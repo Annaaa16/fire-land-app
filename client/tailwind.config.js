@@ -3,6 +3,7 @@ module.exports = {
   purge: [
     './src/pages/**/*.{js,ts,jsx,tsx}',
     './src/components/**/*.{js,ts,jsx,tsx}',
+    './src/features/**/*.{js,ts,jsx,tsx}',
   ],
   darkMode: 'class',
   theme: {
@@ -66,6 +67,12 @@ module.exports = {
       spacing: {
         'form-w': '484px',
         'form-h': '625px',
+      },
+      boxShadow: {
+        'primary-v1': '4px 7px 12px 0 rgb(97 93 250 / 20%)',
+        'primary-v2': '4px 7px 12px 0 rgb(35 210 226 / 20%)',
+        'primary-v3': '4px 7px 12px 0 rgb(119 80 248 / 20%)',
+        'primary-v4': '4px 7px 12px 0 rgb(64 208 79 / 20%)',
       },
     },
     fontSize: {
