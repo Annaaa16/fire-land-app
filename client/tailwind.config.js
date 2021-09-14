@@ -31,6 +31,7 @@ module.exports = {
         },
         'primary-v4': {
           DEFAULT: '#40d04f',
+          hover: '#4ae95b',
         },
         red: {
           DEFAULT: '#fd434f',
