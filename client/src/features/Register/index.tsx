@@ -10,7 +10,7 @@ import {
   ltDot,
   dkDot,
 } from '@/utils/imagesLogin';
-import logo from '@/assets/svgs/common/logo.svg';
+import logo from '@/assets/svgs/logo.svg';
 
 import styles from './styles.module.scss';
 import Meta from '@/layouts/Meta';
@@ -20,7 +20,7 @@ function Register() {
     <Meta title='Register'>
       <div
         className={clsx(
-          'relative md:overflow-hidden dark',
+          'relative md:overflow-hidden',
           'grid grid-cols-1 lg:grid-cols-2 w-screen h-full lg:h-screen py-16 px-5 md:py-50 lg:py-0 lg:px-50',
           'lg:bg-center bg-cover bg-no-repeat'
         )}
