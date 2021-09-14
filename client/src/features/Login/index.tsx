@@ -12,7 +12,7 @@ import {
   ltDot,
   dkDot,
 } from '@/utils/imagesLogin';
-import logo from '@/assets/svgs/common/logo.svg';
+import logo from '@/assets/svgs/logo.svg';
 
 import styles from './styles.module.scss';
 

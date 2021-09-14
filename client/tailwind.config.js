@@ -8,6 +8,9 @@ module.exports = {
   darkMode: 'class',
   theme: {
     extend: {
+      zIndex: {
+        '-1': '-1',
+      },
       lineHeight: {
         3: '12px',
         4: '16px',
@@ -22,6 +25,8 @@ module.exports = {
         'primary-v1': {
           DEFAULT: '#615dfa',
           hover: '#5753e4',
+          input: '#4e4ac8',
+          text: '#8b88ff',
         },
         'primary-v2': {
           DEFAULT: '#23d2e2',
@@ -29,10 +34,12 @@ module.exports = {
         'primary-v3': {
           DEFAULT: '#7750f8',
           hover: '#9668ff',
+          input: '#5538b5',
         },
         'primary-v4': {
           DEFAULT: '#40d04f',
           hover: '#4ae95b',
+          linear: '#9cec5c',
         },
         red: {
           DEFAULT: '#fd434f',
@@ -74,6 +81,9 @@ module.exports = {
         'primary-v3': '4px 7px 12px 0 rgb(119 80 248 / 20%)',
         'primary-v4': '4px 7px 12px 0 rgb(64 208 79 / 20%)',
       },
+      transitionDuration: {
+        250: '250ms',
+      },
     },
     fontSize: {
       xs: '12px',
@@ -110,6 +120,7 @@ module.exports = {
       12: '48px',
       14: '56px',
       16: '64px',
+      18: '72px',
       20: '80px',
       24: '96px',
       28: '112px',
