@@ -13,7 +13,8 @@ function HeaderOptions() {
     <div
       className={clsx(
         'fixed md:static left-0 bottom-0',
-        'flex items-center justify-center w-full md:w-auto'
+        'flex items-center justify-center w-full md:w-auto',
+        'bg-primary-v1 md:bg-transparent'
       )}>
       <div
         className={clsx(
@@ -65,7 +66,7 @@ function HeaderOptions() {
 
           <div
             className={clsx(
-              'absolute -top-4 md:-top-9 right-2.5 lg:right-1.5',
+              'absolute -top-px md:-top-5 right-3 lg:right-1.5',
               'text-4xl',
               'text-primary-v2'
             )}>

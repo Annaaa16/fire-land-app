@@ -18,7 +18,7 @@ function Meta(props: IProps) {
         <title>{title}</title>
       </Head>
 
-      <div className='dark'>{children}</div>
+      <div className=''>{children}</div>
     </>
   );
 }

@@ -7,19 +7,19 @@ import HeaderSearch from './HeaderSearch';
 import HeaderExp from './HeaderExp';
 import HeaderOptions from './HeaderOptions';
 
-import logo from '@/assets/svgs/logo.svg';
+import icon from '@/assets/svgs/icon.svg';
 
 function Header() {
   return (
     <header
       className={clsx(
-        'flex items-center justify-between w-full px-2 md:px-4 py-2.5',
+        'flex items-center justify-between w-full h-header-h px-2 md:px-4 py-2.5',
         'bg-primary-v1 dark:bg-primary-v3'
       )}>
       <img
-        src={logo.src}
+        src={icon.src}
         alt='Logo'
-        className={clsx('w-16 lg:w-20 lg:mr-2', 'cursor-pointer')}
+        className={clsx('w-16 lg:w-12 lg:mr-2', 'cursor-pointer')}
       />
 
       <HeaderWidget />

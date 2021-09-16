@@ -4,15 +4,15 @@ import clsx from 'clsx';
 import Meta from '@/layouts/Meta';
 import LoginForm from './components/LoginForm';
 import LoginSocial from './components/LoginSocial';
+import LandingLeft from '@/components/LandingLeft';
 
 import {
   ltBackground,
-  darkBackground,
+  dkBackground,
   rocket,
   ltDot,
   dkDot,
 } from '@/utils/imagesLogin';
-import logo from '@/assets/svgs/logo.svg';
 
 import styles from './styles.module.scss';
 
@@ -21,27 +21,12 @@ function Login() {
     <Meta title='Login'>
       <div
         className={clsx(
-          'relative md:overflow-hidden dark',
+          'relative md:overflow-hidden',
           'grid grid-cols-1 lg:grid-cols-2 w-screen h-full lg:h-screen py-16 px-5 md:py-50 lg:py-0 lg:px-50',
           'lg:bg-center bg-cover bg-no-repeat'
         )}
-        style={{ backgroundImage: `url(${darkBackground})` }}>
-        <div
-          className={clsx('i-flex-center flex-col text-center mb-8 lg:mb-0')}>
-          <h3 className={clsx('font-bold text-xl lg:text-2xl', 'text-white')}>
-            WELCOME TO
-          </h3>
-          <img
-            src={logo.src}
-            alt='Logo'
-            loading='lazy'
-            className={clsx('w-40 mb-2', 'cursor-pointer select-none')}
-          />
-          <p className='hidden lg:block text-white mt-2 text-base px-10'>
-            The next generation social network & community! Connect with your
-            friends and play with our quests and badges gamification system!
-          </p>
-        </div>
+        style={{ backgroundImage: `url(${dkBackground})` }}>
+        <LandingLeft />
 
         <div
           style={{ backgroundImage: `url(${dkDot})` }}
