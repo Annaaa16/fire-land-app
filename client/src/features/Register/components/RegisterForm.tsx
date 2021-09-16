@@ -33,7 +33,7 @@ function RegisterForm() {
                   'peer-checked:bg-primary-v2 dark:peer-checked:bg-primary-v4'
                 )}>
                 <DoneIcon
-                  className={clsx('text-lt-body dark:text-dk-body !w-4')}
+                  className={clsx('text-lt-cpn dark:text-dk-cpn !w-4')}
                 />
               </div>
             </div>

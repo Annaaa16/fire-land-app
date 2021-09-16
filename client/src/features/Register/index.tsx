@@ -35,7 +35,7 @@ function Register() {
           style={{ backgroundImage: `url(${isDark ? dkDot : ltDot})` }}
           className={clsx(
             'hidden lg:block',
-            'bg-lt-body dark:bg-dk-body',
+            'bg-lt-cpn dark:bg-dk-cpn',
             styles.decoration
           )}
         />
@@ -44,7 +44,7 @@ function Register() {
           className={clsx(
             'relative',
             'i-flex-center flex-col w-full md:w-form-w mr-auto lg:mr-0 ml-auto lg:my-auto py-8 px-5 md:px-16 md:py-16 rounded-lg shadow-lg',
-            'bg-lt-body dark:bg-dk-body'
+            'bg-lt-cpn dark:bg-dk-cpn'
           )}>
           <img
             src={rocket}
