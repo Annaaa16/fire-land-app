@@ -54,10 +54,15 @@ module.exports = {
           lt: '#fff',
           dk: '#161b28',
         },
+        status: {
+          online: '#17dd17',
+        },
         lt: {
           body: '#fff',
           text: '#3e3f5e',
           line: '#dedeea',
+          cpn: '#fff',
+          'tooltip-hv': '#fff',
           gray: {
             DEFAULT: '#adafca',
           },
@@ -66,6 +71,8 @@ module.exports = {
           body: '#1d2333',
           text: '#fff',
           line: '#3f485f',
+          cpn: '#1d2333',
+          'tooltip-hv': '#293249',
           gray: {
             DEFAULT: '#9aa4bf',
           },
@@ -74,6 +81,11 @@ module.exports = {
       spacing: {
         'form-w': '484px',
         'form-h': '625px',
+        'header-h': '64px',
+        'sidebar-sm-w': '80px',
+        'sidebar-sm-h': 'calc(100vh - 64px)',
+        'sidebar-w': '300px',
+        'sidebar-h': 'calc(100vh - 64px)',
       },
       boxShadow: {
         'primary-v1': '4px 7px 12px 0 rgb(97 93 250 / 20%)',
@@ -84,8 +96,15 @@ module.exports = {
       transitionDuration: {
         250: '250ms',
       },
+      minWidth: {
+        6.5: '26px',
+      },
+      rotate: {
+        '-30': '-30deg',
+      },
     },
     fontSize: {
+      '2xs': '10px',
       xs: '12px',
       sm: '14px',
       base: '16px',
@@ -103,6 +122,7 @@ module.exports = {
       0: '0',
       0.5: '2px',
       1: '4px',
+      1.25: '5px',
       1.5: '6px',
       2: '8px',
       2.5: '10px',
