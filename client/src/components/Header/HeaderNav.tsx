@@ -46,15 +46,16 @@ function HeaderNavs() {
 
         <ul
           className={clsx(
-            'absolute left-0 top-1/4',
+            'absolute left-0 top-0',
             'transform min-w-max px-4 py-1.5 rounded-lg shadow-primary-v1 opacity-0 invisible',
             'bg-primary-v1 dark:bg-primary-v3 text-white',
             'transition-all duration-250',
-            'group-hover:top-full group-hover:mt-3 group-hover:opacity-100 group-hover:visible'
+            'pointer-events-none',
+            'group-hover:translate-y-9 group-hover:opacity-100 group-hover:visible group-hover:pointer-events-auto'
           )}>
           <li
             className={clsx(
-              'py-2 px-2 border-b border-primary-v1-text',
+              'py-3 px-2 border-b border-primary-v1-text',
               'transition-all duration-250',
               'hover:text-primary-v2 dark:hover:text-primary-v4'
             )}>
@@ -62,7 +63,7 @@ function HeaderNavs() {
           </li>
           <li
             className={clsx(
-              'py-2 px-2 border-b border-primary-v1-text',
+              'py-3 px-2 border-b border-primary-v1-text',
               'transition-all duration-250',
               'hover:text-primary-v2 dark:hover:text-primary-v4'
             )}>
@@ -70,7 +71,7 @@ function HeaderNavs() {
           </li>
           <li
             className={clsx(
-              'py-2 px-2 border-b border-primary-v1-text',
+              'py-3 px-2 border-b border-primary-v1-text',
               'transition-all duration-250',
               'hover:text-primary-v2 dark:hover:text-primary-v4'
             )}>
@@ -78,7 +79,7 @@ function HeaderNavs() {
           </li>
           <li
             className={clsx(
-              'py-2 px-2',
+              'py-3 px-2',
               'transition-all duration-250',
               'hover:text-primary-v2 dark:hover:text-primary-v4'
             )}>
@@ -88,7 +89,7 @@ function HeaderNavs() {
           <div
             className={clsx(
               'absolute left-0 -top-5 -z-1',
-              'w-full h-8',
+              'w-1/3 h-8',
               'bg-transparent'
             )}
           />
