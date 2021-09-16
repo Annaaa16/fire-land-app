@@ -16,6 +16,8 @@ import {
 import styles from './styles.module.scss';
 
 function Register() {
+  const isDark = true;
+
   return (
     <Meta title='Register'>
       <div
@@ -24,11 +26,13 @@ function Register() {
           'grid grid-cols-1 lg:grid-cols-2 w-screen h-full lg:h-screen py-16 px-5 md:py-50 lg:py-0 lg:px-50',
           'lg:bg-center bg-cover bg-no-repeat'
         )}
-        style={{ backgroundImage: `url(${dkBackground})` }}>
+        style={{
+          backgroundImage: `url(${isDark ? dkBackground : ltBackground})`,
+        }}>
         <LandingLeft />
 
         <div
-          style={{ backgroundImage: `url(${dkDot})` }}
+          style={{ backgroundImage: `url(${isDark ? dkDot : ltDot})` }}
           className={clsx(
             'hidden lg:block',
             'bg-lt-body dark:bg-dk-body',
