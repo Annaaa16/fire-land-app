@@ -58,7 +58,7 @@ module.exports = {
           online: '#17dd17',
         },
         lt: {
-          body: '#fff',
+          body: '#f7f7fa',
           text: '#3e3f5e',
           line: '#dedeea',
           cpn: '#fff',
@@ -66,9 +66,12 @@ module.exports = {
           gray: {
             DEFAULT: '#adafca',
           },
+          newsfeed: {
+            group: '#eff4fb',
+          },
         },
         dk: {
-          body: '#1d2333',
+          body: '#161b28',
           text: '#fff',
           line: '#3f485f',
           cpn: '#1d2333',
