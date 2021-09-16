@@ -86,6 +86,8 @@ module.exports = {
         'sidebar-sm-h': 'calc(100vh - 64px)',
         'sidebar-w': '300px',
         'sidebar-h': 'calc(100vh - 64px)',
+        'newsfeed-content-w': '1184px',
+        'newsfeed-banner-h': '200px',
       },
       boxShadow: {
         'primary-v1': '4px 7px 12px 0 rgb(97 93 250 / 20%)',
