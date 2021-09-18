@@ -21,7 +21,7 @@ function NewsFeedSenderInput() {
           placeholder={`What's on your mind, IG Dev`}
           className={clsx(
             'flex-1 h-full ml-4 rounded-full outline-none px-4 py-3',
-            'bg-newsfeed-sender-input dark:bg-dk-cpn-lt dark:text-white',
+            'bg-[#f0f2f5] dark:bg-[#21283B] dark:text-white',
             'cursor-pointer'
           )}
         />
@@ -36,10 +36,10 @@ function NewsFeedSenderInput() {
             'i-flex-center flex-1 py-2.5 rounded-lg',
             'cursor-pointer',
             'transition-all ease-out',
-            'hover:bg-newsfeed-sender-hv dark:hover:bg-dk-tooltip-hv'
+            'hover:bg-[#f2f2f2] dark:hover:bg-dk-tooltip-hv'
           )}>
           <VideoCallIcon
-            className={clsx('mr-1.5 !text-2xl', 'text-newsfeed-sender-video')}
+            className={clsx('mr-1.5 !text-2xl', 'text-[#f02849]')}
           />
           <span className={clsx('font-bold dark:text-white')}>Live Video</span>
         </li>
@@ -48,10 +48,10 @@ function NewsFeedSenderInput() {
             'i-flex-center flex-1 py-2.5 rounded-lg',
             'cursor-pointer',
             'transition-all ease-out',
-            'hover:bg-newsfeed-sender-hv dark:hover:bg-dk-tooltip-hv'
+            'hover:bg-[#f2f2f2] dark:hover:bg-dk-tooltip-hv'
           )}>
           <PhotoLibraryIcon
-            className={clsx('mr-1.5 !text-2xl', 'text-newsfeed-sender-photo')}
+            className={clsx('mr-1.5 !text-2xl', 'text-[#45bd62]')}
           />
           <span className={clsx('font-bold dark:text-white')}>Photo</span>
         </li>
@@ -60,10 +60,10 @@ function NewsFeedSenderInput() {
             'i-flex-center flex-1 py-2.5 rounded-lg',
             'cursor-pointer',
             'transition-all ease-out',
-            'hover:bg-newsfeed-sender-hv dark:hover:bg-dk-tooltip-hv'
+            'hover:bg-[#f2f2f2] dark:hover:bg-dk-tooltip-hv'
           )}>
           <SentimentVerySatisfiedIcon
-            className={clsx('mr-1.5 !text-2xl', 'text-newsfeed-sender-feeling')}
+            className={clsx('mr-1.5 !text-2xl', 'text-[#f7b928]')}
           />
           <span className={clsx('font-bold dark:text-white')}>Feeling</span>
         </li>

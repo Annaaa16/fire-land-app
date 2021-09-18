@@ -17,7 +17,7 @@ function NewsFeedMembers() {
         <div
           className={clsx(
             'i-flex-center w-11 h-11 mr-3 rounded-full',
-            'bg-newsfeed-members dark:bg-primary-v4'
+            'bg-[#eff4fb] dark:bg-primary-v4'
           )}>
           <GroupIcon className={clsx('text-primary-v1 dark:text-white')} />
         </div>
@@ -33,7 +33,7 @@ function NewsFeedMembers() {
         className={clsx(
           'relative',
           'i-flex-center group w-11 h-11 mr-2 rounded-full',
-          'bg-newsfeed-members dark:bg-primary-v4',
+          'bg-[#eff4fb] dark:bg-primary-v4',
           'cursor-pointer'
         )}>
         <ChatIcon className={clsx('text-primary-v1 dark:text-white')} />

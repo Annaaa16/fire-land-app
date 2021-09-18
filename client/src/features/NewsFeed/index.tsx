@@ -18,10 +18,7 @@ function NewsFeed() {
       {/* <SidebarSmall /> */}
 
       <main className='bg-lt-body dark:bg-dk-body'>
-        <div
-          className={clsx(
-            'lg:w-newsfeed-content-w px-4 lg:px-0 mx-auto py-10'
-          )}>
+        <div className={clsx('lg:w-[1184px] px-4 lg:px-0 mx-auto py-10')}>
           <NewsFeedBanner />
           <NewsFeedMembers />
 

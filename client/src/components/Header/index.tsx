@@ -13,7 +13,7 @@ function Header() {
   return (
     <header
       className={clsx(
-        'flex items-center justify-between w-full h-header-h px-2 md:px-4 py-2.5',
+        'flex items-center justify-between w-full h-[64px] px-2 md:px-4 py-2.5',
         'bg-primary-v1 dark:bg-primary-v3'
       )}>
       <img

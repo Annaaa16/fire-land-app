@@ -8,7 +8,7 @@ function NewsFeedContent() {
   return (
     <div className={clsx('col-span-2')}>
       <NewsFeedSenderInput />
-      <NewsFeedSenderArea />
+      {/* <NewsFeedSenderArea /> */}
     </div>
   );
 }

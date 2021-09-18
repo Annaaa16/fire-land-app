@@ -43,7 +43,7 @@ function Register() {
         <div
           className={clsx(
             'relative',
-            'i-flex-center flex-col w-full md:w-form-w mr-auto lg:mr-0 ml-auto lg:my-auto py-8 px-5 md:px-16 md:py-16 rounded-lg shadow-lg',
+            'i-flex-center flex-col w-full md:w-[484px] mr-auto lg:mr-0 ml-auto lg:my-auto py-8 px-5 md:px-16 md:py-16 rounded-lg shadow-lg',
             'bg-lt-cpn dark:bg-dk-cpn'
           )}>
           <img

@@ -10,7 +10,7 @@ function SidebarSmall() {
   return (
     <div
       className={clsx(
-        'flex flex-col items-center w-sidebar-sm-w h-sidebar-sm-h py-6 shadow-xl',
+        'flex flex-col items-center w-[80px] h-[calc(100vh-64px)] py-6 shadow-xl',
         'bg-lt-cpn dark:bg-dk-cpn'
       )}>
       <User view='small' />

@@ -41,29 +41,8 @@ module.exports = {
           hv: '#4ae95b',
           linear: '#9cec5c',
         },
-        red: {
-          DEFAULT: '#fd434f',
-        },
-        pink: {
-          DEFAULT: '#c13584',
-        },
-        blue: {
-          DEFAULT: '#139df8',
-        },
-        decoration: {
-          lt: '#fff',
-          dk: '#161b28',
-        },
         status: {
           online: '#45bd62',
-        },
-        newsfeed: {
-          members: '#eff4fb',
-          'sender-video': '#f02849',
-          'sender-photo': '#45bd62',
-          'sender-feeling': '#f7b928',
-          'sender-input': '#f0f2f5',
-          'sender-hv': '#f2f2f2',
         },
         lt: {
           body: '#f7f7fa',
@@ -80,23 +59,11 @@ module.exports = {
           text: '#fff',
           line: '#3f485f',
           cpn: '#1d2333',
-          'cpn-lt': '#21283B',
           'tooltip-hv': '#293249',
           gray: {
             DEFAULT: '#9aa4bf',
           },
         },
-      },
-      spacing: {
-        'form-w': '484px',
-        'form-h': '625px',
-        'header-h': '64px',
-        'sidebar-sm-w': '80px',
-        'sidebar-sm-h': 'calc(100vh - 64px)',
-        'sidebar-w': '300px',
-        'sidebar-h': 'calc(100vh - 64px)',
-        'newsfeed-content-w': '1184px',
-        'newsfeed-banner-h': '200px',
       },
       boxShadow: {
         'primary-v1': '4px 7px 12px 0 rgb(97 93 250 / 20%)',
@@ -106,12 +73,6 @@ module.exports = {
       },
       transitionDuration: {
         250: '250ms',
-      },
-      minWidth: {
-        6.5: '26px',
-      },
-      rotate: {
-        '-30': '-30deg',
       },
     },
     fontSize: {

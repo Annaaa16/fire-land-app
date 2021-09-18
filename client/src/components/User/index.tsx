@@ -57,7 +57,7 @@ function User(props: IProps) {
       <span
         className={clsx(
           'absolute z-10 -right-1.5 -top-1',
-          'i-flex-center transform translate-x-3 text-2xs font-bold px-1.5 min-w-6.5 border-2 border-white rounded-full opacity-0 invisible',
+          'i-flex-center transform translate-x-3 text-2xs font-bold px-1.5 min-w-[26px] border-2 border-white rounded-full opacity-0 invisible',
           'bg-primary-v1 text-white',
           'transition-all duration-250 ease-out',
           'group-hover:translate-x-1 group-hover:opacity-100 group-hover:visible'
@@ -73,7 +73,7 @@ function User(props: IProps) {
             'transform -translate-x-1/2 -translate-y-1/2 scale-125 opacity-50',
             'brightness-75',
             'transition-all duration-250 ease-in-out',
-            'group-hover:-rotate-30 group-hover:opacity-100'
+            'group-hover:rotate-[-30deg] group-hover:opacity-100'
           )}
         />
       </div>

@@ -11,7 +11,7 @@ function NewsFeedBanner() {
     <section
       className={clsx(
         'relative',
-        'flex items-center justify-center md:justify-start py-12 lg:h-newsfeed-banner-h rounded-2xl md:px-14',
+        'flex items-center justify-center md:justify-start py-12 lg:h-[200px] rounded-2xl md:px-14',
         'bg-gradient-to-r from-yellow-400 to-yellow-300'
       )}>
       <div className={clsx('hidden md:i-flex-center w-20 h-20 mr-4')}>
