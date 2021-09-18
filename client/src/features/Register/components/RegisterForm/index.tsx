@@ -1,5 +1,5 @@
 // material ui icons
-import DoneIcon from '@material-ui/icons/Done';
+import DoneIcon from '@mui/icons-material/Done';
 
 // clsx
 import clsx from 'clsx';
@@ -50,7 +50,7 @@ function RegisterForm() {
           'w-full mt-7 font-bold py-4 rounded-lg text-xs lg:text-sm shadow-primary-v1 dark:shadow-primary-v4',
           'text-white bg-primary-v1 dark:bg-primary-v4',
           'transition-all',
-          'hover:bg-primary-v1-hover dark:hover:bg-primary-v4-hover'
+          'hover:bg-primary-v1-hv dark:hover:bg-primary-v4-hv'
         )}>
         Register Now!
       </button>

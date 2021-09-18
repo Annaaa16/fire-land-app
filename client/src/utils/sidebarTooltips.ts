@@ -1,12 +1,12 @@
 // material ui icons
-import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
-import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
-import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
-import VideoLibraryIcon from '@material-ui/icons/VideoLibrary';
-import ForumIcon from '@material-ui/icons/Forum';
-import EventNoteIcon from '@material-ui/icons/EventNote';
-import StoreIcon from '@material-ui/icons/Store';
-import TextsmsIcon from '@material-ui/icons/Textsms';
+import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
+import VideoLibraryIcon from '@mui/icons-material/VideoLibrary';
+import ForumIcon from '@mui/icons-material/Forum';
+import EventNoteIcon from '@mui/icons-material/EventNote';
+import StoreIcon from '@mui/icons-material/Store';
+import TextsmsIcon from '@mui/icons-material/Textsms';
 
 export const sidebarTooltips = [
   { isActive: true, title: 'Newsfeed', icon: LibraryBooksIcon },

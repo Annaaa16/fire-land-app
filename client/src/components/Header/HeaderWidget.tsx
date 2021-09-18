@@ -2,7 +2,7 @@
 import clsx from 'clsx';
 
 // material ui icons
-import AppsIcon from '@material-ui/icons/Apps';
+import AppsIcon from '@mui/icons-material/Apps';
 
 function HeaderWidget() {
   return (

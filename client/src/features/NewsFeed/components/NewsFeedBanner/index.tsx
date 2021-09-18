@@ -2,7 +2,7 @@
 import clsx from 'clsx';
 
 // material ui icons
-import SpeakerPhoneIcon from '@material-ui/icons/SpeakerPhone';
+import SpeakerPhoneIcon from '@mui/icons-material/SpeakerPhone';
 
 import { bannerShape, bannerMembers } from '@/utils/imagesNewFeed';
 

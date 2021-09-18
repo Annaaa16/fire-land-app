@@ -2,11 +2,11 @@
 import clsx from 'clsx';
 
 // material ui icons
-import LocalMallOutlinedIcon from '@material-ui/icons/LocalMallOutlined';
-import SentimentSatisfiedOutlinedIcon from '@material-ui/icons/SentimentSatisfiedOutlined';
-import SmsOutlinedIcon from '@material-ui/icons/SmsOutlined';
-import NotificationsNoneOutlinedIcon from '@material-ui/icons/NotificationsNoneOutlined';
-import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
+import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
+import SentimentSatisfiedOutlinedIcon from '@mui/icons-material/SentimentSatisfiedOutlined';
+import SmsOutlinedIcon from '@mui/icons-material/SmsOutlined';
+import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 
 function HeaderOptions() {
   return (

@@ -2,7 +2,8 @@
 import clsx from 'clsx';
 
 // material ui icons
-import DoneIcon from '@material-ui/icons/Done';
+// import DoneIcon from '@mui/icons-material/Done';
+import DoneIcon from '@mui/icons-material/Done';
 
 import FormInput from '@/components/FormInput';
 
@@ -63,7 +64,7 @@ function LoginForm() {
           'w-full mt-7 font-bold py-4 rounded-lg text-xs lg:text-sm shadow-primary-v1 dark:shadow-primary-v3',
           'text-white bg-primary-v1 dark:bg-primary-v3',
           'transition-all',
-          'hover:bg-primary-v1-hover dark:hover:bg-primary-v3-hover'
+          'hover:bg-primary-v1-hv dark:hover:bg-primary-v3-hv'
         )}>
         Login to your Account!
       </button>

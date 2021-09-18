@@ -2,8 +2,8 @@
 import clsx from 'clsx';
 
 // material ui icons
-import GroupIcon from '@material-ui/icons/Group';
-import ChatIcon from '@material-ui/icons/Chat';
+import GroupIcon from '@mui/icons-material/Group';
+import ChatIcon from '@mui/icons-material/Chat';
 import Tooltip from '@/components/Tooltip';
 
 function NewsFeedMembers() {
@@ -17,7 +17,7 @@ function NewsFeedMembers() {
         <div
           className={clsx(
             'i-flex-center w-11 h-11 mr-3 rounded-full',
-            'bg-lt-newsfeed-group dark:bg-primary-v4'
+            'bg-newsfeed-members dark:bg-primary-v4'
           )}>
           <GroupIcon className={clsx('text-primary-v1 dark:text-white')} />
         </div>
@@ -33,7 +33,7 @@ function NewsFeedMembers() {
         className={clsx(
           'relative',
           'i-flex-center group w-11 h-11 mr-2 rounded-full',
-          'bg-lt-newsfeed-group dark:bg-primary-v4',
+          'bg-newsfeed-members dark:bg-primary-v4',
           'cursor-pointer'
         )}>
         <ChatIcon className={clsx('text-primary-v1 dark:text-white')} />
