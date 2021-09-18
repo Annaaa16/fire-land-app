@@ -24,7 +24,7 @@ module.exports = {
       colors: {
         'primary-v1': {
           DEFAULT: '#615dfa',
-          hover: '#5753e4',
+          hv: '#5753e4',
           input: '#4e4ac8',
           text: '#8b88ff',
         },
@@ -33,12 +33,12 @@ module.exports = {
         },
         'primary-v3': {
           DEFAULT: '#7750f8',
-          hover: '#9668ff',
+          hv: '#9668ff',
           input: '#5538b5',
         },
         'primary-v4': {
           DEFAULT: '#40d04f',
-          hover: '#4ae95b',
+          hv: '#4ae95b',
           linear: '#9cec5c',
         },
         red: {
@@ -55,7 +55,15 @@ module.exports = {
           dk: '#161b28',
         },
         status: {
-          online: '#17dd17',
+          online: '#45bd62',
+        },
+        newsfeed: {
+          members: '#eff4fb',
+          'sender-video': '#f02849',
+          'sender-photo': '#45bd62',
+          'sender-feeling': '#f7b928',
+          'sender-input': '#f0f2f5',
+          'sender-hv': '#f2f2f2',
         },
         lt: {
           body: '#f7f7fa',
@@ -66,15 +74,13 @@ module.exports = {
           gray: {
             DEFAULT: '#adafca',
           },
-          newsfeed: {
-            group: '#eff4fb',
-          },
         },
         dk: {
           body: '#161b28',
           text: '#fff',
           line: '#3f485f',
           cpn: '#1d2333',
+          'cpn-lt': '#21283B',
           'tooltip-hv': '#293249',
           gray: {
             DEFAULT: '#9aa4bf',

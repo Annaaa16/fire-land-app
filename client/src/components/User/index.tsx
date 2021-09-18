@@ -2,7 +2,7 @@
 import clsx from 'clsx';
 
 // material ui icons
-import CheckIcon from '@material-ui/icons/Check';
+import CheckIcon from '@mui/icons-material/Check';
 
 import borderLtIcon from '@/assets/images/border-lt.png';
 import borderDkIcon from '@/assets/images/border-dk.png';
@@ -22,7 +22,7 @@ function User(props: IProps) {
     <div
       className={clsx(
         'relative',
-        view === 'small' ? 'w-11 h-11' : 'w-16 h-16',
+        view === 'small' ? 'w-10 h-10' : 'w-16 h-16',
         'group cursor-pointer'
       )}>
       <img
