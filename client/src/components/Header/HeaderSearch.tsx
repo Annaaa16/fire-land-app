@@ -2,7 +2,7 @@
 import clsx from 'clsx';
 
 // material ui icons
-import SearchIcon from '@material-ui/icons/Search';
+import SearchIcon from '@mui/icons-material/Search';
 
 function HeaderSearch() {
   return (

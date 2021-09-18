@@ -13,13 +13,13 @@ function Header() {
   return (
     <header
       className={clsx(
-        'flex items-center justify-between w-full h-header-h px-2 md:px-4 py-2.5',
+        'flex items-center justify-between w-full h-[64px] px-2 md:px-4 py-2.5',
         'bg-primary-v1 dark:bg-primary-v3'
       )}>
       <img
         src={icon.src}
         alt='Logo'
-        className={clsx('w-16 lg:w-12 lg:mr-2', 'cursor-pointer')}
+        className={clsx('w-12 lg:mr-2', 'cursor-pointer')}
       />
 
       <HeaderWidget />

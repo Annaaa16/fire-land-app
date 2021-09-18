@@ -16,6 +16,8 @@ import {
 import styles from './styles.module.scss';
 
 function Register() {
+  const isDark = true;
+
   return (
     <Meta title='Register'>
       <div
@@ -24,14 +26,16 @@ function Register() {
           'grid grid-cols-1 lg:grid-cols-2 w-screen h-full lg:h-screen py-16 px-5 md:py-50 lg:py-0 lg:px-50',
           'lg:bg-center bg-cover bg-no-repeat'
         )}
-        style={{ backgroundImage: `url(${dkBackground})` }}>
+        style={{
+          backgroundImage: `url(${isDark ? dkBackground : ltBackground})`,
+        }}>
         <LandingLeft />
 
         <div
-          style={{ backgroundImage: `url(${dkDot})` }}
+          style={{ backgroundImage: `url(${isDark ? dkDot : ltDot})` }}
           className={clsx(
             'hidden lg:block',
-            'bg-lt-body dark:bg-dk-body',
+            'bg-lt-cpn dark:bg-dk-cpn',
             styles.decoration
           )}
         />
@@ -39,8 +43,8 @@ function Register() {
         <div
           className={clsx(
             'relative',
-            'i-flex-center flex-col w-full md:w-form-w mr-auto lg:mr-0 ml-auto lg:my-auto py-8 px-5 md:px-16 md:py-16 rounded-lg shadow-lg',
-            'bg-lt-body dark:bg-dk-body'
+            'i-flex-center flex-col w-full md:w-[484px] mr-auto lg:mr-0 ml-auto lg:my-auto py-8 px-5 md:px-16 md:py-16 rounded-lg shadow-lg',
+            'bg-lt-cpn dark:bg-dk-cpn'
           )}>
           <img
             src={rocket}

@@ -24,7 +24,7 @@ module.exports = {
       colors: {
         'primary-v1': {
           DEFAULT: '#615dfa',
-          hover: '#5753e4',
+          hv: '#5753e4',
           input: '#4e4ac8',
           text: '#8b88ff',
         },
@@ -33,74 +33,52 @@ module.exports = {
         },
         'primary-v3': {
           DEFAULT: '#7750f8',
-          hover: '#9668ff',
+          hv: '#9668ff',
           input: '#5538b5',
         },
         'primary-v4': {
           DEFAULT: '#40d04f',
-          hover: '#4ae95b',
+          hv: '#4ae95b',
           linear: '#9cec5c',
         },
-        red: {
-          DEFAULT: '#fd434f',
-        },
-        pink: {
-          DEFAULT: '#c13584',
-        },
-        blue: {
-          DEFAULT: '#139df8',
-        },
-        decoration: {
-          lt: '#fff',
-          dk: '#161b28',
-        },
         status: {
-          online: '#17dd17',
+          online: '#45bd62',
+        },
+        gray: {
+          text: '#65676b',
         },
         lt: {
-          body: '#fff',
+          body: '#f7f7fa',
           text: '#3e3f5e',
           line: '#dedeea',
           cpn: '#fff',
+          input: '#f2f2f2',
           'tooltip-hv': '#fff',
           gray: {
             DEFAULT: '#adafca',
           },
         },
         dk: {
-          body: '#1d2333',
+          body: '#161b28',
           text: '#fff',
           line: '#3f485f',
           cpn: '#1d2333',
+          input: '#21283b',
           'tooltip-hv': '#293249',
           gray: {
             DEFAULT: '#9aa4bf',
           },
         },
       },
-      spacing: {
-        'form-w': '484px',
-        'form-h': '625px',
-        'header-h': '64px',
-        'sidebar-sm-w': '80px',
-        'sidebar-sm-h': 'calc(100vh - 64px)',
-        'sidebar-w': '300px',
-        'sidebar-h': 'calc(100vh - 64px)',
-      },
       boxShadow: {
         'primary-v1': '4px 7px 12px 0 rgb(97 93 250 / 20%)',
         'primary-v2': '4px 7px 12px 0 rgb(35 210 226 / 20%)',
         'primary-v3': '4px 7px 12px 0 rgb(119 80 248 / 20%)',
         'primary-v4': '4px 7px 12px 0 rgb(64 208 79 / 20%)',
+        'sender-header-ls': '0 1px 20px rgba(0, 0, 0, 0.18)',
       },
       transitionDuration: {
         250: '250ms',
-      },
-      minWidth: {
-        6.5: '26px',
-      },
-      rotate: {
-        '-30': '-30deg',
       },
     },
     fontSize: {

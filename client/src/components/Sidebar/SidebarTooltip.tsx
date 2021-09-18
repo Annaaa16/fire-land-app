@@ -37,7 +37,7 @@ function SidebarTooltip(props: IProps) {
         />
         <span
           className={clsx(
-            'transform ml-3 font-bold',
+            'ml-3 font-bold',
             isActive ? 'text-white' : 'text-lt-text dark:text-dk-text',
             'transition-all duration-250 ease-out',
             !isActive && 'group-hover:translate-x-1'

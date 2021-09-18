@@ -2,10 +2,10 @@
 import clsx from 'clsx';
 
 // material ui icons
-import FacebookIcon from '@material-ui/icons/Facebook';
-import TwitterIcon from '@material-ui/icons/Twitter';
-import YouTubeIcon from '@material-ui/icons/YouTube';
-import InstagramIcon from '@material-ui/icons/Instagram';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import TwitterIcon from '@mui/icons-material/Twitter';
+import YouTubeIcon from '@mui/icons-material/YouTube';
+import InstagramIcon from '@mui/icons-material/Instagram';
 
 function LoginSocial() {
   return (
@@ -22,8 +22,8 @@ function LoginSocial() {
         <div className={clsx('i-flex-center p-2 rounded-lg', 'cursor-pointer')}>
           <FacebookIcon
             className={clsx(
-              '!text-2xl transform',
-              'text-blue',
+              '!text-2xl',
+              'text-[#139df8]',
               '!transition-all',
               'lg:hover:scale-125'
             )}
@@ -36,8 +36,8 @@ function LoginSocial() {
           )}>
           <TwitterIcon
             className={clsx(
-              '!text-2xl transform',
-              'text-blue',
+              '!text-2xl',
+              'text-[#139df8]',
               '!transition-all',
               'lg:hover:scale-125'
             )}
@@ -50,8 +50,8 @@ function LoginSocial() {
           )}>
           <YouTubeIcon
             className={clsx(
-              '!text-2xl transform',
-              'text-red',
+              '!text-2xl',
+              'text-[#fd434f]',
               '!transition-all',
               'lg:hover:scale-125'
             )}
@@ -64,8 +64,8 @@ function LoginSocial() {
           )}>
           <InstagramIcon
             className={clsx(
-              '!text-2xl transform',
-              'text-pink',
+              '!text-2xl',
+              'text-[#c13584]',
               '!transition-all',
               'lg:hover:scale-125'
             )}

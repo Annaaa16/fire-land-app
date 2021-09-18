@@ -12,7 +12,7 @@ import Tooltip from '../Tooltip';
 function SidebarSmallTooltip(props: IProps) {
   const { title, isActive, icon: Icon } = props;
 
-  const isDark = false;
+  const isDark = true;
 
   return (
     <li
@@ -37,7 +37,7 @@ function SidebarSmallTooltip(props: IProps) {
             'group-hover:text-primary-v2 dark:group-hover:text-primary-v4'
         )}
       />
-      <Tooltip title={title} />
+      <Tooltip title={title} direction='rtl' />
     </li>
   );
 }
