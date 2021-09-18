@@ -1,14 +1,14 @@
 // clsx
 import clsx from 'clsx';
-import NewsFeedSenderArea from './NewsFeedSenderArea';
 
-import NewsFeedSenderInput from './NewsFeedSenderInput';
+import NewsFeedPost from '../NewsFeedPost';
+import NewsFeedSender from '../NewsFeedSender';
 
 function NewsFeedContent() {
   return (
     <div className={clsx('col-span-2')}>
-      <NewsFeedSenderInput />
-      {/* <NewsFeedSenderArea /> */}
+      <NewsFeedSender />
+      <NewsFeedPost />
     </div>
   );
 }

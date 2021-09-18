@@ -23,7 +23,9 @@ function NewsFeed() {
           <NewsFeedMembers />
 
           <section
-            className={clsx('grid grid-cols-3 gap-5 justify-between mt-7')}>
+            className={clsx(
+              'grid grid-cols-1 lg:grid-cols-3 gap-5 justify-between mt-7'
+            )}>
             <NewsFeedContent />
             <NewsFeedWidgets />
           </section>

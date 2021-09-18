@@ -42,7 +42,7 @@ function NewsFeedSenderArea() {
             className={clsx(
               'absolute top-1/2 right-4',
               'rounded-full p-2 -translate-y-1/2',
-              'bg-gray-200 dark:bg-dk-tooltip-hv lg:dark:bg-[#21283B]',
+              'bg-gray-200 dark:bg-dk-tooltip-hv lg:dark:bg-dk-input',
               'transition-all ease-out',
               'hover:bg-gray-300 dark:hover:bg-dk-tooltip-hv',
               'cursor-pointer'
@@ -60,7 +60,7 @@ function NewsFeedSenderArea() {
               <div
                 className={clsx(
                   'flex items-center mt-1.5 px-2 py-1 rounded-md',
-                  'bg-gray-200 dark:bg-dk-tooltip-hv lg:dark:bg-[#21283B]',
+                  'bg-gray-200 dark:bg-dk-tooltip-hv lg:dark:bg-dk-input',
                   'transition-all ease-out',
                   'cursor-pointer',
                   'hover:bg-gray-300 dark:hover:bg-dk-tooltip-hv'

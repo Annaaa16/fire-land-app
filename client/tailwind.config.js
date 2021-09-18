@@ -44,11 +44,15 @@ module.exports = {
         status: {
           online: '#45bd62',
         },
+        gray: {
+          text: '#65676b',
+        },
         lt: {
           body: '#f7f7fa',
           text: '#3e3f5e',
           line: '#dedeea',
           cpn: '#fff',
+          input: '#f2f2f2',
           'tooltip-hv': '#fff',
           gray: {
             DEFAULT: '#adafca',
@@ -59,6 +63,7 @@ module.exports = {
           text: '#fff',
           line: '#3f485f',
           cpn: '#1d2333',
+          input: '#21283b',
           'tooltip-hv': '#293249',
           gray: {
             DEFAULT: '#9aa4bf',
@@ -70,6 +75,7 @@ module.exports = {
         'primary-v2': '4px 7px 12px 0 rgb(35 210 226 / 20%)',
         'primary-v3': '4px 7px 12px 0 rgb(119 80 248 / 20%)',
         'primary-v4': '4px 7px 12px 0 rgb(64 208 79 / 20%)',
+        'sender-header-ls': '0 1px 20px rgba(0, 0, 0, 0.18)',
       },
       transitionDuration: {
         250: '250ms',

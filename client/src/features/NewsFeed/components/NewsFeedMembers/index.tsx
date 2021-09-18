@@ -16,15 +16,23 @@ function NewsFeedMembers() {
       <div className={clsx('flex items-center')}>
         <div
           className={clsx(
-            'i-flex-center w-11 h-11 mr-3 rounded-full',
+            'i-flex-center w-9 h-9 md:w-11 md:h-11 mr-3 rounded-full',
             'bg-[#eff4fb] dark:bg-primary-v4'
           )}>
           <GroupIcon className={clsx('text-primary-v1 dark:text-white')} />
         </div>
-        <span className={clsx('text-dk-gray dark:text-dk-text')}>
+        <span
+          className={clsx(
+            'text-xs md:text-sm',
+            'text-dk-gray dark:text-dk-text'
+          )}>
           Total members:
         </span>
-        <span className={clsx('ml-1 font-bold', 'dark:text-primary-v4')}>
+        <span
+          className={clsx(
+            'ml-1 font-bold text-xs md:text-sm',
+            'dark:text-primary-v4'
+          )}>
           08
         </span>
       </div>
@@ -32,11 +40,13 @@ function NewsFeedMembers() {
       <div
         className={clsx(
           'relative',
-          'i-flex-center group w-11 h-11 mr-2 rounded-full',
+          'i-flex-center group w-9 h-9 md:w-11 md:h-11 mr-2 rounded-full',
           'bg-[#eff4fb] dark:bg-primary-v4',
           'cursor-pointer'
         )}>
-        <ChatIcon className={clsx('text-primary-v1 dark:text-white')} />
+        <ChatIcon
+          className={clsx('!text-xl', 'text-primary-v1 dark:text-white')}
+        />
         <Tooltip title='Go to chat room!' direction='ttb' />
       </div>
     </div>
