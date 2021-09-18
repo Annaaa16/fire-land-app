@@ -47,7 +47,7 @@ function HeaderNavs() {
         <ul
           className={clsx(
             'absolute left-0 top-0 z-10',
-            'transform min-w-max px-4 py-1.5 rounded-lg shadow-primary-v1 opacity-0 invisible',
+            'min-w-max px-4 py-1.5 rounded-lg shadow-primary-v1 opacity-0 invisible',
             'bg-primary-v1 dark:bg-primary-v3 text-white',
             'transition-all duration-250',
             'pointer-events-none',

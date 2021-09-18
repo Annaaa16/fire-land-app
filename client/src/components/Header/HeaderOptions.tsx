@@ -2,7 +2,7 @@
 import clsx from 'clsx';
 
 // material ui icons
-import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
+import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import SentimentSatisfiedOutlinedIcon from '@mui/icons-material/SentimentSatisfiedOutlined';
 import SmsOutlinedIcon from '@mui/icons-material/SmsOutlined';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
@@ -12,7 +12,7 @@ function HeaderOptions() {
   return (
     <div
       className={clsx(
-        'fixed md:static left-0 bottom-0',
+        'fixed md:static left-0 bottom-0 z-50',
         'flex items-center justify-center w-full md:w-auto',
         'bg-primary-v1 md:bg-transparent'
       )}>
@@ -21,7 +21,7 @@ function HeaderOptions() {
           'i-flex-center lg:px-4 lg:mx-4 md:border-l md:border-r border-primary-v1-text'
         )}>
         <div className={clsx('px-2 lg:px-0 py-4 md:py-0')}>
-          <LocalMallOutlinedIcon
+          <ShoppingBagOutlinedIcon
             className={clsx(
               '!text-2xl !w-11',
               'text-primary-v1-text',

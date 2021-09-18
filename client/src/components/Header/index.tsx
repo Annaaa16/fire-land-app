@@ -19,7 +19,7 @@ function Header() {
       <img
         src={icon.src}
         alt='Logo'
-        className={clsx('w-16 lg:w-12 lg:mr-2', 'cursor-pointer')}
+        className={clsx('w-12 lg:mr-2', 'cursor-pointer')}
       />
 
       <HeaderWidget />

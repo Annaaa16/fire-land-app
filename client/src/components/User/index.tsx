@@ -9,10 +9,11 @@ import borderDkIcon from '@/assets/images/border-dk.png';
 
 interface IProps {
   view: string;
+  subClass?: string;
 }
 
 function User(props: IProps) {
-  const { view } = props;
+  const { view, subClass } = props;
 
   const img = 'https://avatars.dicebear.com/api/micah/uiSvbW.svg';
   const isUser = true;
@@ -22,8 +23,9 @@ function User(props: IProps) {
     <div
       className={clsx(
         'relative',
-        view === 'small' ? 'w-10 h-10' : 'w-16 h-16',
-        'group cursor-pointer'
+        view === 'small' ? 'w-9 h-9' : 'w-16 h-16',
+        'group cursor-pointer rounded-full',
+        subClass
       )}>
       <img
         src={img}
@@ -37,8 +39,8 @@ function User(props: IProps) {
       {isUser ? (
         <div
           className={clsx(
-            'absolute z-10 left-1/2 -bottom-3',
-            'i-flex-center w-5 h-5 p-px transform -translate-x-1/2 border-2 border-white rounded-full',
+            'absolute z-10 left-1/2 -bottom-2.5',
+            'i-flex-center w-4 h-4 p-px -translate-x-1/2 border-2 border-white rounded-full',
             'bg-status-online'
           )}>
           <CheckIcon className={clsx('!w-full !h-full', 'text-white')} />
@@ -57,7 +59,7 @@ function User(props: IProps) {
       <span
         className={clsx(
           'absolute z-10 -right-1.5 -top-1',
-          'i-flex-center transform translate-x-3 text-2xs font-bold px-1.5 min-w-[26px] border-2 border-white rounded-full opacity-0 invisible',
+          'i-flex-center translate-x-3 text-2xs font-bold px-1.5 min-w-[26px] border-2 border-white rounded-full opacity-0 invisible',
           'bg-primary-v1 text-white',
           'transition-all duration-250 ease-out',
           'group-hover:translate-x-1 group-hover:opacity-100 group-hover:visible'
@@ -70,7 +72,7 @@ function User(props: IProps) {
           alt='Border'
           className={clsx(
             'absolute top-1/2 left-1/2',
-            'transform -translate-x-1/2 -translate-y-1/2 scale-125 opacity-50',
+            '-translate-x-1/2 -translate-y-1/2 scale-[1.20] opacity-50',
             'brightness-75',
             'transition-all duration-250 ease-in-out',
             'group-hover:rotate-[-30deg] group-hover:opacity-100'
