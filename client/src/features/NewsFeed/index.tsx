@@ -15,7 +15,7 @@ function NewsFeed() {
     <Meta title='News Feed'>
       <Header />
       {/* <Sidebar /> */}
-      {/* <SidebarSmall /> */}
+      <SidebarSmall />
 
       <main className={clsx('mt-[64px]', 'bg-lt-body dark:bg-dk-body')}>
         <div className={clsx('lg:w-[1184px] px-4 lg:px-0 mx-auto py-10')}>

@@ -15,7 +15,7 @@ import Brightness4Icon from '@mui/icons-material/Brightness4';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
 function HeaderOptions() {
-  const [isSetting, setIsSetting] = useState(true);
+  const [isSetting, setIsSetting] = useState(false);
 
   return (
     <div

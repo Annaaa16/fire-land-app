@@ -55,11 +55,7 @@ function Login() {
             )}
             alt='Label'
           />
-          <h3
-            className={clsx(
-              'font-bold text-2xl',
-              'text-lt-text dark:text-dk-text'
-            )}>
+          <h3 className={clsx('font-bold text-2xl', 'dark:text-white')}>
             Account Login
           </h3>
 

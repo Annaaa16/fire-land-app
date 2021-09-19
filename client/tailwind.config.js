@@ -41,15 +41,14 @@ module.exports = {
           hv: '#4ae95b',
           linear: '#9cec5c',
         },
-        status: {
-          online: '#45bd62',
+        green: {
+          DEFAULT: '#45bd62',
         },
         gray: {
           text: '#65676b',
         },
         lt: {
           body: '#f7f7fa',
-          text: '#3e3f5e',
           line: '#dedeea',
           cpn: '#fff',
           input: '#f2f2f2',
@@ -60,7 +59,6 @@ module.exports = {
         },
         dk: {
           body: '#161b28',
-          text: '#fff',
           line: '#3f485f',
           cpn: '#1d2333',
           input: '#21283b',
