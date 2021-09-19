@@ -24,7 +24,7 @@ function User(props: IProps) {
       className={clsx(
         'relative',
         view === 'small' ? 'w-9 h-9' : 'w-16 h-16',
-        'group rounded-full',
+        'group rounded-full flex-shrink-0',
         'cursor-pointer',
         subClass
       )}>

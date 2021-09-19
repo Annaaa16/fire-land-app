@@ -12,7 +12,7 @@ function ContactFriends() {
           'bg-gray-100 dark:bg-dk-tooltip-hv',
           'cursor-pointer'
         )}>
-        <User view='small' subClass='flex-shrink-0' />
+        <User view='small' />
         <div className={clsx('ml-3 max-w-[60%]')}>
           <span className={clsx('font-bold', 'dark:text-white')}>IG Dev</span>
           <p
@@ -33,7 +33,7 @@ function ContactFriends() {
           'dark:bg-dk-cpn',
           'cursor-pointer'
         )}>
-        <User view='small' subClass='flex-shrink-0' />
+        <User view='small' />
         <div className={clsx('ml-3 max-w-[60%]')}>
           <span className={clsx('font-bold', 'dark:text-white')}>IG Dev</span>
           <p
