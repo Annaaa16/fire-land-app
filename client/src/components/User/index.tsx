@@ -40,7 +40,7 @@ function User(props: IProps) {
         <div
           className={clsx(
             'absolute z-10 left-1/2 -bottom-2.5',
-            'i-flex-center w-4 h-4 p-px -translate-x-1/2 border-2 border-white rounded-full',
+            'i-flex-center w-3.5 h-3.5 p-px -translate-x-1/2 border border-white rounded-full',
             'bg-status-online'
           )}>
           <CheckIcon className={clsx('!w-full !h-full', 'text-white')} />
@@ -59,7 +59,7 @@ function User(props: IProps) {
       <span
         className={clsx(
           'absolute z-10 -right-1.5 -top-1',
-          'i-flex-center translate-x-3 text-2xs font-bold px-1.5 min-w-[26px] border-2 border-white rounded-full opacity-0 invisible',
+          'i-flex-center translate-x-3 text-2xs font-bold px-1.5 h-[17px] min-w-[26px] border-2 border-white rounded-full opacity-0 invisible',
           'bg-primary-v1 text-white',
           'transition-all duration-250 ease-out',
           'group-hover:translate-x-1 group-hover:opacity-100 group-hover:visible'
