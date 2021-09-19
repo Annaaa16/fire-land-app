@@ -37,11 +37,7 @@ function LoginForm() {
                 />
               </div>
             </div>
-            <span
-              className={clsx(
-                'text-xs lg:text-sm',
-                'text-lt-text dark:text-dk-text'
-              )}>
+            <span className={clsx('text-xs lg:text-sm', 'dark:text-white')}>
               Remember Me
             </span>
           </label>

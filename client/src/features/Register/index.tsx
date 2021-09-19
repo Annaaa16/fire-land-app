@@ -54,18 +54,14 @@ function Register() {
           <h3
             className={clsx(
               'font-bold text-xl md:text-2xl',
-              'text-lt-text dark:text-dk-text'
+              'dark:text-white'
             )}>
             Create your Account!
           </h3>
 
           <RegisterForm />
 
-          <p
-            className={clsx(
-              'text-xs mt-10 leading-6',
-              'text-lt-text dark:text-dk-text'
-            )}>
+          <p className={clsx('text-xs mt-10 leading-6', 'dark:text-white')}>
             You'll receive a confirmation email in your inbox with a link to
             activate your account. If you have any problems,{' '}
             <span

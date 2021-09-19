@@ -1,6 +1,6 @@
 // material ui icons
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
-import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import GroupsIcon from '@mui/icons-material/Groups';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import VideoLibraryIcon from '@mui/icons-material/VideoLibrary';
 import ForumIcon from '@mui/icons-material/Forum';
@@ -11,7 +11,7 @@ import TextsmsIcon from '@mui/icons-material/Textsms';
 export const sidebarTooltips = [
   { isActive: true, title: 'Newsfeed', icon: LibraryBooksIcon },
   { isActive: false, title: 'Message', icon: TextsmsIcon },
-  { isActive: false, title: 'Groups', icon: PeopleAltIcon },
+  { isActive: false, title: 'Groups', icon: GroupsIcon },
   { isActive: false, title: 'Members', icon: SupervisorAccountIcon },
   { isActive: false, title: 'Videos', icon: VideoLibraryIcon },
   { isActive: false, title: 'Forums', icon: ForumIcon },

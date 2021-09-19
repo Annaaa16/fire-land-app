@@ -37,7 +37,7 @@ function RegisterForm() {
                 />
               </div>
             </div>
-            <span className={clsx('text-xs', 'text-lt-text dark:text-dk-text')}>
+            <span className={clsx('text-xs', 'dark:text-white')}>
               Send me news and updates via email
             </span>
           </label>

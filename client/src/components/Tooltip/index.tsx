@@ -3,11 +3,12 @@ import clsx from 'clsx';
 
 interface IProps {
   title: string;
-  direction: string;
+  direction?: string;
+  subClass?: string;
 }
 
 function Tooltip(props: IProps) {
-  const { title, direction } = props;
+  const { title, direction, subClass } = props;
 
   return (
     <div
@@ -23,7 +24,8 @@ function Tooltip(props: IProps) {
         'lg:group-hover:opacity-100 lg:group-hover:visible',
         direction === 'rtl'
           ? 'lg:group-hover:translate-x-2'
-          : 'lg:group-hover:translate-y-2'
+          : 'lg:group-hover:translate-y-2',
+        subClass
       )}>
       <span>{title}</span>
     </div>

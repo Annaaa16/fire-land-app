@@ -24,7 +24,8 @@ function User(props: IProps) {
       className={clsx(
         'relative',
         view === 'small' ? 'w-9 h-9' : 'w-16 h-16',
-        'group cursor-pointer rounded-full',
+        'group rounded-full',
+        'cursor-pointer',
         subClass
       )}>
       <img
@@ -41,7 +42,7 @@ function User(props: IProps) {
           className={clsx(
             'absolute z-10 left-1/2 -bottom-2.5',
             'i-flex-center w-3.5 h-3.5 p-px -translate-x-1/2 border border-white rounded-full',
-            'bg-status-online'
+            'bg-green'
           )}>
           <CheckIcon className={clsx('!w-full !h-full', 'text-white')} />
         </div>
@@ -50,7 +51,7 @@ function User(props: IProps) {
           className={clsx(
             'absolute -left-px top-0.5',
             'w-2.5 h-2.5 border-2 border-white rounded-full',
-            'bg-status-online'
+            'bg-green'
           )}>
           .
         </span>

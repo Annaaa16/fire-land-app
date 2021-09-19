@@ -13,7 +13,7 @@ function LoginSocial() {
       <span
         className={clsx(
           'text-center font-bold text-xs lg:text-sm mt-12',
-          'text-lt-text dark:text-dk-text'
+          'dark:text-white'
         )}>
         Login with your Social Account
       </span>

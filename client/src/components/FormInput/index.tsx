@@ -13,7 +13,7 @@ function FormInput(props: IProps) {
       <input
         className={clsx(
           'peer p-4 w-full border border-lt-line dark:border-dk-line focus:border-primary-v1 dark:focus:border-primary-v3 outline-none rounded-lg',
-          'text-lt-text dark:text-dk-text placeholder-transparent bg-transparent',
+          'dark:text-white placeholder-transparent bg-transparent',
           'transition-all'
         )}
         placeholder='placeholder'
