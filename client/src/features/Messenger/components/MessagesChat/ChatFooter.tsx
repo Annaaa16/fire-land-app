@@ -14,8 +14,8 @@ function ChatFooter() {
   return (
     <form
       className={clsx(
-        'sticky bottom-0 left-0 right-0 z-50',
-        'flex items-center justify-between w-full px-1 md:px-3 mt-auto py-2.5 md:py-4 border-t border-lt-line dark:border-dk-line',
+        'fixed bottom-0 left-0 lg:left-[calc(80px+370px)] z-50',
+        'flex items-center justify-between w-full h-[59px] md:h-20 px-1 md:px-3 mt-auto py-2.5 md:py-4 border-t border-lt-line dark:border-dk-line',
         'bg-white dark:bg-dk-cpn'
       )}>
       <ul className={clsx('flex items-center mr-2')}>

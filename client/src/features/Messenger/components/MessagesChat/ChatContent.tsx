@@ -9,7 +9,7 @@ function ChatContent() {
   return (
     <div
       className={clsx(
-        'h-[100vh] pb-20 overflow-y-auto px-5 flex-1',
+        'pt-2 pb-20 overflow-y-auto px-5',
         'bg-lt-body dark:bg-dk-body'
       )}>
       <div className={clsx('flex items-end py-3')}>
