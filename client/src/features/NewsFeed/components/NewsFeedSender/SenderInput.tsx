@@ -12,7 +12,7 @@ function NewsFeedSenderInput() {
   return (
     <div
       className={clsx(
-        'shadow-lg rounded-lg pt-4 px-2 md:px-4',
+        'shadow-md dark:shadow-xl rounded-lg pt-4 px-2 md:px-4',
         'bg-lt-cpn dark:bg-dk-cpn'
       )}>
       <div className={clsx('flex items-center')}>

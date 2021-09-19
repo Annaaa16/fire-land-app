@@ -1,10 +1,16 @@
 // clsx
 import clsx from 'clsx';
 
+import WidgetsSuggest from './WidgetsSuggest';
+import WidgetsGroups from './WidgetsGroups';
+import WidgetsFooter from './WidgetsFooter';
+
 function NewsFeedWidgets() {
   return (
-    <div className={clsx('hidden lg:block', 'bg-yellow-200 flex-1')}>
-      This is widgets!
+    <div className={clsx('hidden lg:block')}>
+      <WidgetsSuggest />
+      <WidgetsGroups />
+      <WidgetsFooter />
     </div>
   );
 }
