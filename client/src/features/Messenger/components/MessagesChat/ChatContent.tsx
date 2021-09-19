@@ -18,13 +18,6 @@ function ChatContent() {
       </div>
       <div className={clsx('ml-auto py-3 justify-end')}>
         <ChatUser />
-        <ChatUser />
-        <ChatUser />
-        <ChatUser />
-        <ChatUser />
-        <ChatUser />
-        <ChatUser />
-        <ChatUser />
       </div>
     </div>
   );

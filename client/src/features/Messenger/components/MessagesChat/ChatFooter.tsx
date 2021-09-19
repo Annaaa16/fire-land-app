@@ -15,7 +15,7 @@ function ChatFooter() {
     <form
       className={clsx(
         'fixed bottom-0 left-0 lg:left-[calc(80px+370px)] right-0 z-50',
-        'flex items-center justify-between w-full h-[59px] md:h-20 px-1 md:px-3 mt-auto py-2.5 md:py-4 border-t border-lt-line dark:border-dk-line',
+        'flex items-center h-[59px] md:h-16 px-1 md:px-3 mt-auto py-2.5 md:py-4 border-t border-lt-line dark:border-dk-line',
         'bg-white dark:bg-dk-cpn'
       )}>
       <ul className={clsx('flex items-center mr-2')}>
@@ -50,13 +50,13 @@ function ChatFooter() {
 
       <div
         className={clsx(
-          'flex items-center justify-between flex-1 mr-1 md:mr-2 pr-3 rounded-full',
+          'flex items-center flex-1 justify-between mr-1 md:mr-2 pr-3 rounded-full',
           'bg-lt-input dark:bg-dk-input'
         )}>
         <input
           placeholder='Aa'
           className={clsx(
-            'flex-1 px-5 py-3 md:py-3 text-xs md:text-sm outline-none rounded-full',
+            'w-full px-5 py-3 md:py-3 text-xs md:text-sm outline-none rounded-full',
             'bg-transparent dark:text-white dark:bg-dk-input'
           )}
         />
