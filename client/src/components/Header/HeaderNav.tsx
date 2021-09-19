@@ -55,7 +55,7 @@ function HeaderNavs() {
           )}>
           <li
             className={clsx(
-              'py-3 px-2 border-b border-primary-v1-text',
+              'py-3 pl-1 pr-3 border-b border-primary-v1-text',
               'transition-all duration-250',
               'hover:text-primary-v2 dark:hover:text-primary-v4'
             )}>
@@ -63,7 +63,7 @@ function HeaderNavs() {
           </li>
           <li
             className={clsx(
-              'py-3 px-2 border-b border-primary-v1-text',
+              'py-3 pl-1 pr-3 border-b border-primary-v1-text',
               'transition-all duration-250',
               'hover:text-primary-v2 dark:hover:text-primary-v4'
             )}>
@@ -71,7 +71,7 @@ function HeaderNavs() {
           </li>
           <li
             className={clsx(
-              'py-3 px-2 border-b border-primary-v1-text',
+              'py-3 pl-1 pr-3 border-b border-primary-v1-text',
               'transition-all duration-250',
               'hover:text-primary-v2 dark:hover:text-primary-v4'
             )}>
@@ -79,7 +79,7 @@ function HeaderNavs() {
           </li>
           <li
             className={clsx(
-              'py-3 px-2',
+              'py-3 pl-1 pr-3',
               'transition-all duration-250',
               'hover:text-primary-v2 dark:hover:text-primary-v4'
             )}>

@@ -24,7 +24,7 @@ function PostComment() {
         <input
           placeholder='Write a comment...'
           className={clsx(
-            'flex-1 pl-4 outline-none py-2.5 text-xs md:tex-sm',
+            'flex-1 pl-4 outline-none py-3 text-xs md:text-sm',
             'dark:text-white bg-transparent'
           )}
         />

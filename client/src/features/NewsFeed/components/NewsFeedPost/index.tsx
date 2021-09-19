@@ -10,7 +10,10 @@ import PostComment from './PostComment';
 function NewsFeedPost() {
   return (
     <div
-      className={clsx('mt-7 rounded-lg shadow-xl', 'bg-white dark:bg-dk-cpn')}>
+      className={clsx(
+        'mt-7 rounded-lg shadow-md dark:shadow-xl',
+        'bg-white dark:bg-dk-cpn'
+      )}>
       <PostHeader />
       <PostContent />
 
