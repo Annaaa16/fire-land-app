@@ -13,8 +13,8 @@ function ChatHeader() {
   return (
     <div
       className={clsx(
-        'relative z-50',
-        'flex items-center justify-between p-4 border-b border-lt-line dark:border-dk-line',
+        'absolute left-0 top-0 right-0 z-50',
+        'flex items-center justify-between w-full p-4 border-b border-lt-line dark:border-dk-line',
         'bg-white dark:bg-dk-cpn'
       )}>
       <div className={clsx('flex items-center ml-1')}>
