@@ -5,7 +5,7 @@ function NewsFeedSender() {
   return (
     <>
       <SenderInput />
-      {/* <SenderArea /> */}
+      <SenderArea />
     </>
   );
 }
