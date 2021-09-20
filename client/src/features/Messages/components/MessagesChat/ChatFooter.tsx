@@ -1,3 +1,8 @@
+import { FormEvent, useState } from 'react';
+
+// socket
+import io from 'socket.io-client';
+
 // clsx
 import clsx from 'clsx';
 
@@ -11,8 +16,27 @@ import SendIcon from '@mui/icons-material/Send';
 import Tooltip from '@/components/Tooltip';
 
 function ChatFooter() {
+  const [inputValue, setInputValue] = useState<string>('');
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!inputValue.trim()) return;
+
+    const socket = io('http://localhost:4000', {
+      withCredentials: true,
+    });
+
+    socket.emit('chat message', inputValue);
+    socket.emit('some event', {
+      someProperty: 'some value',
+      otherProperty: 'other value',
+    });
+  };
+
   return (
     <form
+      onSubmit={handleSubmit}
       className={clsx(
         'fixed bottom-0 left-0 lg:left-[calc(80px+370px)] right-0 z-50',
         'flex items-center h-[59px] md:h-16 px-1 md:px-3 mt-auto py-2.5 md:py-4 border-t border-lt-line dark:border-dk-line',
@@ -54,6 +78,8 @@ function ChatFooter() {
           'bg-lt-input dark:bg-dk-input'
         )}>
         <input
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
           placeholder='Aa'
           className={clsx(
             'w-full px-5 py-3 md:py-3 text-xs md:text-sm outline-none rounded-full',

@@ -1,1 +1,1 @@
-export { default } from '@/features/Messenger';
+export { default } from '@/features/Messages';
