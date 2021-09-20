@@ -1,3 +1,5 @@
+import { ChangeEvent, useRef, useState } from 'react';
+
 // clsx
 import clsx from 'clsx';
 
@@ -15,6 +17,36 @@ import User from '@/components/User';
 import Tooltip from '@/components/Tooltip';
 
 function NewsFeedSenderArea() {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [image, setImage] = useState<string>('');
+  const inputUploadRef = useRef<HTMLInputElement | null>(null);
+
+  const handleSelectImage = () => {
+    const inputUpload = inputUploadRef.current as HTMLInputElement;
+
+    inputUpload.click();
+  };
+
+  const handleUploadImage = async (e: ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    const data = new FormData();
+
+    files && data.append('file', files[0]);
+    data.append('upload_preset', 'fire-chat-app');
+    setLoading(true);
+
+    const response = await fetch(
+      'https://api.cloudinary.com/v1_1/drxhgl7xe/image/upload',
+      {
+        method: 'POST',
+        body: data,
+      }
+    );
+
+    const file = await response.json();
+    console.log(file);
+  };
+
   return (
     <div className={clsx('fixed inset-0 z-50', 'flex px-4 md:px-0')}>
       <div
@@ -116,9 +148,16 @@ function NewsFeedSenderArea() {
               Add to your post
             </span>
             <div className={clsx('flex items-center')}>
+              <input
+                type='file'
+                ref={inputUploadRef}
+                className={clsx('hidden')}
+                onChange={handleUploadImage}
+              />
               <div
                 className={clsx('relative', 'group px-2.5', 'cursor-pointer')}>
                 <PhotoLibraryIcon
+                  onClick={handleSelectImage}
                   className={clsx('!text-2xl', 'text-[#45bd62]')}
                 />
                 <Tooltip title='Photo' direction='ttb' />

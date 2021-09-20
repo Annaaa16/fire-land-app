@@ -24,7 +24,7 @@ function NewsFeedSenderInput() {
             'bg-[#f0f2f5] dark:bg-dk-input dark:text-white',
             'cursor-pointer'
           )}
-          value=''
+          defaultValue=''
         />
       </div>
 
