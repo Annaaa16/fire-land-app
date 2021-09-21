@@ -6,7 +6,7 @@ const { notifyServerError } = require('../utils/serverNotify');
 const {
   ACCESS_TOKEN_SECRET,
   REFRESH_TOKEN_SECRET,
-  ACCESS_TOKEN_LIFE,
+  ACCESS_TOKEN_EXP,
 } = require('../constants');
 
 const authController = {};
@@ -110,16 +110,16 @@ authController.getNewAccessToken = async (req, res) => {
       .json({ success: false, message: 'Refresh token not found' });
   }
 
-  jwt.verify(refreshToken, REFRESH_TOKEN_SECRET, (error, user) => {
+  jwt.verify(refreshToken, REFRESH_TOKEN_SECRET, (error, { userId }) => {
     if (error) {
       return res
         .status(403)
         .json({ success: false, message: 'Invalid refresh token' });
     }
 
-    // Return token after decoded user param
-    const accessToken = jwt.sign({ userId: user._id }, ACCESS_TOKEN_SECRET, {
-      expiresIn: ACCESS_TOKEN_LIFE,
+    // Sign with userId after decoded user param
+    const accessToken = jwt.sign({ userId }, ACCESS_TOKEN_SECRET, {
+      expiresIn: ACCESS_TOKEN_EXP,
     });
 
     res.json({ success: true, accessToken });
