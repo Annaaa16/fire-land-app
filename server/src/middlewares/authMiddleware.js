@@ -12,13 +12,13 @@ const verifyToken = (req, res, next) => {
       .json({ success: false, message: 'Access token not found' });
   }
 
-  jwt.verify(token, ACCESS_TOKEN_SECRET, (error, user) => {
+  jwt.verify(token, ACCESS_TOKEN_SECRET, (error, { userId }) => {
     if (error) {
       return res.status(403).json({ success: false, message: 'Invalid token' });
     }
 
-    // Attach userId to request after decoded user param
-    req.userId = user.id;
+    // Sign with userId after decoded user param
+    req.userId = userId;
 
     next();
   });
