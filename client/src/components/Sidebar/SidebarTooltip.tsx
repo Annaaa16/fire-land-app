@@ -1,13 +1,13 @@
 // clsx
 import clsx from 'clsx';
 
-interface IProps {
+interface SidebarTooltipProps {
   title: string;
   icon: any;
   isActive: boolean;
 }
 
-function SidebarTooltip(props: IProps) {
+function SidebarTooltip(props: SidebarTooltipProps) {
   const { title, isActive, icon: Icon } = props;
 
   const isDark = true;

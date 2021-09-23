@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const User = require('../models/userModel');
-const { notifyServerError } = require('../utils/serverNotify');
+const { notifyServerError } = require('../utils/notifyServer');
 const {
   ACCESS_TOKEN_SECRET,
   REFRESH_TOKEN_SECRET,
@@ -33,8 +33,6 @@ authController.register = async (req, res) => {
 
     const hashedPassword = bcrypt.hashSync(password);
 
-    console.log('hashedPassword', hashedPassword);
-
     const user = new User({
       username,
       password: hashedPassword,
@@ -47,7 +45,6 @@ authController.register = async (req, res) => {
     return res.json({
       success: true,
       message: 'User has been created successfully',
-      user,
     });
   } catch (error) {
     notifyServerError(res, error);

@@ -1,7 +1,7 @@
 const Post = require('../models/postModel');
 const User = require('../models/userModel');
 
-const { notifyServerError } = require('../utils/serverNotify');
+const { notifyServerError } = require('../utils/notifyServer');
 
 const postsController = {};
 

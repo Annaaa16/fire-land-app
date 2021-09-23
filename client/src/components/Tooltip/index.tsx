@@ -1,13 +1,13 @@
 // clsx
 import clsx from 'clsx';
 
-interface IProps {
+interface TooltipProps {
   title: string;
   direction?: string;
   subClass?: string;
 }
 
-function Tooltip(props: IProps) {
+function Tooltip(props: TooltipProps) {
   const { title, direction, subClass } = props;
 
   return (

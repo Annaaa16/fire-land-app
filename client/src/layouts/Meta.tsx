@@ -1,12 +1,12 @@
 import { ReactNode } from 'react';
 import Head from 'next/head';
 
-interface IProps {
+interface MetaProps {
   title: string;
   children: ReactNode;
 }
 
-function Meta(props: IProps) {
+function Meta(props: MetaProps) {
   const { title, children } = props;
 
   return (

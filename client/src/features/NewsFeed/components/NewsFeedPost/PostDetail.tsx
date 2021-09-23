@@ -41,7 +41,7 @@ function PostDetail() {
         <span
           className={clsx(
             'pt-0.5 text-xs md:text-sm',
-            'text-gray-text',
+            'text-gray',
             'cursor-pointer',
             'lg:hover:underline'
           )}>
@@ -52,7 +52,7 @@ function PostDetail() {
         <span
           className={clsx(
             'mr-2 text-xs lg:text-sm',
-            'text-gray-text',
+            'text-gray',
             'cursor-pointer',
             'lg:hover:underline'
           )}>
@@ -61,7 +61,7 @@ function PostDetail() {
         <span
           className={clsx(
             'text-xs lg:text-sm',
-            'text-gray-text',
+            'text-gray',
             'cursor-pointer',
             'lg:hover:underline'
           )}>

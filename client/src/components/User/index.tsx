@@ -7,12 +7,12 @@ import CheckIcon from '@mui/icons-material/Check';
 import borderLtIcon from '@/assets/images/border-lt.png';
 import borderDkIcon from '@/assets/images/border-dk.png';
 
-interface IProps {
+interface UserProps {
   view: string;
   subClass?: string;
 }
 
-function User(props: IProps) {
+function User(props: UserProps) {
   const { view, subClass } = props;
 
   const img = 'https://avatars.dicebear.com/api/micah/uiSvbW.svg';

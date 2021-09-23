@@ -3,18 +3,18 @@ import { ReactNode } from 'react';
 // clsx
 import clsx from 'clsx';
 
-import { sidebarTooltips } from '@/utils/sidebarTooltips';
+import sidebarTooltips from '@/utils/sidebarTooltips';
 
 import User from '../User';
 import SidebarSmallTooltip from './SidebarSmallTooltip';
 
 import icon from '@/assets/svgs/icon.svg';
 
-interface IProps {
+interface SidebarSmallProps {
   isMessenger?: boolean;
 }
 
-function SidebarSmall(props: IProps) {
+function SidebarSmall(props: SidebarSmallProps) {
   const { isMessenger } = props;
 
   return (
