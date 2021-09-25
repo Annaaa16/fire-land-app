@@ -33,13 +33,13 @@ function PostHeader() {
           <span
             className={clsx(
               'text-xs mr-1',
-              'text-gray-text',
+              'text-gray',
               'cursor-pointer',
               'lg:hover:underline'
             )}>
             30m
           </span>
-          <GroupIcon className={clsx('!text-[15px]', 'text-gray-text')} />
+          <GroupIcon className={clsx('!text-[15px]', 'text-gray')} />
         </div>
 
         <div

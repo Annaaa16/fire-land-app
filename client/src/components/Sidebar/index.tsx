@@ -1,7 +1,7 @@
 // clsx
 import clsx from 'clsx';
 
-import { sidebarTooltips } from '@/utils/sidebarTooltips';
+import sidebarTooltips from '@/utils/sidebarTooltips';
 
 import User from '../User';
 import SidebarTooltip from './SidebarTooltip';

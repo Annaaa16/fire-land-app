@@ -30,7 +30,7 @@ function PostActions() {
         <span
           className={clsx(
             'font-bold text-xs md:text-sm',
-            'text-gray-text',
+            'text-gray',
             'transition-all ease-out',
             'dark:group-hover:text-primary-v4'
           )}>
@@ -55,7 +55,7 @@ function PostActions() {
         <span
           className={clsx(
             'font-bold text-xs md:text-sm',
-            'text-gray-text',
+            'text-gray',
             'transition-all ease-out',
             'dark:group-hover:text-primary-v4'
           )}>
@@ -80,7 +80,7 @@ function PostActions() {
         <span
           className={clsx(
             'font-bold text-xs md:text-sm',
-            'text-gray-text',
+            'text-gray',
             'transition-all ease-out',
             'dark:group-hover:text-primary-v4'
           )}>

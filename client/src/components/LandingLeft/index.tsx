@@ -15,7 +15,7 @@ function LandingLeft() {
         loading='lazy'
         className={clsx('w-36 mb-2', 'cursor-pointer select-none')}
       />
-      <p className='hidden lg:block text-white mt-2 leading-6 text-base px-10'>
+      <p className='hidden lg:block text-white mt-2 leading-6 text-sm px-10'>
         The next generation social network & community! Connect with your
         friends and play with our quests and badges gamification system!
       </p>
