@@ -45,7 +45,7 @@ module.exports = {
           DEFAULT: '#45bd62',
         },
         gray: {
-          text: '#65676b',
+          DEFAULT: '#65676b',
         },
         lt: {
           body: '#f7f7fa',
