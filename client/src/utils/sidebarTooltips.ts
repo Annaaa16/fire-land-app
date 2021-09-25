@@ -8,7 +8,7 @@ import EventNoteIcon from '@mui/icons-material/EventNote';
 import StoreIcon from '@mui/icons-material/Store';
 import TextsmsIcon from '@mui/icons-material/Textsms';
 
-export const sidebarTooltips = [
+const sidebarTooltips = [
   { isActive: true, title: 'Newsfeed', icon: LibraryBooksIcon },
   { isActive: false, title: 'Message', icon: TextsmsIcon },
   { isActive: false, title: 'Groups', icon: GroupsIcon },
@@ -18,3 +18,5 @@ export const sidebarTooltips = [
   { isActive: false, title: 'Todos', icon: EventNoteIcon },
   { isActive: false, title: 'Marketplace', icon: StoreIcon },
 ];
+
+export default sidebarTooltips;

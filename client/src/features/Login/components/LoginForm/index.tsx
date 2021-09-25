@@ -2,17 +2,51 @@
 import clsx from 'clsx';
 
 // material ui icons
-// import DoneIcon from '@mui/icons-material/Done';
 import DoneIcon from '@mui/icons-material/Done';
 
-import FormInput from '@/components/FormInput';
+// react hook form
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 
+// types
+import FormInput from '@/components/FormInput';
+import { LoginFormData } from '@/types/login';
+
+import useMyDispatch from '@/hooks/useMyDispatch';
+import { loginUser } from '@/redux/actions/auth';
+import { formLoginSchema } from '@/utils/formSchemas';
 function LoginForm() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(formLoginSchema),
+  });
+
+  const dispatch = useMyDispatch();
+
+  const handleOnSubmit = (data: LoginFormData) => {
+    dispatch(loginUser(data));
+  };
+
   return (
-    <form className={clsx('mt-4 lg:mt-10 w-full')}>
+    <form
+      onSubmit={handleSubmit(handleOnSubmit)}
+      className={clsx('mt-4 w-full')}>
       <div className={clsx('relative')}>
-        <FormInput field='Username' />
-        <FormInput field='Password' />
+        <FormInput
+          name='username'
+          register={register}
+          errors={errors}
+          field='Username'
+        />
+        <FormInput
+          name='password'
+          register={register}
+          errors={errors}
+          field='Password'
+        />
       </div>
 
       <div className={clsx('flex justify-between items-center mt-7')}>

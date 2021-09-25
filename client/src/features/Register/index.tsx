@@ -1,3 +1,5 @@
+import { useRouter } from 'next/dist/client/router';
+
 // clsx
 import clsx from 'clsx';
 
@@ -17,6 +19,12 @@ import styles from './styles.module.scss';
 
 function Register() {
   const isDark = true;
+
+  const router = useRouter();
+
+  const moveToLogin = () => {
+    router.push('/login');
+  };
 
   return (
     <Meta title='Register'>
@@ -43,7 +51,7 @@ function Register() {
         <div
           className={clsx(
             'relative',
-            'i-flex-center flex-col w-full md:w-[424px] lg:w-[484px] lg:h-[625px] mr-auto lg:mr-0 ml-auto lg:my-auto pt-12 pb-6 md:pb-8 px-5 md:px-10 lg:px-16 lg:py-16 rounded-lg shadow-lg',
+            'i-flex-center flex-col w-full md:w-[424px] lg:w-[484px] mr-auto lg:mr-0 ml-auto lg:my-auto pt-12 pb-6 md:pb-8 px-5 md:px-10 lg:px-16 lg:py-16 rounded-lg shadow-lg',
             'bg-lt-cpn dark:bg-dk-cpn'
           )}>
           <img
@@ -62,6 +70,7 @@ function Register() {
           <p className={clsx('text-xs mt-8 leading-6', 'dark:text-white')}>
             Already have an account? {''}
             <span
+              onClick={moveToLogin}
               className={clsx(
                 'font-bold',
                 'text-primary-v2 dark:text-primary-v4',

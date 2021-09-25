@@ -1,3 +1,5 @@
+import { useRouter } from 'next/dist/client/router';
+
 // clsx
 import clsx from 'clsx';
 
@@ -18,6 +20,12 @@ import styles from './styles.module.scss';
 
 function Login() {
   const isDark = true;
+
+  const router = useRouter();
+
+  const moveToRegister = () => {
+    router.push('/register');
+  };
 
   return (
     <Meta title='Login'>
@@ -62,6 +70,7 @@ function Login() {
           <p className={clsx('text-xs mt-8 leading-6', 'dark:text-white')}>
             Don't have an account? {''}
             <span
+              onClick={moveToRegister}
               className={clsx(
                 'font-bold',
                 'text-primary-v2 dark:text-primary-v4',
