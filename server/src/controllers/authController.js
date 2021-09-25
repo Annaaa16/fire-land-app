@@ -85,10 +85,16 @@ authController.login = async (req, res) => {
     });
     const refreshToken = jwt.sign({ userId: user._id }, REFRESH_TOKEN_SECRET);
 
+    const filteredUser = {
+      _id: user._id,
+      username: user.username,
+      avatar: user.avatar,
+    };
+
     return res.json({
       success: true,
       message: 'User has successfully logged in',
-      username,
+      user: filteredUser,
       accessToken,
       refreshToken,
     });
