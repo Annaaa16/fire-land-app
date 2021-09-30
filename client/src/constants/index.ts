@@ -4,3 +4,5 @@ export const AVATAR_URL = 'https://avatars.dicebear.com/api';
 
 export const CLOUDINARY_PREFIX =
   'https://res.cloudinary.com/drxhgl7xe/image/upload';
+
+export const LIMIT_POSTS = 5;

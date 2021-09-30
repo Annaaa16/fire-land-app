@@ -7,8 +7,8 @@ import clsx from 'clsx';
 import { UseFormRegister } from 'react-hook-form';
 
 // types
-import { LoginFormData } from '@/types/login';
-import { RegisterFormData } from '@/types/register';
+import { LoginFormData } from '@/models/login';
+import { RegisterFormData } from '@/models/register';
 
 import { authState$ } from '@/redux/selectors';
 import { clearMessage } from '@/redux/slices/authSlice';

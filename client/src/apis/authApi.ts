@@ -1,8 +1,8 @@
 import { axiosClient } from './axiosClient';
 
 // types
-import { LoginFormData } from '@/types/login';
-import { RegisterFormData } from '@/types/register';
+import { LoginFormData } from '@/models/login';
+import { RegisterFormData } from '@/models/register';
 import { AxiosError } from 'axios';
 
 import notifyServerError from '@/helpers/notifyServerError';

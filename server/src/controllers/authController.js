@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const User = require('../models/userModel');
-const { notifyServerError } = require('../utils/notifyServer');
+const { notifyServerError } = require('../helpers/notifyServer');
 const {
   ACCESS_TOKEN_SECRET,
   REFRESH_TOKEN_SECRET,
@@ -103,7 +103,7 @@ authController.login = async (req, res) => {
   }
 };
 
-authController.getNewAccessToken = async (req, res) => {
+authController.getAccessToken = async (req, res) => {
   const { refreshToken } = req.body;
 
   // Empty refresh token

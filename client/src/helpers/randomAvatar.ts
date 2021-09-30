@@ -18,9 +18,11 @@ const avatarList = [
 ];
 
 const randomAvatar = () => {
-  const avatar = avatarList[Math.floor(Math.random() * avatarList.length)];
+  const idx = Math.floor(Math.random() * avatarList.length);
+  const avatar = avatarList[idx];
+  const seed = nanoid(6);
 
-  const avatarUrl = `${AVATAR_URL}/${avatar}/${nanoid(6)}.svg`;
+  const avatarUrl = `${AVATAR_URL}/${avatar}/${seed}.svg`;
 
   return avatarUrl;
 };

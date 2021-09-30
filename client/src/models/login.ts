@@ -1,3 +1,6 @@
+// types
+import { User } from './common';
+
 export interface LoginFormData {
   username: string;
   password: string;
@@ -6,11 +9,7 @@ export interface LoginFormData {
 export interface LoginResponse {
   success: boolean;
   message: string;
-  user: {
-    readonly _id: string;
-    username: string;
-    avatar: string;
-  };
+  user: User;
   accessToken: string;
   refreshToken: string;
 }

@@ -14,7 +14,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 // types
-import { RegisterFormData } from '@/types/register';
+import { RegisterFormData } from '@/models/register';
 
 import { formRegisterSchema } from '@/utils/formSchemas';
 import { registerUser } from '@/redux/actions/auth';

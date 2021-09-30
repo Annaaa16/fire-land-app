@@ -16,12 +16,15 @@ const postSchema = Schema(
       type: Number,
       default: 0,
     },
-    attachment: {
+    photo: {
+      type: String,
+    },
+    photoId: {
       type: String,
     },
     createdAt: {
       type: Date,
-      default: Date.now(),
+      default: Date.now,
     },
   },
   { timestamps: true }

@@ -6,3 +6,10 @@ exports.MONGO_URI = `mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.M
 
 exports.ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
 exports.REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET;
+
+exports.CLOUDINARY = {
+  NAME: process.env.CLOUDINARY_NAME,
+  API_KEY: process.env.CLOUDINARY_API_KEY,
+  SECRET: process.env.CLOUDINARY_SECRET,
+  PATH_UPLOAD: 'fire-chat-app/userUpload',
+};

@@ -9,13 +9,14 @@ import borderDkIcon from '@/assets/images/border-dk.png';
 
 interface UserProps {
   view: string;
+  avatar?: string;
   subClass?: string;
 }
 
 function User(props: UserProps) {
-  const { view, subClass } = props;
+  const { view, avatar, subClass } = props;
 
-  const img = 'https://avatars.dicebear.com/api/micah/uiSvbW.svg';
+  const img = avatar || 'https://avatars.dicebear.com/api/micah/uiSvbW.svg';
   const isUser = true;
   const isDark = false;
 
@@ -73,7 +74,7 @@ function User(props: UserProps) {
           alt='Border'
           className={clsx(
             'absolute top-1/2 left-1/2',
-            '-translate-x-1/2 -translate-y-1/2 scale-[1.20] opacity-50',
+            '-translate-x-1/2 -translate-y-1/2 scale-[1.2] opacity-50',
             'brightness-75',
             'transition-all duration-250 ease-in-out',
             'group-hover:rotate-[-30deg] group-hover:opacity-100'
