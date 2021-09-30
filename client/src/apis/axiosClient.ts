@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import queryString from 'query-string';
+
 import { API_URL } from '@/constants';
 
 export const axiosClient = axios.create({
@@ -7,4 +9,5 @@ export const axiosClient = axios.create({
   headers: {
     'content-type': 'application/json',
   },
+  paramsSerializer: (params) => queryString.stringify(params),
 });

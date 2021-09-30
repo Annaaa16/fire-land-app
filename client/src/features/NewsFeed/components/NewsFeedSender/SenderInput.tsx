@@ -1,3 +1,6 @@
+import { useContext } from 'react';
+import { useSelector } from 'react-redux';
+
 // clsx
 import clsx from 'clsx';
 
@@ -6,9 +9,20 @@ import VideoCallIcon from '@mui/icons-material/VideoCall';
 import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary';
 import SentimentVerySatisfiedIcon from '@mui/icons-material/SentimentVerySatisfied';
 
+import { authState$ } from '@/redux/selectors';
+import { GlobalContext } from '@/contexts/GlobalContext';
+
 import User from '@/components/User';
 
 function NewsFeedSenderInput() {
+  const { avatar } = useSelector(authState$).currentUser;
+
+  const { toggleSenderArea } = useContext(GlobalContext);
+
+  const openSenderArea = () => {
+    toggleSenderArea(true);
+  };
+
   return (
     <div
       className={clsx(
@@ -16,8 +30,9 @@ function NewsFeedSenderInput() {
         'bg-lt-cpn dark:bg-dk-cpn'
       )}>
       <div className={clsx('flex items-center')}>
-        <User view='small' subClass={clsx('ml-1 md:ml-0')} />
+        <User view='small' avatar={avatar} subClass={clsx('ml-1 md:ml-0')} />
         <input
+          onClick={openSenderArea}
           placeholder={`What's on your mind, IG Dev`}
           className={clsx(
             'flex-1 h-full ml-3 md:ml-4 rounded-full text-xs md:text-sm outline-none px-4 py-3',
@@ -25,6 +40,7 @@ function NewsFeedSenderInput() {
             'cursor-pointer'
           )}
           defaultValue=''
+          readOnly
         />
       </div>
 
@@ -35,7 +51,7 @@ function NewsFeedSenderInput() {
         <li
           className={clsx(
             'hidden md:i-flex-center flex-1 py-2.5 rounded-lg',
-            'cursor-pointer',
+            'cursor-pointer select-none',
             'transition-all ease-out',
             'lg:hover:bg-lt-input lg:dark:hover:bg-dk-tooltip-hv'
           )}>
@@ -47,7 +63,7 @@ function NewsFeedSenderInput() {
         <li
           className={clsx(
             'i-flex-center flex-1 py-2.5 rounded-lg',
-            'cursor-pointer',
+            'cursor-pointer select-none',
             'transition-all ease-out',
             'lg:hover:bg-lt-input lg:dark:hover:bg-dk-tooltip-hv'
           )}>
@@ -62,7 +78,7 @@ function NewsFeedSenderInput() {
         <li
           className={clsx(
             'i-flex-center flex-1 py-2.5 rounded-lg',
-            'cursor-pointer',
+            'cursor-pointer select-none',
             'transition-all ease-out',
             'lg:hover:bg-lt-input lg:dark:hover:bg-dk-tooltip-hv'
           )}>

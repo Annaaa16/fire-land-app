@@ -1,4 +1,5 @@
-import { ChangeEvent, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 // clsx
 import clsx from 'clsx';
@@ -13,43 +14,72 @@ import FlagIcon from '@mui/icons-material/Flag';
 import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
 import CloseIcon from '@mui/icons-material/Close';
 
+// types
+import { Post } from '@/models/common';
+
+import { authState$, postsState$ } from '@/redux/selectors';
+import { createPost, updatePost } from '@/redux/actions/posts';
+import { GlobalContext } from '@/contexts/GlobalContext';
+import { setUpdatePost } from '@/redux/slices/postsSlice';
+import useMyDispatch from '@/hooks/useMyDispatch';
+
 import User from '@/components/User';
 import Tooltip from '@/components/Tooltip';
 
 function NewsFeedSenderArea() {
-  const [loading, setLoading] = useState<boolean>(false);
-  const [image, setImage] = useState<string>('');
-  const inputUploadRef = useRef<HTMLInputElement | null>(null);
+  const { isShowSenderArea, toggleSenderArea } = useContext(GlobalContext);
+  const { updatePost: post } = useSelector(postsState$);
+  const { avatar } = useSelector(authState$).currentUser;
 
-  const handleSelectImage = () => {
-    const inputUpload = inputUploadRef.current as HTMLInputElement;
+  const [file, setFile] = useState<File>();
+  const [content, setContent] = useState<string>(post?.content || '');
 
-    inputUpload.click();
+  const inputUploadRef = useRef<HTMLInputElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const dispatch = useMyDispatch();
+
+  const closeSenderArea = () => {
+    toggleSenderArea(false);
+    dispatch(setUpdatePost(null));
   };
 
-  const handleUploadImage = async (e: ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    const data = new FormData();
+  const handleSubmitPost = () => {
+    if (!content) return;
 
-    files && data.append('file', files[0]);
-    data.append('upload_preset', 'fire-chat-app');
-    setLoading(true);
+    const formData = new FormData();
 
-    const response = await fetch(
-      'https://api.cloudinary.com/v1_1/drxhgl7xe/image/upload',
-      {
-        method: 'POST',
-        body: data,
-      }
-    );
+    formData.append('content', content);
+    formData.append('file', file as Blob);
 
-    const file = await response.json();
-    console.log(file);
+    dispatch(createPost.request(formData));
+    toggleSenderArea(false);
   };
+
+  const handleUpdatePost = () => {
+    if (!content) return;
+
+    const formData = new FormData();
+    const { id, photoId } = post as Post;
+
+    formData.append('content', content);
+    formData.append('photoId', photoId);
+    formData.append('file', file as Blob);
+
+    dispatch(updatePost.request({ id, updateData: formData }));
+    toggleSenderArea(false);
+  };
+
+  // Set cursor focus at last letter
+  useEffect(() => {
+    textareaRef.current?.focus();
+    textareaRef.current?.setSelectionRange(content.length, content.length);
+  }, [isShowSenderArea, content]);
 
   return (
     <div className={clsx('fixed inset-0 z-50', 'flex px-4 md:px-0')}>
       <div
+        onClick={closeSenderArea}
         className={clsx(
           'absolute inset-0',
           'w-full h-full',
@@ -71,6 +101,7 @@ function NewsFeedSenderArea() {
             Create Post
           </h2>
           <div
+            onClick={closeSenderArea}
             className={clsx(
               'absolute top-1/2 right-4',
               'rounded-full p-2 -translate-y-1/2',
@@ -82,9 +113,10 @@ function NewsFeedSenderArea() {
             <CloseIcon className={clsx('dark:text-gray-400')} />
           </div>
         </div>
+
         <div className={clsx('p-3')}>
           <div className={clsx('flex items-center mt-2 ml-2')}>
-            <User view='small' />
+            <User view='small' avatar={avatar} />
             <div className={clsx('ml-5')}>
               <span className={clsx('font-bold', 'dark:text-white')}>
                 IG Dev
@@ -110,13 +142,17 @@ function NewsFeedSenderArea() {
               </div>
             </div>
           </div>
+
           <div className={clsx('relative')}>
             <textarea
+              ref={textareaRef}
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
               className={clsx(
                 'h-40 w-full pt-8 outline-none resize-none',
                 'dark:bg-dk-cpn dark:text-white'
               )}
-              placeholder='What"s on your mind, IG Dev?'
+              placeholder={'What"s on your mind, IG Dev?'}
             />
             <div
               className={clsx(
@@ -135,6 +171,7 @@ function NewsFeedSenderArea() {
               <Tooltip title='Emoji' direction='ttb' />
             </div>
           </div>
+
           <div
             className={clsx(
               'flex items-center justify-center md:justify-between px-4 py-3 rounded-full border border-lt-line dark:border-dk-line'
@@ -150,14 +187,15 @@ function NewsFeedSenderArea() {
             <div className={clsx('flex items-center')}>
               <input
                 type='file'
+                name='attachment'
                 ref={inputUploadRef}
                 className={clsx('hidden')}
-                onChange={handleUploadImage}
+                onChange={(e) => setFile(e.target.files?.[0])}
               />
               <div
                 className={clsx('relative', 'group px-2.5', 'cursor-pointer')}>
                 <PhotoLibraryIcon
-                  onClick={handleSelectImage}
+                  onClick={() => textareaRef.current?.click()}
                   className={clsx('!text-2xl', 'text-[#45bd62]')}
                 />
                 <Tooltip title='Photo' direction='ttb' />
@@ -190,14 +228,16 @@ function NewsFeedSenderArea() {
               </div>
             </div>
           </div>
+
           <button
+            onClick={post ? handleUpdatePost : handleSubmitPost}
             className={clsx(
               'mt-4 py-3.5 w-full font-bold rounded-lg',
               'text-white bg-primary-v1 dark:bg-primary-v3',
               'transition-all',
               'hover:bg-primary-v1-hv dark:hover:bg-primary-v3-hv'
             )}>
-            Post
+            {post ? 'Update' : 'Post'}
           </button>
         </div>
       </div>

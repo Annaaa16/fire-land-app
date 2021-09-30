@@ -1,8 +1,15 @@
+import Image from 'next/image';
+
 // clsx
 import clsx from 'clsx';
 
-function PostContent() {
-  const img = 'https://odindesignthemes.com/vikinger/img/cover/04.jpg';
+interface PostContentProps {
+  content: string;
+  photo: string;
+}
+
+function PostContent(props: PostContentProps) {
+  const { content, photo } = props;
 
   return (
     <>
@@ -11,17 +18,20 @@ function PostContent() {
           'px-2 mt-3 mb-4 md:px-4 text-xs md:text-sm leading-5',
           'dark:text-white'
         )}>
-        Mấy ai còn nhớ đồ dùng cổ này nữa không a 😂😂 Mấy ai còn nhớ đồ dùng cổ
-        này nữa không a 😂😂
+        {content}
       </p>
-
-      <div className={clsx('h-[500px]')}>
-        <img
-          src={img}
-          alt='Post'
-          className={clsx('w-full h-full object-cover')}
-        />
-      </div>
+      {photo && (
+        <div
+          className={clsx('relative', 'h-[300px] lg:h-[500px]', 'bg-gray-100')}>
+          <Image
+            src={photo}
+            layout='fill'
+            objectFit='contain'
+            alt='Post thumb'
+            className={clsx('w-full h-full object-cover')}
+          />
+        </div>
+      )}
     </>
   );
 }

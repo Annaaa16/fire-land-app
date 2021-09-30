@@ -1,21 +1,26 @@
 // clsx
 import clsx from 'clsx';
 
+// types
+import { Post } from '@/models/common';
+
 import PostHeader from './PostHeader';
 import PostContent from './PostContent';
 import PostActions from './PostActions';
 import PostDetail from './PostDetail';
 import PostComment from './PostComment';
 
-function NewsFeedPost() {
+function NewsFeedPost(props: Post) {
+  const { id, content, photo } = props;
+
   return (
     <div
       className={clsx(
         'mt-7 rounded-lg shadow-md dark:shadow-xl',
         'bg-white dark:bg-dk-cpn'
       )}>
-      <PostHeader />
-      <PostContent />
+      <PostHeader postId={id} />
+      <PostContent content={content} photo={photo} />
 
       <div className={clsx('px-2 md:px-4 pt-3.5 pb-2')}>
         <PostDetail />
