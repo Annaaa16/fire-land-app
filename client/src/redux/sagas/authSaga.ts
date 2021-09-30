@@ -2,9 +2,9 @@ import { PayloadAction } from '@reduxjs/toolkit';
 import { call, put, takeLatest } from 'redux-saga/effects';
 
 // types
-import { LoginFormData, LoginResponse } from '@/types/login';
-import { RegisterResponse } from '@/types/register';
-import { RegisterFormData } from '@/types/register';
+import { LoginFormData, LoginResponse } from '@/models/login';
+import { RegisterResponse } from '@/models/register';
+import { RegisterFormData } from '@/models/register';
 import { AxiosResponse } from 'axios';
 
 import { reqLoginUser, reqRegisterUser } from '@/apis/authApi';

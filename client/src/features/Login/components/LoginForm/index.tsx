@@ -10,7 +10,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 // types
 import FormInput from '@/components/FormInput';
-import { LoginFormData } from '@/types/login';
+import { LoginFormData } from '@/models/login';
 
 import useMyDispatch from '@/hooks/useMyDispatch';
 import { loginUser } from '@/redux/actions/auth';

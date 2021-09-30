@@ -2,10 +2,10 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 // types
 import { AuthInitState } from '../types/auth';
-import { LoginResponse } from '@/types/login';
-import { RegisterResponse } from '@/types/register';
+import { LoginResponse } from '@/models/login';
+import { RegisterResponse } from '@/models/register';
 
-const initialState: AuthInitState = {
+export const initialState: AuthInitState = {
   currentUser: {
     id: '',
     username: '',
