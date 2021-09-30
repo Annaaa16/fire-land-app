@@ -2,32 +2,38 @@ const express = require('express');
 
 const postsController = require('../controllers/postsController');
 const verifyToken = require('../middlewares/authMiddleware');
+const upload = require('../middlewares/uploadMiddleware');
 
 const router = express.Router();
 
 // @route POST /api/posts
 // @desc Create new post
 // @access Private
-router.post('/', verifyToken, postsController.createPost);
+router.post(
+  '/',
+  // verifyToken,
+  upload.single('file'),
+  postsController.createPost
+);
 
 // @route GET /api/posts
 // @desc Get all posts or limit posts
 // @access Private
-router.get('/', verifyToken, postsController.getPosts);
+router.get('/', postsController.getPosts);
 
 // @route PUT /api/posts/:id
 // @desc Update post
 // @access Private
-router.put('/:id', verifyToken, postsController.updatePost);
+router.put('/:id', upload.single('file'), postsController.updatePost);
 
 // @route DELETE /api/posts/:id
 // @desc Delete post
 // @access Private
-router.delete('/:id', verifyToken, postsController.deletePost);
+router.delete('/:id', postsController.deletePost);
 
 // @route PATCH /api/posts/:id
 // @desc Like post
 // @access Private
-router.patch('/:id', verifyToken, postsController.likePost);
+router.patch('/:id', postsController.likePost);
 
 module.exports = router;

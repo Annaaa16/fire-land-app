@@ -17,6 +17,6 @@ router.post('/login', authController.login);
 // @route POST api/auth/token
 // @desc Generate new access token
 // @access Public
-router.post('/token', authController.getNewAccessToken);
+router.post('/token', authController.getAccessToken);
 
 module.exports = router;
