@@ -14,6 +14,12 @@ import FlagIcon from '@mui/icons-material/Flag';
 import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
 import CloseIcon from '@mui/icons-material/Close';
 
+// react dropzone
+import { useDropzone } from 'react-dropzone';
+
+// react overlayscrollbars
+import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
+
 // types
 import { Post } from '@/models/common';
 
@@ -22,21 +28,25 @@ import { createPost, updatePost } from '@/redux/actions/posts';
 import { GlobalContext } from '@/contexts/GlobalContext';
 import { setUpdatePost } from '@/redux/slices/postsSlice';
 import useMyDispatch from '@/hooks/useMyDispatch';
+import useDetectKeydown from '@/hooks/useDetectKeydown';
 
 import User from '@/components/User';
 import Tooltip from '@/components/Tooltip';
+import SenderAreaPhoto from './SenderAreaPhoto';
 
 function NewsFeedSenderArea() {
   const { isShowSenderArea, toggleSenderArea } = useContext(GlobalContext);
   const { updatePost: post } = useSelector(postsState$);
   const { avatar } = useSelector(authState$).currentUser;
 
-  const [file, setFile] = useState<File>();
+  const [isAddPhoto, setIsAddPhoto] = useState<boolean>(false);
+  const [file, setFile] = useState<File | Object>({});
+  const [preview, setPreview] = useState<string>('');
   const [content, setContent] = useState<string>(post?.content || '');
 
-  const inputUploadRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
+  const { textareaRows, handleTextareaRows } = useDetectKeydown();
   const dispatch = useMyDispatch();
 
   const closeSenderArea = () => {
@@ -74,7 +84,23 @@ function NewsFeedSenderArea() {
   useEffect(() => {
     textareaRef.current?.focus();
     textareaRef.current?.setSelectionRange(content.length, content.length);
-  }, [isShowSenderArea, content]);
+  }, [isShowSenderArea, content, isAddPhoto]);
+
+  const { getRootProps, getInputProps } = useDropzone({
+    accept: 'image/*',
+    onDrop: ([file]) => {
+      setFile(file);
+      setPreview(URL.createObjectURL(file));
+    },
+  });
+
+  // Make sure to revoke the data uris to avoid memory leaks
+  useEffect(
+    () => () => {
+      URL.revokeObjectURL(preview);
+    },
+    [preview]
+  );
 
   return (
     <div className={clsx('fixed inset-0 z-50', 'flex px-4 md:px-0')}>
@@ -89,7 +115,7 @@ function NewsFeedSenderArea() {
       <div
         className={clsx(
           'relative',
-          'm-auto w-[500px] h-auto rounded-xl shadow-lg',
+          'm-auto w-[500px] rounded-xl shadow-lg',
           'bg-white dark:bg-dk-cpn'
         )}>
         <div className={clsx('relative')}>
@@ -114,7 +140,7 @@ function NewsFeedSenderArea() {
           </div>
         </div>
 
-        <div className={clsx('p-3')}>
+        <div className={clsx('relative', 'p-3')}>
           <div className={clsx('flex items-center mt-2 ml-2')}>
             <User view='small' avatar={avatar} />
             <div className={clsx('ml-5')}>
@@ -143,26 +169,43 @@ function NewsFeedSenderArea() {
             </div>
           </div>
 
-          <div className={clsx('relative')}>
+          <OverlayScrollbarsComponent
+            options={{ scrollbars: { autoHide: 'scroll' } }}
+            className={clsx(isAddPhoto ? 'max-h-100' : 'max-h-60')}>
             <textarea
+              onKeyDown={handleTextareaRows}
               ref={textareaRef}
               value={content}
               onChange={(e) => setContent(e.target.value)}
+              rows={isAddPhoto ? textareaRows : textareaRows + 3}
               className={clsx(
-                'h-40 w-full pt-8 outline-none resize-none',
+                'w-full pt-8 leading-4 outline-none resize-none overflow-y-hidden',
                 'dark:bg-dk-cpn dark:text-white'
               )}
-              placeholder={'What"s on your mind, IG Dev?'}
+              placeholder={"What's on your mind, IG Dev?"}
             />
-            <div
-              className={clsx(
-                'absolute bottom-3 right-2',
-                'group',
-                'cursor-pointer'
-              )}>
+            {isAddPhoto && (
+              <div className={clsx('mb-4')}>
+                <SenderAreaPhoto
+                  preview={preview}
+                  setPreview={setPreview}
+                  setIsAddPhoto={setIsAddPhoto}
+                  getRootProps={getRootProps}
+                  getInputProps={getInputProps}
+                />
+              </div>
+            )}
+          </OverlayScrollbarsComponent>
+
+          <div
+            className={clsx(
+              'absolute right-5',
+              isAddPhoto ? 'top-[82px]' : 'bottom-32'
+            )}>
+            <div className={clsx('group', 'cursor-pointer')}>
               <SentimentSatisfiedIcon
-                fontSize='large'
                 className={clsx(
+                  '!text-[28px]',
                   'text-gray-300 dark:text-gray-300 lg:dark:text-gray-500',
                   '!transition-all',
                   'hover:text-gray-400 dark:hover:text-white'
@@ -184,49 +227,42 @@ function NewsFeedSenderArea() {
               )}>
               Add to your post
             </span>
-            <div className={clsx('flex items-center')}>
-              <input
-                type='file'
-                name='attachment'
-                ref={inputUploadRef}
-                className={clsx('hidden')}
-                onChange={(e) => setFile(e.target.files?.[0])}
-              />
-              <div
+            <ul className={clsx('flex items-center')}>
+              <li
+                onClick={() => setIsAddPhoto(!isAddPhoto)}
                 className={clsx('relative', 'group px-2.5', 'cursor-pointer')}>
                 <PhotoLibraryIcon
-                  onClick={() => textareaRef.current?.click()}
                   className={clsx('!text-2xl', 'text-[#45bd62]')}
                 />
                 <Tooltip title='Photo' direction='ttb' />
-              </div>
-              <div
+              </li>
+              <li
                 className={clsx('relative', 'group px-2.5', 'cursor-pointer')}>
                 <PersonAddIcon
                   className={clsx('!text-2xl', 'text-[#1877f2]')}
                 />
                 <Tooltip title='Tag People' direction='ttb' />
-              </div>
-              <div
+              </li>
+              <li
                 className={clsx('relative', 'group px-2.5', 'cursor-pointer')}>
                 <SentimentVerySatisfiedIcon
                   className={clsx('!text-2xl', 'text-[#f7b928]')}
                 />
                 <Tooltip title='Feeling' direction='ttb' />
-              </div>
-              <div
+              </li>
+              <li
                 className={clsx('relative', 'group px-2.5', 'cursor-pointer')}>
                 <EditLocationAltIcon
                   className={clsx('!text-2xl', 'text-[#f5533d]')}
                 />
                 <Tooltip title='Check In' direction='ttb' />
-              </div>
-              <div
+              </li>
+              <li
                 className={clsx('relative', 'group px-2.5', 'cursor-pointer')}>
                 <FlagIcon className={clsx('!text-2xl', 'text-[#39afd5]')} />
                 <Tooltip title='Life Event' direction='ttb' />
-              </div>
-            </div>
+              </li>
+            </ul>
           </div>
 
           <button
