@@ -105,8 +105,8 @@ postsController.getPosts = async (req, res) => {
 
     // Rename Mongo id
     const editedPosts = posts.map((post) => {
-      const { _id: id, ...others } = post;
-
+      const { _id: id, user, ...others } = post;
+      // FIX ID USER RESPONSE
       return { id, ...others };
     });
 
@@ -123,7 +123,7 @@ postsController.getPosts = async (req, res) => {
 };
 
 postsController.updatePost = async (req, res) => {
-  let { content, photoId } = req.body;
+  let { content, photo: photoUrl, photoId } = req.body;
 
   let photo = req.file?.path; // Read photo file path from client
 
@@ -136,7 +136,7 @@ postsController.updatePost = async (req, res) => {
 
   try {
     // Replace photo
-    if (photoId) {
+    if (photo && photoId) {
       const { secure_url, public_id } = await cloudinary.uploader.upload(
         photo,
         {
@@ -167,7 +167,7 @@ postsController.updatePost = async (req, res) => {
 
     const post = {
       content,
-      photo,
+      photo: photo || photoUrl, // New photo or old photo
       photoId,
     };
     const updateCondition = { _id: req.params.id, user: req.userId };

@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const User = require('../models/userModel');
+
 const { notifyServerError } = require('../helpers/notifyServer');
 const {
   ACCESS_TOKEN_SECRET,
@@ -81,7 +82,7 @@ authController.login = async (req, res) => {
     }
 
     const accessToken = jwt.sign({ userId: user._id }, ACCESS_TOKEN_SECRET, {
-      expiresIn: 3000000,
+      expiresIn: ACCESS_TOKEN_EXP,
     });
     const refreshToken = jwt.sign({ userId: user._id }, REFRESH_TOKEN_SECRET);
 
@@ -97,6 +98,26 @@ authController.login = async (req, res) => {
       user: filteredUser,
       accessToken,
       refreshToken,
+    });
+  } catch (error) {
+    notifyServerError(res, error);
+  }
+};
+
+authController.getCurrentUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.userId).select('-password');
+
+    if (!user) {
+      return res
+        .status(400)
+        .json({ success: false, message: 'User not found' });
+    }
+
+    res.json({
+      success: true,
+      message: 'User has successfully logged in',
+      user,
     });
   } catch (error) {
     notifyServerError(res, error);
