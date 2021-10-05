@@ -7,9 +7,12 @@ import { RegisterResponse } from '@/models/register';
 import { RegisterFormData } from '@/models/register';
 import { AxiosResponse } from 'axios';
 
-import { reqLoginUser, reqRegisterUser } from '@/apis/authApi';
+import { authApiClient } from '@/apis/authApi';
 import { setRegisterStatus, setUser } from '../slices/authSlice';
 import { loginUser, registerUser } from '../actions/auth';
+import cookies from '@/helpers/cookies';
+
+const { reqLoginUser, reqRegisterUser } = authApiClient();
 
 function* handleReqLoginUser(action: PayloadAction<LoginFormData>) {
   try {
@@ -19,6 +22,13 @@ function* handleReqLoginUser(action: PayloadAction<LoginFormData>) {
       reqLoginUser,
       formData
     );
+
+    const {
+      data: { accessToken, refreshToken },
+    } = response;
+
+    cookies.setAccessToken(accessToken);
+    cookies.setRefreshToken(refreshToken);
 
     yield put(setUser(response.data));
   } catch (error) {
@@ -42,8 +52,8 @@ function* handleReqRegisterUser(action: PayloadAction<RegisterFormData>) {
 }
 
 function* authSaga() {
-  yield takeLatest(loginUser().type, handleReqLoginUser);
-  yield takeLatest(registerUser().type, handleReqRegisterUser);
+  yield takeLatest(loginUser.request().type, handleReqLoginUser);
+  yield takeLatest(registerUser.request().type, handleReqRegisterUser);
 }
 
 export default authSaga;

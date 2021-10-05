@@ -27,7 +27,9 @@ function NewsFeedContent() {
     if (isMeeting && nextPage) {
       dispatch(getPosts.request({ page: nextPage, limit: LIMIT_POSTS }));
     }
-  }, [total, isMeeting, nextPage, dispatch]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [total, isMeeting, dispatch]);
 
   return (
     <div className={clsx('col-span-2')}>

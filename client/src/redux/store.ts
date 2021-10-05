@@ -30,7 +30,7 @@ const store = configureStore({
         })
       )
       .concat(sagaMiddleware),
-  devTools: process.env.NODE_ENV !== 'production',
+  // devTools: process.env.NODE_ENV !== 'production',
 });
 
 export const makeStore = wrapMakeStore(() => {

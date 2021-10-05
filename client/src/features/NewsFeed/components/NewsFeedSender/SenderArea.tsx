@@ -70,9 +70,10 @@ function NewsFeedSenderArea() {
     if (!content) return;
 
     const formData = new FormData();
-    const { id, photoId } = post as Post;
+    const { id, photo, photoId } = post as Post;
 
     formData.append('content', content);
+    formData.append('photo', photo);
     formData.append('photoId', photoId);
     formData.append('file', file as Blob);
 

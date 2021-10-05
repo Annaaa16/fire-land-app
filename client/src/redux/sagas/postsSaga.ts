@@ -10,12 +10,7 @@ import {
 } from '@/models/posts';
 import { GetPosts, UpdatePost } from '../actions/posts';
 
-import {
-  reqCreatePost,
-  reqGetPosts,
-  reqUpdatePost,
-  reqDeletePost,
-} from '@/apis/postsApi';
+import { postsApiClient } from '@/apis/postsApi';
 import { createPost, getPosts, updatePost, deletePost } from '../actions/posts';
 import {
   addCreatedPost,
@@ -23,6 +18,9 @@ import {
   removeDeletedPost,
   setUpdatedPost,
 } from '../slices/postsSlice';
+
+const { reqCreatePost, reqGetPosts, reqUpdatePost, reqDeletePost } =
+  postsApiClient();
 
 function* handleReqCreatePost(action: PayloadAction<FormData>) {
   try {
@@ -77,7 +75,7 @@ function* handleReqDeletePost(action: PayloadAction<string>) {
   try {
     const id = action.payload;
 
-    yield delay(300); // Block spam update button
+    yield delay(300); // Block spam delete button
 
     const response: AxiosResponse<DeletePostResponse> = yield call(
       reqDeletePost,
@@ -86,7 +84,7 @@ function* handleReqDeletePost(action: PayloadAction<string>) {
 
     yield put(removeDeletedPost(response.data));
   } catch (error) {
-    console.log('Update post error 👉', error);
+    console.log('Delete post error 👉', error);
   }
 }
 

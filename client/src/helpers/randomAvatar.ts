@@ -12,8 +12,6 @@ const avatarList = [
   'croodles-neutral',
   'micah',
   'miniavs',
-  'miniavs',
-  'miniavs',
   'pixel-art-neutral',
 ];
 

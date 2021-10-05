@@ -20,7 +20,7 @@ const useMeeting = (
     if (current) {
       observer.observe(current);
     }
-  }, []);
+  }, [ref, rootMargin]);
 
   return isMeeting;
 };

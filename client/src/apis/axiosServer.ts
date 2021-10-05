@@ -4,9 +4,8 @@ import axios from 'axios';
 import queryString from 'query-string';
 
 import { API_URL } from '@/constants';
-import cookies from '@/helpers/cookies';
 
-export const axiosClient = (refreshToken?: string) => {
+export const axiosServer = (accessToken?: string, refreshToken?: string) => {
   const axiosInstance = axios.create({
     baseURL: API_URL,
     headers: {
@@ -16,11 +15,9 @@ export const axiosClient = (refreshToken?: string) => {
   });
 
   axiosInstance.interceptors.request.use((config) => {
-    const token = cookies.getAccessToken();
+    const headerToken = config.headers['Authorization'];
 
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
+    config.headers.Authorization = headerToken || `Bearer ${accessToken}`;
 
     return config;
   });
@@ -40,9 +37,6 @@ export const axiosClient = (refreshToken?: string) => {
         const { data } = await axiosInstance.post('/auth/token', {
           refreshToken,
         });
-
-        // Replace new token for client side
-        cookies.setAccessToken(data.accessToken);
 
         // Attach new token to header for re-request
         originalRequest.headers.Authorization = `Bearer ${data.accessToken}`;

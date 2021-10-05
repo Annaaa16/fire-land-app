@@ -11,7 +11,7 @@ const router = express.Router();
 // @access Private
 router.post(
   '/',
-  // verifyToken,
+  verifyToken,
   upload.single('file'),
   postsController.createPost
 );
@@ -19,21 +19,26 @@ router.post(
 // @route GET /api/posts
 // @desc Get all posts or limit posts
 // @access Private
-router.get('/', postsController.getPosts);
+router.get('/', verifyToken, postsController.getPosts);
 
 // @route PUT /api/posts/:id
 // @desc Update post
 // @access Private
-router.put('/:id', upload.single('file'), postsController.updatePost);
+router.put(
+  '/:id',
+  verifyToken,
+  upload.single('file'),
+  postsController.updatePost
+);
 
 // @route DELETE /api/posts/:id
 // @desc Delete post
 // @access Private
-router.delete('/:id', postsController.deletePost);
+router.delete('/:id', verifyToken, postsController.deletePost);
 
 // @route PATCH /api/posts/:id
 // @desc Like post
 // @access Private
-router.patch('/:id', postsController.likePost);
+router.patch('/:id', verifyToken, postsController.likePost);
 
 module.exports = router;

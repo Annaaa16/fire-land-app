@@ -6,3 +6,8 @@ export const CLOUDINARY_PREFIX =
   'https://res.cloudinary.com/drxhgl7xe/image/upload';
 
 export const LIMIT_POSTS = 5;
+
+export const COOKIE_KEYS = {
+  ACCESS_TOKEN: 'ACCESS_TOKEN',
+  REFRESH_TOKEN: 'REFRESH_TOKEN',
+};

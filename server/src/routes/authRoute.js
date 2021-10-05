@@ -1,6 +1,7 @@
 const express = require('express');
 
 const authController = require('../controllers/authController');
+const verifyToken = require('../middlewares/authMiddleware');
 
 const router = express.Router();
 
@@ -13,6 +14,11 @@ router.post('/register', authController.register);
 // @desc Check if user is logged in
 // @access Public
 router.post('/login', authController.login);
+
+// @route GET api/auth/user
+// @desc Get current user
+// @access Private
+router.get('/user', verifyToken, authController.getCurrentUser);
 
 // @route POST api/auth/token
 // @desc Generate new access token

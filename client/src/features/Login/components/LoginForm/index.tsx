@@ -1,3 +1,5 @@
+import { useRouter } from 'next/dist/client/router';
+
 // clsx
 import clsx from 'clsx';
 
@@ -12,10 +14,13 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import FormInput from '@/components/FormInput';
 import { LoginFormData } from '@/models/login';
 
-import useMyDispatch from '@/hooks/useMyDispatch';
 import { loginUser } from '@/redux/actions/auth';
 import { formLoginSchema } from '@/utils/formSchemas';
+import useMyDispatch from '@/hooks/useMyDispatch';
+
 function LoginForm() {
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -27,7 +32,8 @@ function LoginForm() {
   const dispatch = useMyDispatch();
 
   const handleOnSubmit = (data: LoginFormData) => {
-    dispatch(loginUser(data));
+    dispatch(loginUser.request(data));
+    router.push('/newsfeed');
   };
 
   return (
