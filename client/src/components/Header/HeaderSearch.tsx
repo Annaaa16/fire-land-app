@@ -8,7 +8,7 @@ function HeaderSearch() {
   return (
     <div
       className={clsx(
-        'flex items-center flex-1 px-4 ml-2 md:mx-5 rounded-lg',
+        'flex items-center flex-1 pl-5 pr-4 ml-2 md:mx-5 rounded-full',
         'bg-primary-v1-input dark:bg-primary-v3-input'
       )}>
       <input

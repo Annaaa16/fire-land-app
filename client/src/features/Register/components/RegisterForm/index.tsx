@@ -49,7 +49,7 @@ function RegisterForm() {
       avatar,
     };
 
-    dispatch(registerUser(formData));
+    dispatch(registerUser.request(formData));
   };
 
   // Random avatar when init app
