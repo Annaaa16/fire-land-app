@@ -1,5 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+// next redux wrapper
+import { HYDRATE } from 'next-redux-wrapper';
+
 // types
 import { AuthInitState } from '../types/auth';
 import { LoginResponse } from '@/models/login';
@@ -46,10 +49,12 @@ const authSlice = createSlice({
         },
       };
     },
+
     clearMessage: (state) => {
       state.currentUser.message = '';
       state.registerStatus.message = '';
     },
+
     setRegisterStatus(state, action: PayloadAction<RegisterResponse>) {
       const { success, message } = action.payload;
 
@@ -57,6 +62,11 @@ const authSlice = createSlice({
         ...state,
         registerStatus: { ...state.registerStatus, success, message },
       };
+    },
+  },
+  extraReducers: {
+    [HYDRATE]: (state, action) => {
+      if (action.type === HYDRATE) return { ...state, ...action.payload.auth };
     },
   },
 });

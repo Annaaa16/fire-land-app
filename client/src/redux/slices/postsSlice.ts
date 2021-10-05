@@ -1,5 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
+
+// next redux wrapper
 import { HYDRATE } from 'next-redux-wrapper';
+
+// lodash
+import _ from 'lodash';
 
 // types
 import { PayloadAction } from '@reduxjs/toolkit';
@@ -11,7 +16,7 @@ import {
 import { PostsInitState } from '../types/posts';
 import { Post } from '@/models/common';
 
-export const initialState: PostsInitState = {
+const initialState: PostsInitState = {
   success: false,
   prevPage: null,
   nextPage: null,
@@ -37,7 +42,11 @@ const postsSlice = createSlice({
       const { success, posts, ...others } = action.payload;
 
       if (success) {
-        return { ...state, ...others, posts: [...state.posts, ...posts] };
+        return {
+          ...state,
+          ...others,
+          posts: [...state.posts, ...posts],
+        };
       }
     },
 
@@ -75,11 +84,15 @@ const postsSlice = createSlice({
   },
   extraReducers: {
     [HYDRATE]: (state, action) => {
-      if (action.type === HYDRATE) {
-        return {
-          ...state,
-          ...action.payload.posts,
-        };
+      const payload = { ...action.payload.posts };
+
+      if (payload) {
+        // Prevent duplicate from gSSP data
+        const filteredPosts = _.uniqBy(payload.posts, 'id');
+
+        payload.posts = filteredPosts;
+
+        return { ...state, ...payload };
       }
     },
   },
