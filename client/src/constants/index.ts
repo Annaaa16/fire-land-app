@@ -11,3 +11,7 @@ export const COOKIE_KEYS = {
   ACCESS_TOKEN: 'ACCESS_TOKEN',
   REFRESH_TOKEN: 'REFRESH_TOKEN',
 };
+
+export const PATHS = {
+  LOGIN: '/login',
+};
