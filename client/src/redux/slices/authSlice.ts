@@ -66,7 +66,7 @@ const authSlice = createSlice({
   },
   extraReducers: {
     [HYDRATE]: (state, action) => {
-      if (action.type === HYDRATE) return { ...state, ...action.payload.auth };
+      return { ...state, ...action.payload.auth };
     },
   },
 });
