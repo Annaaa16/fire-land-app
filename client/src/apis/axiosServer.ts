@@ -30,7 +30,7 @@ export const axiosServer = (accessToken?: string, refreshToken?: string) => {
       const { config, response } = error;
       const originalRequest = config;
 
-      // Invalid token
+      // Invalid or not exists token
       if (response.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
 
@@ -44,6 +44,7 @@ export const axiosServer = (accessToken?: string, refreshToken?: string) => {
         // Re-request
         return axiosInstance(originalRequest);
       }
+
       return Promise.reject(error);
     }
   );

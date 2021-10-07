@@ -1,9 +1,13 @@
 // clsx
 import clsx from 'clsx';
 
+// types
+import { SvgIconProps } from '@mui/material';
+import { ComponentType } from 'react';
+
 interface SidebarTooltipProps {
   title: string;
-  icon: any;
+  icon: ComponentType<SvgIconProps>;
   isActive: boolean;
 }
 

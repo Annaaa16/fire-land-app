@@ -14,4 +14,5 @@ export const COOKIE_KEYS = {
 
 export const PATHS = {
   LOGIN: '/login',
+  NEWSFEED: '/newsfeed',
 };

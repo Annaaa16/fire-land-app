@@ -1,8 +1,8 @@
-import { END } from '@redux-saga/core';
-
 // types
-import { SagaStore } from '@/redux/types';
 import { GetServerSideProps } from 'next';
+import { GetPostsResponse } from '@/models/posts';
+import { LoginResponse } from '@/models/login';
+import { ErrorResponse } from '@/models/common';
 
 import { LIMIT_POSTS } from '@/constants';
 import { wrapper } from '@/redux/store';
@@ -29,23 +29,23 @@ export default NewsFeedPage;
 export const getServerSideProps: GetServerSideProps =
   wrapper.getServerSideProps((store) => async (ctx) => {
     const { reqGetCurrentUser } = authApiServer(ctx);
-    const { data: userData, accessToken }: any = await reqGetCurrentUser();
 
-    store.dispatch(setUser(userData));
+    const { data: userData, accessToken } = (await reqGetCurrentUser()) as {
+      data: LoginResponse | ErrorResponse;
+      accessToken: string;
+    };
+
+    store.dispatch(setUser(userData as LoginResponse));
 
     // Send new token when got from request get user
     const { reqGetPosts } = postsApiServer('', ctx);
-    const { data: postsData }: any = await reqGetPosts({
+
+    const { data: postsData } = (await reqGetPosts({
       page: 1,
       limit: LIMIT_POSTS,
-    });
+    })) as { data: GetPostsResponse };
 
     store.dispatch(addFetchedPostList(postsData));
-
-    // End saga
-    store.dispatch(END);
-
-    await (store as SagaStore).sagaTask?.toPromise();
 
     return {
       props: {
