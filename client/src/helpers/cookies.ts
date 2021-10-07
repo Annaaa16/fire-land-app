@@ -16,9 +16,6 @@ const cookies = {
   getRefreshToken: () => {
     return cookie.get(COOKIE_KEYS.REFRESH_TOKEN);
   },
-  checkRefreshToken: (refreshToken: string | undefined) => {
-    return !refreshToken || refreshToken === 'undefined' ? false : true;
-  },
 };
 
 export default cookies;

@@ -1,5 +1,5 @@
 export interface User {
-  readonly _id: string;
+  readonly id: string;
   username: string;
   avatar: string;
 }
@@ -12,4 +12,9 @@ export interface Post {
   photo: string;
   photoId: string;
   createdAt: string;
+}
+
+export interface ErrorResponse {
+  success: boolean;
+  message: string;
 }

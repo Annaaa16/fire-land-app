@@ -87,7 +87,7 @@ authController.login = async (req, res) => {
     const refreshToken = jwt.sign({ userId: user._id }, REFRESH_TOKEN_SECRET);
 
     const filteredUser = {
-      _id: user._id,
+      id: user._id,
       username: user.username,
       avatar: user.avatar,
     };
@@ -114,17 +114,23 @@ authController.getCurrentUser = async (req, res) => {
         .json({ success: false, message: 'User not found' });
     }
 
+    const filteredUser = {
+      id: user._id,
+      username: user.username,
+      avatar: user.avatar,
+    };
+
     res.json({
       success: true,
       message: 'User has successfully logged in',
-      user,
+      user: filteredUser,
     });
   } catch (error) {
     notifyServerError(res, error);
   }
 };
 
-authController.getAccessToken = async (req, res) => {
+authController.getAccessToken = (req, res) => {
   const { refreshToken } = req.body;
 
   // Empty refresh token
@@ -134,19 +140,42 @@ authController.getAccessToken = async (req, res) => {
       .json({ success: false, message: 'Refresh token not found' });
   }
 
-  jwt.verify(refreshToken, REFRESH_TOKEN_SECRET, (error, { userId }) => {
+  try {
+    jwt.verify(refreshToken, REFRESH_TOKEN_SECRET, (error, decoded) => {
+      if (error) {
+        return res
+          .status(401)
+          .json({ success: false, message: 'Invalid refresh token' });
+      }
+
+      // Sign with userId after decoded user param
+      const accessToken = jwt.sign(
+        { userId: decoded?.userId },
+        ACCESS_TOKEN_SECRET,
+        {
+          expiresIn: ACCESS_TOKEN_EXP,
+        }
+      );
+
+      res.json({ success: true, accessToken });
+    });
+  } catch (error) {
+    notifyServerError(res, error);
+  }
+};
+
+authController.validateRefreshToken = (req, res) => {
+  const { refreshToken } = req.body;
+  console.log(refreshToken);
+
+  jwt.verify(refreshToken, REFRESH_TOKEN_SECRET, (error) => {
     if (error) {
       return res
-        .status(403)
+        .status(401)
         .json({ success: false, message: 'Invalid refresh token' });
     }
 
-    // Sign with userId after decoded user param
-    const accessToken = jwt.sign({ userId }, ACCESS_TOKEN_SECRET, {
-      expiresIn: ACCESS_TOKEN_EXP,
-    });
-
-    res.json({ success: true, accessToken });
+    res.json({ success: true, message: 'Valid refresh token' });
   });
 };
 

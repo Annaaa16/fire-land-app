@@ -9,11 +9,13 @@ import { parseCookies } from 'nookies';
 
 // types
 import { AppContext, AppInitialProps } from 'next/app';
+import { END } from '@redux-saga/core';
+import { SagaStore } from '@/redux/types';
 
 import { COOKIE_KEYS, PATHS } from '@/constants';
 import { wrapper } from '@/redux/store';
+import { authApiServer } from '@/apis/authApi';
 import GlobalProvider from '../contexts/GlobalContext';
-import cookies from '@/helpers/cookies';
 
 // styles
 import '../styles/globals.scss';
@@ -23,11 +25,15 @@ class WrappedApp extends App<AppInitialProps> {
     const originalUrl = ctx.asPath;
 
     const parsedCookies = parseCookies(ctx);
-    const hasRefreshToken = cookies.checkRefreshToken(
+
+    const { reqValidateRefreshToken } = authApiServer();
+
+    const { success } = await reqValidateRefreshToken(
       parsedCookies[COOKIE_KEYS.REFRESH_TOKEN]
     );
 
-    if (!hasRefreshToken && originalUrl !== PATHS.LOGIN) {
+    // Invalid or not exists refresh token
+    if (!success && originalUrl !== PATHS.LOGIN) {
       if (ctx.req) {
         ctx.res?.writeHead(303, {
           Location: PATHS.LOGIN,
@@ -38,12 +44,32 @@ class WrappedApp extends App<AppInitialProps> {
       }
     }
 
+    // Redirect if try to go to login
+    if (success && originalUrl === PATHS.LOGIN) {
+      if (ctx.req) {
+        ctx.res?.writeHead(303, {
+          Location: PATHS.NEWSFEED,
+        });
+        ctx.res?.end();
+      } else {
+        Router.replace(PATHS.NEWSFEED);
+      }
+    }
+
+    // Wait for all page actions to dispatch
+    if (ctx.req) {
+      ctx.store?.dispatch(END);
+      await (ctx.store as SagaStore)?.sagaTask?.toPromise();
+    }
+
+    // Stop the saga if on server
     const pageProps = {
       ...(Component.getInitialProps
         ? await Component.getInitialProps(ctx)
         : {}),
     };
 
+    // Return props
     return {
       pageProps,
     };

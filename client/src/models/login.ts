@@ -13,3 +13,9 @@ export interface LoginResponse {
   accessToken: string;
   refreshToken: string;
 }
+
+export interface GetUserResponse {
+  success: boolean;
+  message: string;
+  user: User;
+}

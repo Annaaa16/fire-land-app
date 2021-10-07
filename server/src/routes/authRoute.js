@@ -22,7 +22,12 @@ router.get('/user', verifyToken, authController.getCurrentUser);
 
 // @route POST api/auth/token
 // @desc Generate new access token
-// @access Public
+// @access Private
 router.post('/token', authController.getAccessToken);
+
+// @route POST api/auth/validate-refresh-token
+// @desc Validate refresh token
+// @access Private
+router.post('/validate-refresh-token', authController.validateRefreshToken);
 
 module.exports = router;
