@@ -15,6 +15,7 @@ import {
 } from '@/models/posts';
 import { PostsInitState } from '../types/posts';
 import { Post } from '@/models/common';
+import { HydrateResponse } from '../types/common';
 
 const initialState: PostsInitState = {
   success: false,
@@ -83,7 +84,7 @@ const postsSlice = createSlice({
     },
   },
   extraReducers: {
-    [HYDRATE]: (state, action) => {
+    [HYDRATE]: (state, action: PayloadAction<HydrateResponse>) => {
       const payload = { ...action.payload.posts };
 
       if (payload) {

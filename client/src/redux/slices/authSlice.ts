@@ -7,6 +7,7 @@ import { HYDRATE } from 'next-redux-wrapper';
 import { AuthInitState } from '../types/auth';
 import { LoginResponse } from '@/models/login';
 import { RegisterResponse } from '@/models/register';
+import { HydrateResponse } from '../types/common';
 
 export const initialState: AuthInitState = {
   currentUser: {
@@ -40,7 +41,7 @@ const authSlice = createSlice({
       return {
         ...state,
         currentUser: {
-          id: user._id,
+          id: user.id,
           username: user.username,
           avatar: user.avatar,
           isAuthenticated: true,
@@ -65,8 +66,8 @@ const authSlice = createSlice({
     },
   },
   extraReducers: {
-    [HYDRATE]: (state, action) => {
-      if (action.type === HYDRATE) return { ...state, ...action.payload.auth };
+    [HYDRATE]: (state, action: PayloadAction<HydrateResponse>) => {
+      return { ...state, ...action.payload.auth };
     },
   },
 });
