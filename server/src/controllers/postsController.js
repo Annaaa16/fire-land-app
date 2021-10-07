@@ -106,7 +106,7 @@ postsController.getPosts = async (req, res) => {
     // Rename Mongo id
     const editedPosts = posts.map((post) => {
       const { _id: id, user, ...others } = post;
-      // FIX ID USER RESPONSE
+
       return { id, ...others };
     });
 

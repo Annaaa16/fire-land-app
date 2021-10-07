@@ -1,8 +1,7 @@
 import { KeyboardEvent, useState } from 'react';
 
 const useDetectKeydown = () => {
-  const defaultRows = 3;
-
+  const [defaultRows] = useState<number>(3);
   const [isCtrlA, setIsCtrlA] = useState<boolean>(false);
   const [textareaRows, setTextareaRows] = useState<number>(defaultRows);
 

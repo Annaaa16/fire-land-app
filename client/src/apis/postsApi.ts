@@ -75,7 +75,7 @@ export const postsApiServer = (
 
         return { data };
       } catch (error) {
-        console.log('Server error get posts 👉', error);
+        return notifyServerError(error as AxiosError);
       }
     },
   };

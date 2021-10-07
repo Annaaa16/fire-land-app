@@ -1,8 +1,8 @@
 // types
 import { GetServerSidePropsContext } from 'next';
-import { LoginFormData } from '@/models/login';
+import { GetUserResponse, LoginFormData } from '@/models/login';
 import { RegisterFormData } from '@/models/register';
-import { AxiosError } from 'axios';
+import { AxiosError, AxiosRequestConfig } from 'axios';
 
 import { axiosServer } from './axiosServer';
 import notifyServerError from '@/helpers/notifyServerError';
@@ -37,19 +37,36 @@ export const authApiClient = () => {
   };
 };
 
-export const authApiServer = ({ req }: GetServerSidePropsContext) => {
-  const accessToken = req.cookies.ACCESS_TOKEN;
-  const refreshToken = req.cookies.REFRESH_TOKEN;
+export const authApiServer = (ctx?: GetServerSidePropsContext) => {
+  const accessToken = ctx?.req.cookies.ACCESS_TOKEN;
+  const refreshToken = ctx?.req.cookies.REFRESH_TOKEN;
 
   const axiosInstance = axiosServer(accessToken, refreshToken);
 
   return {
     reqGetCurrentUser: async () => {
       try {
-        const { data, config } = await axiosInstance.get('/auth/user');
+        const {
+          data,
+          config,
+        }: { data: GetUserResponse; config: AxiosRequestConfig } =
+          await axiosInstance.get('/auth/user');
+
         const headerToken = config?.headers.Authorization.split(' ')[1];
 
         return { data, accessToken: headerToken };
+      } catch (error) {
+        return notifyServerError(error as AxiosError);
+      }
+    },
+    reqValidateRefreshToken: async (refreshToken: string) => {
+      try {
+        const { data } = await axiosInstance.post(
+          'auth/validate-refresh-token',
+          { refreshToken }
+        );
+
+        return data;
       } catch (error) {
         return notifyServerError(error as AxiosError);
       }
