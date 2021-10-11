@@ -1,3 +1,7 @@
+// types
+import { AuthInitState } from './auth';
+import { PostsInitState } from './posts';
+
 export interface User {
   readonly id: string;
   username: string;
@@ -11,7 +15,11 @@ export interface Post {
   likeCount: number;
   photo: string;
   photoId: string;
-  createdAt: string;
+}
+
+export interface HydrateResponse {
+  auth: AuthInitState;
+  posts: PostsInitState;
 }
 
 export interface ErrorResponse {
