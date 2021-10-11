@@ -12,10 +12,9 @@ import {
   UploadPostResponse,
   GetPostsResponse,
   DeletePostResponse,
+  PostsInitState,
 } from '@/models/posts';
-import { PostsInitState } from '../types/posts';
-import { Post } from '@/models/common';
-import { HydrateResponse } from '../types/common';
+import { HydrateResponse, Post } from '@/models/common';
 
 const initialState: PostsInitState = {
   success: false,

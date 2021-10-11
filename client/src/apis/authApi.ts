@@ -1,8 +1,8 @@
 // types
 import { GetServerSidePropsContext } from 'next';
-import { GetUserResponse, LoginFormData } from '@/models/login';
+import { LoginFormData } from '@/models/login';
 import { RegisterFormData } from '@/models/register';
-import { AxiosError, AxiosRequestConfig } from 'axios';
+import { AxiosError } from 'axios';
 
 import { axiosServer } from './axiosServer';
 import notifyServerError from '@/helpers/notifyServerError';
@@ -34,6 +34,16 @@ export const authApiClient = () => {
         return notifyServerError(error as AxiosError);
       }
     },
+
+    reqGetUserById: async (userId: string) => {
+      try {
+        const response = await axiosInstance.get('/auth/user/' + userId);
+
+        return response;
+      } catch (error) {
+        return notifyServerError(error as AxiosError);
+      }
+    },
   };
 };
 
@@ -46,11 +56,7 @@ export const authApiServer = (ctx?: GetServerSidePropsContext) => {
   return {
     reqGetCurrentUser: async () => {
       try {
-        const {
-          data,
-          config,
-        }: { data: GetUserResponse; config: AxiosRequestConfig } =
-          await axiosInstance.get('/auth/user');
+        const { data, config } = await axiosInstance.get('/auth/user');
 
         const headerToken = config?.headers.Authorization.split(' ')[1];
 
@@ -59,6 +65,7 @@ export const authApiServer = (ctx?: GetServerSidePropsContext) => {
         return notifyServerError(error as AxiosError);
       }
     },
+
     reqValidateRefreshToken: async (refreshToken: string) => {
       try {
         const { data } = await axiosInstance.post(

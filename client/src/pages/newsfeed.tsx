@@ -1,8 +1,7 @@
 // types
 import { GetServerSideProps } from 'next';
 import { GetPostsResponse } from '@/models/posts';
-import { LoginResponse } from '@/models/login';
-import { ErrorResponse } from '@/models/common';
+import { LoginResponse } from '@/models/auth';
 
 import { LIMIT_POSTS } from '@/constants';
 import { wrapper } from '@/redux/store';
@@ -19,7 +18,7 @@ interface NewsFeedPageProps {
 }
 
 function NewsFeedPage({ accessToken }: NewsFeedPageProps) {
-  cookies.setAccessToken(accessToken);
+  accessToken && cookies.setAccessToken(accessToken);
 
   return <NewsFeed />;
 }
@@ -31,11 +30,11 @@ export const getServerSideProps: GetServerSideProps =
     const { reqGetCurrentUser } = authApiServer(ctx);
 
     const { data: userData, accessToken } = (await reqGetCurrentUser()) as {
-      data: LoginResponse | ErrorResponse;
+      data: LoginResponse;
       accessToken: string;
     };
 
-    store.dispatch(setUser(userData as LoginResponse));
+    store.dispatch(setUser(userData));
 
     // Send new token when got from request get user
     const { reqGetPosts } = postsApiServer('', ctx);
@@ -49,7 +48,7 @@ export const getServerSideProps: GetServerSideProps =
 
     return {
       props: {
-        accessToken,
+        accessToken: accessToken || '',
       },
     };
   });
