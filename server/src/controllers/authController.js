@@ -130,6 +130,28 @@ authController.getCurrentUser = async (req, res) => {
   }
 };
 
+authController.getUserById = async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    const user = await User.findById(userId).select('-password');
+
+    if (!user) {
+      return res
+        .status(400)
+        .json({ success: false, message: 'User not found' });
+    }
+
+    res.json({
+      success: true,
+      message: 'Get user successfully',
+      user,
+    });
+  } catch (error) {
+    notifyServerError(res, error);
+  }
+};
+
 authController.getAccessToken = (req, res) => {
   const { refreshToken } = req.body;
 
@@ -166,7 +188,6 @@ authController.getAccessToken = (req, res) => {
 
 authController.validateRefreshToken = (req, res) => {
   const { refreshToken } = req.body;
-  console.log(refreshToken);
 
   jwt.verify(refreshToken, REFRESH_TOKEN_SECRET, (error) => {
     if (error) {
