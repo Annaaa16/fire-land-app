@@ -1,4 +1,5 @@
 node_modules
 .env
-auth-requests.http
-posts-requests.http
+auth.http
+posts.http
+conversation.http

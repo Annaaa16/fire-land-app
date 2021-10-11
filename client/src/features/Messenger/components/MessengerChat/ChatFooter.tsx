@@ -1,7 +1,5 @@
-import { FormEvent, useState } from 'react';
-
-// socket
-import io from 'socket.io-client';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 // clsx
 import clsx from 'clsx';
@@ -13,25 +11,56 @@ import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 import SendIcon from '@mui/icons-material/Send';
 
+// types
+import { FormEvent } from 'react';
+
+import {
+  authState$,
+  conversationsState$,
+  messengerState$,
+} from '@/redux/selectors';
+import { createMessage } from '@/redux/actions/messenger';
+import { addMessage } from '@/redux/slices/messengerSlice';
+import useSocket from '@/hooks/useSocket';
+import useMyDispatch from '@/hooks/useMyDispatch';
+
 import Tooltip from '@/components/Tooltip';
 
 function ChatFooter() {
   const [inputValue, setInputValue] = useState<string>('');
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const { currentUser } = useSelector(authState$);
+  const { conversationId, receiverId } = useSelector(messengerState$);
+
+  const { socket } = useSocket();
+  const dispatch = useMyDispatch();
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!inputValue.trim()) return;
 
-    const socket = io('http://localhost:4000', {
-      withCredentials: true,
+    // Send message to friend
+    socket.emit('sendMessage', {
+      senderId: currentUser.id,
+      receiverId,
+      text: inputValue,
     });
 
-    socket.emit('chat message', inputValue);
-    socket.emit('some event', {
-      someProperty: 'some value',
-      otherProperty: 'other value',
-    });
+    const message = {
+      senderId: currentUser.id,
+      text: inputValue,
+      conversationId,
+    };
+
+    dispatch(
+      addMessage({
+        ...message,
+        updatedAt: new Date().toISOString(),
+      })
+    );
+    dispatch(createMessage.request(message));
+    setInputValue('');
   };
 
   return (

@@ -4,10 +4,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { HYDRATE } from 'next-redux-wrapper';
 
 // types
-import { AuthInitState } from '../types/auth';
-import { LoginResponse } from '@/models/login';
-import { RegisterResponse } from '@/models/register';
-import { HydrateResponse } from '../types/common';
+import { AuthInitState, LoginResponse, RegisterResponse } from '@/models/auth';
+import { HydrateResponse } from '@/models/common';
 
 export const initialState: AuthInitState = {
   currentUser: {

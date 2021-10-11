@@ -35,8 +35,8 @@ function NewsFeedContent() {
     <div className={clsx('col-span-2')}>
       <NewsFeedSender />
 
-      {posts.map((post, index) => (
-        <NewsFeedPost key={index} {...post} />
+      {posts.map((post) => (
+        <NewsFeedPost key={post.id} {...post} />
       ))}
 
       <div ref={loaderRef} />

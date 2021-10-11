@@ -3,8 +3,8 @@ import clsx from 'clsx';
 
 import Meta from '@/layouts/Meta';
 import SidebarSmall from '@/components/SidebarSmall';
-import MessagesContact from './components/MessagesContact';
-import MessagesChat from './components/MessagesChat';
+import MessengerContact from './components/MessengerContact';
+import MessengerChat from './components/MessengerChat';
 
 function Messages() {
   return (
@@ -13,8 +13,8 @@ function Messages() {
         <div className={clsx('hidden lg:block')}>
           <SidebarSmall isMessenger={true} />
         </div>
-        <MessagesContact />
-        <MessagesChat />
+        <MessengerContact />
+        <MessengerChat />
       </main>
     </Meta>
   );

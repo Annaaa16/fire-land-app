@@ -20,6 +20,11 @@ router.post('/login', authController.login);
 // @access Private
 router.get('/user', verifyToken, authController.getCurrentUser);
 
+// @route GET api/auth/user/:userId
+// @desc Get user by id
+// @access Private
+router.get('/user/:userId', authController.getUserById);
+
 // @route POST api/auth/token
 // @desc Generate new access token
 // @access Private

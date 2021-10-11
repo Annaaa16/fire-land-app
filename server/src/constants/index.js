@@ -1,6 +1,6 @@
 exports.LIMIT_UPLOAD = '5mb';
 
-exports.ACCESS_TOKEN_EXP = 10;
+exports.ACCESS_TOKEN_EXP = '5d';
 
 exports.MONGO_URI = `mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@fire-chat-app-global-se.y50eq.mongodb.net/fire-chat-app-global-server?retryWrites=true&w=majority`;
 

@@ -1,7 +1,8 @@
+// types
 import { Store } from 'redux';
 import { Task } from '@redux-saga/types';
 
-import store, { makeStore } from '../store';
+import store, { makeStore } from '@/redux/store';
 
 export interface SagaStore extends Store {
   sagaTask?: Task;

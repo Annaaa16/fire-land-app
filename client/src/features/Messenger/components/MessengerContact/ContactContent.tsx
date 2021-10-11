@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import SearchIcon from '@mui/icons-material/Search';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
-import ContactFriends from './ContactFriends';
+import ContactFriendList from './ContactFriendList';
 
 function ContactContent() {
   return (
@@ -47,7 +47,7 @@ function ContactContent() {
         </div>
       </div>
 
-      <ContactFriends />
+      <ContactFriendList />
     </>
   );
 }

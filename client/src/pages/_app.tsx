@@ -13,12 +13,13 @@ import { END } from '@redux-saga/core';
 import { SagaStore } from '@/redux/types';
 
 import { COOKIE_KEYS, PATHS } from '@/constants';
-import { wrapper } from '@/redux/store';
+import store, { wrapper } from '@/redux/store';
 import { authApiServer } from '@/apis/authApi';
 import GlobalProvider from '../contexts/GlobalContext';
 
 // styles
 import '../styles/globals.scss';
+import { Provider } from 'react-redux';
 
 class WrappedApp extends App<AppInitialProps> {
   static getInitialProps = async ({ Component, ctx }: AppContext) => {
@@ -79,9 +80,11 @@ class WrappedApp extends App<AppInitialProps> {
     const { Component, pageProps } = this.props;
 
     return (
-      <GlobalProvider>
-        <Component {...pageProps} />
-      </GlobalProvider>
+      <Provider store={store}>
+        <GlobalProvider>
+          <Component {...pageProps} />
+        </GlobalProvider>
+      </Provider>
     );
   }
 }
