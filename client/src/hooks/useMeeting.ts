@@ -15,10 +15,8 @@ const useMeeting = (
       setIsMeeting(entry.isIntersecting);
     }, options);
 
-    const { current } = ref;
-
-    if (current) {
-      observer.observe(current);
+    if (ref.current) {
+      observer.observe(ref.current);
     }
   }, [ref, rootMargin]);
 
