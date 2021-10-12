@@ -1,6 +1,8 @@
 // clsx
 import clsx from 'clsx';
 
+import useCompareNode from '@/hooks/useCompareNode';
+
 interface ChatUserProps {
   message: string;
 }
@@ -8,15 +10,24 @@ interface ChatUserProps {
 function ChatUser(props: ChatUserProps) {
   const { message } = props;
 
+  const { isNodeEqual, elRef, compared } = useCompareNode('user-msg');
+
   return (
-    <div className={clsx('flex flex-col items-end ml-3')}>
-      <div
+    <div
+      ref={elRef}
+      className={clsx(
+        compared,
+        'flex w-5/6 ml-auto',
+        !isNodeEqual && 'mt-4',
+        'transition-all'
+      )}>
+      <p
         className={clsx(
-          'inline-flex items-end px-5 text-xs md:text-sm mb-2 py-2.5 rounded-full leading-5',
+          'flex ml-auto px-5 text-xs md:text-sm mb-2 py-2 rounded-3xl lg:rounded-full leading-5 break-all',
           'text-white bg-primary-v1 dark:bg-primary-v4'
         )}>
         {message}
-      </div>
+      </p>
     </div>
   );
 }

@@ -9,7 +9,7 @@ import MessengerChat from './components/MessengerChat';
 function Messages() {
   return (
     <Meta title='Messenger'>
-      <main className={clsx('flex')}>
+      <main className={clsx('flex h-screen')}>
         <div className={clsx('hidden lg:block')}>
           <SidebarSmall isMessenger={true} />
         </div>

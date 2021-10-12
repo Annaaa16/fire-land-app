@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useRef, useLayoutEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 // clsx
@@ -7,44 +7,41 @@ import clsx from 'clsx';
 // nanoid
 import { nanoid } from 'nanoid';
 
+// react overlayscrollbars
+import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
+
 import { authState$, messengerState$ } from '@/redux/selectors';
 
 import ChatFriend from './ChatFriend';
 import ChatUser from './ChatUser';
 
 function ChatContent() {
-  const scrollRef = useRef<HTMLDivElement>(null);
-
   const { currentChat } = useSelector(messengerState$);
   const { currentUser } = useSelector(authState$);
 
-  useEffect(() => {
-    scrollRef.current!.scrollTo({
-      top: scrollRef.current!.scrollHeight,
-      behavior: 'smooth',
-    });
+  const scrollRef = useRef<OverlayScrollbarsComponent>(null);
+
+  // Auto scroll to bottom
+  useLayoutEffect(() => {
+    const scrollNode = scrollRef.current?.osInstance()?.getElements('viewport');
+
+    scrollNode.scrollTo({ top: scrollNode.scrollHeight, behavior: 'smooth' });
   }, [currentChat]);
 
   return (
-    <div
+    <OverlayScrollbarsComponent
       ref={scrollRef}
-      className={clsx(
-        'pt-20 pb-20 overflow-y-auto px-5',
-        'bg-lt-body dark:bg-dk-body'
-      )}>
+      options={{ scrollbars: { autoHide: 'scroll' } }}
+      className={clsx('flex-1 pl-2 pr-4')}>
       {/* <User view='small' /> */}
-      {currentChat?.map(({ senderId, text }, idx) =>
-        senderId !== currentUser.id ? (
-          <div key={nanoid(6)} className={clsx('flex items-end')}>
-            <ChatFriend message={text} />
-          </div>
+      {currentChat?.map(({ senderId, text }) =>
+        senderId !== currentUser._id ? (
+          <ChatFriend key={nanoid(6)} message={text} />
         ) : (
-          <div key={nanoid(6)} className={clsx('ml-auto justify-end')}>
-            <ChatUser message={text} />
-          </div>
+          <ChatUser key={nanoid(6)} message={text} />
         )
       )}
-    </div>
+    </OverlayScrollbarsComponent>
   );
 }
 
