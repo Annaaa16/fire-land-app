@@ -3,13 +3,13 @@ import { AuthInitState } from './auth';
 import { PostsInitState } from './posts';
 
 export interface User {
-  readonly id: string;
+  readonly _id: string;
   username: string;
   avatar: string;
 }
 
 export interface Post {
-  id: string;
+  readonly _id: string;
   user: User;
   content: string;
   likeCount: number;

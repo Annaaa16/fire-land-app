@@ -55,7 +55,9 @@ const postsSlice = createSlice({
 
       if (!postId) return { ...state, updatePost: null };
 
-      const updatePost = state.posts.find((post) => post.id == postId) as Post;
+      const updatePost = state.posts.find(
+        (post) => post._id === postId
+      ) as Post;
 
       return { ...state, updatePost };
     },
@@ -65,18 +67,17 @@ const postsSlice = createSlice({
 
       if (success) {
         const posts = state.posts.map((post) =>
-          post.id === updatedPost.id ? updatedPost : post
+          post._id === updatedPost._id ? updatedPost : post
         );
 
         return { ...state, updatePost: null, posts };
       }
     },
-
     removeDeletedPost: (state, action: PayloadAction<DeletePostResponse>) => {
-      const { id, success } = action.payload;
+      const { _id, success } = action.payload;
 
       if (success) {
-        const filteredPosts = state.posts.filter((post) => post.id !== id);
+        const filteredPosts = state.posts.filter((post) => post._id !== _id);
 
         return { ...state, posts: filteredPosts };
       }

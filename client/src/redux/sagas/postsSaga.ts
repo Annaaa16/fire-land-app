@@ -73,13 +73,13 @@ function* handleReqUpdatePost(action: PayloadAction<UpdatePost>) {
 
 function* handleReqDeletePost(action: PayloadAction<string>) {
   try {
-    const id = action.payload;
+    const postId = action.payload;
 
     yield delay(300); // Block spam delete button
 
     const response: AxiosResponse<DeletePostResponse> = yield call(
       reqDeletePost,
-      id
+      postId
     );
 
     yield put(removeDeletedPost(response.data));

@@ -9,7 +9,7 @@ import { HydrateResponse } from '@/models/common';
 
 export const initialState: AuthInitState = {
   currentUser: {
-    id: '',
+    _id: '',
     username: '',
     avatar: '',
     isAuthenticated: false,
@@ -39,7 +39,7 @@ const authSlice = createSlice({
       return {
         ...state,
         currentUser: {
-          id: user.id,
+          _id: user._id,
           username: user.username,
           avatar: user.avatar,
           isAuthenticated: true,

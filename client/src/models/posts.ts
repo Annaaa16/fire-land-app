@@ -25,7 +25,7 @@ export interface UploadPostResponse {
 }
 
 export interface DeletePostResponse {
+  readonly _id: string;
   success: boolean;
   message: string;
-  id: string;
 }

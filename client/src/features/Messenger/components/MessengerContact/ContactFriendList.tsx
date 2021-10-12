@@ -15,7 +15,7 @@ function ContactFriendList() {
 
   // Set conversations first mount
   useEffect(() => {
-    dispatch(getConversations.request(currentUser.id));
+    dispatch(getConversations.request(currentUser._id));
   }, [currentUser, dispatch]);
 
   return (
@@ -23,7 +23,7 @@ function ContactFriendList() {
       {conversations?.map((conversation) => (
         <ContactFriend
           key={conversation._id}
-          userId={currentUser.id}
+          userId={currentUser._id}
           conversation={conversation}
         />
       ))}

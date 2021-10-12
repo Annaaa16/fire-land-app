@@ -4,7 +4,7 @@ export interface GetPosts {
 }
 
 export interface UpdatePost {
-  id: string;
+  postId: string;
   updateData: FormData;
 }
 

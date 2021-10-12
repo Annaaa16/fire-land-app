@@ -87,7 +87,7 @@ authController.login = async (req, res) => {
     const refreshToken = jwt.sign({ userId: user._id }, REFRESH_TOKEN_SECRET);
 
     const filteredUser = {
-      id: user._id,
+      _id: user._id,
       username: user.username,
       avatar: user.avatar,
     };
@@ -115,7 +115,7 @@ authController.getCurrentUser = async (req, res) => {
     }
 
     const filteredUser = {
-      id: user._id,
+      _id: user._id,
       username: user.username,
       avatar: user.avatar,
     };
