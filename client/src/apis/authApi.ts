@@ -1,8 +1,7 @@
 // types
-import { GetServerSidePropsContext } from 'next';
-import { LoginFormData } from '@/models/login';
-import { RegisterFormData } from '@/models/register';
 import { AxiosError } from 'axios';
+import { GetServerSidePropsContext } from 'next';
+import { LoginFormData, RegisterFormData } from '@/models/auth';
 
 import { axiosServer } from './axiosServer';
 import notifyServerError from '@/helpers/notifyServerError';
