@@ -1,3 +1,5 @@
+import { Provider } from 'react-redux';
+import { END } from '@redux-saga/core';
 import App from 'next/app';
 import Router from 'next/router';
 
@@ -9,17 +11,15 @@ import { parseCookies } from 'nookies';
 
 // types
 import { AppContext, AppInitialProps } from 'next/app';
-import { END } from '@redux-saga/core';
-import { SagaStore } from '@/redux/types';
+import { SagaStore } from '@/models/store';
 
 import { COOKIE_KEYS, PATHS } from '@/constants';
-import store, { wrapper } from '@/redux/store';
 import { authApiServer } from '@/apis/authApi';
+import store, { wrapper } from '@/redux/store';
 import GlobalProvider from '../contexts/GlobalContext';
 
 // styles
 import '../styles/globals.scss';
-import { Provider } from 'react-redux';
 
 class WrappedApp extends App<AppInitialProps> {
   static getInitialProps = async ({ Component, ctx }: AppContext) => {
@@ -34,7 +34,11 @@ class WrappedApp extends App<AppInitialProps> {
     );
 
     // Invalid or not exists refresh token
-    if (!success && originalUrl !== PATHS.LOGIN) {
+    if (
+      !success &&
+      originalUrl !== PATHS.LOGIN &&
+      originalUrl !== PATHS.REGISTER
+    ) {
       if (ctx.req) {
         ctx.res?.writeHead(303, {
           Location: PATHS.LOGIN,

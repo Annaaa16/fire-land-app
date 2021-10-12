@@ -3,10 +3,7 @@ import { useRouter } from 'next/dist/client/router';
 // clsx
 import clsx from 'clsx';
 
-import Meta from '@/layouts/Meta';
-import RegisterForm from './components/RegisterForm';
-import LandingLeft from '@/components/LandingLeft';
-
+import { PATHS } from '@/constants';
 import {
   ltBackground,
   dkBackground,
@@ -15,6 +12,11 @@ import {
   dkDot,
 } from '@/utils/images';
 
+import Meta from '@/layouts/Meta';
+import RegisterForm from './components/RegisterForm';
+import LandingLeft from '@/components/LandingLeft';
+
+// styles
 import styles from './styles.module.scss';
 
 function Register() {
@@ -23,7 +25,7 @@ function Register() {
   const router = useRouter();
 
   const moveToLogin = () => {
-    router.push('/login');
+    router.push(PATHS.LOGIN);
   };
 
   return (
