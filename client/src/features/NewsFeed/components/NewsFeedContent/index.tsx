@@ -14,7 +14,7 @@ import NewsFeedPost from '../NewsFeedPost';
 import NewsFeedSender from '../NewsFeedSender';
 
 function NewsFeedContent() {
-  const loaderRef = useRef(null);
+  const loaderRef = useRef<HTMLDivElement>(null);
 
   const { nextPage, total, posts } = useSelector(postsState$);
 
@@ -36,7 +36,7 @@ function NewsFeedContent() {
       <NewsFeedSender />
 
       {posts.map((post) => (
-        <NewsFeedPost key={post.id} {...post} />
+        <NewsFeedPost key={post._id} {...post} />
       ))}
 
       <div ref={loaderRef} />

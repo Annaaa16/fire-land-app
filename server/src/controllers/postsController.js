@@ -55,12 +55,12 @@ postsController.createPost = async (req, res) => {
     await post.save();
 
     // Filter unnecessary fields of post
-    const { __v, createdAt, _id: id, ...others } = post.toObject();
+    const { __v, createdAt, ...others } = post.toObject();
 
     res.json({
       success: true,
       message: 'New post has been created successfully',
-      post: { id, ...others },
+      post: { ...others },
     });
   } catch (error) {
     notifyServerError(res, error);
@@ -103,19 +103,12 @@ postsController.getPosts = async (req, res) => {
       .select(['-password', '-createdAt', '-__v'])
       .lean();
 
-    // Rename Mongo id
-    const editedPosts = posts.map((post) => {
-      const { _id: id, user, ...others } = post;
-
-      return { id, ...others };
-    });
-
     return res.json({
       success: true,
       prevPage,
       nextPage,
       total,
-      posts: editedPosts,
+      posts,
     });
   } catch (error) {
     notifyServerError(res, error);
@@ -185,12 +178,12 @@ postsController.updatePost = async (req, res) => {
     }
 
     // Filter unnecessary fields of post
-    const { __v, createdAt, _id: id, ...others } = updatedPost;
+    const { __v, createdAt, ...others } = updatedPost;
 
     res.json({
       success: true,
       message: 'Post is updated!',
-      post: { id, ...others },
+      post: { ...others },
     });
   } catch (error) {
     notifyServerError(res, error);
@@ -218,7 +211,7 @@ postsController.deletePost = async (req, res) => {
     res.json({
       success: true,
       message: 'Post is deleted!',
-      id: deletedPost._id,
+      _id: deletedPost._id,
     });
   } catch (error) {
     notifyServerError(res, error);

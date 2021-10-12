@@ -11,7 +11,7 @@ import PostDetail from './PostDetail';
 import PostComment from './PostComment';
 
 function NewsFeedPost(props: Post) {
-  const { id, content, photo } = props;
+  const { _id, content, photo } = props;
 
   return (
     <div
@@ -19,7 +19,7 @@ function NewsFeedPost(props: Post) {
         'mt-7 rounded-lg shadow-md dark:shadow-xl',
         'bg-white dark:bg-dk-cpn'
       )}>
-      <PostHeader postId={id} />
+      <PostHeader postId={_id} />
       <PostContent content={content} photo={photo} />
 
       <div className={clsx('px-2 md:px-4 pt-3.5 pb-2')}>

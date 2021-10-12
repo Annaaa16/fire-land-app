@@ -34,10 +34,13 @@ export const postsApiClient = () => {
     },
 
     reqUpdatePost: async (payload: UpdatePost) => {
-      const { id, updateData } = payload;
+      const { postId, updateData } = payload;
 
       try {
-        const response = await axiosInstance.put('/posts/' + id, updateData);
+        const response = await axiosInstance.put(
+          '/posts/' + postId,
+          updateData
+        );
 
         return response;
       } catch (error) {
@@ -46,10 +49,10 @@ export const postsApiClient = () => {
     },
 
     reqDeletePost: async (payload: string) => {
-      const id = payload;
+      const postId = payload;
 
       try {
-        const response = await axiosInstance.delete('/posts/' + id);
+        const response = await axiosInstance.delete('/posts/' + postId);
 
         return response;
       } catch (error) {

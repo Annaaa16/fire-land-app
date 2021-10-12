@@ -20,9 +20,6 @@ import { useDropzone } from 'react-dropzone';
 // react overlayscrollbars
 import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
 
-// types
-import { Post } from '@/models/common';
-
 import { authState$, postsState$ } from '@/redux/selectors';
 import { createPost, updatePost } from '@/redux/actions/posts';
 import { GlobalContext } from '@/contexts/GlobalContext';
@@ -70,14 +67,14 @@ function NewsFeedSenderArea() {
     if (!content) return;
 
     const formData = new FormData();
-    const { id, photo, photoId } = post as Post;
+    const { _id, photo, photoId } = post!;
 
     formData.append('content', content);
     formData.append('photo', photo);
     formData.append('photoId', photoId);
     formData.append('file', file as Blob);
 
-    dispatch(updatePost.request({ id, updateData: formData }));
+    dispatch(updatePost.request({ postId: _id, updateData: formData }));
     toggleSenderArea(false);
   };
 

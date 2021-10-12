@@ -14,11 +14,7 @@ import SendIcon from '@mui/icons-material/Send';
 // types
 import { FormEvent } from 'react';
 
-import {
-  authState$,
-  conversationsState$,
-  messengerState$,
-} from '@/redux/selectors';
+import { authState$, messengerState$ } from '@/redux/selectors';
 import { createMessage } from '@/redux/actions/messenger';
 import { addMessage } from '@/redux/slices/messengerSlice';
 import useSocket from '@/hooks/useSocket';
@@ -42,13 +38,13 @@ function ChatFooter() {
 
     // Send message to friend
     socket.emit('sendMessage', {
-      senderId: currentUser.id,
+      senderId: currentUser._id,
       receiverId,
       text: inputValue,
     });
 
     const message = {
-      senderId: currentUser.id,
+      senderId: currentUser._id,
       text: inputValue,
       conversationId,
     };
@@ -67,8 +63,7 @@ function ChatFooter() {
     <form
       onSubmit={handleSubmit}
       className={clsx(
-        'fixed bottom-0 left-0 lg:left-[calc(80px+370px)] right-0 z-50',
-        'flex items-center h-[59px] md:h-16 px-1 md:px-3 mt-auto py-2.5 md:py-4 border-t border-lt-line dark:border-dk-line',
+        'flex items-center h-[59px] md:h-[68px] px-1 md:px-3 mt-auto py-2.5 md:py-4 border-t border-lt-line dark:border-dk-line',
         'bg-white dark:bg-dk-cpn'
       )}>
       <ul className={clsx('flex items-center mr-2')}>

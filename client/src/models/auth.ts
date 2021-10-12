@@ -2,7 +2,7 @@
 import { User } from './common';
 
 interface CurrentUser {
-  readonly id: string;
+  readonly _id: string;
   username: string;
   avatar: string;
   isAuthenticated: boolean;
