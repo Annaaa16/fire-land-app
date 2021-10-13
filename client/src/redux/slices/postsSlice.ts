@@ -13,6 +13,7 @@ import {
   GetPostsResponse,
   DeletePostResponse,
   PostsInitState,
+  LikeOrDislikePostResponse,
 } from '@/models/posts';
 import { HydrateResponse, Post } from '@/models/common';
 
@@ -73,6 +74,7 @@ const postsSlice = createSlice({
         return { ...state, updatePost: null, posts };
       }
     },
+
     removeDeletedPost: (state, action: PayloadAction<DeletePostResponse>) => {
       const { _id, success } = action.payload;
 
@@ -82,6 +84,21 @@ const postsSlice = createSlice({
         return { ...state, posts: filteredPosts };
       }
     },
+
+    setLikedOrDislikedPost: (
+      state,
+      action: PayloadAction<LikeOrDislikePostResponse>
+    ) => {
+      const { success, post } = action.payload;
+
+      if (success) {
+        const { _id, likes } = post;
+
+        state.posts.forEach((post) => {
+          if (post._id === _id) post.likes = likes;
+        });
+      }
+    },
   },
   extraReducers: {
     [HYDRATE]: (state, action: PayloadAction<HydrateResponse>) => {
@@ -89,7 +106,7 @@ const postsSlice = createSlice({
 
       if (payload) {
         // Prevent duplicate from gSSP data
-        const filteredPosts = _.uniqBy(payload.posts, 'id');
+        const filteredPosts = _.uniqBy(payload.posts, '_id');
 
         payload.posts = filteredPosts;
 
@@ -105,6 +122,7 @@ export const {
   setUpdatePost,
   setUpdatedPost,
   removeDeletedPost,
+  setLikedOrDislikedPost,
 } = postsSlice.actions;
 
 export default postsSlice.reducer;

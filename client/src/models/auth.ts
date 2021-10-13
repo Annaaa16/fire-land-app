@@ -8,6 +8,8 @@ interface CurrentUser {
   isAuthenticated: boolean;
   message: string;
   success: boolean;
+  followings: string[];
+  followers: string[];
 }
 
 interface RegisterStatus {

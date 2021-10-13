@@ -15,6 +15,8 @@ export const initialState: AuthInitState = {
     isAuthenticated: false,
     message: '',
     success: false,
+    followings: [],
+    followers: [],
   },
   registerStatus: {
     message: '',
@@ -45,6 +47,8 @@ const authSlice = createSlice({
           isAuthenticated: true,
           message,
           success,
+          followings: user.followings,
+          followers: user.followers,
         },
       };
     },

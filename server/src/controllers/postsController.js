@@ -55,9 +55,9 @@ postsController.createPost = async (req, res) => {
     await post.save();
 
     // Filter unnecessary fields of post
-    const { __v, createdAt, ...others } = post.toObject();
+    const { __v, ...others } = post.toObject();
 
-    res.json({
+    res.status(201).json({
       success: true,
       message: 'New post has been created successfully',
       post: { ...others },
@@ -77,6 +77,7 @@ postsController.getPosts = async (req, res) => {
       const posts = await Post.find()
         .sort({ createdAt: 'desc' })
         .populate('user', ['username', 'avatar'])
+        .select(['-password', '-__v'])
         .lean();
 
       return res.json({ success: true, posts });
@@ -96,11 +97,11 @@ postsController.getPosts = async (req, res) => {
   // Pagination
   try {
     const posts = await Post.find()
-      .sort({ updatedAt: 'desc' })
+      .sort({ createdAt: 'desc' })
       .skip(startPos)
       .limit(limit)
       .populate('user', ['username', 'avatar'])
-      .select(['-password', '-createdAt', '-__v'])
+      .select(['-password', '-__v'])
       .lean();
 
     return res.json({
@@ -218,25 +219,47 @@ postsController.deletePost = async (req, res) => {
   }
 };
 
-postsController.likePost = async (req, res) => {
-  const { likeCount } = req.body;
-
+postsController.likeOrUnlikePost = async (req, res) => {
   try {
-    const likedPost = await Post.findByIdAndUpdate(
-      req.params.id,
-      { likeCount },
-      { new: true }
-    );
+    const post = await Post.findById(req.params.id);
 
     // Invalid post id
-    if (!likedPost) {
+    if (!post) {
       return res.status(401).json({
         success: false,
         message: 'Post not found',
       });
     }
 
-    res.json({ success: true, message: 'Post is liked!', likedPost });
+    const likeOrDislikeCondition = { _id: req.params.id };
+
+    if (!post.likes.includes(req.userId)) {
+      const likedPost = await Post.findOneAndUpdate(
+        likeOrDislikeCondition,
+        { $push: { likes: req.userId } },
+        {
+          new: true,
+        }
+      );
+
+      return res.json({
+        success: true,
+        message: 'The post has been liked',
+        post: likedPost,
+      });
+    } else {
+      const dislikedPost = await Post.findOneAndUpdate(
+        likeOrDislikeCondition,
+        { $pull: { likes: req.userId } },
+        { new: true }
+      );
+
+      return res.json({
+        success: true,
+        message: 'The post has been disliked',
+        post: dislikedPost,
+      });
+    }
   } catch (error) {
     notifyServerError(res, error);
   }

@@ -3,15 +3,33 @@ import { call, put, takeLatest } from '@redux-saga/core/effects';
 // types
 import { PayloadAction } from '@reduxjs/toolkit';
 import { AxiosResponse } from 'axios';
-import { GetConversationsResponse } from '@/models/conversations';
+import {
+  CreateConversation,
+  GetConversationsResponse,
+} from '@/models/conversations';
 
-import { conversationApiClient } from '@/apis/conversationApi';
+import { conversationsApiClient } from '@/apis/conversationsApi';
 import { setConversations } from '../slices/conversationsSlice';
-import { getConversations } from '../actions/conversations';
+import { createConversation, getConversations } from '../actions/conversations';
 
-const { reqGetConversations } = conversationApiClient();
+const { reqCreateConversation, reqGetConversations } = conversationsApiClient();
 
-function* handleReqGetConversations(action: PayloadAction<string>) {
+function* handleReqCreateConv(action: PayloadAction<CreateConversation>) {
+  try {
+    const memberIds = action.payload;
+
+    const response: AxiosResponse<GetConversationsResponse> = yield call(
+      reqCreateConversation,
+      memberIds
+    );
+
+    yield put(setConversations(response.data));
+  } catch (error) {
+    console.log('Create conversation error 👉', error);
+  }
+}
+
+function* handleReqGetConvs(action: PayloadAction<string>) {
   try {
     const userId = action.payload;
 
@@ -27,7 +45,8 @@ function* handleReqGetConversations(action: PayloadAction<string>) {
 }
 
 function* conversationSaga() {
-  yield takeLatest(getConversations.request().type, handleReqGetConversations);
+  yield takeLatest(createConversation.request().type, handleReqCreateConv);
+  yield takeLatest(getConversations.request().type, handleReqGetConvs);
 }
 
 export default conversationSaga;

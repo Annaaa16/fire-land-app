@@ -6,15 +6,19 @@ export interface User {
   readonly _id: string;
   username: string;
   avatar: string;
+  followings: string[];
+  followers: string[];
 }
 
 export interface Post {
   readonly _id: string;
   user: User;
   content: string;
-  likeCount: number;
+  likes: string[];
   photo: string;
   photoId: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface HydrateResponse {
@@ -25,4 +29,8 @@ export interface HydrateResponse {
 export interface ErrorResponse {
   success: boolean;
   message: string;
+}
+
+export interface Map<T> {
+  [key: string]: T;
 }

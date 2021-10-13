@@ -32,3 +32,8 @@ export interface GetMessagesResponse {
   messages: Message[];
   conversationId: string;
 }
+
+export interface OnlineUser {
+  userId: string;
+  socketId: string;
+}

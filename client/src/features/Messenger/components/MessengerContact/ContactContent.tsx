@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 // clsx
 import clsx from 'clsx';
 
@@ -5,9 +7,22 @@ import clsx from 'clsx';
 import SearchIcon from '@mui/icons-material/Search';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
-import ContactFriendList from './ContactFriendList';
+import GroupsIcon from '@mui/icons-material/Groups';
+
+import ContactConversationList from './ContactConversationList';
+import ContactOnlineList from './ContactOnlineList';
+
+enum Contacts {
+  CONVERSATIONS,
+  ONLINE,
+  GROUPS,
+}
 
 function ContactContent() {
+  const { CONVERSATIONS, ONLINE, GROUPS } = Contacts;
+
+  const [contact, setContact] = useState<Contacts>(CONVERSATIONS);
+
   return (
     <>
       <div className={clsx('mt-5 px-8')}>
@@ -23,31 +38,69 @@ function ContactContent() {
           <SearchIcon className={clsx('text-lt-gray', 'cursor-pointer')} />
         </div>
 
-        <div className={clsx('flex items-center justify-between mt-6')}>
+        <div className={clsx('flex items-center justify-center mt-6')}>
           <button
+            onClick={() => setContact(CONVERSATIONS)}
             className={clsx(
-              'flex items-center py-2.5 px-7 min-w-[130px] rounded-full',
-              'bg-primary-v1 dark:bg-primary-v4'
+              'group i-flex-center min-w-[40px] min-h-[40px] rounded-full',
+              'bg-primary-v1 dark:bg-primary-v4',
+              'transition-all duration-300 ease-out',
+              'hover:pl-5 hover:pr-18 hover:duration-[350ms]'
             )}>
-            <ChatBubbleIcon className={clsx('!text-lg', 'text-white')} />
-            <span className={clsx('ml-1 font-bold', 'text-white')}>
+            <ChatBubbleIcon className={clsx('!text-base', 'text-white')} />
+            <span
+              className={clsx(
+                'font-bold invisible opacity-0 w-0',
+                'text-white',
+                'ease-out',
+                'group-hover:visible group-hover:opacity-100 group-hover:ml-1 group-hover:duration-300'
+              )}>
               Friends
             </span>
           </button>
+
           <button
+            onClick={() => setContact(ONLINE)}
             className={clsx(
-              'flex items-center py-2.5 px-7 min-w-[130px] rounded-full',
-              'transition-all ease-out',
-              'bg-gray-200 dark:text-white dark:bg-dk-tooltip-hv ',
-              'lg:hover:bg-gray-300 lg:dark:hover:bg-gray-700'
+              'group i-flex-center min-w-[40px] min-h-[40px] rounded-full mx-4',
+              'bg-gray-200 dark:bg-dk-tooltip-hv dark:text-white',
+              'transition-all duration-300 ease-out',
+              'hover:pl-5 hover:pr-16 hover:bg-gray-300 hover:duration-[350ms]'
             )}>
             <PeopleAltIcon className={clsx('!text-lg')} />
-            <span className={clsx('ml-1 font-bold')}>Groups</span>
+            <span
+              className={clsx(
+                'font-bold invisible opacity-0 w-0',
+                'ease-out',
+                'group-hover:visible group-hover:opacity-100 group-hover:ml-1 group-hover:duration-300'
+              )}>
+              Online
+            </span>
+          </button>
+
+          <button
+            onClick={() => setContact(GROUPS)}
+            className={clsx(
+              'group i-flex-center min-w-[40px] min-h-[40px] rounded-full',
+              'bg-gray-200 dark:bg-dk-tooltip-hv dark:text-white',
+              'transition-all duration-300 ease-out',
+              'hover:pl-5 hover:pr-17 hover:bg-gray-300 hover:duration-[350ms]'
+            )}>
+            <GroupsIcon className={clsx('!text-xl')} />
+            <span
+              className={clsx(
+                'font-bold invisible opacity-0 w-0',
+                'ease-out',
+                'group-hover:visible group-hover:opacity-100 group-hover:ml-1 group-hover:duration-300'
+              )}>
+              Groups
+            </span>
           </button>
         </div>
       </div>
 
-      <ContactFriendList />
+      {contact === CONVERSATIONS && <ContactConversationList />}
+      {contact === ONLINE && <ContactOnlineList />}
     </>
   );
 }
