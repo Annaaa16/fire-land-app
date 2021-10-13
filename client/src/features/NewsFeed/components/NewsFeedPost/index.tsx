@@ -11,7 +11,7 @@ import PostDetail from './PostDetail';
 import PostComment from './PostComment';
 
 function NewsFeedPost(props: Post) {
-  const { _id, content, photo } = props;
+  const { _id, content, photo, likes } = props;
 
   return (
     <div
@@ -23,8 +23,8 @@ function NewsFeedPost(props: Post) {
       <PostContent content={content} photo={photo} />
 
       <div className={clsx('px-2 md:px-4 pt-3.5 pb-2')}>
-        <PostDetail />
-        <PostActions />
+        <PostDetail likes={likes} />
+        <PostActions postId={_id} likes={likes} />
         <PostComment />
       </div>
     </div>

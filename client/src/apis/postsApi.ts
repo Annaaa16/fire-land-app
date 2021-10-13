@@ -48,11 +48,19 @@ export const postsApiClient = () => {
       }
     },
 
-    reqDeletePost: async (payload: string) => {
-      const postId = payload;
-
+    reqDeletePost: async (postId: string) => {
       try {
         const response = await axiosInstance.delete('/posts/' + postId);
+
+        return response;
+      } catch (error) {
+        return notifyServerError(error as AxiosError);
+      }
+    },
+
+    reqLikeOrDislikePost: async (postId: string) => {
+      try {
+        const response = await axiosInstance.patch(`posts/${postId}/like`);
 
         return response;
       } catch (error) {

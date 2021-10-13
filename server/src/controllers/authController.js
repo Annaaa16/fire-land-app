@@ -118,6 +118,8 @@ authController.getCurrentUser = async (req, res) => {
       _id: user._id,
       username: user.username,
       avatar: user.avatar,
+      followings: user.followings,
+      followers: user.followers,
     };
 
     res.json({

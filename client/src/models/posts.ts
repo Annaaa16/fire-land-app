@@ -29,3 +29,9 @@ export interface DeletePostResponse {
   success: boolean;
   message: string;
 }
+
+export interface LikeOrDislikePostResponse {
+  success: boolean;
+  message: string;
+  post: Post;
+}

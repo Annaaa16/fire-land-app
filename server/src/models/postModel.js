@@ -10,9 +10,9 @@ const PostSchema = new mongoose.Schema(
     content: {
       type: String,
     },
-    likeCount: {
-      type: Number,
-      default: 0,
+    likes: {
+      type: Array,
+      default: [],
     },
     photo: {
       type: String,

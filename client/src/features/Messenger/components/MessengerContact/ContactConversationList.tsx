@@ -5,9 +5,9 @@ import { authState$, conversationsState$ } from '@/redux/selectors';
 import { getConversations } from '@/redux/actions/conversations';
 import useMyDispatch from '@/hooks/useMyDispatch';
 
-import ContactFriend from './ContactFriend';
+import ContactFriend from './ContactConversation';
 
-function ContactFriendList() {
+function ContactConversationList() {
   const { currentUser } = useSelector(authState$);
   const { conversations } = useSelector(conversationsState$);
 
@@ -31,4 +31,4 @@ function ContactFriendList() {
   );
 }
 
-export default ContactFriendList;
+export default ContactConversationList;

@@ -39,10 +39,6 @@ function MessagesChat() {
   // Send id to socket
   useEffect(() => {
     socket.emit('addUser', currentUser._id);
-
-    socket.on('getUsers', (users: { userId: string; socketId: string }[]) => {
-      console.log('getUsers', users);
-    });
   }, [currentUser, socket]);
 
   return currentChat?.length > 0 ? (

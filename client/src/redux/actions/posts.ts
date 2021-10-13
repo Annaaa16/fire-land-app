@@ -59,3 +59,16 @@ export const deletePost = {
     type: 'deletePost/failure',
   }),
 };
+
+export const likeOrDislikePost = {
+  request: (payload?: string) => ({
+    type: 'likeOrDislikePost/request',
+    payload,
+  }),
+  success: () => ({
+    type: 'likeOrDislikePost/success',
+  }),
+  failure: () => ({
+    type: 'likeOrDislikePost/failure',
+  }),
+};

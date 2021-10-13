@@ -18,12 +18,12 @@ import useMyDispatch from '@/hooks/useMyDispatch';
 
 import User from '@/components/User';
 
-interface ContactFriendProps {
+interface ContactConversationProps {
   userId: string;
   conversation: Conversation;
 }
 
-function ContactFriend(props: ContactFriendProps) {
+function ContactConversation(props: ContactConversationProps) {
   const { userId, conversation } = props;
 
   const [friend, setFriend] = useState<GetUserResponse | null>(null);
@@ -58,7 +58,7 @@ function ContactFriend(props: ContactFriendProps) {
 
         setFriend(response.data);
       } catch (error) {
-        console.log(error);
+        console.log('Get friend error 👉', error);
       }
     })();
   }, [conversation, userId]);
@@ -92,4 +92,4 @@ function ContactFriend(props: ContactFriendProps) {
   );
 }
 
-export default ContactFriend;
+export default ContactConversation;

@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
 
-const Schema = mongoose.Schema;
-
 const UserSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -14,6 +12,14 @@ const UserSchema = new mongoose.Schema({
   },
   avatar: {
     type: String,
+  },
+  followings: {
+    type: Array,
+    default: [],
+  },
+  followers: {
+    type: Array,
+    default: [],
   },
 });
 

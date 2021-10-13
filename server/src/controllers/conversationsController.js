@@ -1,4 +1,4 @@
-// model
+// models
 const Conversation = require('../models/conversationModel');
 
 const { notifyServerError } = require('../helpers/notifyServer');
@@ -15,7 +15,7 @@ conversationsController.createConversation = async (req, res) => {
   try {
     await conversation.save();
 
-    return res.json({
+    return res.status(201).json({
       success: true,
       message: 'Create conversation successfully',
       conversation,

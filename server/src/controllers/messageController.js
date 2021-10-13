@@ -1,4 +1,4 @@
-// model
+// models
 const Message = require('../models/messageModel');
 
 const { notifyServerError } = require('../helpers/notifyServer');

@@ -13,3 +13,8 @@ export interface GetConversationsResponse {
 export interface ConversationsInitState {
   conversations: Conversation[];
 }
+
+export interface CreateConversation {
+  userId: string;
+  receiverId: string;
+}
