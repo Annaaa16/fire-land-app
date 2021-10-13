@@ -15,12 +15,7 @@ function ChatUser(props: ChatUserProps) {
   return (
     <div
       ref={elRef}
-      className={clsx(
-        compared,
-        'flex w-5/6 ml-auto',
-        !isNodeEqual && 'mt-4',
-        'transition-all'
-      )}>
+      className={clsx(compared, 'flex w-5/6 ml-auto', !isNodeEqual && 'mt-4')}>
       <p
         className={clsx(
           'flex ml-auto px-5 text-xs md:text-sm mb-2 py-2 rounded-3xl lg:rounded-full leading-5 break-all',

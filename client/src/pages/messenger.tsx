@@ -1,6 +1,6 @@
 // types
 import { GetServerSideProps } from 'next';
-import { LoginResponse } from '@/models/login';
+import { LoginResponse } from '@/models/auth';
 import { ErrorResponse } from '@/models/common';
 
 import { wrapper } from '@/redux/store';

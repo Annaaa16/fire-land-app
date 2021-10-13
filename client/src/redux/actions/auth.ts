@@ -1,6 +1,5 @@
 // types
-import { LoginFormData } from '@/models/login';
-import { RegisterFormData } from '@/models/register';
+import { LoginFormData, RegisterFormData } from '@/models/auth';
 
 export const loginUser = {
   request: (payload?: LoginFormData) => ({

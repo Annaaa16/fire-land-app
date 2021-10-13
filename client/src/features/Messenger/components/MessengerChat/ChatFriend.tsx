@@ -15,12 +15,7 @@ function ChatFriend(props: ChatFriendProps) {
   return (
     <div
       ref={elRef}
-      className={clsx(
-        compared,
-        'flex ml-3 w-5/6',
-        !isNodeEqual && 'mt-4',
-        'transition-all'
-      )}>
+      className={clsx(compared, 'flex ml-3 w-5/6', !isNodeEqual && 'mt-4')}>
       <p
         className={clsx(
           'inline-flex text-xs md:text-sm px-5 py-2 mb-2 rounded-3xl lg:rounded-full leading-5 break-all',
