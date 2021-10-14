@@ -13,6 +13,6 @@ router.post('/', conversationsController.createConversation);
 // @route GET api/conversations/:userId
 // @desc Get conversations of a user
 // @access Private
-router.get('/:userId', conversationsController.getConversationsOfUser);
+router.get('/:userId', conversationsController.getUserConversation);
 
 module.exports = router;

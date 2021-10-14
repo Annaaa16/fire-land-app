@@ -5,20 +5,38 @@ import clsx from 'clsx';
 import GroupIcon from '@mui/icons-material/Group';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
+import { authState$ } from '@/redux/selectors';
+import { useSelector } from 'react-redux';
+
 import User from '@/components/User';
 import PostHeaderOptions from './PostHeaderOptions';
+import PostHeaderBox from './PostHeaderBox';
 
-interface PostHeader {
+interface PostHeaderProps {
+  userId: string;
   postId: string;
+  username: string;
+  avatar: string;
 }
 
-function PostHeader(props: PostHeader) {
-  const { postId } = props;
+function PostHeader(props: PostHeaderProps) {
+  const { postId, username, avatar, userId } = props;
+
+  const { currentUser } = useSelector(authState$);
 
   return (
     <div className={clsx('relative', 'flex items-center px-2 md:px-4 py-4')}>
       <div className={clsx('flex items-center')}>
-        <User view='small' subClass={clsx('ml-1 md:ml-0 z-0')} />
+        <div className={clsx('relative', 'group ml-1 md:ml-0 z-0')}>
+          <User avatar={avatar} view='small' />
+          {currentUser._id !== userId && (
+            <PostHeaderBox
+              userId={userId}
+              username={username}
+              avatar={avatar}
+            />
+          )}
+        </div>
         <div className={clsx('ml-4')}>
           <span
             className={clsx(
@@ -27,7 +45,7 @@ function PostHeader(props: PostHeader) {
               'cursor-pointer',
               'lg:hover:underline'
             )}>
-            IG Dev
+            {username}
           </span>
           <div className={clsx('flex items-center mt-1')}>
             <span

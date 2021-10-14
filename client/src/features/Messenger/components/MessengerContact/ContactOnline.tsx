@@ -8,7 +8,15 @@ import { AxiosResponse } from 'axios';
 import { GetUserResponse } from '@/models/auth';
 import { User as UserType } from '@/models/common';
 
+import { conversationsState$ } from '@/redux/selectors';
+import { useSelector } from 'react-redux';
 import { authApiClient } from '@/apis/authApi';
+import { getMessages } from '@/redux/actions/messenger';
+import {
+  setConversationId,
+  setReceiverId,
+} from '@/redux/slices/messengerSlice';
+import useMyDispatch from '@/hooks/useMyDispatch';
 
 import User from '@/components/User';
 
@@ -19,7 +27,21 @@ interface ContactOnlineProps {
 function ContactOnline(props: ContactOnlineProps) {
   const { friendId } = props;
 
+  const { conversations } = useSelector(conversationsState$);
+
   const [onlineFriend, setOnlineFriend] = useState<UserType | null>(null);
+
+  const dispatch = useMyDispatch();
+
+  const handleGetMessages = () => {
+    const conversation = conversations.find((conv) =>
+      conv.memberIds.some((id) => id === onlineFriend?._id)
+    );
+
+    dispatch(getMessages.request({ conversationId: conversation!._id }));
+    dispatch(setConversationId(conversation!._id));
+    dispatch(setReceiverId(onlineFriend!._id));
+  };
 
   // Fetch online friend by friend ID
   useEffect(() => {
@@ -40,6 +62,7 @@ function ContactOnline(props: ContactOnlineProps) {
 
   return (
     <li
+      onClick={handleGetMessages}
       className={clsx(
         'flex items-center px-8 py-5',
         'dark:bg-dk-cpn',

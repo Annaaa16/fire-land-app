@@ -66,6 +66,9 @@ export const authApiServer = (ctx?: GetServerSidePropsContext) => {
     },
 
     reqValidateRefreshToken: async (refreshToken: string) => {
+      if (!refreshToken)
+        return { success: false, message: 'Client refresh token not found' };
+
       try {
         const { data } = await axiosInstance.post(
           'auth/validate-refresh-token',

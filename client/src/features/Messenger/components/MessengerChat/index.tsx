@@ -17,7 +17,7 @@ import ChatFooter from './ChatFooter';
 import ChatContent from './ChatContent';
 
 function MessagesChat() {
-  const { currentChat } = useSelector(messengerState$);
+  const { currentChat, conversationId } = useSelector(messengerState$);
   const { currentUser } = useSelector(authState$);
 
   const { socket } = useSocket();
@@ -41,7 +41,7 @@ function MessagesChat() {
     socket.emit('addUser', currentUser._id);
   }, [currentUser, socket]);
 
-  return currentChat?.length > 0 ? (
+  return conversationId ? (
     <div
       className={clsx(
         'flex flex-col flex-grow overflow-x-hidden',

@@ -223,9 +223,8 @@ postsController.likeOrUnlikePost = async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
 
-    // Invalid post id
     if (!post) {
-      return res.status(401).json({
+      return res.status(404).json({
         success: false,
         message: 'Post not found',
       });

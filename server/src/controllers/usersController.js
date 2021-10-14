@@ -12,20 +12,23 @@ usersController.followUser = async (req, res) => {
   if (userId !== req.userId) {
     try {
       const currentUser = await User.findById(req.userId);
-      const followUser = await User.findById(userId);
+      const followedUser = await User.findById(userId);
 
-      // Follow user not found
-      if (!followUser) {
+      if (!followedUser) {
         return res
           .status(403)
-          .json({ success: false, message: 'Follow user not found' });
+          .json({ success: false, message: 'Followed user not found' });
       }
 
       if (!currentUser.followings.includes(userId)) {
         await currentUser.updateOne({ $push: { followings: userId } });
-        await followUser.updateOne({ $push: { followers: userId } });
+        await followedUser.updateOne({ $push: { followers: userId } });
 
-        return res.json({ success: true, message: 'User has been followed' });
+        return res.json({
+          success: true,
+          message: 'User has been followed',
+          userId,
+        });
       } else {
         return res.status(403).json({
           success: false,
@@ -49,10 +52,9 @@ usersController.unfollowUser = async (req, res) => {
   if (userId !== req.userId) {
     try {
       const currentUser = await User.findById(req.userId);
-      const followUser = await User.findById(userId);
+      const unfollowedUser = await User.findById(userId);
 
-      // Unfollow user not found
-      if (!followUser) {
+      if (!unfollowedUser) {
         return res
           .status(403)
           .json({ success: false, message: 'Unfollow user not found' });
@@ -60,9 +62,13 @@ usersController.unfollowUser = async (req, res) => {
 
       if (currentUser.followings.includes(userId)) {
         await currentUser.updateOne({ $pull: { followings: userId } });
-        await followUser.updateOne({ $pull: { followers: userId } });
+        await unfollowedUser.updateOne({ $pull: { followers: userId } });
 
-        return res.json({ success: true, message: 'User has been unfollowed' });
+        return res.json({
+          success: true,
+          message: 'User has been unfollowed',
+          userId,
+        });
       } else {
         return res.status(403).json({
           success: false,
