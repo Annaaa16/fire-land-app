@@ -40,7 +40,7 @@ function* handleReqGetMessages(action: PayloadAction<GetMessagesData>) {
       conversationId
     );
 
-    yield put(setCurrentChat(response.data.messages));
+    yield put(setCurrentChat(response.data));
   } catch (error) {
     console.log('Get messages error 👉', error);
   }

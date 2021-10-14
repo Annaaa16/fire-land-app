@@ -1,8 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 // types
+
+// types
 import { PayloadAction } from '@reduxjs/toolkit';
-import { Message, MessengerInitState } from '@/models/messenger';
+import {
+  GetMessagesResponse,
+  Message,
+  MessengerInitState,
+} from '@/models/messenger';
 
 const initialState: MessengerInitState = {
   currentChat: [],
@@ -14,10 +20,10 @@ const messengerSlice = createSlice({
   name: 'messenger',
   initialState,
   reducers: {
-    setCurrentChat: (state, action) => {
-      const currentChat = action.payload;
+    setCurrentChat: (state, action: PayloadAction<GetMessagesResponse>) => {
+      const { success, messages } = action.payload;
 
-      state.currentChat = currentChat;
+      if (success) state.currentChat = messages;
     },
 
     addMessage: (state, action: PayloadAction<Message>) => {

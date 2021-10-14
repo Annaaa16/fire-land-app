@@ -47,6 +47,10 @@ module.exports = {
         gray: {
           DEFAULT: '#65676b',
         },
+        blue: {
+          DEFAULT: '#1877f2',
+          hv: '#1771e6',
+        },
         lt: {
           body: '#f7f7fa',
           line: '#dedeea',
@@ -73,7 +77,7 @@ module.exports = {
         'primary-v2': '4px 7px 12px 0 rgb(35 210 226 / 20%)',
         'primary-v3': '4px 7px 12px 0 rgb(119 80 248 / 20%)',
         'primary-v4': '4px 7px 12px 0 rgb(64 208 79 / 20%)',
-        'sender-header-ls': '0 1px 20px rgba(0, 0, 0, 0.18)',
+        box: '0 1px 20px rgba(0, 0, 0, 0.18)',
       },
       transitionDuration: {
         250: '250ms',
@@ -82,6 +86,7 @@ module.exports = {
     fontSize: {
       '2xs': '10px',
       xs: '12px',
+      '2sm': '13px',
       sm: '14px',
       base: '16px',
       lg: '18px',
