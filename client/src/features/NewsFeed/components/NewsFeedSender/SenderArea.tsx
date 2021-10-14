@@ -236,9 +236,7 @@ function NewsFeedSenderArea() {
               </li>
               <li
                 className={clsx('relative', 'group px-2.5', 'cursor-pointer')}>
-                <PersonAddIcon
-                  className={clsx('!text-2xl', 'text-[#1877f2]')}
-                />
+                <PersonAddIcon className={clsx('!text-2xl', 'text-blue')} />
                 <Tooltip title='Tag People' direction='ttb' />
               </li>
               <li

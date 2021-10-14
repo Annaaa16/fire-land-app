@@ -191,6 +191,13 @@ authController.getAccessToken = (req, res) => {
 authController.validateRefreshToken = (req, res) => {
   const { refreshToken } = req.body;
 
+  // Empty refresh token
+  if (!refreshToken) {
+    return res
+      .status(403)
+      .json({ success: false, message: 'Refresh token not found' });
+  }
+
   jwt.verify(refreshToken, REFRESH_TOKEN_SECRET, (error) => {
     if (error) {
       return res

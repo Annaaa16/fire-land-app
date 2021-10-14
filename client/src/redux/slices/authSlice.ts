@@ -3,9 +3,13 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 // next redux wrapper
 import { HYDRATE } from 'next-redux-wrapper';
 
+// lodash
+import _ from 'lodash';
+
 // types
 import { AuthInitState, LoginResponse, RegisterResponse } from '@/models/auth';
 import { HydrateResponse } from '@/models/common';
+import { FollowResponse, UnfollowResponse } from '@/models/users';
 
 export const initialState: AuthInitState = {
   currentUser: {
@@ -53,18 +57,32 @@ const authSlice = createSlice({
       };
     },
 
+    setRegisterStatus(state, action: PayloadAction<RegisterResponse>) {
+      const { success, message } = action.payload;
+
+      if (success) {
+        return {
+          ...state,
+          registerStatus: { ...state.registerStatus, success, message },
+        };
+      }
+    },
+
     clearMessage: (state) => {
       state.currentUser.message = '';
       state.registerStatus.message = '';
     },
 
-    setRegisterStatus(state, action: PayloadAction<RegisterResponse>) {
-      const { success, message } = action.payload;
+    addFollowingUser: (state, action: PayloadAction<FollowResponse>) => {
+      const { success, userId } = action.payload;
 
-      return {
-        ...state,
-        registerStatus: { ...state.registerStatus, success, message },
-      };
+      if (success) state.currentUser.followings.push(userId);
+    },
+
+    deleteFollowingUser: (state, action: PayloadAction<UnfollowResponse>) => {
+      const { success, userId } = action.payload;
+
+      if (success) _.remove(state.currentUser.followings, (n) => n === userId);
     },
   },
   extraReducers: {
@@ -74,5 +92,12 @@ const authSlice = createSlice({
   },
 });
 
-export const { setUser, clearMessage, setRegisterStatus } = authSlice.actions;
+export const {
+  setUser,
+  clearMessage,
+  setRegisterStatus,
+  addFollowingUser,
+  deleteFollowingUser,
+} = authSlice.actions;
+
 export default authSlice.reducer;

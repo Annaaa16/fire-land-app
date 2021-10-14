@@ -9,13 +9,19 @@ import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
 import User from '@/components/User';
 import Tooltip from '@/components/Tooltip';
 
-function PostComment() {
+interface PostCommentProps {
+  avatar: string;
+}
+
+function PostComment(props: PostCommentProps) {
+  const { avatar } = props;
+
   return (
     <form
       className={clsx(
         'flex items-center border-t border-lt-line dark:border-dk-line mt-1 pt-4 pb-3'
       )}>
-      <User view='small' />
+      <User avatar={avatar} view='small' />
       <div
         className={clsx(
           'flex flex-1 ml-2.5 justify-between rounded-3xl',

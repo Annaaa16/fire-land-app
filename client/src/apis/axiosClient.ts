@@ -33,8 +33,8 @@ export const axiosClient = (refreshToken?: string) => {
       const { config, response } = error;
       const originalRequest = config;
 
-      // Invalid token
-      if (response.status === 403 && !originalRequest._retry) {
+      // Expired token
+      if (response.status === 401 && !originalRequest._retry) {
         originalRequest._retry = true;
 
         const { data } = await axiosInstance.post('/auth/token', {

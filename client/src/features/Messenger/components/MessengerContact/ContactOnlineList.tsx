@@ -28,7 +28,7 @@ function ContactOnlineList() {
       {onlineUsers.map(
         (user) =>
           currentUser.followings.includes(user.userId) && (
-            <ContactOnline friendId={user.userId} />
+            <ContactOnline key={user.userId} friendId={user.userId} />
           )
       )}
     </ul>

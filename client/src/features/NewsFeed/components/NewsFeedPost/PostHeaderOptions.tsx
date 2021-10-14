@@ -42,7 +42,7 @@ function PostHeaderOptions(props: PostHeaderOptionsProps) {
     <ul
       className={clsx(
         'absolute right-0 top-full z-[10]',
-        'p-2 mt-1 min-w-max rounded-lg shadow-sender-header-ls scale-0 opacity-0 invisible',
+        'p-2 mt-1 min-w-max rounded-lg shadow-box scale-0 opacity-0 invisible',
         'bg-white dark:bg-dk-cpn',
         'origin-top-right transition-all duration-[350ms] ease-out',
         'pointer-events-none',

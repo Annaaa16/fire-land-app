@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 // clsx
 import clsx from 'clsx';
@@ -8,6 +9,10 @@ import SearchIcon from '@mui/icons-material/Search';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import GroupsIcon from '@mui/icons-material/Groups';
+
+import { authState$ } from '@/redux/selectors';
+import { getConversations } from '@/redux/actions/conversations';
+import useMyDispatch from '@/hooks/useMyDispatch';
 
 import ContactConversationList from './ContactConversationList';
 import ContactOnlineList from './ContactOnlineList';
@@ -21,7 +26,16 @@ enum Contacts {
 function ContactContent() {
   const { CONVERSATIONS, ONLINE, GROUPS } = Contacts;
 
+  const { currentUser } = useSelector(authState$);
+
   const [contact, setContact] = useState<Contacts>(CONVERSATIONS);
+
+  const dispatch = useMyDispatch();
+
+  // Get conversations of current user
+  useEffect(() => {
+    dispatch(getConversations.request(currentUser._id));
+  }, [currentUser, dispatch]);
 
   return (
     <>
@@ -99,8 +113,9 @@ function ContactContent() {
         </div>
       </div>
 
-      {contact === CONVERSATIONS && <ContactConversationList />}
-      {contact === ONLINE && <ContactOnlineList />}
+      {/* {contact === CONVERSATIONS && <ContactConversationList />}
+      {contact === ONLINE && <ContactOnlineList />} */}
+      <ContactOnlineList />
     </>
   );
 }

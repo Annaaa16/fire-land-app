@@ -16,7 +16,7 @@ function WidgetsGroups() {
         <h3 className={clsx('font-bold', 'dark:text-white')}>Groups</h3>
         <span
           className={clsx(
-            'text-[13px] font-bold',
+            'text-2sm font-bold',
             'text-lt-gray',
             'transition-all',
             'cursor-pointer',
@@ -52,7 +52,7 @@ function WidgetsGroups() {
           </div>
           <span
             className={clsx(
-              'text-[13px] font-bold',
+              'text-2sm font-bold',
               'text-primary-v1 dark:text-primary-v4',
               'transition-all ease-out',
               'cursor-pointer',

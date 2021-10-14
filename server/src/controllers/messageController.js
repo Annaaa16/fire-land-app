@@ -6,9 +6,9 @@ const { notifyServerError } = require('../helpers/notifyServer');
 const messagesController = {};
 
 messagesController.createMessage = async (req, res) => {
-  const message = new Message(req.body);
-
   try {
+    const message = new Message(req.body);
+
     await message.save();
 
     return res.json({ success: true, message });

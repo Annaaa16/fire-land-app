@@ -11,13 +11,6 @@ function ContactConversationList() {
   const { currentUser } = useSelector(authState$);
   const { conversations } = useSelector(conversationsState$);
 
-  const dispatch = useMyDispatch();
-
-  // Set conversations first mount
-  useEffect(() => {
-    dispatch(getConversations.request(currentUser._id));
-  }, [currentUser, dispatch]);
-
   return (
     <ul className='mt-7'>
       {conversations?.map((conversation) => (

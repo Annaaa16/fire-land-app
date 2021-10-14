@@ -1,5 +1,6 @@
 // models
 const Conversation = require('../models/conversationModel');
+const User = require('../models/userModel');
 
 const { notifyServerError } = require('../helpers/notifyServer');
 
@@ -25,10 +26,18 @@ conversationsController.createConversation = async (req, res) => {
   }
 };
 
-conversationsController.getConversationsOfUser = async (req, res) => {
+conversationsController.getUserConversation = async (req, res) => {
   const { userId } = req.params;
 
   try {
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res
+        .status(404)
+        .json({ success: false, message: 'User not found to get messages' });
+    }
+
     const conversations = await Conversation.find({
       memberIds: { $in: [userId] },
     });
@@ -39,7 +48,7 @@ conversationsController.getConversationsOfUser = async (req, res) => {
       conversations,
     });
   } catch (error) {
-    notifyServerError(error);
+    notifyServerError(res, error);
   }
 };
 
