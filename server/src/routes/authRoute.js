@@ -1,7 +1,7 @@
 const express = require('express');
 
-const authController = require('../controllers/authController');
 const verifyToken = require('../middlewares/authMiddleware');
+const authController = require('../controllers/authController');
 
 const router = express.Router();
 
@@ -15,24 +15,14 @@ router.post('/register', authController.register);
 // @access Public
 router.post('/login', authController.login);
 
-// @route GET api/auth/user
-// @desc Get current user
-// @access Private
-router.get('/user', verifyToken, authController.getCurrentUser);
-
-// @route GET api/auth/user/:userId
-// @desc Get user by id
-// @access Private
-router.get('/user/:userId', authController.getUserById);
-
 // @route POST api/auth/token
 // @desc Generate new access token
 // @access Private
-router.post('/token', authController.getAccessToken);
+router.post('/token', verifyToken, authController.getAccessToken);
 
-// @route POST api/auth/validate-refresh-token
-// @desc Validate refresh token
+// @route POST api/auth/verify-token
+// @desc Validate access token
 // @access Private
-router.post('/validate-refresh-token', authController.validateRefreshToken);
+router.post('/verify-token', verifyToken, authController.verifyToken);
 
 module.exports = router;

@@ -8,11 +8,15 @@ const router = express.Router();
 // @route POST api/conversations
 // @desc Create new conversation
 // @access Private
-router.post('/', conversationsController.createConversation);
+router.post('/', verifyToken, conversationsController.createConversation);
 
 // @route GET api/conversations/:userId
 // @desc Get conversations of a user
 // @access Private
-router.get('/:userId', conversationsController.getUserConversation);
+router.get(
+  '/:userId',
+  verifyToken,
+  conversationsController.getUserConversation
+);
 
 module.exports = router;

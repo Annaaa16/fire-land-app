@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 
 const User = require('../models/userModel');
 
-const { notifyServerError } = require('../helpers/notifyServer');
+const { notifyServerError } = require('../helpers/notifyServerError');
 const {
   ACCESS_TOKEN_SECRET,
   REFRESH_TOKEN_SECRET,
@@ -81,9 +81,15 @@ authController.login = async (req, res) => {
         .json({ success: false, message: 'Incorrect username or password' });
     }
 
-    const accessToken = jwt.sign({ userId: user._id }, ACCESS_TOKEN_SECRET, {
-      expiresIn: ACCESS_TOKEN_EXP,
-    });
+    const tokenExp = new Date(Date.now() + ACCESS_TOKEN_EXP);
+
+    const accessToken = jwt.sign(
+      { userId: user._id, tokenExp },
+      ACCESS_TOKEN_SECRET,
+      {
+        expiresIn: ACCESS_TOKEN_EXP,
+      }
+    );
     const refreshToken = jwt.sign({ userId: user._id }, REFRESH_TOKEN_SECRET);
 
     const filteredUser = {
@@ -98,56 +104,6 @@ authController.login = async (req, res) => {
       user: filteredUser,
       accessToken,
       refreshToken,
-    });
-  } catch (error) {
-    notifyServerError(res, error);
-  }
-};
-
-authController.getCurrentUser = async (req, res) => {
-  try {
-    const user = await User.findById(req.userId).select('-password');
-
-    if (!user) {
-      return res
-        .status(400)
-        .json({ success: false, message: 'User not found' });
-    }
-
-    const filteredUser = {
-      _id: user._id,
-      username: user.username,
-      avatar: user.avatar,
-      followings: user.followings,
-      followers: user.followers,
-    };
-
-    res.json({
-      success: true,
-      message: 'User has successfully logged in',
-      user: filteredUser,
-    });
-  } catch (error) {
-    notifyServerError(res, error);
-  }
-};
-
-authController.getUserById = async (req, res) => {
-  const { userId } = req.params;
-
-  try {
-    const user = await User.findById(userId).select('-password');
-
-    if (!user) {
-      return res
-        .status(400)
-        .json({ success: false, message: 'User not found' });
-    }
-
-    res.json({
-      success: true,
-      message: 'Get user successfully',
-      user,
     });
   } catch (error) {
     notifyServerError(res, error);
@@ -188,24 +144,24 @@ authController.getAccessToken = (req, res) => {
   }
 };
 
-authController.validateRefreshToken = (req, res) => {
-  const { refreshToken } = req.body;
+authController.verifyToken = (req, res) => {
+  const { accessToken } = req.body;
 
-  // Empty refresh token
-  if (!refreshToken) {
+  // Empty access token
+  if (!accessToken) {
     return res
-      .status(403)
-      .json({ success: false, message: 'Refresh token not found' });
+      .status(401)
+      .json({ success: false, message: 'Access token not found' });
   }
 
-  jwt.verify(refreshToken, REFRESH_TOKEN_SECRET, (error) => {
+  jwt.verify(accessToken, ACCESS_TOKEN_SECRET, (error) => {
     if (error) {
       return res
         .status(401)
-        .json({ success: false, message: 'Invalid refresh token' });
+        .json({ success: false, message: 'Token is expired' });
     }
 
-    res.json({ success: true, message: 'Valid refresh token' });
+    res.json({ success: true, message: 'Valid access token' });
   });
 };
 

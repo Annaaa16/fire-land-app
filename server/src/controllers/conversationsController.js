@@ -2,18 +2,18 @@
 const Conversation = require('../models/conversationModel');
 const User = require('../models/userModel');
 
-const { notifyServerError } = require('../helpers/notifyServer');
+const { notifyServerError } = require('../helpers/notifyServerError');
 
 const conversationsController = {};
 
 conversationsController.createConversation = async (req, res) => {
   const { senderId, receiverId } = req.body;
 
-  const conversation = new Conversation({
-    memberIds: [senderId, receiverId],
-  });
-
   try {
+    const conversation = new Conversation({
+      memberIds: [senderId, receiverId],
+    });
+
     await conversation.save();
 
     return res.status(201).json({
