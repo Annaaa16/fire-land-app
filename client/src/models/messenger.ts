@@ -22,6 +22,12 @@ export interface MessengerInitState {
   receiverId: string;
 }
 
+export interface OnlineUser {
+  userId: string;
+  socketId: string;
+}
+
+// === Responses ===
 export interface CreateMessageResponse {
   success: boolean;
   message: Message;
@@ -31,9 +37,4 @@ export interface GetMessagesResponse {
   success: boolean;
   messages: Message[];
   conversationId: string;
-}
-
-export interface OnlineUser {
-  userId: string;
-  socketId: string;
 }
