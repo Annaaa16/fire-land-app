@@ -19,6 +19,7 @@
     "axios": "^0.21.4",
     "clsx": "^1.1.1",
     "js-cookie": "^3.0.1",
+    "jsonwebtoken": "^8.5.1",
     "nanoid": "^3.1.25",
     "next": "11.1.2",
     "next-redux-cookie-wrapper": "^2.1.0",
@@ -40,6 +41,7 @@
   },
   "devDependencies": {
     "@types/js-cookie": "^3.0.0",
+    "@types/jsonwebtoken": "^8.5.5",
     "@types/react": "17.0.20",
     "autoprefixer": "^10.3.4",
     "eslint": "7.32.0",
