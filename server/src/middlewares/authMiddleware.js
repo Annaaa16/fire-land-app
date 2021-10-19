@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-const { ACCESS_TOKEN_SECRET } = require('../constants');
+const { TOKENS } = require('../constants');
 
 const verifyToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
@@ -9,10 +9,10 @@ const verifyToken = (req, res, next) => {
   if (!token) {
     return res
       .status(401)
-      .json({ success: false, message: 'Access token not found' });
+      .json({ success: false, message: 'Header access token not found' });
   }
 
-  jwt.verify(token, ACCESS_TOKEN_SECRET, (error, decoded) => {
+  jwt.verify(token, TOKENS.ACCESS_TOKEN_SECRET, (error, decoded) => {
     if (error) {
       return res.status(401).json({ success: false, message: 'Invalid token' });
     }

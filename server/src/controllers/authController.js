@@ -3,12 +3,9 @@ const jwt = require('jsonwebtoken');
 
 const User = require('../models/userModel');
 
+const { TOKENS } = require('../constants');
 const { notifyServerError } = require('../helpers/notifyServerError');
-const {
-  ACCESS_TOKEN_SECRET,
-  REFRESH_TOKEN_SECRET,
-  ACCESS_TOKEN_EXP,
-} = require('../constants');
+const getTokens = require('../helpers/getTokens');
 
 const authController = {};
 
@@ -81,17 +78,6 @@ authController.login = async (req, res) => {
         .json({ success: false, message: 'Incorrect username or password' });
     }
 
-    const tokenExp = new Date(Date.now() + ACCESS_TOKEN_EXP);
-
-    const accessToken = jwt.sign(
-      { userId: user._id, tokenExp },
-      ACCESS_TOKEN_SECRET,
-      {
-        expiresIn: ACCESS_TOKEN_EXP,
-      }
-    );
-    const refreshToken = jwt.sign({ userId: user._id }, REFRESH_TOKEN_SECRET);
-
     const filteredUser = {
       _id: user._id,
       username: user.username,
@@ -102,8 +88,8 @@ authController.login = async (req, res) => {
       success: true,
       message: 'User has successfully logged in',
       user: filteredUser,
-      accessToken,
-      refreshToken,
+      accessToken: getTokens.accessToken(user._id),
+      refreshToken: getTokens.refreshToken(user._id),
     });
   } catch (error) {
     notifyServerError(res, error);
@@ -121,7 +107,7 @@ authController.getAccessToken = (req, res) => {
   }
 
   try {
-    jwt.verify(refreshToken, REFRESH_TOKEN_SECRET, (error, decoded) => {
+    jwt.verify(refreshToken, TOKENS.REFRESH_TOKEN_SECRET, (error, decoded) => {
       if (error) {
         return res
           .status(401)
@@ -129,15 +115,10 @@ authController.getAccessToken = (req, res) => {
       }
 
       // Sign with userId after decoded user param
-      const accessToken = jwt.sign(
-        { userId: decoded?.userId },
-        ACCESS_TOKEN_SECRET,
-        {
-          expiresIn: ACCESS_TOKEN_EXP,
-        }
-      );
-
-      res.json({ success: true, accessToken });
+      res.json({
+        success: true,
+        accessToken: getTokens.accessToken(decoded?.userId),
+      });
     });
   } catch (error) {
     notifyServerError(res, error);
@@ -154,7 +135,7 @@ authController.verifyToken = (req, res) => {
       .json({ success: false, message: 'Access token not found' });
   }
 
-  jwt.verify(accessToken, ACCESS_TOKEN_SECRET, (error) => {
+  jwt.verify(accessToken, TOKENS.ACCESS_TOKEN_SECRET, (error) => {
     if (error) {
       return res
         .status(401)
