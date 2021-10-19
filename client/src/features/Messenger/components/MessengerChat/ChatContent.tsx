@@ -1,5 +1,4 @@
 import { useRef, useLayoutEffect } from 'react';
-import { useSelector } from 'react-redux';
 
 // clsx
 import clsx from 'clsx';
@@ -10,14 +9,14 @@ import { nanoid } from 'nanoid';
 // react overlayscrollbars
 import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
 
-import { authState$, messengerState$ } from '@/redux/selectors';
+import { useMessengerSelector, useUsersSelector } from '@/redux/selectors';
 
 import ChatFriend from './ChatFriend';
 import ChatUser from './ChatUser';
 
 function ChatContent() {
-  const { currentChat } = useSelector(messengerState$);
-  const { currentUser } = useSelector(authState$);
+  const { currentChat } = useMessengerSelector();
+  const { currentUser } = useUsersSelector();
 
   const scrollRef = useRef<OverlayScrollbarsComponent>(null);
 

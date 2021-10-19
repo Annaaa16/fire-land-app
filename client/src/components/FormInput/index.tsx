@@ -1,5 +1,3 @@
-import { useSelector } from 'react-redux';
-
 // clsx
 import clsx from 'clsx';
 
@@ -7,11 +5,10 @@ import clsx from 'clsx';
 import { UseFormRegister } from 'react-hook-form';
 
 // types
-import { LoginFormData } from '@/models/login';
-import { RegisterFormData } from '@/models/register';
+import { LoginFormData, RegisterFormData } from '@/models/auth';
 
-import { authState$ } from '@/redux/selectors';
 import { clearMessage } from '@/redux/slices/authSlice';
+import { useAuthSelector } from '@/redux/selectors';
 import useMyDispatch from '@/hooks/useMyDispatch';
 
 interface FormInputProps {
@@ -24,12 +21,7 @@ interface FormInputProps {
 function FormInput(props: FormInputProps) {
   const { field, name, register, errors } = props;
 
-  const { success: isLoginSuccess, message: serverErrorLogin } =
-    useSelector(authState$).currentUser;
-
-  const { success: isRegisterSuccess, message: serverErrorRegister } =
-    useSelector(authState$).registerStatus;
-
+  const { authStatus, registerStatus } = useAuthSelector();
   const dispatch = useMyDispatch();
 
   return (
@@ -46,7 +38,7 @@ function FormInput(props: FormInputProps) {
           autoComplete='off'
           onChange={(e) => {
             register(name).onChange(e);
-            (serverErrorLogin || serverErrorRegister) &&
+            (authStatus.message || registerStatus.message) &&
               dispatch(clearMessage());
           }}
         />
@@ -63,8 +55,10 @@ function FormInput(props: FormInputProps) {
       </div>
       <span className={clsx('block mt-1.5 text-xs', 'text-[#f02849]')}>
         {errors[name]?.message ||
-          (!isLoginSuccess && serverErrorLogin) ||
-          (!isRegisterSuccess && name === 'username' && serverErrorRegister)}
+          (!authStatus.success && authStatus.message) ||
+          (!registerStatus.success &&
+            name === 'username' &&
+            registerStatus.message)}
       </span>
     </>
   );

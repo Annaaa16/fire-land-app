@@ -35,7 +35,7 @@ function User(props: UserProps) {
       {isUser ? (
         <div
           className={clsx(
-            'absolute left-1/2 -bottom-2.5',
+            'absolute left-1/2 -bottom-2.5 z-[1]',
             'i-flex-center w-3.5 h-3.5 p-px -translate-x-1/2 border border-white rounded-full',
             'bg-green'
           )}>
@@ -44,7 +44,7 @@ function User(props: UserProps) {
       ) : (
         <span
           className={clsx(
-            'absolute -left-px top-0.5',
+            'absolute -left-px top-0.5 z-[1]',
             'w-2.5 h-2.5 border-2 border-white rounded-full',
             'bg-green'
           )}>

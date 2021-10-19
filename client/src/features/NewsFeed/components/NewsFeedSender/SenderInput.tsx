@@ -1,5 +1,4 @@
 import { useContext } from 'react';
-import { useSelector } from 'react-redux';
 
 // clsx
 import clsx from 'clsx';
@@ -9,13 +8,13 @@ import VideoCallIcon from '@mui/icons-material/VideoCall';
 import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary';
 import SentimentVerySatisfiedIcon from '@mui/icons-material/SentimentVerySatisfied';
 
-import { authState$ } from '@/redux/selectors';
+import { useUsersSelector } from '@/redux/selectors';
 import { GlobalContext } from '@/contexts/GlobalContext';
 
 import User from '@/components/User';
 
 function NewsFeedSenderInput() {
-  const { avatar } = useSelector(authState$).currentUser;
+  const { currentUser } = useUsersSelector();
 
   const { toggleSenderArea } = useContext(GlobalContext);
 
@@ -30,7 +29,11 @@ function NewsFeedSenderInput() {
         'bg-lt-cpn dark:bg-dk-cpn'
       )}>
       <div className={clsx('flex items-center')}>
-        <User view='small' avatar={avatar} subClass={clsx('ml-1 md:ml-0')} />
+        <User
+          view='small'
+          avatar={currentUser.avatar}
+          subClass={clsx('ml-1 md:ml-0')}
+        />
         <input
           onClick={openSenderArea}
           placeholder={`What's on your mind, IG Dev`}

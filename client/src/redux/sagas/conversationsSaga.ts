@@ -10,16 +10,19 @@ import {
 
 import { conversationsApiClient } from '@/apis/conversationsApi';
 import { setConversations } from '../slices/conversationsSlice';
-import { createConversation, getConversations } from '../actions/conversations';
+import {
+  createConversation as createConversationAct,
+  getConversations as getConversationsAct,
+} from '../actions/conversations';
 
-const { reqCreateConversation, reqGetConversations } = conversationsApiClient();
+const { createConversation, getConversations } = conversationsApiClient();
 
-function* handleReqCreateConv(action: PayloadAction<CreateConversation>) {
+function* handleCreateConversation(action: PayloadAction<CreateConversation>) {
   try {
     const memberIds = action.payload;
 
     const response: AxiosResponse<GetConversationsResponse> = yield call(
-      reqCreateConversation,
+      createConversation,
       memberIds
     );
 
@@ -29,12 +32,12 @@ function* handleReqCreateConv(action: PayloadAction<CreateConversation>) {
   }
 }
 
-function* handleReqGetConvs(action: PayloadAction<string>) {
+function* handleGetConversations(action: PayloadAction<string>) {
   try {
     const userId = action.payload;
 
     const response: AxiosResponse<GetConversationsResponse> = yield call(
-      reqGetConversations,
+      getConversations,
       userId
     );
 
@@ -45,8 +48,11 @@ function* handleReqGetConvs(action: PayloadAction<string>) {
 }
 
 function* conversationSaga() {
-  yield takeLatest(createConversation.request().type, handleReqCreateConv);
-  yield takeLatest(getConversations.request().type, handleReqGetConvs);
+  yield takeLatest(
+    createConversationAct.request().type,
+    handleCreateConversation
+  );
+  yield takeLatest(getConversationsAct.request().type, handleGetConversations);
 }
 
 export default conversationSaga;

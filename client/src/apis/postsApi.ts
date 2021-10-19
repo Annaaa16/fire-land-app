@@ -1,7 +1,14 @@
 // types
-import { GetServerSidePropsContext } from 'next';
 import { AxiosError } from 'axios';
-import { GetPosts, UpdatePost } from '../redux/actions/posts';
+import {
+  CreatePostsResponse,
+  DeletePostResponse,
+  GetPosts,
+  GetPostsResponse,
+  LikePostResponse,
+  UpdatePost,
+  UpdatePostResponse,
+} from '@/models/posts';
 
 import { axiosClient } from './axiosClient';
 import { axiosServer } from './axiosServer';
@@ -13,80 +20,85 @@ export const postsApiClient = () => {
   const axiosInstance = axiosClient(refreshToken);
 
   return {
-    reqCreatePost: async (uploadData: FormData) => {
+    createPost: async (uploadData: FormData) => {
       try {
-        const response = await axiosInstance.post('/posts', uploadData);
+        const response = await axiosInstance.post<CreatePostsResponse>(
+          '/posts',
+          uploadData
+        );
 
         return response;
       } catch (error) {
-        return notifyServerError(error as AxiosError);
+        return notifyServerError('Create post', error as AxiosError);
       }
     },
 
-    reqGetPosts: async (params: GetPosts) => {
+    getPosts: async (params: GetPosts) => {
       try {
-        const response = await axiosInstance.get('/posts', { params });
+        const response = await axiosInstance.get<GetPostsResponse>('/posts', {
+          params,
+        });
 
         return response;
       } catch (error) {
-        return notifyServerError(error as AxiosError);
+        return notifyServerError('Get posts', error as AxiosError);
       }
     },
 
-    reqUpdatePost: async (payload: UpdatePost) => {
+    updatePost: async (payload: UpdatePost) => {
       const { postId, updateData } = payload;
 
       try {
-        const response = await axiosInstance.put(
+        const response = await axiosInstance.put<UpdatePostResponse>(
           '/posts/' + postId,
           updateData
         );
 
         return response;
       } catch (error) {
-        return notifyServerError(error as AxiosError);
+        return notifyServerError('Update post', error as AxiosError);
       }
     },
 
-    reqDeletePost: async (postId: string) => {
+    deletePost: async (postId: string) => {
       try {
-        const response = await axiosInstance.delete('/posts/' + postId);
+        const response = await axiosInstance.delete<DeletePostResponse>(
+          '/posts/' + postId
+        );
 
         return response;
       } catch (error) {
-        return notifyServerError(error as AxiosError);
+        return notifyServerError('Delete post', error as AxiosError);
       }
     },
 
-    reqLikeOrDislikePost: async (postId: string) => {
+    likePost: async (postId: string) => {
       try {
-        const response = await axiosInstance.patch(`posts/${postId}/like`);
+        const response = await axiosInstance.patch<LikePostResponse>(
+          `posts/${postId}/like`
+        );
 
         return response;
       } catch (error) {
-        return notifyServerError(error as AxiosError);
+        return notifyServerError('Like post', error as AxiosError);
       }
     },
   };
 };
 
-export const postsApiServer = (
-  token: string,
-  { req }: GetServerSidePropsContext
-) => {
-  const accessToken = req.cookies.ACCESS_TOKEN;
-  const refreshToken = req.cookies.REFRESH_TOKEN;
-
-  const axiosInstance = axiosServer(token || accessToken, refreshToken);
+export const postsApiServer = (accessToken: string) => {
+  const axiosInstance = axiosServer(accessToken);
 
   return {
-    reqGetPosts: async (params: GetPosts) => {
+    getPosts: async (params: GetPosts) => {
       try {
-        const { data } = await axiosInstance.get('/posts', { params });
+        const response = await axiosInstance.get<GetPostsResponse>('/posts', {
+          params,
+        });
 
-        return { data };
+        return response;
       } catch (error) {
-        return notifyServerError(error as AxiosError);
+        return notifyServerError('Get posts', error as AxiosError);
       }
     },
   };

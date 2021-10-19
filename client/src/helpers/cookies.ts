@@ -16,6 +16,10 @@ const cookies = {
   getRefreshToken: () => {
     return cookie.get(COOKIE_KEYS.REFRESH_TOKEN);
   },
+  removeAll: () => {
+    cookie.remove(COOKIE_KEYS.ACCESS_TOKEN);
+    cookie.remove(COOKIE_KEYS.REFRESH_TOKEN);
+  },
 };
 
 export default cookies;

@@ -1,83 +1,84 @@
 // types
 import { AxiosError } from 'axios';
-import { GetServerSidePropsContext } from 'next';
-import { LoginFormData, RegisterFormData } from '@/models/auth';
+import { SuccessResponse } from '@/models/common';
+import {
+  GetTokenResponse,
+  LoginFormData,
+  LoginResponse,
+  RegisterFormData,
+  RegisterResponse,
+} from '@/models/auth';
 
 import { axiosServer } from './axiosServer';
+import { axiosClient } from './axiosClient';
 import notifyServerError from '@/helpers/notifyServerError';
 import cookies from '@/helpers/cookies';
 
 export const authApiClient = () => {
-  const accessToken = cookies.getAccessToken();
   const refreshToken = cookies.getRefreshToken();
 
-  const axiosInstance = axiosServer(accessToken, refreshToken);
+  const axiosInstance = axiosClient(refreshToken);
 
   return {
-    reqLoginUser: async (formData: LoginFormData) => {
+    loginUser: async (formData: LoginFormData) => {
       try {
-        const response = await axiosInstance.post('/auth/login', formData);
+        const response = await axiosInstance.post<LoginResponse>(
+          '/auth/login',
+          formData
+        );
 
         return response;
       } catch (error) {
-        return notifyServerError(error as AxiosError);
+        return notifyServerError('Login user', error as AxiosError);
       }
     },
 
-    reqRegisterUser: async (formData: RegisterFormData) => {
+    registerUser: async (formData: RegisterFormData) => {
       try {
-        const response = await axiosInstance.post('/auth/register', formData);
+        const response = await axiosInstance.post<RegisterResponse>(
+          '/auth/register',
+          formData
+        );
 
         return response;
       } catch (error) {
-        return notifyServerError(error as AxiosError);
-      }
-    },
-
-    reqGetUserById: async (userId: string) => {
-      try {
-        const response = await axiosInstance.get('/auth/user/' + userId);
-
-        return response;
-      } catch (error) {
-        return notifyServerError(error as AxiosError);
+        return notifyServerError('Register user', error as AxiosError);
       }
     },
   };
 };
 
-export const authApiServer = (ctx?: GetServerSidePropsContext) => {
-  const accessToken = ctx?.req.cookies.ACCESS_TOKEN;
-  const refreshToken = ctx?.req.cookies.REFRESH_TOKEN;
-
-  const axiosInstance = axiosServer(accessToken, refreshToken);
+export const authApiServer = (accessToken: string) => {
+  const axiosInstance = axiosServer(accessToken);
 
   return {
-    reqGetCurrentUser: async () => {
+    verifyToken: async (accessToken: string) => {
       try {
-        const { data, config } = await axiosInstance.get('/auth/user');
+        const response = await axiosInstance.post<SuccessResponse>(
+          'auth/verify-token',
+          {
+            accessToken,
+          }
+        );
 
-        const headerToken = config?.headers.Authorization.split(' ')[1];
-
-        return { data, accessToken: headerToken };
+        return response;
       } catch (error) {
-        return notifyServerError(error as AxiosError);
+        return notifyServerError('Verify token', error as AxiosError);
       }
     },
 
-    reqValidateRefreshToken: async (refreshToken: string) => {
-      if (!refreshToken)
-        return { success: false, message: 'Client refresh token not found' };
-
+    getToken: async (refreshToken: string) => {
       try {
-        const { data } = await axiosInstance.post(
-          'auth/validate-refresh-token',
-          { refreshToken }
+        const response = await axiosInstance.post<GetTokenResponse>(
+          'auth/token',
+          {
+            refreshToken,
+          }
         );
 
-        return data;
+        return response;
       } catch (error) {
-        return notifyServerError(error as AxiosError);
+        return notifyServerError('Get token', error as AxiosError);
       }
     },
   };

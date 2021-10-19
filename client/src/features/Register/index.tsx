@@ -11,6 +11,8 @@ import {
   ltDot,
   dkDot,
 } from '@/utils/images';
+import { clearMessage } from '@/redux/slices/authSlice';
+import useMyDispatch from '@/hooks/useMyDispatch';
 
 import Meta from '@/layouts/Meta';
 import RegisterForm from './components/RegisterForm';
@@ -23,8 +25,10 @@ function Register() {
   const isDark = true;
 
   const router = useRouter();
+  const dispatch = useMyDispatch();
 
   const moveToLogin = () => {
+    dispatch(clearMessage());
     router.push(PATHS.LOGIN);
   };
 

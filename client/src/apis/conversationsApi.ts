@@ -1,6 +1,10 @@
 // types
 import { AxiosError } from 'axios';
-import { CreateConversation } from '@/models/conversations';
+import {
+  CreateConversation,
+  CreateConversationResponse,
+  GetConversationsResponse,
+} from '@/models/conversations';
 
 import { axiosClient } from './axiosClient';
 import cookies from '@/helpers/cookies';
@@ -11,23 +15,28 @@ export const conversationsApiClient = () => {
   const axiosInstance = axiosClient(refreshToken);
 
   return {
-    reqCreateConversation: async (memberIds: CreateConversation) => {
+    createConversation: async (memberIds: CreateConversation) => {
       try {
-        const response = await axiosInstance.post('/conversations', memberIds);
+        const response = await axiosInstance.post<CreateConversationResponse>(
+          '/conversations',
+          memberIds
+        );
 
         return response;
       } catch (error) {
-        return notifyServerError(error as AxiosError);
+        return notifyServerError('Create conversation', error as AxiosError);
       }
     },
 
-    reqGetConversations: async (userId: string) => {
+    getConversations: async (userId: string) => {
       try {
-        const response = await axiosInstance.get('/conversations/' + userId);
+        const response = await axiosInstance.get<GetConversationsResponse>(
+          '/conversations/' + userId
+        );
 
         return response;
       } catch (error) {
-        return notifyServerError(error as AxiosError);
+        return notifyServerError('Get conversations', error as AxiosError);
       }
     },
   };

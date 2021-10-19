@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
 
 // clsx
 import clsx from 'clsx';
@@ -14,9 +13,9 @@ import SendIcon from '@mui/icons-material/Send';
 // types
 import { FormEvent } from 'react';
 
-import { authState$, messengerState$ } from '@/redux/selectors';
 import { createMessage } from '@/redux/actions/messenger';
 import { addMessage } from '@/redux/slices/messengerSlice';
+import { useMessengerSelector, useUsersSelector } from '@/redux/selectors';
 import useSocket from '@/hooks/useSocket';
 import useMyDispatch from '@/hooks/useMyDispatch';
 
@@ -25,8 +24,8 @@ import Tooltip from '@/components/Tooltip';
 function ChatFooter() {
   const [inputValue, setInputValue] = useState<string>('');
 
-  const { currentUser } = useSelector(authState$);
-  const { conversationId, receiverId } = useSelector(messengerState$);
+  const { currentUser } = useUsersSelector();
+  const { conversationId, receiverId } = useMessengerSelector();
 
   const { socket } = useSocket();
   const dispatch = useMyDispatch();

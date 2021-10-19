@@ -1,12 +1,4 @@
-export interface GetPosts {
-  page: number;
-  limit: number;
-}
-
-export interface UpdatePost {
-  postId: string;
-  updateData: FormData;
-}
+import { GetPosts, UpdatePost } from '@/models/posts';
 
 export const createPost = {
   request: (payload?: FormData) => ({
@@ -60,15 +52,15 @@ export const deletePost = {
   }),
 };
 
-export const likeOrDislikePost = {
+export const likePost = {
   request: (payload?: string) => ({
-    type: 'likeOrDislikePost/request',
+    type: 'likePost/request',
     payload,
   }),
   success: () => ({
-    type: 'likeOrDislikePost/success',
+    type: 'likePost/success',
   }),
   failure: () => ({
-    type: 'likeOrDislikePost/failure',
+    type: 'likePost/failure',
   }),
 };

@@ -13,7 +13,7 @@ import {
   setReceiverId,
 } from '@/redux/slices/messengerSlice';
 import { getMessages } from '@/redux/actions/messenger';
-import { authApiClient } from '@/apis/authApi';
+import { usersApiClient } from '@/apis/usersApi';
 import useMyDispatch from '@/hooks/useMyDispatch';
 
 import User from '@/components/User';
@@ -44,7 +44,7 @@ function ContactConversation(props: ContactConversationProps) {
 
   // Fetch friend by friend ID
   useEffect(() => {
-    const { reqGetUserById } = authApiClient();
+    const { getUserById } = usersApiClient();
 
     const friendId = conversation.memberIds.find(
       (memberId: string) => memberId !== userId
@@ -52,7 +52,7 @@ function ContactConversation(props: ContactConversationProps) {
 
     (async () => {
       try {
-        const response = (await reqGetUserById(
+        const response = (await getUserById(
           friendId!
         )) as AxiosResponse<GetUserResponse>;
 

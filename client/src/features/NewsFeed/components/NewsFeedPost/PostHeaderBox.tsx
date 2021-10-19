@@ -8,8 +8,7 @@ import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 
-import { useSelector } from 'react-redux';
-import { authState$ } from '@/redux/selectors';
+import { useUsersSelector } from '@/redux/selectors';
 import { followUser, unfollowUser } from '@/redux/actions/users';
 import useMyDispatch from '@/hooks/useMyDispatch';
 
@@ -26,7 +25,7 @@ function PostHeaderBox(props: PostHeaderBoxProps) {
 
   const {
     currentUser: { followings },
-  } = useSelector(authState$);
+  } = useUsersSelector();
 
   const dispatch = useMyDispatch();
 

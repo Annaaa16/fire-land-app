@@ -1,50 +1,55 @@
-import { PayloadAction } from '@reduxjs/toolkit';
 import { call, put, takeLatest } from 'redux-saga/effects';
 
 // types
+import { AxiosResponse } from 'axios';
+import { PayloadAction } from '@reduxjs/toolkit';
 import {
   LoginFormData,
   LoginResponse,
   RegisterFormData,
   RegisterResponse,
 } from '@/models/auth';
-import { AxiosResponse } from 'axios';
 
 import { authApiClient } from '@/apis/authApi';
-import { setRegisterStatus, setUser } from '../slices/authSlice';
-import { loginUser, registerUser } from '../actions/auth';
+import { setRegisterStatus, setAuthStatus } from '../slices/authSlice';
+import {
+  loginUser as loginUserAct,
+  registerUser as registerUserAct,
+} from '../actions/auth';
 import cookies from '@/helpers/cookies';
 
-const { reqLoginUser, reqRegisterUser } = authApiClient();
+const { loginUser, registerUser } = authApiClient();
 
-function* handleReqLoginUser(action: PayloadAction<LoginFormData>) {
+function* handleLoginUser(action: PayloadAction<LoginFormData>) {
   try {
     const formData = action.payload;
 
     const response: AxiosResponse<LoginResponse> = yield call(
-      reqLoginUser,
+      loginUser,
       formData
     );
 
     const {
-      data: { accessToken, refreshToken },
+      data: { success, accessToken, refreshToken },
     } = response;
 
-    cookies.setAccessToken(accessToken);
-    cookies.setRefreshToken(refreshToken);
+    if (success) {
+      cookies.setAccessToken(accessToken);
+      cookies.setRefreshToken(refreshToken);
+    }
 
-    yield put(setUser(response.data));
+    yield put(setAuthStatus(response.data));
   } catch (error) {
     console.log('Login error 👉', error);
   }
 }
 
-function* handleReqRegisterUser(action: PayloadAction<RegisterFormData>) {
+function* handleRegisterUser(action: PayloadAction<RegisterFormData>) {
   try {
     const formData = action.payload;
 
     const response: AxiosResponse<RegisterResponse> = yield call(
-      reqRegisterUser,
+      registerUser,
       formData
     );
 
@@ -55,8 +60,8 @@ function* handleReqRegisterUser(action: PayloadAction<RegisterFormData>) {
 }
 
 function* authSaga() {
-  yield takeLatest(loginUser.request().type, handleReqLoginUser);
-  yield takeLatest(registerUser.request().type, handleReqRegisterUser);
+  yield takeLatest(loginUserAct.request().type, handleLoginUser);
+  yield takeLatest(registerUserAct.request().type, handleRegisterUser);
 }
 
 export default authSaga;

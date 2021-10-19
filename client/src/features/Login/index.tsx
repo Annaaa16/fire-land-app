@@ -3,6 +3,9 @@ import { useRouter } from 'next/dist/client/router';
 // clsx
 import clsx from 'clsx';
 
+import { clearMessage } from '@/redux/slices/authSlice';
+import useMyDispatch from '@/hooks/useMyDispatch';
+
 import Meta from '@/layouts/Meta';
 import LoginForm from './components/LoginForm';
 import LoginSocial from './components/LoginSocial';
@@ -22,8 +25,10 @@ function Login() {
   const isDark = true;
 
   const router = useRouter();
+  const dispatch = useMyDispatch();
 
   const moveToRegister = () => {
+    dispatch(clearMessage());
     router.push('/register');
   };
 

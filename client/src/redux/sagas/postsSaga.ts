@@ -1,42 +1,43 @@
 import { call, delay, put, takeLatest } from '@redux-saga/core/effects';
 
 // types
-import { AxiosResponse } from 'axios';
-import { PayloadAction } from '@reduxjs/toolkit';
 import {
   GetPostsResponse,
   DeletePostResponse,
-  UploadPostResponse,
-  LikeOrDislikePostResponse,
+  UpdatePostResponse,
+  LikePostResponse,
 } from '@/models/posts';
-import { GetPosts, likeOrDislikePost, UpdatePost } from '../actions/posts';
+import { AxiosResponse } from 'axios';
+import { PayloadAction } from '@reduxjs/toolkit';
+import { GetPosts, UpdatePost } from '@/models/posts';
 
-import { postsApiClient } from '@/apis/postsApi';
-import { createPost, getPosts, updatePost, deletePost } from '../actions/posts';
+import {
+  createPost as createPostAct,
+  getPosts as getPostsAct,
+  updatePost as updatePostAct,
+  deletePost as deletePostAct,
+  likePost as likePostAct,
+} from '../actions/posts';
 import {
   addCreatedPost,
   addFetchedPostList,
   removeDeletedPost,
-  setLikedOrDislikedPost,
+  setLikedPost,
   setUpdatedPost,
 } from '../slices/postsSlice';
+import { postsApiClient } from '@/apis/postsApi';
 
-const {
-  reqCreatePost,
-  reqGetPosts,
-  reqUpdatePost,
-  reqDeletePost,
-  reqLikeOrDislikePost,
-} = postsApiClient();
+const { createPost, getPosts, updatePost, deletePost, likePost } =
+  postsApiClient();
 
-function* handleReqCreatePost(action: PayloadAction<FormData>) {
+function* handleCreatePost(action: PayloadAction<FormData>) {
   try {
     const uploadData = action.payload;
 
     yield delay(300); // Block spam upload button
 
-    const response: AxiosResponse<UploadPostResponse> = yield call(
-      reqCreatePost,
+    const response: AxiosResponse<UpdatePostResponse> = yield call(
+      createPost,
       uploadData
     );
 
@@ -46,12 +47,12 @@ function* handleReqCreatePost(action: PayloadAction<FormData>) {
   }
 }
 
-function* handleReqGetPosts(action: PayloadAction<GetPosts>) {
+function* handleGetPosts(action: PayloadAction<GetPosts>) {
   try {
     const params = action.payload;
 
     const response: AxiosResponse<GetPostsResponse> = yield call(
-      reqGetPosts,
+      getPosts,
       params
     );
 
@@ -61,14 +62,14 @@ function* handleReqGetPosts(action: PayloadAction<GetPosts>) {
   }
 }
 
-function* handleReqUpdatePost(action: PayloadAction<UpdatePost>) {
+function* handleUpdatePost(action: PayloadAction<UpdatePost>) {
   try {
     const updateData = action.payload;
 
     yield delay(300); // Block spam update button
 
-    const response: AxiosResponse<UploadPostResponse> = yield call(
-      reqUpdatePost,
+    const response: AxiosResponse<UpdatePostResponse> = yield call(
+      updatePost,
       updateData
     );
 
@@ -78,14 +79,14 @@ function* handleReqUpdatePost(action: PayloadAction<UpdatePost>) {
   }
 }
 
-function* handleReqDeletePost(action: PayloadAction<string>) {
+function* handleDeletePost(action: PayloadAction<string>) {
   try {
     const postId = action.payload;
 
     yield delay(300); // Block spam delete button
 
     const response: AxiosResponse<DeletePostResponse> = yield call(
-      reqDeletePost,
+      deletePost,
       postId
     );
 
@@ -95,32 +96,29 @@ function* handleReqDeletePost(action: PayloadAction<string>) {
   }
 }
 
-function* handleReqLikeOrDislikePost(action: PayloadAction<string>) {
+function* handleLikePost(action: PayloadAction<string>) {
   try {
     const postId = action.payload;
 
     yield delay(300); // Block spam like button
 
-    const response: AxiosResponse<LikeOrDislikePostResponse> = yield call(
-      reqLikeOrDislikePost,
+    const response: AxiosResponse<LikePostResponse> = yield call(
+      likePost,
       postId
     );
 
-    yield put(setLikedOrDislikedPost(response.data));
+    yield put(setLikedPost(response.data));
   } catch (error) {
     console.log('Like or dislike post error 👉', error);
   }
 }
 
 function* postsSaga() {
-  yield takeLatest(createPost.request().type, handleReqCreatePost);
-  yield takeLatest(getPosts.request().type, handleReqGetPosts);
-  yield takeLatest(updatePost.request().type, handleReqUpdatePost);
-  yield takeLatest(deletePost.request().type, handleReqDeletePost);
-  yield takeLatest(
-    likeOrDislikePost.request().type,
-    handleReqLikeOrDislikePost
-  );
+  yield takeLatest(createPostAct.request().type, handleCreatePost);
+  yield takeLatest(getPostsAct.request().type, handleGetPosts);
+  yield takeLatest(updatePostAct.request().type, handleUpdatePost);
+  yield takeLatest(deletePostAct.request().type, handleDeletePost);
+  yield takeLatest(likePostAct.request().type, handleLikePost);
 }
 
 export default postsSaga;
