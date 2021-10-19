@@ -10,6 +10,23 @@ export interface PostsInitState {
   updatePost: Post | null;
 }
 
+export interface GetPosts {
+  page: number;
+  limit: number;
+}
+
+export interface UpdatePost {
+  postId: string;
+  updateData: FormData;
+}
+
+// === Responses ===
+export interface CreatePostsResponse {
+  success: boolean;
+  message: string;
+  post: Post;
+}
+
 export interface GetPostsResponse {
   success: boolean;
   prevPage: number | null;
@@ -18,7 +35,7 @@ export interface GetPostsResponse {
   posts: Post[];
 }
 
-export interface UploadPostResponse {
+export interface UpdatePostResponse {
   success: boolean;
   message: string;
   post: Post;
@@ -30,7 +47,7 @@ export interface DeletePostResponse {
   message: string;
 }
 
-export interface LikeOrDislikePostResponse {
+export interface LikePostResponse {
   success: boolean;
   message: string;
   post: Post;

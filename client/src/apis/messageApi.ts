@@ -1,6 +1,10 @@
 // types
 import { AxiosError } from 'axios';
-import { MessageData } from '@/models/messenger';
+import {
+  CreateMessageResponse,
+  GetMessagesResponse,
+  MessageData,
+} from '@/models/messenger';
 
 import { axiosClient } from './axiosClient';
 import cookies from '@/helpers/cookies';
@@ -11,22 +15,27 @@ export const messageApiClient = () => {
   const axiosInstance = axiosClient(refreshToken);
 
   return {
-    reqCreateMessage: async (messageData: MessageData) => {
+    createMessage: async (messageData: MessageData) => {
       try {
-        const response = await axiosInstance.post('/messages', messageData);
+        const response = await axiosInstance.post<CreateMessageResponse>(
+          '/messages',
+          messageData
+        );
 
         return response;
       } catch (error) {
-        return notifyServerError(error as AxiosError);
+        return notifyServerError('Create message', error as AxiosError);
       }
     },
-    reqGetMessages: async (conversationId: string) => {
+    getMessages: async (conversationId: string) => {
       try {
-        const response = await axiosInstance.get('/messages/' + conversationId);
+        const response = await axiosInstance.get<GetMessagesResponse>(
+          '/messages/' + conversationId
+        );
 
         return response;
       } catch (error) {
-        return notifyServerError(error as AxiosError);
+        return notifyServerError('Get messages', error as AxiosError);
       }
     },
   };

@@ -6,7 +6,7 @@ import SidebarSmall from '@/components/SidebarSmall';
 import MessengerContact from './components/MessengerContact';
 import MessengerChat from './components/MessengerChat';
 
-function Messages() {
+function Messenger() {
   return (
     <Meta title='Messenger'>
       <main className={clsx('flex h-screen')}>
@@ -20,4 +20,4 @@ function Messages() {
   );
 }
 
-export default Messages;
+export default Messenger;

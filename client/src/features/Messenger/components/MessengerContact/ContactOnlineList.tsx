@@ -1,16 +1,15 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 
 // types
 import { OnlineUser } from '@/models/messenger';
 
-import { authState$ } from '@/redux/selectors';
+import { useUsersSelector } from '@/redux/selectors';
 import useSocket from '@/hooks/useSocket';
 
 import ContactOnline from './ContactOnline';
 
 function ContactOnlineList() {
-  const { currentUser } = useSelector(authState$);
+  const { currentUser } = useUsersSelector();
 
   const [onlineUsers, setOnlineUsers] = useState<OnlineUser[]>([]);
 

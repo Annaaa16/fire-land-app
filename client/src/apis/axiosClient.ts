@@ -3,12 +3,13 @@ import axios from 'axios';
 // query string
 import queryString from 'query-string';
 
-import { API_URL } from '@/constants';
+import { URLS } from '@/constants';
 import cookies from '@/helpers/cookies';
+import token from '@/helpers/token';
 
 export const axiosClient = (refreshToken?: string) => {
   const axiosInstance = axios.create({
-    baseURL: API_URL,
+    baseURL: URLS.API,
     headers: {
       'content-type': 'application/json',
     },
@@ -16,10 +17,10 @@ export const axiosClient = (refreshToken?: string) => {
   });
 
   axiosInstance.interceptors.request.use((config) => {
-    const token = cookies.getAccessToken();
+    const accessToken = cookies.getAccessToken();
 
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
     }
 
     return config;
@@ -33,8 +34,11 @@ export const axiosClient = (refreshToken?: string) => {
       const { config, response } = error;
       const originalRequest = config;
 
-      // Expired token
-      if (response.status === 401 && !originalRequest._retry) {
+      const accessToken = cookies.getAccessToken();
+      const { isExpired } = token.verifyToken(accessToken!)!;
+
+      // Token has expired
+      if (response.status === 401 && !originalRequest._retry && !isExpired!) {
         originalRequest._retry = true;
 
         const { data } = await axiosInstance.post('/auth/token', {
@@ -44,12 +48,12 @@ export const axiosClient = (refreshToken?: string) => {
         // Replace new token for client side
         cookies.setAccessToken(data.accessToken);
 
-        // Attach new token to header for re-request
         originalRequest.headers.Authorization = `Bearer ${data.accessToken}`;
 
         // Re-request
         return axiosInstance(originalRequest);
       }
+
       return Promise.reject(error);
     }
   );

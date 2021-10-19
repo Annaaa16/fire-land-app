@@ -1,7 +1,7 @@
 // models
 const Message = require('../models/messageModel');
 
-const { notifyServerError } = require('../helpers/notifyServer');
+const { notifyServerError } = require('../helpers/notifyServerError');
 
 const messagesController = {};
 

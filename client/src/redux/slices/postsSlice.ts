@@ -9,11 +9,12 @@ import _ from 'lodash';
 // types
 import { PayloadAction } from '@reduxjs/toolkit';
 import {
-  UploadPostResponse,
+  CreatePostsResponse,
   GetPostsResponse,
   DeletePostResponse,
   PostsInitState,
-  LikeOrDislikePostResponse,
+  LikePostResponse,
+  UpdatePostResponse,
 } from '@/models/posts';
 import { HydrateResponse, Post } from '@/models/common';
 
@@ -30,7 +31,7 @@ const postsSlice = createSlice({
   name: 'posts',
   initialState,
   reducers: {
-    addCreatedPost: (state, action: PayloadAction<UploadPostResponse>) => {
+    addCreatedPost: (state, action: PayloadAction<CreatePostsResponse>) => {
       const { success, post } = action.payload;
 
       if (success) {
@@ -63,7 +64,7 @@ const postsSlice = createSlice({
       return { ...state, updatePost };
     },
 
-    setUpdatedPost: (state, action: PayloadAction<UploadPostResponse>) => {
+    setUpdatedPost: (state, action: PayloadAction<UpdatePostResponse>) => {
       const { success, post: updatedPost } = action.payload;
 
       if (success) {
@@ -85,10 +86,7 @@ const postsSlice = createSlice({
       }
     },
 
-    setLikedOrDislikedPost: (
-      state,
-      action: PayloadAction<LikeOrDislikePostResponse>
-    ) => {
+    setLikedPost: (state, action: PayloadAction<LikePostResponse>) => {
       const { success, post } = action.payload;
 
       if (success) {
@@ -122,7 +120,7 @@ export const {
   setUpdatePost,
   setUpdatedPost,
   removeDeletedPost,
-  setLikedOrDislikedPost,
+  setLikedPost,
 } = postsSlice.actions;
 
 export default postsSlice.reducer;

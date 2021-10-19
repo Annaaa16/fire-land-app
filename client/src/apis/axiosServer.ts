@@ -3,11 +3,11 @@ import axios from 'axios';
 // query string
 import queryString from 'query-string';
 
-import { API_URL } from '@/constants';
+import { URLS } from '@/constants';
 
-export const axiosServer = (accessToken?: string, refreshToken?: string) => {
+export const axiosServer = (accessToken?: string) => {
   const axiosInstance = axios.create({
-    baseURL: API_URL,
+    baseURL: URLS.API,
     headers: {
       'content-type': 'application/json',
     },
@@ -15,9 +15,9 @@ export const axiosServer = (accessToken?: string, refreshToken?: string) => {
   });
 
   axiosInstance.interceptors.request.use((config) => {
-    const headerToken = config.headers['Authorization'];
-
-    config.headers.Authorization = headerToken || `Bearer ${accessToken}`;
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
+    }
 
     return config;
   });
@@ -27,24 +27,6 @@ export const axiosServer = (accessToken?: string, refreshToken?: string) => {
       return response;
     },
     async (error) => {
-      const { config, response } = error;
-      const originalRequest = config;
-
-      // Invalid or not exists token
-      if (response.status === 403 && !originalRequest._retry) {
-        originalRequest._retry = true;
-
-        const { data } = await axiosInstance.post('/auth/token', {
-          refreshToken,
-        });
-
-        // Attach new token to header for re-request
-        originalRequest.headers.Authorization = `Bearer ${data.accessToken}`;
-
-        // Re-request
-        return axiosInstance(originalRequest);
-      }
-
       return Promise.reject(error);
     }
   );

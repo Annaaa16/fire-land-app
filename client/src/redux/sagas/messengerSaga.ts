@@ -11,17 +11,20 @@ import {
 import { CreateMessageResponse } from '@/models/messenger';
 
 import { messageApiClient } from '@/apis/messageApi';
-import { createMessage, getMessages } from '../actions/messenger';
+import {
+  createMessage as createMessageAct,
+  getMessages as getMessagesAct,
+} from '../actions/messenger';
 import { addMessage, setCurrentChat } from '../slices/messengerSlice';
 
-const { reqCreateMessage, reqGetMessages } = messageApiClient();
+const { createMessage, getMessages } = messageApiClient();
 
-function* handleReqCreateMessage(action: PayloadAction<MessageData>) {
+function* handleCreateMessage(action: PayloadAction<MessageData>) {
   const messageData = action.payload;
 
   try {
     const response: AxiosResponse<CreateMessageResponse> = yield call(
-      reqCreateMessage,
+      createMessage,
       messageData
     );
 
@@ -31,12 +34,12 @@ function* handleReqCreateMessage(action: PayloadAction<MessageData>) {
   }
 }
 
-function* handleReqGetMessages(action: PayloadAction<GetMessagesData>) {
+function* handleGetMessages(action: PayloadAction<GetMessagesData>) {
   const { conversationId } = action.payload;
 
   try {
     const response: AxiosResponse<GetMessagesResponse> = yield call(
-      reqGetMessages,
+      getMessages,
       conversationId
     );
 
@@ -47,8 +50,8 @@ function* handleReqGetMessages(action: PayloadAction<GetMessagesData>) {
 }
 
 function* messageSaga() {
-  yield takeLatest(createMessage.request().type, handleReqCreateMessage);
-  yield takeLatest(getMessages.request().type, handleReqGetMessages);
+  yield takeLatest(createMessageAct.request().type, handleCreateMessage);
+  yield takeLatest(getMessagesAct.request().type, handleGetMessages);
 }
 
 export default messageSaga;

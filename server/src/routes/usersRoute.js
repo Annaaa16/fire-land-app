@@ -5,6 +5,16 @@ const usersController = require('../controllers/usersController');
 
 const router = express.Router();
 
+// @route GET api/users
+// @desc Get current user
+// @access Private
+router.get('/current', verifyToken, usersController.getCurrentUser);
+
+// @route GET api/users/:userId
+// @desc Get user by id
+// @access Private
+router.get('/:userId', verifyToken, usersController.getUserById);
+
 // @route PATCH api/users/:userId/follow
 // @desc Follow an user
 // @access Private

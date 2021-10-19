@@ -7,7 +7,7 @@ import {
 } from 'next-redux-cookie-wrapper';
 
 // types
-import { WrapperStore, SagaStore } from './types';
+import { WrapperStore, SagaStore } from '@/models/store';
 
 import { createPost, updatePost } from './actions/posts';
 import rootSaga from './sagas/rootSaga';

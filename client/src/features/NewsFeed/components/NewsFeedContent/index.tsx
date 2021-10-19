@@ -1,10 +1,9 @@
 import { useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
 
 // clsx
 import clsx from 'clsx';
 
-import { postsState$ } from '@/redux/selectors';
+import { usePostsSelector } from '@/redux/selectors';
 import { getPosts } from '@/redux/actions/posts';
 import { LIMIT_POSTS } from '@/constants';
 import useMeeting from '@/hooks/useMeeting';
@@ -16,7 +15,7 @@ import NewsFeedSender from '../NewsFeedSender';
 function NewsFeedContent() {
   const loaderRef = useRef<HTMLDivElement>(null);
 
-  const { nextPage, total, posts } = useSelector(postsState$);
+  const { nextPage, total, posts } = usePostsSelector();
 
   const dispatch = useMyDispatch();
 

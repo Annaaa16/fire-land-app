@@ -1,6 +1,3 @@
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-
 // clsx
 import clsx from 'clsx';
 
@@ -10,8 +7,8 @@ import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 
-import { authState$ } from '@/redux/selectors';
-import { likeOrDislikePost } from '@/redux/actions/posts';
+import { useUsersSelector } from '@/redux/selectors';
+import { likePost } from '@/redux/actions/posts';
 import useMyDispatch from '@/hooks/useMyDispatch';
 
 interface PostActionsProps {
@@ -22,14 +19,13 @@ interface PostActionsProps {
 function PostActions(props: PostActionsProps) {
   const { postId, likes } = props;
 
-  const { currentUser } = useSelector(authState$);
-
+  const { currentUser } = useUsersSelector();
   const dispatch = useMyDispatch();
 
   const isLiked = likes.includes(currentUser._id);
 
-  const handleLikeOrDislikePost = () => {
-    dispatch(likeOrDislikePost.request(postId));
+  const handleLikePost = () => {
+    dispatch(likePost.request(postId));
   };
 
   return (
@@ -38,7 +34,7 @@ function PostActions(props: PostActionsProps) {
         'flex items-center mt-3 pt-1 border-t border-lt-line dark:border-dk-line'
       )}>
       <div
-        onClick={handleLikeOrDislikePost}
+        onClick={handleLikePost}
         className={clsx(
           'group i-flex-center flex-1 py-2.5 rounded-md',
           'transition-all ease-out',

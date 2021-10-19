@@ -6,19 +6,22 @@ import { AxiosResponse } from 'axios';
 import { FollowResponse } from '@/models/users';
 
 import { usersApiClient } from '@/apis/usersApi';
-import { followUser, unfollowUser } from '../actions/users';
-import { addFollowingUser, deleteFollowingUser } from '../slices/authSlice';
+import {
+  followUser as followUserAct,
+  unfollowUser as unfollowUserAct,
+} from '../actions/users';
+import { addFollowingUser, deleteFollowingUser } from '../slices/usersSlice';
 
-const { reqFollowUser, reqUnfollowUser } = usersApiClient();
+const { followUser, unfollowUser } = usersApiClient();
 
-function* handleReqFollowUser(action: PayloadAction<string>) {
+function* handleFollowUser(action: PayloadAction<string>) {
   const userId = action.payload;
 
   try {
     yield delay(300); // Block spam follow button
 
     const response: AxiosResponse<FollowResponse> = yield call(
-      reqFollowUser,
+      followUser,
       userId
     );
 
@@ -28,14 +31,14 @@ function* handleReqFollowUser(action: PayloadAction<string>) {
   }
 }
 
-function* handleReqUnfollowUser(action: PayloadAction<string>) {
+function* handleUnfollowUser(action: PayloadAction<string>) {
   const userId = action.payload;
 
   try {
     yield delay(300); // Block spam unfollow button
 
     const response: AxiosResponse<FollowResponse> = yield call(
-      reqUnfollowUser,
+      unfollowUser,
       userId
     );
 
@@ -46,8 +49,8 @@ function* handleReqUnfollowUser(action: PayloadAction<string>) {
 }
 
 function* usersSaga() {
-  yield takeLatest(followUser.request().type, handleReqFollowUser);
-  yield takeLatest(unfollowUser.request().type, handleReqUnfollowUser);
+  yield takeLatest(followUserAct.request().type, handleFollowUser);
+  yield takeLatest(unfollowUserAct.request().type, handleUnfollowUser);
 }
 
 export default usersSaga;

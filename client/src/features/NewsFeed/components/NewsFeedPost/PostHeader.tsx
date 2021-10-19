@@ -5,8 +5,7 @@ import clsx from 'clsx';
 import GroupIcon from '@mui/icons-material/Group';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
-import { authState$ } from '@/redux/selectors';
-import { useSelector } from 'react-redux';
+import { useUsersSelector } from '@/redux/selectors';
 
 import User from '@/components/User';
 import PostHeaderOptions from './PostHeaderOptions';
@@ -22,7 +21,7 @@ interface PostHeaderProps {
 function PostHeader(props: PostHeaderProps) {
   const { postId, username, avatar, userId } = props;
 
-  const { currentUser } = useSelector(authState$);
+  const { currentUser } = useUsersSelector();
 
   return (
     <div className={clsx('relative', 'flex items-center px-2 md:px-4 py-4')}>

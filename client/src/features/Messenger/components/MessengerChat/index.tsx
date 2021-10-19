@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
 
 // clsx
 import clsx from 'clsx';
@@ -7,7 +6,7 @@ import clsx from 'clsx';
 // types
 import { Message } from '@/models/messenger';
 
-import { authState$, messengerState$ } from '@/redux/selectors';
+import { useMessengerSelector, useUsersSelector } from '@/redux/selectors';
 import { addMessage } from '@/redux/slices/messengerSlice';
 import useMyDispatch from '@/hooks/useMyDispatch';
 import useSocket from '@/hooks/useSocket';
@@ -17,8 +16,8 @@ import ChatFooter from './ChatFooter';
 import ChatContent from './ChatContent';
 
 function MessagesChat() {
-  const { currentChat, conversationId } = useSelector(messengerState$);
-  const { currentUser } = useSelector(authState$);
+  const { conversationId } = useMessengerSelector();
+  const { currentUser } = useUsersSelector();
 
   const { socket } = useSocket();
   const dispatch = useMyDispatch();

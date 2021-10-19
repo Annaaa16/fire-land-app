@@ -1,6 +1,10 @@
+// types
 import { AxiosError } from 'axios';
+import { FollowResponse, UnfollowResponse } from '@/models/users';
+import { GetUserResponse } from '@/models/auth';
 
 import { axiosClient } from './axiosClient';
+import { axiosServer } from './axiosServer';
 import notifyServerError from '@/helpers/notifyServerError';
 import cookies from '@/helpers/cookies';
 
@@ -10,23 +14,69 @@ export const usersApiClient = () => {
   const axiosInstance = axiosClient(refreshToken);
 
   return {
-    reqFollowUser: async (userId: string) => {
+    getCurrentUser: async () => {
       try {
-        const response = await axiosInstance.patch(`/users/${userId}/follow`);
+        const response = await axiosInstance.get<GetUserResponse>(
+          '/users/current'
+        );
 
         return response;
       } catch (error) {
-        return notifyServerError(error as AxiosError);
+        return notifyServerError('Get current user', error as AxiosError);
       }
     },
 
-    reqUnfollowUser: async (userId: string) => {
+    getUserById: async (userId: string) => {
       try {
-        const response = await axiosInstance.patch(`/users/${userId}/unfollow`);
+        const response = await axiosInstance.get<GetUserResponse>(
+          '/users/' + userId
+        );
 
         return response;
       } catch (error) {
-        return notifyServerError(error as AxiosError);
+        return notifyServerError('Get user by ID', error as AxiosError);
+      }
+    },
+
+    followUser: async (userId: string) => {
+      try {
+        const response = await axiosInstance.patch<FollowResponse>(
+          `/users/${userId}/follow`
+        );
+
+        return response;
+      } catch (error) {
+        return notifyServerError('Follow user', error as AxiosError);
+      }
+    },
+
+    unfollowUser: async (userId: string) => {
+      try {
+        const response = await axiosInstance.patch<UnfollowResponse>(
+          `/users/${userId}/unfollow`
+        );
+
+        return response;
+      } catch (error) {
+        return notifyServerError('Unfollow user', error as AxiosError);
+      }
+    },
+  };
+};
+
+export const usersApiServer = (accessToken: string) => {
+  const axiosInstance = axiosServer(accessToken);
+
+  return {
+    getCurrentUser: async () => {
+      try {
+        const response = await axiosInstance.get<GetUserResponse>(
+          '/users/current'
+        );
+
+        return response;
+      } catch (error) {
+        return notifyServerError('Get current user', error as AxiosError);
       }
     },
   };

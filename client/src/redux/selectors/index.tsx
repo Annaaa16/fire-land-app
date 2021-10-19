@@ -1,10 +1,19 @@
+import { useSelector } from 'react-redux';
+
 // types
 import { StoreState } from '@/models/store';
 
-export const authState$ = (state: StoreState) => state.auth;
+export const useAuthSelector = () =>
+  useSelector((state: StoreState) => state.auth);
 
-export const postsState$ = (state: StoreState) => state.posts;
+export const useUsersSelector = () =>
+  useSelector((state: StoreState) => state.users);
 
-export const messengerState$ = (state: StoreState) => state.messenger;
+export const usePostsSelector = () =>
+  useSelector((state: StoreState) => state.posts);
 
-export const conversationsState$ = (state: StoreState) => state.conversations;
+export const useMessengerSelector = () =>
+  useSelector((state: StoreState) => state.messenger);
+
+export const useConversationsSelector = () =>
+  useSelector((state: StoreState) => state.conversations);

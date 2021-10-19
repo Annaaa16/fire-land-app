@@ -1,5 +1,4 @@
 import { useContext, useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
 
 // clsx
 import clsx from 'clsx';
@@ -20,7 +19,7 @@ import { useDropzone } from 'react-dropzone';
 // react overlayscrollbars
 import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
 
-import { authState$, postsState$ } from '@/redux/selectors';
+import { usePostsSelector, useUsersSelector } from '@/redux/selectors';
 import { createPost, updatePost } from '@/redux/actions/posts';
 import { GlobalContext } from '@/contexts/GlobalContext';
 import { setUpdatePost } from '@/redux/slices/postsSlice';
@@ -33,8 +32,8 @@ import SenderAreaPhoto from './SenderAreaPhoto';
 
 function NewsFeedSenderArea() {
   const { isShowSenderArea, toggleSenderArea } = useContext(GlobalContext);
-  const { updatePost: post } = useSelector(postsState$);
-  const { avatar } = useSelector(authState$).currentUser;
+  const { updatePost: post } = usePostsSelector();
+  const { currentUser } = useUsersSelector();
 
   const [isAddPhoto, setIsAddPhoto] = useState<boolean>(false);
   const [file, setFile] = useState<File | Object>({});
@@ -140,7 +139,7 @@ function NewsFeedSenderArea() {
 
         <div className={clsx('relative', 'p-3')}>
           <div className={clsx('flex items-center mt-2 ml-2')}>
-            <User view='small' avatar={avatar} />
+            <User view='small' avatar={currentUser.avatar} />
             <div className={clsx('ml-5')}>
               <span className={clsx('font-bold', 'dark:text-white')}>
                 IG Dev

@@ -1,7 +1,7 @@
 // nanoid
 import { nanoid } from 'nanoid';
 
-import { AVATAR_URL } from '@/constants';
+import { URLS } from '@/constants';
 
 const avatarList = [
   'avataaars',
@@ -20,7 +20,7 @@ const randomAvatar = () => {
   const avatar = avatarList[idx];
   const seed = nanoid(6);
 
-  const avatarUrl = `${AVATAR_URL}/${avatar}/${seed}.svg`;
+  const avatarUrl = `${URLS.AVATAR}/${avatar}/${seed}.svg`;
 
   return avatarUrl;
 };

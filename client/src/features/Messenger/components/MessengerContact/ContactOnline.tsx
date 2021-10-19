@@ -8,15 +8,14 @@ import { AxiosResponse } from 'axios';
 import { GetUserResponse } from '@/models/auth';
 import { User as UserType } from '@/models/common';
 
-import { conversationsState$ } from '@/redux/selectors';
-import { useSelector } from 'react-redux';
-import { authApiClient } from '@/apis/authApi';
+import { useConversationsSelector } from '@/redux/selectors';
+import { usersApiClient } from '@/apis/usersApi';
 import { getMessages } from '@/redux/actions/messenger';
+import useMyDispatch from '@/hooks/useMyDispatch';
 import {
   setConversationId,
   setReceiverId,
 } from '@/redux/slices/messengerSlice';
-import useMyDispatch from '@/hooks/useMyDispatch';
 
 import User from '@/components/User';
 
@@ -27,7 +26,7 @@ interface ContactOnlineProps {
 function ContactOnline(props: ContactOnlineProps) {
   const { friendId } = props;
 
-  const { conversations } = useSelector(conversationsState$);
+  const { conversations } = useConversationsSelector();
 
   const [onlineFriend, setOnlineFriend] = useState<UserType | null>(null);
 
@@ -45,11 +44,11 @@ function ContactOnline(props: ContactOnlineProps) {
 
   // Fetch online friend by friend ID
   useEffect(() => {
-    const { reqGetUserById } = authApiClient();
+    const { getUserById } = usersApiClient();
 
     (async () => {
       try {
-        const response = (await reqGetUserById(
+        const response = (await getUserById(
           friendId!
         )) as AxiosResponse<GetUserResponse>;
 

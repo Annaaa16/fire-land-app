@@ -21,16 +21,18 @@ export interface Post {
   updatedAt: string;
 }
 
+// === Responses ===
 export interface HydrateResponse {
   auth: AuthInitState;
   posts: PostsInitState;
 }
 
-export interface ErrorResponse {
+export interface SuccessResponse {
   success: boolean;
   message: string;
 }
 
-export interface Map<T> {
-  [key: string]: T;
+export interface ErrorResponse {
+  success: boolean;
+  message: string;
 }

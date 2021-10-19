@@ -5,7 +5,7 @@ const User = require('../models/userModel');
 const { CLOUDINARY } = require('../constants');
 const cloudinary = require('../configs/cloudinaryConfig');
 
-const { notifyServerError } = require('../helpers/notifyServer');
+const { notifyServerError } = require('../helpers/notifyServerError');
 
 const postsController = {};
 
@@ -179,7 +179,7 @@ postsController.updatePost = async (req, res) => {
     }
 
     // Filter unnecessary fields of post
-    const { __v, createdAt, ...others } = updatedPost;
+    const { __v, ...others } = updatedPost;
 
     res.json({
       success: true,

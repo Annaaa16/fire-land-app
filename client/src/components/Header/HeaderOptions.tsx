@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 
 // clsx
 import clsx from 'clsx';
@@ -10,12 +11,22 @@ import SmsOutlinedIcon from '@mui/icons-material/SmsOutlined';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import SettingsIcon from '@mui/icons-material/Settings';
-import HelpOutlinedIcon from '@mui/icons-material/HelpOutlined';
+import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
+import { PATHS } from '@/constants';
+import cookies from '@/helpers/cookies';
+
 function HeaderOptions() {
   const [isSetting, setIsSetting] = useState(false);
+
+  const router = useRouter();
+
+  const handleLogout = () => {
+    cookies.removeAll();
+    router.push(PATHS.LOGIN);
+  };
 
   return (
     <div
@@ -120,7 +131,7 @@ function HeaderOptions() {
                 'transition-all ease-out',
                 'group-hover:text-primary-v2 dark:group-hover:text-primary-v4'
               )}>
-              Settings & Privacy
+              Settings
             </span>
           </li>
           <li
@@ -129,7 +140,7 @@ function HeaderOptions() {
               'cursor-pointer',
               'transition-all ease-out'
             )}>
-            <HelpOutlinedIcon
+            <AssignmentIndIcon
               className={clsx(
                 'text-white',
                 '!transition-all !ease-out',
@@ -143,7 +154,7 @@ function HeaderOptions() {
                 'transition-all ease-out',
                 'group-hover:text-primary-v2 dark:group-hover:text-primary-v4'
               )}>
-              Help & Support
+              Profile
             </span>
           </li>
           <li
@@ -170,6 +181,7 @@ function HeaderOptions() {
             </span>
           </li>
           <li
+            onClick={handleLogout}
             className={clsx(
               'group flex items-center pl-1 pr-3 py-3',
               'cursor-pointer',

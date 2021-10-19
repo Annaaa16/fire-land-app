@@ -1,15 +1,10 @@
-import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-
-import { authState$, conversationsState$ } from '@/redux/selectors';
-import { getConversations } from '@/redux/actions/conversations';
-import useMyDispatch from '@/hooks/useMyDispatch';
+import { useConversationsSelector, useUsersSelector } from '@/redux/selectors';
 
 import ContactFriend from './ContactConversation';
 
 function ContactConversationList() {
-  const { currentUser } = useSelector(authState$);
-  const { conversations } = useSelector(conversationsState$);
+  const { currentUser } = useUsersSelector();
+  const { conversations } = useConversationsSelector();
 
   return (
     <ul className='mt-7'>
