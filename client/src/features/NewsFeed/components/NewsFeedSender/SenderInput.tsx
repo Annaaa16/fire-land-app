@@ -1,5 +1,3 @@
-import { useContext } from 'react';
-
 // clsx
 import clsx from 'clsx';
 
@@ -9,14 +7,14 @@ import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary';
 import SentimentVerySatisfiedIcon from '@mui/icons-material/SentimentVerySatisfied';
 
 import { useUsersSelector } from '@/redux/selectors';
-import { GlobalContext } from '@/contexts/GlobalContext';
+import { useGlobalContext } from '@/contexts/GlobalContext';
 
 import User from '@/components/User';
 
 function NewsFeedSenderInput() {
   const { currentUser } = useUsersSelector();
 
-  const { toggleSenderArea } = useContext(GlobalContext);
+  const { toggleSenderArea } = useGlobalContext();
 
   const openSenderArea = () => {
     toggleSenderArea(true);

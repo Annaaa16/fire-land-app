@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 
 // types
 import { ReactNode } from 'react';
@@ -68,5 +68,7 @@ function GlobalProvider(props: GlobalProviderProps) {
     <GlobalContext.Provider value={value}>{children}</GlobalContext.Provider>
   );
 }
+
+export const useGlobalContext = () => useContext(GlobalContext);
 
 export default GlobalProvider;

@@ -1,12 +1,10 @@
-import { useContext, useState } from 'react';
-
-import { GlobalContext } from '@/contexts/GlobalContext';
+import { useGlobalContext } from '@/contexts/GlobalContext';
 
 import SenderArea from './SenderArea';
 import SenderInput from './SenderInput';
 
 function NewsFeedSender() {
-  const { isShowSenderArea } = useContext(GlobalContext);
+  const { isShowSenderArea } = useGlobalContext();
 
   return (
     <>

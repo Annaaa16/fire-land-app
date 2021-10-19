@@ -1,5 +1,3 @@
-import { useContext } from 'react';
-
 // clsx
 import clsx from 'clsx';
 
@@ -14,7 +12,7 @@ import ArchiveOutlinedIcon from '@mui/icons-material/ArchiveOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 
 import { setUpdatePost } from '@/redux/slices/postsSlice';
-import { GlobalContext } from '@/contexts/GlobalContext';
+import { useGlobalContext } from '@/contexts/GlobalContext';
 import useMyDispatch from '@/hooks/useMyDispatch';
 import { deletePost } from '@/redux/actions/posts';
 
@@ -25,7 +23,7 @@ interface PostHeaderOptionsProps {
 function PostHeaderOptions(props: PostHeaderOptionsProps) {
   const { postId } = props;
 
-  const { toggleSenderArea } = useContext(GlobalContext);
+  const { toggleSenderArea } = useGlobalContext();
 
   const dispatch = useMyDispatch();
 

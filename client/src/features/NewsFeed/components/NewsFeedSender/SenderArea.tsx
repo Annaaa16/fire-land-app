@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 // clsx
 import clsx from 'clsx';
@@ -21,7 +21,7 @@ import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
 
 import { usePostsSelector, useUsersSelector } from '@/redux/selectors';
 import { createPost, updatePost } from '@/redux/actions/posts';
-import { GlobalContext } from '@/contexts/GlobalContext';
+import { useGlobalContext } from '@/contexts/GlobalContext';
 import { setUpdatePost } from '@/redux/slices/postsSlice';
 import useMyDispatch from '@/hooks/useMyDispatch';
 import useDetectKeydown from '@/hooks/useDetectKeydown';
@@ -31,7 +31,7 @@ import Tooltip from '@/components/Tooltip';
 import SenderAreaPhoto from './SenderAreaPhoto';
 
 function NewsFeedSenderArea() {
-  const { isShowSenderArea, toggleSenderArea } = useContext(GlobalContext);
+  const { isShowSenderArea, toggleSenderArea } = useGlobalContext();
   const { updatePost: post } = usePostsSelector();
   const { currentUser } = useUsersSelector();
 
