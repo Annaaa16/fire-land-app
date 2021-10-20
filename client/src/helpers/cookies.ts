@@ -1,24 +1,24 @@
 // js cookie
 import cookie from 'js-cookie';
 
-import { COOKIE_KEYS } from '@/constants';
+import { COOKIES } from '@/constants';
 
 const cookies = {
   setAccessToken: (accessToken: string) => {
-    cookie.set(COOKIE_KEYS.ACCESS_TOKEN, accessToken);
+    cookie.set(COOKIES.ACCESS_TOKEN_KEY, accessToken);
   },
   getAccessToken: () => {
-    return cookie.get(COOKIE_KEYS.ACCESS_TOKEN);
+    return cookie.get(COOKIES.ACCESS_TOKEN_KEY);
   },
   setRefreshToken: (refreshToken: string) => {
-    cookie.set(COOKIE_KEYS.REFRESH_TOKEN, refreshToken);
+    cookie.set(COOKIES.REFRESH_TOKEN_KEY, refreshToken);
   },
   getRefreshToken: () => {
-    return cookie.get(COOKIE_KEYS.REFRESH_TOKEN);
+    return cookie.get(COOKIES.REFRESH_TOKEN_KEY);
   },
   removeAll: () => {
-    cookie.remove(COOKIE_KEYS.ACCESS_TOKEN);
-    cookie.remove(COOKIE_KEYS.REFRESH_TOKEN);
+    cookie.remove(COOKIES.ACCESS_TOKEN_KEY);
+    cookie.remove(COOKIES.REFRESH_TOKEN_KEY);
   },
 };
 

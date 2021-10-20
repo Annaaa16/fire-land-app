@@ -45,7 +45,7 @@ function PostActions(props: PostActionsProps) {
           <ThumbUpAltIcon
             className={clsx(
               'mr-1.5 !text-lg md:!text-xl',
-              'text-[#2d86ff]',
+              'text-[#2d86ff] dark:text-primary-v4',
               '!transition-all ease-out',
               'dark:group-hover:text-primary-v4'
             )}
@@ -63,7 +63,7 @@ function PostActions(props: PostActionsProps) {
         <span
           className={clsx(
             'font-bold text-xs md:text-sm',
-            isLiked ? 'text-[#2d86ff]' : 'text-gray',
+            isLiked ? 'text-[#2d86ff] dark:text-primary-v4' : 'text-gray',
             'transition-all ease-out',
             'dark:group-hover:text-primary-v4'
           )}>
