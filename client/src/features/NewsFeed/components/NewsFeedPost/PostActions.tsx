@@ -9,7 +9,7 @@ import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 
 import { useUsersSelector } from '@/redux/selectors';
 import { likePost } from '@/redux/actions/posts';
-import useMyDispatch from '@/hooks/useMyDispatch';
+import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 interface PostActionsProps {
   postId: string;
@@ -20,7 +20,7 @@ function PostActions(props: PostActionsProps) {
   const { postId, likes } = props;
 
   const { currentUser } = useUsersSelector();
-  const dispatch = useMyDispatch();
+  const dispatch = useStoreDispatch();
 
   const isLiked = likes.includes(currentUser._id);
 

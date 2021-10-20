@@ -11,7 +11,7 @@ import { User as UserType } from '@/models/common';
 import { useConversationsSelector } from '@/redux/selectors';
 import { usersApiClient } from '@/apis/usersApi';
 import { getMessages } from '@/redux/actions/messenger';
-import useMyDispatch from '@/hooks/useMyDispatch';
+import useStoreDispatch from '@/hooks/useStoreDispatch';
 import {
   setConversationId,
   setReceiverId,
@@ -30,7 +30,7 @@ function ContactOnline(props: ContactOnlineProps) {
 
   const [onlineFriend, setOnlineFriend] = useState<UserType | null>(null);
 
-  const dispatch = useMyDispatch();
+  const dispatch = useStoreDispatch();
 
   const handleGetMessages = () => {
     const conversation = conversations.find((conv) =>

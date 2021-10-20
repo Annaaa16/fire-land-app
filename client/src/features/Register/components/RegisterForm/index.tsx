@@ -18,7 +18,7 @@ import { RegisterFormData } from '@/models/auth';
 
 import { formRegisterSchema } from '@/utils/formSchemas';
 import { registerUser } from '@/redux/actions/auth';
-import useMyDispatch from '@/hooks/useMyDispatch';
+import useStoreDispatch from '@/hooks/useStoreDispatch';
 import randomAvatar from '@/helpers/randomAvatar';
 
 import FormInput from '@/components/FormInput';
@@ -26,7 +26,7 @@ import FormInput from '@/components/FormInput';
 function RegisterForm() {
   const [avatar, setAvatar] = useState<string>('');
 
-  const dispatch = useMyDispatch();
+  const dispatch = useStoreDispatch();
 
   const {
     register,

@@ -10,7 +10,7 @@ import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 
 import { useUsersSelector } from '@/redux/selectors';
 import { followUser, unfollowUser } from '@/redux/actions/users';
-import useMyDispatch from '@/hooks/useMyDispatch';
+import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 import User from '@/components/User';
 
@@ -27,7 +27,7 @@ function PostHeaderBox(props: PostHeaderBoxProps) {
     currentUser: { followings },
   } = useUsersSelector();
 
-  const dispatch = useMyDispatch();
+  const dispatch = useStoreDispatch();
 
   const handleFollowUser = () => {
     dispatch(followUser.request(userId));

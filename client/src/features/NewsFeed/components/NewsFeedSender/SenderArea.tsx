@@ -23,7 +23,7 @@ import { usePostsSelector, useUsersSelector } from '@/redux/selectors';
 import { createPost, updatePost } from '@/redux/actions/posts';
 import { useGlobalContext } from '@/contexts/GlobalContext';
 import { setUpdatePost } from '@/redux/slices/postsSlice';
-import useMyDispatch from '@/hooks/useMyDispatch';
+import useStoreDispatch from '@/hooks/useStoreDispatch';
 import useDetectKeydown from '@/hooks/useDetectKeydown';
 
 import User from '@/components/User';
@@ -43,7 +43,7 @@ function NewsFeedSenderArea() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const { textareaRows, handleTextareaRows } = useDetectKeydown();
-  const dispatch = useMyDispatch();
+  const dispatch = useStoreDispatch();
 
   const closeSenderArea = () => {
     toggleSenderArea(false);

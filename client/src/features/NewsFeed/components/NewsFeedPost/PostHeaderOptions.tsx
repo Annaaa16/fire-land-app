@@ -13,7 +13,7 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 
 import { setUpdatePost } from '@/redux/slices/postsSlice';
 import { useGlobalContext } from '@/contexts/GlobalContext';
-import useMyDispatch from '@/hooks/useMyDispatch';
+import useStoreDispatch from '@/hooks/useStoreDispatch';
 import { deletePost } from '@/redux/actions/posts';
 
 interface PostHeaderOptionsProps {
@@ -25,7 +25,7 @@ function PostHeaderOptions(props: PostHeaderOptionsProps) {
 
   const { toggleSenderArea } = useGlobalContext();
 
-  const dispatch = useMyDispatch();
+  const dispatch = useStoreDispatch();
 
   const handleEditPost = () => {
     dispatch(setUpdatePost(postId));

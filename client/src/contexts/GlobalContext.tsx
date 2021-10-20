@@ -11,7 +11,7 @@ import { setAuthStatus } from '@/redux/slices/authSlice';
 import { setUser } from '@/redux/slices/usersSlice';
 import cookies from '@/helpers/cookies';
 import token from '@/helpers/token';
-import useMyDispatch from '@/hooks/useMyDispatch';
+import useStoreDispatch from '@/hooks/useStoreDispatch';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import useIsomorphicLayoutEffect from '@/hooks/useIsomorphicLayoutEffect';
 
@@ -48,7 +48,7 @@ function GlobalProvider(props: GlobalProviderProps) {
 
   const [isShowSenderArea, setIsShowSenderArea] = useState<boolean>(false);
 
-  const dispatch = useMyDispatch();
+  const dispatch = useStoreDispatch();
 
   const toggleSenderArea = (isOpen: boolean) => {
     setIsShowSenderArea(isOpen);
