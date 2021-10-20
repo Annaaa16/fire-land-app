@@ -7,7 +7,7 @@ import { usePostsSelector } from '@/redux/selectors';
 import { getPosts } from '@/redux/actions/posts';
 import { LIMIT_POSTS } from '@/constants';
 import useMeeting from '@/hooks/useMeeting';
-import useMyDispatch from '@/hooks/useMyDispatch';
+import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 import NewsFeedPost from '../NewsFeedPost';
 import NewsFeedSender from '../NewsFeedSender';
@@ -17,7 +17,7 @@ function NewsFeedContent() {
 
   const { nextPage, total, posts } = usePostsSelector();
 
-  const dispatch = useMyDispatch();
+  const dispatch = useStoreDispatch();
 
   const isMeeting = useMeeting(loaderRef, '500px');
 

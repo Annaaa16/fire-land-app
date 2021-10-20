@@ -12,4 +12,4 @@ export type WrapperStore = ReturnType<typeof makeStore>;
 
 export type StoreState = ReturnType<typeof store.getState>;
 
-export type MyDispatch = typeof store.dispatch;
+export type StoreDispatch = typeof store.dispatch;

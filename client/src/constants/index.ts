@@ -10,9 +10,15 @@ export const LIMIT_POSTS = 5;
 
 export const ACCESS_TOKEN_SECRET = process.env.NEXT_PUBLIC_ACCESS_TOKEN_SECRET;
 
-export const COOKIE_KEYS = {
-  ACCESS_TOKEN: 'access_token',
-  REFRESH_TOKEN: 'refresh_token',
+export const COOKIES = {
+  ACCESS_TOKEN_KEY: 'access_token',
+  REFRESH_TOKEN_KEY: 'refresh_token',
+};
+
+export const LOCAL_STORAGE = {
+  THEME_KEY: 'theme',
+  LIGHT_THEME_VALUE: 'light',
+  DARK_THEME_VALUE: 'dark',
 };
 
 export const PATHS = {

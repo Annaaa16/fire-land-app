@@ -16,7 +16,7 @@ import { LoginFormData } from '@/models/auth';
 
 import { loginUser } from '@/redux/actions/auth';
 import { formLoginSchema } from '@/utils/formSchemas';
-import useMyDispatch from '@/hooks/useMyDispatch';
+import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 function LoginForm() {
   const {
@@ -27,7 +27,7 @@ function LoginForm() {
     resolver: yupResolver(formLoginSchema),
   });
 
-  const dispatch = useMyDispatch();
+  const dispatch = useStoreDispatch();
 
   const handleOnSubmit = (data: LoginFormData) => {
     dispatch(loginUser.request(data));

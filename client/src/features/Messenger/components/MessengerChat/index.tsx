@@ -8,7 +8,7 @@ import { Message } from '@/models/messenger';
 
 import { useMessengerSelector, useUsersSelector } from '@/redux/selectors';
 import { addMessage } from '@/redux/slices/messengerSlice';
-import useMyDispatch from '@/hooks/useMyDispatch';
+import useStoreDispatch from '@/hooks/useStoreDispatch';
 import useSocket from '@/hooks/useSocket';
 
 import ChatHeader from './ChatHeader';
@@ -20,7 +20,7 @@ function MessagesChat() {
   const { currentUser } = useUsersSelector();
 
   const { socket } = useSocket();
-  const dispatch = useMyDispatch();
+  const dispatch = useStoreDispatch();
 
   // Get message from sender
   useEffect(() => {

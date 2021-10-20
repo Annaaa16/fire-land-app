@@ -17,7 +17,7 @@ import { createMessage } from '@/redux/actions/messenger';
 import { addMessage } from '@/redux/slices/messengerSlice';
 import { useMessengerSelector, useUsersSelector } from '@/redux/selectors';
 import useSocket from '@/hooks/useSocket';
-import useMyDispatch from '@/hooks/useMyDispatch';
+import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 import Tooltip from '@/components/Tooltip';
 
@@ -28,7 +28,7 @@ function ChatFooter() {
   const { conversationId, receiverId } = useMessengerSelector();
 
   const { socket } = useSocket();
-  const dispatch = useMyDispatch();
+  const dispatch = useStoreDispatch();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

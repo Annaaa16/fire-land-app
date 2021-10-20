@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 // clsx
 import clsx from 'clsx';
@@ -21,9 +21,9 @@ import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
 
 import { usePostsSelector, useUsersSelector } from '@/redux/selectors';
 import { createPost, updatePost } from '@/redux/actions/posts';
-import { GlobalContext } from '@/contexts/GlobalContext';
+import { useGlobalContext } from '@/contexts/GlobalContext';
 import { setUpdatePost } from '@/redux/slices/postsSlice';
-import useMyDispatch from '@/hooks/useMyDispatch';
+import useStoreDispatch from '@/hooks/useStoreDispatch';
 import useDetectKeydown from '@/hooks/useDetectKeydown';
 
 import User from '@/components/User';
@@ -31,7 +31,7 @@ import Tooltip from '@/components/Tooltip';
 import SenderAreaPhoto from './SenderAreaPhoto';
 
 function NewsFeedSenderArea() {
-  const { isShowSenderArea, toggleSenderArea } = useContext(GlobalContext);
+  const { isShowSenderArea, toggleSenderArea } = useGlobalContext();
   const { updatePost: post } = usePostsSelector();
   const { currentUser } = useUsersSelector();
 
@@ -43,7 +43,7 @@ function NewsFeedSenderArea() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const { textareaRows, handleTextareaRows } = useDetectKeydown();
-  const dispatch = useMyDispatch();
+  const dispatch = useStoreDispatch();
 
   const closeSenderArea = () => {
     toggleSenderArea(false);

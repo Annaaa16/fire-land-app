@@ -9,7 +9,7 @@ import { LoginFormData, RegisterFormData } from '@/models/auth';
 
 import { clearMessage } from '@/redux/slices/authSlice';
 import { useAuthSelector } from '@/redux/selectors';
-import useMyDispatch from '@/hooks/useMyDispatch';
+import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 interface FormInputProps {
   field: string;
@@ -22,7 +22,7 @@ function FormInput(props: FormInputProps) {
   const { field, name, register, errors } = props;
 
   const { authStatus, registerStatus } = useAuthSelector();
-  const dispatch = useMyDispatch();
+  const dispatch = useStoreDispatch();
 
   return (
     <>

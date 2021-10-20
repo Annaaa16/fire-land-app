@@ -14,7 +14,7 @@ import {
 } from '@/redux/slices/messengerSlice';
 import { getMessages } from '@/redux/actions/messenger';
 import { usersApiClient } from '@/apis/usersApi';
-import useMyDispatch from '@/hooks/useMyDispatch';
+import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 import User from '@/components/User';
 
@@ -28,7 +28,7 @@ function ContactConversation(props: ContactConversationProps) {
 
   const [friend, setFriend] = useState<GetUserResponse | null>(null);
 
-  const dispatch = useMyDispatch();
+  const dispatch = useStoreDispatch();
 
   const isActive = true;
 

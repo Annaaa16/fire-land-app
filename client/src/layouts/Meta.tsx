@@ -1,6 +1,9 @@
 import { ReactNode } from 'react';
 import Head from 'next/head';
 
+import { LOCAL_STORAGE } from '@/constants';
+import { useGlobalContext } from '@/contexts/GlobalContext';
+
 interface MetaProps {
   title: string;
   children: ReactNode;
@@ -8,6 +11,8 @@ interface MetaProps {
 
 function Meta(props: MetaProps) {
   const { title, children } = props;
+
+  const { theme } = useGlobalContext();
 
   return (
     <>
@@ -18,7 +23,14 @@ function Meta(props: MetaProps) {
         <title>{title}</title>
       </Head>
 
-      <div className='light'>{children}</div>
+      <div
+        className={
+          theme === LOCAL_STORAGE.LIGHT_THEME_VALUE
+            ? LOCAL_STORAGE.LIGHT_THEME_VALUE
+            : LOCAL_STORAGE.DARK_THEME_VALUE
+        }>
+        {children}
+      </div>
     </>
   );
 }

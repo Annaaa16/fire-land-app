@@ -14,18 +14,30 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 
-import { PATHS } from '@/constants';
+import { LOCAL_STORAGE, PATHS } from '@/constants';
 import cookies from '@/helpers/cookies';
+import { useGlobalContext } from '@/contexts/GlobalContext';
 
 function HeaderOptions() {
   const [isSetting, setIsSetting] = useState(false);
 
   const router = useRouter();
 
+  const { theme, toggleTheme } = useGlobalContext();
+
   const handleLogout = () => {
     cookies.removeAll();
     router.push(PATHS.LOGIN);
+  };
+
+  const handleToggleTheme = () => {
+    toggleTheme(
+      theme === LOCAL_STORAGE.LIGHT_THEME_VALUE
+        ? LOCAL_STORAGE.DARK_THEME_VALUE
+        : LOCAL_STORAGE.LIGHT_THEME_VALUE
+    );
   };
 
   return (
@@ -107,7 +119,7 @@ function HeaderOptions() {
         <ul
           className={clsx(
             'absolute bottom-[90%] md:top-[150%] right-0',
-            'px-4 py-1.5 min-w-max rounded-lg lg:shadow-primary-v1 min-h-[max-content]',
+            'px-4 py-1.5 w-44 rounded-lg lg:shadow-primary-v1 min-h-[max-content]',
             isSetting ? 'block' : 'hidden',
             'bg-primary-v1 dark:bg-primary-v3'
           )}>
@@ -158,18 +170,29 @@ function HeaderOptions() {
             </span>
           </li>
           <li
+            onClick={handleToggleTheme}
             className={clsx(
               'group flex items-center pl-1 pr-3 py-3 border-b border-primary-v1-text',
               'cursor-pointer',
               'transition-all ease-out'
             )}>
-            <Brightness4Icon
-              className={clsx(
-                'text-white',
-                '!transition-all !ease-out',
-                'group-hover:text-primary-v2 dark:group-hover:text-primary-v4'
-              )}
-            />
+            {theme === LOCAL_STORAGE.LIGHT_THEME_VALUE ? (
+              <Brightness4Icon
+                className={clsx(
+                  'text-white',
+                  '!transition-all !ease-out',
+                  'group-hover:text-primary-v2 dark:group-hover:text-primary-v4'
+                )}
+              />
+            ) : (
+              <Brightness7Icon
+                className={clsx(
+                  'text-white',
+                  '!transition-all !ease-out',
+                  'group-hover:text-primary-v2 dark:group-hover:text-primary-v4'
+                )}
+              />
+            )}
             <span
               className={clsx(
                 'ml-1.5 font-bold text-xs md:text-sm',
@@ -177,7 +200,9 @@ function HeaderOptions() {
                 'transition-all ease-out',
                 'group-hover:text-primary-v2 dark:group-hover:text-primary-v4'
               )}>
-              Night mode
+              {theme === LOCAL_STORAGE.LIGHT_THEME_VALUE
+                ? 'Night mode'
+                : 'Light mode'}
             </span>
           </li>
           <li

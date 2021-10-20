@@ -11,7 +11,7 @@ import GroupsIcon from '@mui/icons-material/Groups';
 
 import { useUsersSelector } from '@/redux/selectors';
 import { getConversations } from '@/redux/actions/conversations';
-import useMyDispatch from '@/hooks/useMyDispatch';
+import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 import ContactConversationList from './ContactConversationList';
 import ContactOnlineList from './ContactOnlineList';
@@ -29,7 +29,7 @@ function ContactContent() {
 
   const [contact, setContact] = useState<Contacts>(CONVERSATIONS);
 
-  const dispatch = useMyDispatch();
+  const dispatch = useStoreDispatch();
 
   // Get conversations of current user
   useEffect(() => {
