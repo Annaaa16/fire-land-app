@@ -1,12 +1,14 @@
 // types
-import { Post } from './common';
+import { Pagination, Post } from './common';
+
+export type PostInit = Post & Pagination;
 
 export interface PostsInitState {
   success: boolean;
   prevPage: number | null;
   nextPage: number | null;
   total: number;
-  posts: Post[];
+  posts: PostInit[];
   updatePost: Post | null;
 }
 

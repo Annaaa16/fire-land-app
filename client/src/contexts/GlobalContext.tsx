@@ -35,9 +35,7 @@ const initialState: GlobalInitContext = {
 
 export const GlobalContext = createContext(initialState);
 
-function GlobalProvider(props: GlobalProviderProps) {
-  const { children } = props;
-
+function GlobalProvider({ children }: GlobalProviderProps) {
   const useLayoutEffect = useIsomorphicLayoutEffect();
 
   const { storedValue: theme, setValue: toggleTheme } = useLocalStorage(

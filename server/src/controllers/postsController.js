@@ -1,6 +1,7 @@
 // models
 const Post = require('../models/postModel');
 const User = require('../models/userModel');
+const Comment = require('../models/commentModel');
 
 const { CLOUDINARY } = require('../constants');
 const cloudinary = require('../configs/cloudinaryConfig');
@@ -77,7 +78,7 @@ postsController.getPosts = async (req, res) => {
       const posts = await Post.find()
         .sort({ createdAt: 'desc' })
         .populate('user', ['username', 'avatar'])
-        .select(['-password', '-__v'])
+        .select(['-__v'])
         .lean();
 
       return res.json({ success: true, posts });
@@ -101,7 +102,7 @@ postsController.getPosts = async (req, res) => {
       .skip(startPos)
       .limit(limit)
       .populate('user', ['username', 'avatar'])
-      .select(['-password', '-__v'])
+      .select(['-__v'])
       .lean();
 
     return res.json({
@@ -168,7 +169,10 @@ postsController.updatePost = async (req, res) => {
 
     const updatedPost = await Post.findOneAndUpdate(updateCondition, post, {
       new: true,
-    }).lean();
+    })
+      .populate('user')
+      .select(['-__v'])
+      .lean();
 
     // Invalid post id or user not authorized
     if (!updatedPost) {
@@ -178,13 +182,10 @@ postsController.updatePost = async (req, res) => {
       });
     }
 
-    // Filter unnecessary fields of post
-    const { __v, ...others } = updatedPost;
-
     res.json({
       success: true,
       message: 'Post is updated!',
-      post: { ...others },
+      post: updatedPost,
     });
   } catch (error) {
     notifyServerError(res, error);

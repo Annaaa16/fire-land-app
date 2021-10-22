@@ -1,3 +1,4 @@
+// types
 import { GetPosts, UpdatePost } from '@/models/posts';
 
 export const createPost = {

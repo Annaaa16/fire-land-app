@@ -16,7 +16,8 @@ import {
   LikePostResponse,
   UpdatePostResponse,
 } from '@/models/posts';
-import { HydrateResponse, Post } from '@/models/common';
+import { CreateCommentResponse, GetCommentsResponse } from '@/models/comments';
+import { HydrateResponse } from '@/models/common';
 
 const initialState: PostsInitState = {
   success: false,
@@ -57,9 +58,7 @@ const postsSlice = createSlice({
 
       if (!postId) return { ...state, updatePost: null };
 
-      const updatePost = state.posts.find(
-        (post) => post._id === postId
-      ) as Post;
+      const updatePost = state.posts.find((post) => post._id === postId)!;
 
       return { ...state, updatePost };
     },
@@ -97,6 +96,37 @@ const postsSlice = createSlice({
         });
       }
     },
+
+    setPagination: (state, action: PayloadAction<GetCommentsResponse>) => {
+      const { success, comments, nextPage, prevPage, total } = action.payload;
+
+      if (success && comments.length > 0) {
+        const commentedPost = state.posts.find(
+          (post) => post._id === comments[0].postId
+        );
+
+        commentedPost!.nextPage = nextPage;
+        commentedPost!.prevPage = prevPage;
+        commentedPost!.total = total;
+      }
+    },
+
+    updateCommentCount: (
+      state,
+      action: PayloadAction<CreateCommentResponse>
+    ) => {
+      const { success, comment } = action.payload;
+
+      if (success) {
+        const posts = state.posts.map((post) => {
+          return post._id === comment.postId
+            ? { ...post, commentCount: post.commentCount + 1 }
+            : post;
+        });
+
+        return { ...state, posts };
+      }
+    },
   },
   extraReducers: {
     [HYDRATE]: (state, action: PayloadAction<HydrateResponse>) => {
@@ -121,6 +151,8 @@ export const {
   setUpdatedPost,
   removeDeletedPost,
   setLikedPost,
+  setPagination,
+  updateCommentCount,
 } = postsSlice.actions;
 
 export default postsSlice.reducer;

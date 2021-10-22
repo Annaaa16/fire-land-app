@@ -13,8 +13,8 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 
 import { setUpdatePost } from '@/redux/slices/postsSlice';
 import { useGlobalContext } from '@/contexts/GlobalContext';
-import useStoreDispatch from '@/hooks/useStoreDispatch';
 import { deletePost } from '@/redux/actions/posts';
+import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 interface PostHeaderOptionsProps {
   postId: string;

@@ -26,19 +26,18 @@ import {
   setUpdatedPost,
 } from '../slices/postsSlice';
 import { postsApiClient } from '@/apis/postsApi';
+import { notifySagaError } from '@/helpers/notify';
 
 const { createPost, getPosts, updatePost, deletePost, likePost } =
   postsApiClient();
 
 function* handleCreatePost(action: PayloadAction<FormData>) {
   try {
-    const uploadData = action.payload;
-
     yield delay(300); // Block spam upload button
 
     const response: AxiosResponse<UpdatePostResponse> = yield call(
       createPost,
-      uploadData
+      action.payload
     );
 
     yield put(addCreatedPost(response.data));
@@ -58,24 +57,22 @@ function* handleGetPosts(action: PayloadAction<GetPosts>) {
 
     yield put(addFetchedPostList(response.data));
   } catch (error) {
-    console.log('Get posts error 👉', error);
+    notifySagaError('Get posts', error);
   }
 }
 
 function* handleUpdatePost(action: PayloadAction<UpdatePost>) {
   try {
-    const updateData = action.payload;
-
     yield delay(300); // Block spam update button
 
     const response: AxiosResponse<UpdatePostResponse> = yield call(
       updatePost,
-      updateData
+      action.payload
     );
 
     yield put(setUpdatedPost(response.data));
   } catch (error) {
-    console.log('Update post error 👉', error);
+    notifySagaError('Update post', error);
   }
 }
 
@@ -92,7 +89,7 @@ function* handleDeletePost(action: PayloadAction<string>) {
 
     yield put(removeDeletedPost(response.data));
   } catch (error) {
-    console.log('Delete post error 👉', error);
+    notifySagaError('Delete post', error);
   }
 }
 
@@ -109,7 +106,7 @@ function* handleLikePost(action: PayloadAction<string>) {
 
     yield put(setLikedPost(response.data));
   } catch (error) {
-    console.log('Like or dislike post error 👉', error);
+    notifySagaError('Like post', error);
   }
 }
 

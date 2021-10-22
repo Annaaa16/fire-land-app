@@ -2,7 +2,7 @@
 import { AxiosError } from 'axios';
 import { ErrorResponse } from '@/models/common';
 
-const notifyServerError = (
+export const notifyAxiosError = (
   message: string,
   error: AxiosError<ErrorResponse>
 ) => {
@@ -10,4 +10,6 @@ const notifyServerError = (
   return error?.response;
 };
 
-export default notifyServerError;
+export const notifySagaError = (message: string, error: any) => {
+  console.log(message + ' error from saga 👉', error);
+};

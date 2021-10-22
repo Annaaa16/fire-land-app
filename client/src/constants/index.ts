@@ -6,7 +6,10 @@ export const URLS = {
 export const CLOUDINARY_PREFIX =
   'https://res.cloudinary.com/drxhgl7xe/image/upload';
 
-export const LIMIT_POSTS = 5;
+export const LIMITS = {
+  POSTS: 5,
+  COMMENTS: 5,
+};
 
 export const ACCESS_TOKEN_SECRET = process.env.NEXT_PUBLIC_ACCESS_TOKEN_SECRET;
 

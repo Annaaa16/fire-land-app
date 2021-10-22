@@ -13,10 +13,6 @@ router.post('/', verifyToken, conversationsController.createConversation);
 // @route GET api/conversations/:userId
 // @desc Get conversations of a user
 // @access Private
-router.get(
-  '/:userId',
-  verifyToken,
-  conversationsController.getUserConversation
-);
+router.get('/:userId', verifyToken, conversationsController.getConversations);
 
 module.exports = router;

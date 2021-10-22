@@ -11,7 +11,7 @@ usersController.getCurrentUser = async (req, res) => {
 
     if (!user) {
       return res
-        .status(400)
+        .status(404)
         .json({ success: false, message: 'User not found' });
     }
 
@@ -41,7 +41,7 @@ usersController.getUserById = async (req, res) => {
 
     if (!user) {
       return res
-        .status(400)
+        .status(404)
         .json({ success: false, message: 'User not found' });
     }
 

@@ -37,7 +37,7 @@ function NewsFeedSenderInput() {
           placeholder={`What's on your mind, IG Dev`}
           className={clsx(
             'flex-1 h-full ml-3 md:ml-4 rounded-full text-xs md:text-sm outline-none px-4 py-3',
-            'bg-[#f0f2f5] dark:bg-dk-input dark:text-white',
+            'bg-lt-input dark:bg-dk-input dark:text-white',
             'cursor-pointer'
           )}
           defaultValue=''

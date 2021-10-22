@@ -10,6 +10,21 @@ export interface User {
   followers: string[];
 }
 
+export interface Comment {
+  readonly _id: string;
+  postId: string;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+  user: User;
+}
+
+export interface Pagination {
+  prevPage?: number;
+  nextPage?: number;
+  total?: number;
+}
+
 export interface Post {
   readonly _id: string;
   user: User;
@@ -17,6 +32,7 @@ export interface Post {
   likes: string[];
   photo: string;
   photoId: string;
+  commentCount: number;
   createdAt: string;
   updatedAt: string;
 }

@@ -13,7 +13,7 @@ messagesController.createMessage = async (req, res) => {
 
     return res.json({ success: true, message });
   } catch (error) {
-    notifyServerError(error);
+    notifyServerError(res, error);
   }
 };
 
@@ -29,7 +29,7 @@ messagesController.getMessages = async (req, res) => {
       messages,
     });
   } catch (error) {
-    notifyServerError(error);
+    notifyServerError(res, error);
   }
 };
 

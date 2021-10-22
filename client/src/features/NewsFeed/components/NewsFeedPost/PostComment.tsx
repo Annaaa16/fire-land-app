@@ -1,85 +1,82 @@
 // clsx
 import clsx from 'clsx';
 
-// material ui icons
-import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
-import PhotoCameraBackOutlinedIcon from '@mui/icons-material/PhotoCameraBackOutlined';
-import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
-
-import User from '@/components/User';
-import Tooltip from '@/components/Tooltip';
+// types
+import { Comment } from '@/models/common';
 
 interface PostCommentProps {
-  avatar: string;
+  comment: Comment;
 }
 
-function PostComment(props: PostCommentProps) {
-  const { avatar } = props;
+function PostComment({ comment }: PostCommentProps) {
+  const { content, user } = comment;
 
   return (
-    <form
-      className={clsx(
-        'flex items-center border-t border-lt-line dark:border-dk-line mt-1 pt-4 pb-3'
-      )}>
-      <User avatar={avatar} view='small' />
-      <div
-        className={clsx(
-          'flex flex-1 ml-2.5 justify-between rounded-3xl',
-          'bg-[#f0f2f5] dark:bg-dk-input'
-        )}>
-        <input
-          placeholder='Write a comment...'
+    <div className={clsx('flex mb-2')}>
+      <div className={clsx('h-8 w-8 mt-1 flex-shrink-0 mr-2')}>
+        <img
+          src={user?.avatar}
+          alt='Avatar'
           className={clsx(
-            'flex-1 pl-4 outline-none py-3 text-xs md:text-sm',
-            'dark:text-white bg-transparent'
+            'w-full h-full rounded-full object-contain',
+            'cursor-pointer'
           )}
         />
-        <ul className={clsx('flex items-center')}>
-          <li
-            className={clsx(
-              'relative',
-              'group i-flex-center w-10 h-10 rounded-full',
-              'transition-all ease-out',
-              'cursor-pointer',
-              'lg:hover:bg-gray-200 lg:dark:hover:bg-dk-tooltip-hv'
-            )}>
-            <SentimentSatisfiedIcon
-              fontSize='small'
-              className={clsx('!text-xl', 'text-gray-400')}
-            />
-            <Tooltip title='Insert an emoji' direction='ttb' />
-          </li>
-          <li
-            className={clsx(
-              'relative',
-              'group i-flex-center w-10 h-10 rounded-full',
-              'transition-all ease-out',
-              'cursor-pointer',
-              'lg:hover:bg-gray-200 lg:dark:hover:bg-dk-tooltip-hv'
-            )}>
-            <PhotoCameraBackOutlinedIcon
-              fontSize='small'
-              className={clsx('!text-xl', 'text-gray-400')}
-            />
-            <Tooltip title='Attach a photo or video' direction='ttb' />
-          </li>
-          <li
-            className={clsx(
-              'relative',
-              'group i-flex-center w-10 h-10 rounded-full',
-              'transition-all ease-out',
-              'cursor-pointer',
-              'lg:hover:bg-gray-200 lg:dark:hover:bg-dk-tooltip-hv'
-            )}>
-            <StorefrontOutlinedIcon
-              fontSize='small'
-              className={clsx('!text-xl', 'text-gray-400')}
-            />
-            <Tooltip title='Comment with a sticker' direction='ttb' />
-          </li>
-        </ul>
       </div>
-    </form>
+      <div className={clsx('flex-grow')}>
+        <div
+          className={clsx(
+            'mb-1 px-3 py-2 rounded-xl',
+            'bg-lt-input dark:bg-dk-input'
+          )}>
+          <h4
+            className={clsx(
+              'inline-block font-bold mb-1.5 text-xs lg:text-2sm leading-4',
+              'dark:text-white',
+              'cursor-pointer',
+              'hover:underline'
+            )}>
+            {user?.username}
+          </h4>
+          <p
+            className={clsx(
+              'leading-4 text-xs lg:text-2sm',
+              'dark:text-white'
+            )}>
+            {content}
+          </p>
+        </div>
+        <div className={clsx('flex items-center ml-3')}>
+          <span
+            className={clsx(
+              'font-bold mr-2 text-xs',
+              'dark:text-gray',
+              'cursor-pointer',
+              'hover:underline'
+            )}>
+            Like
+          </span>
+          <span
+            className={clsx(
+              'font-bold mr-2 text-xs',
+              'dark:text-gray',
+              'cursor-pointer',
+              'hover:underline'
+            )}>
+            Reply
+          </span>
+          <span
+            className={clsx(
+              'text-xs',
+              'cursor-pointer',
+              'dark:text-gray',
+              'hover:underline'
+            )}>
+            3m
+          </span>
+        </div>
+      </div>
+    </div>
   );
 }
 

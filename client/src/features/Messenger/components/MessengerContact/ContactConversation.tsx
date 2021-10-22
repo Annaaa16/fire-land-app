@@ -23,9 +23,10 @@ interface ContactConversationProps {
   conversation: Conversation;
 }
 
-function ContactConversation(props: ContactConversationProps) {
-  const { userId, conversation } = props;
-
+function ContactConversation({
+  userId,
+  conversation,
+}: ContactConversationProps) {
   const [friend, setFriend] = useState<GetUserResponse | null>(null);
 
   const dispatch = useStoreDispatch();

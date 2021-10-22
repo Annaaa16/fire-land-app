@@ -5,7 +5,7 @@ import { GetUserResponse } from '@/models/auth';
 
 import { axiosClient } from './axiosClient';
 import { axiosServer } from './axiosServer';
-import notifyServerError from '@/helpers/notifyServerError';
+import { notifyAxiosError } from '@/helpers/notify';
 import cookies from '@/helpers/cookies';
 
 export const usersApiClient = () => {
@@ -22,7 +22,7 @@ export const usersApiClient = () => {
 
         return response;
       } catch (error) {
-        return notifyServerError('Get current user', error as AxiosError);
+        return notifyAxiosError('Get current user', error as AxiosError);
       }
     },
 
@@ -34,7 +34,7 @@ export const usersApiClient = () => {
 
         return response;
       } catch (error) {
-        return notifyServerError('Get user by ID', error as AxiosError);
+        return notifyAxiosError('Get user by ID', error as AxiosError);
       }
     },
 
@@ -46,7 +46,7 @@ export const usersApiClient = () => {
 
         return response;
       } catch (error) {
-        return notifyServerError('Follow user', error as AxiosError);
+        return notifyAxiosError('Follow user', error as AxiosError);
       }
     },
 
@@ -58,7 +58,7 @@ export const usersApiClient = () => {
 
         return response;
       } catch (error) {
-        return notifyServerError('Unfollow user', error as AxiosError);
+        return notifyAxiosError('Unfollow user', error as AxiosError);
       }
     },
   };
@@ -76,7 +76,7 @@ export const usersApiServer = (accessToken: string) => {
 
         return response;
       } catch (error) {
-        return notifyServerError('Get current user', error as AxiosError);
+        return notifyAxiosError('Get current user', error as AxiosError);
       }
     },
   };

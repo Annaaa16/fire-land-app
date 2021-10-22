@@ -8,7 +8,7 @@ import {
 
 import { axiosClient } from './axiosClient';
 import cookies from '@/helpers/cookies';
-import notifyServerError from '@/helpers/notifyServerError';
+import { notifyAxiosError } from '@/helpers/notify';
 
 export const messageApiClient = () => {
   const refreshToken = cookies.getRefreshToken();
@@ -24,7 +24,7 @@ export const messageApiClient = () => {
 
         return response;
       } catch (error) {
-        return notifyServerError('Create message', error as AxiosError);
+        return notifyAxiosError('Create message', error as AxiosError);
       }
     },
     getMessages: async (conversationId: string) => {
@@ -35,7 +35,7 @@ export const messageApiClient = () => {
 
         return response;
       } catch (error) {
-        return notifyServerError('Get messages', error as AxiosError);
+        return notifyAxiosError('Get messages', error as AxiosError);
       }
     },
   };

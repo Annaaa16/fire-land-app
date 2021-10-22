@@ -17,3 +17,6 @@ export const useMessengerSelector = () =>
 
 export const useConversationsSelector = () =>
   useSelector((state: StoreState) => state.conversations);
+
+export const useCommentsSelector = () =>
+  useSelector((state: StoreState) => state.comments);

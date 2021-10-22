@@ -11,6 +11,7 @@ import {
   unfollowUser as unfollowUserAct,
 } from '../actions/users';
 import { addFollowingUser, deleteFollowingUser } from '../slices/usersSlice';
+import { notifySagaError } from '@/helpers/notify';
 
 const { followUser, unfollowUser } = usersApiClient();
 
@@ -27,7 +28,7 @@ function* handleFollowUser(action: PayloadAction<string>) {
 
     yield put(addFollowingUser(response.data));
   } catch (error) {
-    console.log('Follow user error 👉', error);
+    notifySagaError('Follow user', error);
   }
 }
 
@@ -44,7 +45,7 @@ function* handleUnfollowUser(action: PayloadAction<string>) {
 
     yield put(deleteFollowingUser(response.data));
   } catch (error) {
-    console.log('Unfollow user error 👉', error);
+    notifySagaError('Unfollow user', error);
   }
 }
 

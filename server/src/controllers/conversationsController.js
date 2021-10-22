@@ -22,11 +22,11 @@ conversationsController.createConversation = async (req, res) => {
       conversation,
     });
   } catch (error) {
-    notifyServerError(error);
+    notifyServerError(res, error);
   }
 };
 
-conversationsController.getUserConversation = async (req, res) => {
+conversationsController.getConversations = async (req, res) => {
   const { userId } = req.params;
 
   try {

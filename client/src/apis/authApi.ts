@@ -11,7 +11,7 @@ import {
 
 import { axiosServer } from './axiosServer';
 import { axiosClient } from './axiosClient';
-import notifyServerError from '@/helpers/notifyServerError';
+import { notifyAxiosError } from '@/helpers/notify';
 import cookies from '@/helpers/cookies';
 
 export const authApiClient = () => {
@@ -29,7 +29,7 @@ export const authApiClient = () => {
 
         return response;
       } catch (error) {
-        return notifyServerError('Login user', error as AxiosError);
+        return notifyAxiosError('Login user', error as AxiosError);
       }
     },
 
@@ -42,7 +42,7 @@ export const authApiClient = () => {
 
         return response;
       } catch (error) {
-        return notifyServerError('Register user', error as AxiosError);
+        return notifyAxiosError('Register user', error as AxiosError);
       }
     },
   };
@@ -63,7 +63,7 @@ export const authApiServer = (accessToken: string) => {
 
         return response;
       } catch (error) {
-        return notifyServerError('Verify token', error as AxiosError);
+        return notifyAxiosError('Verify token', error as AxiosError);
       }
     },
 
@@ -78,7 +78,7 @@ export const authApiServer = (accessToken: string) => {
 
         return response;
       } catch (error) {
-        return notifyServerError('Get token', error as AxiosError);
+        return notifyAxiosError('Get token', error as AxiosError);
       }
     },
   };
