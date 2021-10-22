@@ -5,7 +5,7 @@ import clsx from 'clsx';
 
 import { usePostsSelector } from '@/redux/selectors';
 import { getPosts } from '@/redux/actions/posts';
-import { LIMIT_POSTS } from '@/constants';
+import { LIMITS } from '@/constants';
 import useMeeting from '@/hooks/useMeeting';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
@@ -24,7 +24,7 @@ function NewsFeedContent() {
   // Get new posts when scrolled to bottom
   useEffect(() => {
     if (isMeeting && nextPage) {
-      dispatch(getPosts.request({ page: nextPage, limit: LIMIT_POSTS }));
+      dispatch(getPosts.request({ page: nextPage, limit: LIMITS.POSTS }));
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

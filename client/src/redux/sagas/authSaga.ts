@@ -16,6 +16,7 @@ import {
   loginUser as loginUserAct,
   registerUser as registerUserAct,
 } from '../actions/auth';
+import { notifySagaError } from '@/helpers/notify';
 import cookies from '@/helpers/cookies';
 
 const { loginUser, registerUser } = authApiClient();
@@ -40,7 +41,7 @@ function* handleLoginUser(action: PayloadAction<LoginFormData>) {
 
     yield put(setAuthStatus(response.data));
   } catch (error) {
-    console.log('Login error 👉', error);
+    notifySagaError('Login', error);
   }
 }
 
@@ -55,7 +56,7 @@ function* handleRegisterUser(action: PayloadAction<RegisterFormData>) {
 
     yield put(setRegisterStatus(response.data));
   } catch (error) {
-    console.log('Register error 👉', error);
+    notifySagaError('Register', error);
   }
 }
 

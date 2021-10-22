@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 // clsx
 import clsx from 'clsx';
 
@@ -14,19 +16,16 @@ import useStoreDispatch from '@/hooks/useStoreDispatch';
 interface PostActionsProps {
   postId: string;
   likes: string[];
+  handleFetchComments: () => void;
 }
 
 function PostActions(props: PostActionsProps) {
-  const { postId, likes } = props;
+  const { postId, likes, handleFetchComments } = props;
 
   const { currentUser } = useUsersSelector();
   const dispatch = useStoreDispatch();
 
   const isLiked = likes.includes(currentUser._id);
-
-  const handleLikePost = () => {
-    dispatch(likePost.request(postId));
-  };
 
   return (
     <div
@@ -34,7 +33,7 @@ function PostActions(props: PostActionsProps) {
         'flex items-center mt-3 pt-1 border-t border-lt-line dark:border-dk-line'
       )}>
       <div
-        onClick={handleLikePost}
+        onClick={() => dispatch(likePost.request(postId))}
         className={clsx(
           'group i-flex-center flex-1 py-2.5 rounded-md',
           'transition-all ease-out',
@@ -70,7 +69,9 @@ function PostActions(props: PostActionsProps) {
           {isLiked ? 'Liked' : 'Like'}
         </span>
       </div>
+
       <div
+        onClick={handleFetchComments}
         className={clsx(
           'group i-flex-center flex-1 py-2.5 rounded-md',
           'transition-all ease-out',
@@ -95,6 +96,7 @@ function PostActions(props: PostActionsProps) {
           Comment
         </span>
       </div>
+
       <div
         className={clsx(
           'group i-flex-center flex-1 py-2.5 rounded-md',

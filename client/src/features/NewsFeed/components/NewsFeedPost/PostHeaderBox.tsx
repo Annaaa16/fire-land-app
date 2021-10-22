@@ -29,10 +29,6 @@ function PostHeaderBox(props: PostHeaderBoxProps) {
 
   const dispatch = useStoreDispatch();
 
-  const handleFollowUser = () => {
-    dispatch(followUser.request(userId));
-  };
-
   return (
     <div
       className={clsx(

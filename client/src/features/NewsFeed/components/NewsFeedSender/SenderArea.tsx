@@ -28,7 +28,7 @@ import useDetectKeydown from '@/hooks/useDetectKeydown';
 
 import User from '@/components/User';
 import Tooltip from '@/components/Tooltip';
-import SenderAreaPhoto from './SenderAreaPhoto';
+import SenderPhoto from './SenderPhoto';
 
 function NewsFeedSenderArea() {
   const { isShowSenderArea, toggleSenderArea } = useGlobalContext();
@@ -183,7 +183,7 @@ function NewsFeedSenderArea() {
             />
             {isAddPhoto && (
               <div className={clsx('mb-4')}>
-                <SenderAreaPhoto
+                <SenderPhoto
                   preview={preview}
                   setPreview={setPreview}
                   setIsAddPhoto={setIsAddPhoto}

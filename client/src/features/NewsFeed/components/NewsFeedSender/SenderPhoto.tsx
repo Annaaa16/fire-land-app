@@ -10,7 +10,7 @@ import clsx from 'clsx';
 // types
 import { DropzoneInputProps, DropzoneRootProps } from 'react-dropzone';
 
-interface SenderAreaPhotoProps {
+interface SenderPhotoProps {
   preview: string;
   setPreview: Dispatch<SetStateAction<string>>;
   setIsAddPhoto: Dispatch<SetStateAction<boolean>>;
@@ -18,7 +18,7 @@ interface SenderAreaPhotoProps {
   getInputProps: <T extends DropzoneInputProps>(props?: T) => T;
 }
 
-function SenderAreaPhoto(props: SenderAreaPhotoProps) {
+function SenderPhoto(props: SenderPhotoProps) {
   const { preview, setPreview, setIsAddPhoto, getRootProps, getInputProps } =
     props;
 
@@ -39,7 +39,6 @@ function SenderAreaPhoto(props: SenderAreaPhotoProps) {
               'bg-gray-100'
             )}>
             <input {...getInputProps()} />
-            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={preview}
               alt='Thumbnail'
@@ -51,7 +50,7 @@ function SenderAreaPhoto(props: SenderAreaPhotoProps) {
             {...getRootProps()}
             className={clsx(
               'i-flex-center flex-col w-full h-full rounded-md',
-              'bg-gray-100',
+              'bg-gray-100 dark:bg-gray-700',
               'cursor-pointer'
             )}>
             <input {...getInputProps()} />
@@ -62,8 +61,12 @@ function SenderAreaPhoto(props: SenderAreaPhotoProps) {
               )}>
               <AddPhotoAlternateIcon className={clsx('!text-[28px]')} />
             </div>
-            <h3 className={clsx('font-bold mt-2 mb-0.5')}>Add Photo/Videos</h3>
-            <p className={clsx('text-xs')}>or drag and drops</p>
+            <h3 className={clsx('font-bold mt-2 mb-0.5', 'dark:text-gray-200')}>
+              Add Photo/Videos
+            </h3>
+            <p className={clsx('text-xs', 'dark:text-gray-200')}>
+              or drag and drops
+            </p>
           </div>
         )}
         <div
@@ -73,8 +76,8 @@ function SenderAreaPhoto(props: SenderAreaPhotoProps) {
           }}
           className={clsx(
             'absolute top-4 right-4',
-            'rounded-full p-1 border border-gray-300',
-            'bg-white',
+            'rounded-full p-1 border border-gray-300 dark:border-transparent',
+            'bg-white dark:bg-dk-cpn',
             'transition-all ease-out',
             'hover:bg-gray-100 dark:hover:bg-dk-tooltip-hv',
             'cursor-pointer'
@@ -86,4 +89,4 @@ function SenderAreaPhoto(props: SenderAreaPhotoProps) {
   );
 }
 
-export default SenderAreaPhoto;
+export default SenderPhoto;
