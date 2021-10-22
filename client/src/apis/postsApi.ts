@@ -1,5 +1,4 @@
 // types
-import { AxiosError } from 'axios';
 import {
   CreatePostsResponse,
   DeletePostResponse,
@@ -9,10 +8,11 @@ import {
   UpdatePost,
   UpdatePostResponse,
 } from '@/models/posts';
+import { AxiosError } from 'axios';
 
 import { axiosClient } from './axiosClient';
 import { axiosServer } from './axiosServer';
-import notifyServerError from '@/helpers/notifyServerError';
+import { notifyAxiosError } from '@/helpers/notify';
 import cookies from '@/helpers/cookies';
 
 export const postsApiClient = () => {
@@ -29,7 +29,7 @@ export const postsApiClient = () => {
 
         return response;
       } catch (error) {
-        return notifyServerError('Create post', error as AxiosError);
+        return notifyAxiosError('Create post', error as AxiosError);
       }
     },
 
@@ -41,7 +41,7 @@ export const postsApiClient = () => {
 
         return response;
       } catch (error) {
-        return notifyServerError('Get posts', error as AxiosError);
+        return notifyAxiosError('Get posts', error as AxiosError);
       }
     },
 
@@ -56,7 +56,7 @@ export const postsApiClient = () => {
 
         return response;
       } catch (error) {
-        return notifyServerError('Update post', error as AxiosError);
+        return notifyAxiosError('Update post', error as AxiosError);
       }
     },
 
@@ -68,19 +68,19 @@ export const postsApiClient = () => {
 
         return response;
       } catch (error) {
-        return notifyServerError('Delete post', error as AxiosError);
+        return notifyAxiosError('Delete post', error as AxiosError);
       }
     },
 
     likePost: async (postId: string) => {
       try {
         const response = await axiosInstance.patch<LikePostResponse>(
-          `posts/${postId}/like`
+          `/posts/${postId}/like`
         );
 
         return response;
       } catch (error) {
-        return notifyServerError('Like post', error as AxiosError);
+        return notifyAxiosError('Like post', error as AxiosError);
       }
     },
   };
@@ -98,7 +98,7 @@ export const postsApiServer = (accessToken: string) => {
 
         return response;
       } catch (error) {
-        return notifyServerError('Get posts', error as AxiosError);
+        return notifyAxiosError('Get posts', error as AxiosError);
       }
     },
   };

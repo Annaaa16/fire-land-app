@@ -8,14 +8,14 @@ import {
   GetMessagesResponse,
   MessageData,
 } from '@/models/messenger';
-import { CreateMessageResponse } from '@/models/messenger';
 
 import { messageApiClient } from '@/apis/messageApi';
 import {
   createMessage as createMessageAct,
   getMessages as getMessagesAct,
 } from '../actions/messenger';
-import { addMessage, setCurrentChat } from '../slices/messengerSlice';
+import { setCurrentChat } from '../slices/messengerSlice';
+import { notifySagaError } from '@/helpers/notify';
 
 const { createMessage, getMessages } = messageApiClient();
 
@@ -23,14 +23,9 @@ function* handleCreateMessage(action: PayloadAction<MessageData>) {
   const messageData = action.payload;
 
   try {
-    const response: AxiosResponse<CreateMessageResponse> = yield call(
-      createMessage,
-      messageData
-    );
-
-    // yield put(addMessage(response.data.message));
+    yield call(createMessage, messageData);
   } catch (error) {
-    console.log('Create message error 👉', error);
+    notifySagaError('Create message', error);
   }
 }
 
@@ -45,7 +40,7 @@ function* handleGetMessages(action: PayloadAction<GetMessagesData>) {
 
     yield put(setCurrentChat(response.data));
   } catch (error) {
-    console.log('Get messages error 👉', error);
+    notifySagaError('Get messages', error);
   }
 }
 

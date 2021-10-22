@@ -8,7 +8,7 @@ import {
 
 import { axiosClient } from './axiosClient';
 import cookies from '@/helpers/cookies';
-import notifyServerError from '@/helpers/notifyServerError';
+import { notifyAxiosError } from '@/helpers/notify';
 
 export const conversationsApiClient = () => {
   const refreshToken = cookies.getRefreshToken();
@@ -24,7 +24,7 @@ export const conversationsApiClient = () => {
 
         return response;
       } catch (error) {
-        return notifyServerError('Create conversation', error as AxiosError);
+        return notifyAxiosError('Create conversation', error as AxiosError);
       }
     },
 
@@ -36,7 +36,7 @@ export const conversationsApiClient = () => {
 
         return response;
       } catch (error) {
-        return notifyServerError('Get conversations', error as AxiosError);
+        return notifyAxiosError('Get conversations', error as AxiosError);
       }
     },
   };

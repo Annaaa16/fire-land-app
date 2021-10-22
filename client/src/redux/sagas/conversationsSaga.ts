@@ -14,6 +14,7 @@ import {
   createConversation as createConversationAct,
   getConversations as getConversationsAct,
 } from '../actions/conversations';
+import { notifySagaError } from '@/helpers/notify';
 
 const { createConversation, getConversations } = conversationsApiClient();
 
@@ -28,7 +29,7 @@ function* handleCreateConversation(action: PayloadAction<CreateConversation>) {
 
     yield put(setConversations(response.data));
   } catch (error) {
-    console.log('Create conversation error 👉', error);
+    notifySagaError('Create conversation', error);
   }
 }
 
@@ -43,7 +44,7 @@ function* handleGetConversations(action: PayloadAction<string>) {
 
     yield put(setConversations(response.data));
   } catch (error) {
-    console.log('Get conversations error 👉', error);
+    notifySagaError('Get conversations', error);
   }
 }
 
