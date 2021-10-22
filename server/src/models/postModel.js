@@ -20,6 +20,10 @@ const PostSchema = new mongoose.Schema(
     photoId: {
       type: String,
     },
+    commentCount: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 );
