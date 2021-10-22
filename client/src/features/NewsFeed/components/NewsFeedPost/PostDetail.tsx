@@ -7,10 +7,11 @@ import love from '@/assets/svgs/NewsFeed/love.svg';
 
 interface PostDetailProps {
   likes: string[];
+  commentCount: number;
 }
 
 function PostDetail(props: PostDetailProps) {
-  const { likes } = props;
+  const { likes, commentCount } = props;
 
   return (
     <div className={clsx('flex items-center justify-between h-5')}>
@@ -78,7 +79,7 @@ function PostDetail(props: PostDetailProps) {
             'cursor-pointer',
             'lg:hover:underline'
           )}>
-          1.1k Comments
+          {commentCount} Comments
         </span>
         <span
           className={clsx(

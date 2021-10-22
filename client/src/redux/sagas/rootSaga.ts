@@ -5,6 +5,7 @@ import postsSaga from './postsSaga';
 import conversationsSaga from './conversationsSaga';
 import messengerSaga from './messengerSaga';
 import usersSaga from './usersSaga';
+import commentsSaga from './commentsSaga';
 
 function* watcherSaga() {
   yield all([
@@ -13,6 +14,7 @@ function* watcherSaga() {
     conversationsSaga(),
     messengerSaga(),
     usersSaga(),
+    commentsSaga(),
   ]);
 }
 
