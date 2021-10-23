@@ -27,6 +27,7 @@ function NewsFeedPost(props: PostInit) {
     nextPage,
     total,
     commentCount,
+    createdAt,
     user: { username, _id: userId, avatar },
   } = props;
 
@@ -78,6 +79,7 @@ function NewsFeedPost(props: PostInit) {
         username={username}
         userId={userId}
         avatar={avatar}
+        createdAt={createdAt}
       />
       <PostContent content={content} photo={photo} />
 
