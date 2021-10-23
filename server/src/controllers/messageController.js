@@ -11,7 +11,7 @@ messagesController.createMessage = async (req, res) => {
 
     await message.save();
 
-    return res.json({ success: true, message });
+    res.json({ success: true, message });
   } catch (error) {
     notifyServerError(res, error);
   }
@@ -23,7 +23,7 @@ messagesController.getMessages = async (req, res) => {
   try {
     const messages = await Message.find({ conversationId });
 
-    return res.json({
+    res.json({
       success: true,
       message: 'Get messages successfully',
       messages,

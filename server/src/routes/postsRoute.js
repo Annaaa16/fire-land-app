@@ -38,8 +38,13 @@ router.put(
 router.delete('/:id', verifyToken, postsController.deletePost);
 
 // @route PATCH /api/posts/:id/like
-// @desc Like or unlike post
+// @desc Like post
 // @access Private
-router.patch('/:id/like', verifyToken, postsController.likeOrUnlikePost);
+router.patch('/:id/like', verifyToken, postsController.likePost);
+
+// @route PATCH /api/posts/:id/unlike
+// @desc Unlike post
+// @access Private
+router.patch('/:id/unlike', verifyToken, postsController.unlikePost);
 
 module.exports = router;

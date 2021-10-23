@@ -14,7 +14,7 @@ authController.register = async (req, res) => {
 
   // Empty username or password
   if (!username || !password) {
-    return res
+    res
       .status(400)
       .json({ success: false, message: 'Missing username or password' });
   }
@@ -24,7 +24,7 @@ authController.register = async (req, res) => {
 
     // User already exists
     if (userExisting) {
-      return res
+      res
         .status(400)
         .json({ success: false, message: 'Username is already taken' });
     }
@@ -40,7 +40,7 @@ authController.register = async (req, res) => {
     // Save to db
     await user.save();
 
-    return res.json({
+    res.json({
       success: true,
       message: 'User has been created successfully',
     });
@@ -54,7 +54,7 @@ authController.login = async (req, res) => {
 
   // Empty username or password
   if (!username || !password) {
-    return res
+    res
       .status(400)
       .json({ success: false, message: 'Missing username or password' });
   }
@@ -64,7 +64,7 @@ authController.login = async (req, res) => {
 
     // User does not exist or incorrect username
     if (!user) {
-      return res
+      res
         .status(400)
         .json({ success: false, message: 'Incorrect username or password' });
     }
@@ -73,7 +73,7 @@ authController.login = async (req, res) => {
 
     // Incorrect password or not match
     if (!isPasswordCorrect) {
-      return res
+      res
         .status(400)
         .json({ success: false, message: 'Incorrect username or password' });
     }
@@ -84,7 +84,7 @@ authController.login = async (req, res) => {
       avatar: user.avatar,
     };
 
-    return res.json({
+    res.json({
       success: true,
       message: 'User has successfully logged in',
       user: filteredUser,
@@ -101,7 +101,7 @@ authController.getAccessToken = (req, res) => {
 
   // Empty refresh token
   if (!refreshToken) {
-    return res
+    res
       .status(401)
       .json({ success: false, message: 'Refresh token not found' });
   }
@@ -109,7 +109,7 @@ authController.getAccessToken = (req, res) => {
   try {
     jwt.verify(refreshToken, TOKENS.REFRESH_TOKEN_SECRET, (error, decoded) => {
       if (error) {
-        return res
+        res
           .status(401)
           .json({ success: false, message: 'Invalid refresh token' });
       }
@@ -130,16 +130,12 @@ authController.verifyToken = (req, res) => {
 
   // Empty access token
   if (!accessToken) {
-    return res
-      .status(401)
-      .json({ success: false, message: 'Access token not found' });
+    res.status(401).json({ success: false, message: 'Access token not found' });
   }
 
   jwt.verify(accessToken, TOKENS.ACCESS_TOKEN_SECRET, (error) => {
     if (error) {
-      return res
-        .status(401)
-        .json({ success: false, message: 'Token is expired' });
+      res.status(401).json({ success: false, message: 'Token is expired' });
     }
 
     res.json({ success: true, message: 'Valid access token' });
