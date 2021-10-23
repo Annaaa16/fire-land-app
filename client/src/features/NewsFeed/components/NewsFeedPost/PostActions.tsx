@@ -10,7 +10,7 @@ import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutline
 import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 
 import { useUsersSelector } from '@/redux/selectors';
-import { likePost } from '@/redux/actions/posts';
+import { likePost, unlikePost } from '@/redux/actions/posts';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 interface PostActionsProps {
@@ -33,7 +33,11 @@ function PostActions(props: PostActionsProps) {
         'flex items-center mt-3 pt-1 border-t border-lt-line dark:border-dk-line'
       )}>
       <div
-        onClick={() => dispatch(likePost.request(postId))}
+        onClick={() =>
+          dispatch(
+            isLiked ? unlikePost.request(postId) : likePost.request(postId)
+          )
+        }
         className={clsx(
           'group i-flex-center flex-1 py-2.5 rounded-md',
           'transition-all ease-out',

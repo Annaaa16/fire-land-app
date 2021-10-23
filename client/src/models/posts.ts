@@ -31,6 +31,7 @@ export interface CreatePostsResponse {
 
 export interface GetPostsResponse {
   success: boolean;
+  message: string;
   prevPage: number | null;
   nextPage: number | null;
   total: number;
@@ -50,6 +51,12 @@ export interface DeletePostResponse {
 }
 
 export interface LikePostResponse {
+  success: boolean;
+  message: string;
+  post: Post;
+}
+
+export interface UnlikePostResponse {
   success: boolean;
   message: string;
   post: Post;
