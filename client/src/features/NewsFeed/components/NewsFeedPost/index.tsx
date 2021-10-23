@@ -88,12 +88,7 @@ function NewsFeedPost(props: PostInit) {
           likes={likes}
           handleFetchComments={handleFetchComments}
         />
-        <PostSender
-          avatar={avatar}
-          postId={_id}
-          userId={userId}
-          setIsOpenComments={setIsOpenComments}
-        />
+        <PostSender postId={_id} setIsOpenComments={setIsOpenComments} />
         <PostCommentList
           postId={_id}
           isOpenComments={isOpenComments}
