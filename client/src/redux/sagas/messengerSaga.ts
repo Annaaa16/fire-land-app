@@ -9,7 +9,7 @@ import {
   MessageData,
 } from '@/models/messenger';
 
-import { messageApiClient } from '@/apis/messageApi';
+import { messagesApiClient } from '@/apis/messagesApi';
 import {
   createMessage as createMessageAct,
   getMessages as getMessagesAct,
@@ -17,7 +17,7 @@ import {
 import { setCurrentChat } from '../slices/messengerSlice';
 import { notifySagaError } from '@/helpers/notify';
 
-const { createMessage, getMessages } = messageApiClient();
+const { createMessage, getMessages } = messagesApiClient();
 
 function* handleCreateMessage(action: PayloadAction<MessageData>) {
   const messageData = action.payload;

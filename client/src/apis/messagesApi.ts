@@ -10,7 +10,7 @@ import { axiosClient } from './axiosClient';
 import cookies from '@/helpers/cookies';
 import { notifyAxiosError } from '@/helpers/notify';
 
-export const messageApiClient = () => {
+export const messagesApiClient = () => {
   const refreshToken = cookies.getRefreshToken();
   const axiosInstance = axiosClient(refreshToken);
 
