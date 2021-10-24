@@ -45,7 +45,7 @@ function HeaderOptions() {
       className={clsx(
         'fixed md:static left-0 bottom-0 z-50',
         'flex items-center justify-center w-full md:w-auto',
-        'bg-primary-v1 md:bg-transparent'
+        'bg-primary-v1 dark:bg-primary-v3 md:bg-transparent'
       )}>
       <div
         className={clsx(
@@ -141,6 +141,7 @@ function HeaderOptions() {
                 'ml-1.5 font-bold text-xs md:text-sm',
                 'text-white',
                 'transition-all ease-out',
+                'select-none',
                 'group-hover:text-primary-v2 dark:group-hover:text-primary-v4'
               )}>
               Settings
@@ -164,6 +165,7 @@ function HeaderOptions() {
                 'ml-1.5 font-bold text-xs md:text-sm',
                 'text-white',
                 'transition-all ease-out',
+                'select-none',
                 'group-hover:text-primary-v2 dark:group-hover:text-primary-v4'
               )}>
               Profile
@@ -198,6 +200,7 @@ function HeaderOptions() {
                 'ml-1.5 font-bold text-xs md:text-sm',
                 'text-white',
                 'transition-all ease-out',
+                'select-none',
                 'group-hover:text-primary-v2 dark:group-hover:text-primary-v4'
               )}>
               {theme === LOCAL_STORAGE.LIGHT_THEME_VALUE
@@ -224,6 +227,7 @@ function HeaderOptions() {
                 'ml-1.5 font-bold text-xs md:text-sm',
                 'text-white',
                 'transition-all ease-out',
+                'select-none',
                 'group-hover:text-primary-v2 dark:group-hover:text-primary-v4'
               )}>
               Log Out

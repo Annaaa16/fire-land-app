@@ -21,13 +21,14 @@ function Tooltip(props: TooltipProps) {
           : '-translate-x-1/2',
         'text-white bg-dk-tooltip-hv',
         'transition-all duration-200 ease-in-out',
-        'lg:group-hover:opacity-100 lg:group-hover:visible',
+        'pointer-events-none',
+        'lg:group-hover:opacity-100 lg:group-hover:visible lg:group-hover:pointer-events-auto',
         direction === 'rtl'
           ? 'lg:group-hover:translate-x-2'
           : 'lg:group-hover:translate-y-2',
         subClass
       )}>
-      <span>{title}</span>
+      <span className={clsx('select-none')}>{title}</span>
     </div>
   );
 }

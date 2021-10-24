@@ -75,7 +75,7 @@ function PostHeader(props: PostHeaderProps) {
           )}
         />
 
-        <PostHeaderOptions postId={postId} />
+        <PostHeaderOptions postId={postId} userId={userId} />
       </div>
     </div>
   );

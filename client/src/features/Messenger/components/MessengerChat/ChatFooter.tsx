@@ -73,7 +73,11 @@ function ChatFooter() {
               'text-primary-v1 dark:text-primary-v4'
             )}
           />
-          <Tooltip title='Open more actions' direction='ttb' />
+          <Tooltip
+            title='Open more actions'
+            direction='ttb'
+            subClass={clsx('!left-[calc(100%+14px)]')}
+          />
         </li>
         <li className={clsx('relative', 'group px-1.5', 'cursor-pointer')}>
           <PhotoLibraryIcon

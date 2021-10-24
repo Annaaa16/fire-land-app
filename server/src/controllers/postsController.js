@@ -200,15 +200,16 @@ postsController.deletePost = async (req, res) => {
 
     // Invalid post id or user not authorized
     if (!deletedPost) {
-      res.status(401).json({
+      return res.status(401).json({
         success: false,
         message: 'Post not found or user is not authorized',
       });
     }
 
     // Delete photo on cloudinary
-    if (deletedPost.photoId)
+    if (deletedPost?.photoId) {
       await cloudinary.uploader.destroy(deletedPost.photoId);
+    }
 
     res.json({
       success: true,

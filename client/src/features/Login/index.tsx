@@ -3,7 +3,9 @@ import { useRouter } from 'next/dist/client/router';
 // clsx
 import clsx from 'clsx';
 
+import { LOCAL_STORAGE } from '@/constants';
 import { clearMessage } from '@/redux/slices/authSlice';
+import { useGlobalContext } from '@/contexts/GlobalContext';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 import Meta from '@/layouts/Meta';
@@ -22,7 +24,7 @@ import {
 import styles from './styles.module.scss';
 
 function Login() {
-  const isDark = true;
+  const { theme } = useGlobalContext();
 
   const router = useRouter();
   const dispatch = useStoreDispatch();
@@ -41,12 +43,20 @@ function Login() {
           'lg:bg-center bg-cover bg-no-repeat'
         )}
         style={{
-          backgroundImage: `url(${isDark ? dkBackground : ltBackground})`,
+          backgroundImage: `url(${
+            theme === LOCAL_STORAGE.DARK_THEME_VALUE
+              ? dkBackground
+              : ltBackground
+          })`,
         }}>
         <LandingLeft />
 
         <div
-          style={{ backgroundImage: `url(${isDark ? dkDot : ltDot})` }}
+          style={{
+            backgroundImage: `url(${
+              theme === LOCAL_STORAGE.DARK_THEME_VALUE ? dkDot : ltDot
+            })`,
+          }}
           className={clsx(
             'hidden lg:block',
             'bg-lt-cpn dark:bg-dk-cpn',

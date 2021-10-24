@@ -60,7 +60,7 @@ authController.login = async (req, res) => {
   }
 
   try {
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ username }).select(['-__v']).lean();
 
     // User does not exist or incorrect username
     if (!user) {
@@ -78,16 +78,10 @@ authController.login = async (req, res) => {
         .json({ success: false, message: 'Incorrect username or password' });
     }
 
-    const filteredUser = {
-      _id: user._id,
-      username: user.username,
-      avatar: user.avatar,
-    };
-
     res.json({
       success: true,
       message: 'User has successfully logged in',
-      user: filteredUser,
+      user,
       accessToken: getTokens.accessToken(user._id),
       refreshToken: getTokens.refreshToken(user._id),
     });
