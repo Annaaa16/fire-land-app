@@ -12,6 +12,7 @@ import PhotoCameraBackOutlinedIcon from '@mui/icons-material/PhotoCameraBackOutl
 import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
 
 import { createComment } from '@/redux/actions/comments';
+import { useUsersSelector } from '@/redux/selectors';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 import User from '@/components/User';
@@ -19,13 +20,15 @@ import Tooltip from '@/components/Tooltip';
 
 interface PostSenderProps {
   postId: string;
-  userId: string;
-  avatar: string;
   setIsOpenComments: Dispatch<SetStateAction<boolean>>;
 }
 
 function PostSender(props: PostSenderProps) {
-  const { avatar, userId, postId, setIsOpenComments } = props;
+  const { postId, setIsOpenComments } = props;
+
+  const {
+    currentUser: { _id: userId, avatar },
+  } = useUsersSelector();
 
   const [content, setContent] = useState<string>('');
 

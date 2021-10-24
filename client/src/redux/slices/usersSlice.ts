@@ -29,18 +29,20 @@ const usersSlice = createSlice({
       state,
       action: PayloadAction<LoginResponse | GetUserResponse>
     ) => {
-      const { user } = action.payload;
+      const { user, success } = action.payload;
 
-      return {
-        ...state,
-        currentUser: {
-          _id: user._id,
-          username: user.username,
-          avatar: user.avatar,
-          followings: user.followings,
-          followers: user.followers,
-        },
-      };
+      if (success) {
+        return {
+          ...state,
+          currentUser: {
+            _id: user._id,
+            username: user.username,
+            avatar: user.avatar,
+            followings: user.followings,
+            followers: user.followers,
+          },
+        };
+      }
     },
 
     addFollowingUser: (state, action: PayloadAction<FollowResponse>) => {

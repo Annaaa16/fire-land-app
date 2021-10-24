@@ -3,7 +3,7 @@ import { useRouter } from 'next/dist/client/router';
 // clsx
 import clsx from 'clsx';
 
-import { PATHS } from '@/constants';
+import { LOCAL_STORAGE, PATHS } from '@/constants';
 import {
   ltBackground,
   dkBackground,
@@ -11,6 +11,7 @@ import {
   ltDot,
   dkDot,
 } from '@/utils/images';
+import { useGlobalContext } from '@/contexts/GlobalContext';
 import { clearMessage } from '@/redux/slices/authSlice';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
@@ -22,7 +23,7 @@ import LandingLeft from '@/components/LandingLeft';
 import styles from './styles.module.scss';
 
 function Register() {
-  const isDark = true;
+  const { theme } = useGlobalContext();
 
   const router = useRouter();
   const dispatch = useStoreDispatch();
@@ -41,12 +42,20 @@ function Register() {
           'lg:bg-center bg-cover bg-no-repeat'
         )}
         style={{
-          backgroundImage: `url(${isDark ? dkBackground : ltBackground})`,
+          backgroundImage: `url(${
+            theme === LOCAL_STORAGE.DARK_THEME_VALUE
+              ? dkBackground
+              : ltBackground
+          })`,
         }}>
         <LandingLeft />
 
         <div
-          style={{ backgroundImage: `url(${isDark ? dkDot : ltDot})` }}
+          style={{
+            backgroundImage: `url(${
+              theme === LOCAL_STORAGE.DARK_THEME_VALUE ? dkDot : ltDot
+            })`,
+          }}
           className={clsx(
             'hidden lg:block',
             'bg-lt-cpn dark:bg-dk-cpn',

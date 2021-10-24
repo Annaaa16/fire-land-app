@@ -1,6 +1,9 @@
 // clsx
 import clsx from 'clsx';
 
+// react timeago
+import Timeago from 'react-timeago';
+
 // types
 import { Comment } from '@/models/common';
 
@@ -9,7 +12,7 @@ interface PostCommentProps {
 }
 
 function PostComment({ comment }: PostCommentProps) {
-  const { content, user } = comment;
+  const { content, user, createdAt } = comment;
 
   return (
     <div className={clsx('flex mb-2')}>
@@ -65,15 +68,16 @@ function PostComment({ comment }: PostCommentProps) {
             )}>
             Reply
           </span>
-          <span
+          <Timeago
+            live={false}
+            date={createdAt}
             className={clsx(
               'text-xs',
               'cursor-pointer',
               'dark:text-gray',
               'hover:underline'
-            )}>
-            3m
-          </span>
+            )}
+          />
         </div>
       </div>
     </div>

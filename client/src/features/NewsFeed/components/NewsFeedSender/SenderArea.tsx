@@ -138,11 +138,11 @@ function NewsFeedSenderArea() {
         </div>
 
         <div className={clsx('relative', 'p-3')}>
-          <div className={clsx('flex items-center mt-2 ml-2')}>
+          <div className={clsx('flex items-center mt-2 pb-2 ml-2')}>
             <User view='small' avatar={currentUser.avatar} />
             <div className={clsx('ml-5')}>
               <span className={clsx('font-bold', 'dark:text-white')}>
-                IG Dev
+                {currentUser.username}
               </span>
               <div
                 className={clsx(
@@ -168,7 +168,7 @@ function NewsFeedSenderArea() {
 
           <OverlayScrollbarsComponent
             options={{ scrollbars: { autoHide: 'scroll' } }}
-            className={clsx(isAddPhoto ? 'max-h-100' : 'max-h-60')}>
+            className={clsx(isAddPhoto ? 'max-h-72 md:max-h-100' : 'max-h-60')}>
             <textarea
               onKeyDown={handleTextareaRows}
               ref={textareaRef}
@@ -182,7 +182,7 @@ function NewsFeedSenderArea() {
               placeholder={"What's on your mind, IG Dev?"}
             />
             {isAddPhoto && (
-              <div className={clsx('mb-4')}>
+              <div className=''>
                 <SenderPhoto
                   preview={preview}
                   setPreview={setPreview}
@@ -214,7 +214,7 @@ function NewsFeedSenderArea() {
 
           <div
             className={clsx(
-              'flex items-center justify-center md:justify-between px-4 py-3 rounded-full border border-lt-line dark:border-dk-line'
+              'flex items-center justify-center md:justify-between px-4 py-3 mt-[17px] rounded-full border border-lt-line dark:border-dk-line'
             )}>
             <span
               className={clsx(

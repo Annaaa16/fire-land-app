@@ -16,7 +16,7 @@ postsController.createPost = async (req, res) => {
 
   // Empty content and attachment
   if (!content.trim() && !photo) {
-    return res
+    res
       .status(400)
       .json({ success: false, message: 'Content or attachment is required!' });
   }
@@ -81,7 +81,7 @@ postsController.getPosts = async (req, res) => {
         .select(['-__v'])
         .lean();
 
-      return res.json({ success: true, posts });
+      res.json({ success: true, posts });
     } catch (error) {
       notifyServerError(res, error);
     }
@@ -105,7 +105,7 @@ postsController.getPosts = async (req, res) => {
       .select(['-__v'])
       .lean();
 
-    return res.json({
+    res.json({
       success: true,
       prevPage,
       nextPage,
@@ -124,7 +124,7 @@ postsController.updatePost = async (req, res) => {
 
   // Empty content and photo
   if (!content?.trim() && !photo) {
-    return res
+    res
       .status(400)
       .json({ success: false, message: 'Content or attachment is required!' });
   }
@@ -176,7 +176,7 @@ postsController.updatePost = async (req, res) => {
 
     // Invalid post id or user not authorized
     if (!updatedPost) {
-      return res.status(401).json({
+      res.status(401).json({
         success: false,
         message: 'Post not found or user is not authorized',
       });
@@ -207,8 +207,9 @@ postsController.deletePost = async (req, res) => {
     }
 
     // Delete photo on cloudinary
-    if (deletedPost.photoId)
+    if (deletedPost?.photoId) {
       await cloudinary.uploader.destroy(deletedPost.photoId);
+    }
 
     res.json({
       success: true,
@@ -220,44 +221,73 @@ postsController.deletePost = async (req, res) => {
   }
 };
 
-postsController.likeOrUnlikePost = async (req, res) => {
+postsController.likePost = async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
 
     if (!post) {
-      return res.status(404).json({
+      res.status(404).json({
         success: false,
         message: 'Post not found',
       });
     }
 
-    const likeOrDislikeCondition = { _id: req.params.id };
+    const likeCondition = { _id: req.params.id };
 
     if (!post.likes.includes(req.userId)) {
       const likedPost = await Post.findOneAndUpdate(
-        likeOrDislikeCondition,
+        likeCondition,
         { $push: { likes: req.userId } },
         {
           new: true,
         }
       );
 
-      return res.json({
+      res.json({
         success: true,
         message: 'The post has been liked',
         post: likedPost,
       });
     } else {
-      const dislikedPost = await Post.findOneAndUpdate(
-        likeOrDislikeCondition,
+      res.status(400).json({
+        success: false,
+        message: 'The post has already been liked',
+      });
+    }
+  } catch (error) {
+    notifyServerError(res, error);
+  }
+};
+
+postsController.unlikePost = async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+
+    if (!post) {
+      res.status(404).json({
+        success: false,
+        message: 'Post not found',
+      });
+    }
+
+    const unlikeCondition = { _id: req.params.id };
+
+    if (post.likes.includes(req.userId)) {
+      const unlikePost = await Post.findOneAndUpdate(
+        unlikeCondition,
         { $pull: { likes: req.userId } },
         { new: true }
       );
 
-      return res.json({
+      res.json({
         success: true,
-        message: 'The post has been disliked',
-        post: dislikedPost,
+        message: 'The post has been unliked',
+        post: unlikePost,
+      });
+    } else {
+      res.status(400).json({
+        success: false,
+        message: 'The post has already been unliked',
       });
     }
   } catch (error) {

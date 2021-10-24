@@ -16,7 +16,7 @@ conversationsController.createConversation = async (req, res) => {
 
     await conversation.save();
 
-    return res.status(201).json({
+    res.status(201).json({
       success: true,
       message: 'Create conversation successfully',
       conversation,
@@ -33,7 +33,7 @@ conversationsController.getConversations = async (req, res) => {
     const user = await User.findById(userId);
 
     if (!user) {
-      return res
+      res
         .status(404)
         .json({ success: false, message: 'User not found to get messages' });
     }
@@ -42,7 +42,7 @@ conversationsController.getConversations = async (req, res) => {
       memberIds: { $in: [userId] },
     });
 
-    return res.json({
+    res.json({
       success: true,
       message: 'Get conversations successfully',
       conversations,

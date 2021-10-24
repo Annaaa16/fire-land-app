@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 // clsx
 import clsx from 'clsx';
@@ -27,6 +27,7 @@ function NewsFeedPost(props: PostInit) {
     nextPage,
     total,
     commentCount,
+    createdAt,
     user: { username, _id: userId, avatar },
   } = props;
 
@@ -78,6 +79,7 @@ function NewsFeedPost(props: PostInit) {
         username={username}
         userId={userId}
         avatar={avatar}
+        createdAt={createdAt}
       />
       <PostContent content={content} photo={photo} />
 
@@ -88,12 +90,7 @@ function NewsFeedPost(props: PostInit) {
           likes={likes}
           handleFetchComments={handleFetchComments}
         />
-        <PostSender
-          avatar={avatar}
-          postId={_id}
-          userId={userId}
-          setIsOpenComments={setIsOpenComments}
-        />
+        <PostSender postId={_id} setIsOpenComments={setIsOpenComments} />
         <PostCommentList
           postId={_id}
           isOpenComments={isOpenComments}

@@ -1,6 +1,9 @@
 // clsx
 import clsx from 'clsx';
 
+// react timeago
+import Timeago from 'react-timeago';
+
 // material ui icons
 import GroupIcon from '@mui/icons-material/Group';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
@@ -16,10 +19,11 @@ interface PostHeaderProps {
   postId: string;
   username: string;
   avatar: string;
+  createdAt: string;
 }
 
 function PostHeader(props: PostHeaderProps) {
-  const { postId, username, avatar, userId } = props;
+  const { postId, username, avatar, userId, createdAt } = props;
 
   const { currentUser } = useUsersSelector();
 
@@ -47,15 +51,16 @@ function PostHeader(props: PostHeaderProps) {
             {username}
           </span>
           <div className={clsx('flex items-center mt-1')}>
-            <span
+            <Timeago
+              live={false}
+              date={createdAt}
               className={clsx(
                 'text-xs mr-1',
                 'text-gray',
                 'cursor-pointer',
                 'lg:hover:underline'
-              )}>
-              30m
-            </span>
+              )}
+            />
             <GroupIcon className={clsx('!text-[15px]', 'text-gray')} />
           </div>
         </div>
@@ -70,7 +75,7 @@ function PostHeader(props: PostHeaderProps) {
           )}
         />
 
-        <PostHeaderOptions postId={postId} />
+        <PostHeaderOptions postId={postId} userId={userId} />
       </div>
     </div>
   );

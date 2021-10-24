@@ -10,20 +10,24 @@ import NotificationsOffOutlinedIcon from '@mui/icons-material/NotificationsOffOu
 import EventNoteOutlinedIcon from '@mui/icons-material/EventNoteOutlined';
 import ArchiveOutlinedIcon from '@mui/icons-material/ArchiveOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import HideImageOutlinedIcon from '@mui/icons-material/HideImageOutlined';
 
 import { setUpdatePost } from '@/redux/slices/postsSlice';
 import { useGlobalContext } from '@/contexts/GlobalContext';
 import { deletePost } from '@/redux/actions/posts';
+import { useUsersSelector } from '@/redux/selectors';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 interface PostHeaderOptionsProps {
   postId: string;
+  userId: string;
 }
 
 function PostHeaderOptions(props: PostHeaderOptionsProps) {
-  const { postId } = props;
+  const { postId, userId } = props;
 
   const { toggleSenderArea } = useGlobalContext();
+  const { currentUser } = useUsersSelector();
 
   const dispatch = useStoreDispatch();
 
@@ -79,43 +83,47 @@ function PostHeaderOptions(props: PostHeaderOptionsProps) {
         </span>
       </li>
 
-      <li
+      <div
         className={clsx('h-px w-full my-1.5', 'bg-lt-line dark:bg-dk-line')}
       />
 
-      <li
-        onClick={handleEditPost}
-        className={clsx(
-          'pl-2 pr-4 py-3 rounded-lg',
-          'dark:bg-dk-cpn',
-          'transition-all ease-out',
-          'lg:hover:bg-lt-input lg:dark:hover:bg-dk-tooltip-hv'
-        )}>
-        <EditOutlinedIcon className={clsx('dark:text-white')} />
-        <span
-          className={clsx(
-            'ml-1.5 font-bold text-xs md:text-sm',
-            'dark:text-white'
-          )}>
-          Edit post
-        </span>
-      </li>
-      <li
-        className={clsx(
-          'pl-2 pr-4 py-3 rounded-lg',
-          'dark:bg-dk-cpn',
-          'transition-all ease-out',
-          'lg:hover:bg-lt-input lg:dark:hover:bg-dk-tooltip-hv'
-        )}>
-        <PeopleOutlinedIcon className={clsx('dark:text-white')} />
-        <span
-          className={clsx(
-            'ml-1.5 font-bold text-xs md:text-sm',
-            'dark:text-white'
-          )}>
-          Edit audience
-        </span>
-      </li>
+      {currentUser._id === userId && (
+        <>
+          <li
+            onClick={handleEditPost}
+            className={clsx(
+              'pl-2 pr-4 py-3 rounded-lg',
+              'dark:bg-dk-cpn',
+              'transition-all ease-out',
+              'lg:hover:bg-lt-input lg:dark:hover:bg-dk-tooltip-hv'
+            )}>
+            <EditOutlinedIcon className={clsx('dark:text-white')} />
+            <span
+              className={clsx(
+                'ml-1.5 font-bold text-xs md:text-sm',
+                'dark:text-white'
+              )}>
+              Edit post
+            </span>
+          </li>
+          <li
+            className={clsx(
+              'pl-2 pr-4 py-3 rounded-lg',
+              'dark:bg-dk-cpn',
+              'transition-all ease-out',
+              'lg:hover:bg-lt-input lg:dark:hover:bg-dk-tooltip-hv'
+            )}>
+            <PeopleOutlinedIcon className={clsx('dark:text-white')} />
+            <span
+              className={clsx(
+                'ml-1.5 font-bold text-xs md:text-sm',
+                'dark:text-white'
+              )}>
+              Edit audience
+            </span>
+          </li>
+        </>
+      )}
       <li
         className={clsx(
           'pl-2 pr-4 py-3 rounded-lg',
@@ -139,17 +147,35 @@ function PostHeaderOptions(props: PostHeaderOptionsProps) {
           'transition-all ease-out',
           'lg:hover:bg-lt-input lg:dark:hover:bg-dk-tooltip-hv'
         )}>
-        <EventNoteOutlinedIcon className={clsx('dark:text-white')} />
+        <HideImageOutlinedIcon className={clsx('dark:text-white')} />
         <span
           className={clsx(
             'ml-1.5 font-bold text-xs md:text-sm',
             'dark:text-white'
           )}>
-          Edit date
+          Hide post
         </span>
       </li>
+      {currentUser._id === userId && (
+        <li
+          className={clsx(
+            'pl-2 pr-4 py-3 rounded-lg',
+            'dark:bg-dk-cpn',
+            'transition-all ease-out',
+            'lg:hover:bg-lt-input lg:dark:hover:bg-dk-tooltip-hv'
+          )}>
+          <EventNoteOutlinedIcon className={clsx('dark:text-white')} />
+          <span
+            className={clsx(
+              'ml-1.5 font-bold text-xs md:text-sm',
+              'dark:text-white'
+            )}>
+            Edit date
+          </span>
+        </li>
+      )}
 
-      <li
+      <div
         className={clsx('h-px w-full my-1.5', 'bg-lt-line dark:bg-dk-line')}
       />
 
@@ -169,23 +195,25 @@ function PostHeaderOptions(props: PostHeaderOptionsProps) {
           Move to archive
         </span>
       </li>
-      <li
-        onClick={handleDeletePost}
-        className={clsx(
-          'pl-2 pr-4 py-3 rounded-lg',
-          'dark:bg-dk-cpn',
-          'transition-all ease-out',
-          'lg:hover:bg-lt-input lg:dark:hover:bg-dk-tooltip-hv'
-        )}>
-        <DeleteOutlineOutlinedIcon className={clsx('dark:text-white')} />
-        <span
+      {currentUser._id === userId && (
+        <li
+          onClick={handleDeletePost}
           className={clsx(
-            'ml-1.5 font-bold text-xs md:text-sm',
-            'dark:text-white'
+            'pl-2 pr-4 py-3 rounded-lg',
+            'dark:bg-dk-cpn',
+            'transition-all ease-out',
+            'lg:hover:bg-lt-input lg:dark:hover:bg-dk-tooltip-hv'
           )}>
-          Move to trash
-        </span>
-      </li>
+          <DeleteOutlineOutlinedIcon className={clsx('dark:text-white')} />
+          <span
+            className={clsx(
+              'ml-1.5 font-bold text-xs md:text-sm',
+              'dark:text-white'
+            )}>
+            Move to trash
+          </span>
+        </li>
+      )}
 
       <li className={clsx('absolute right-0 -top-4 z-50', 'w-1/2 h-8')} />
     </ul>

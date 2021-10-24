@@ -6,6 +6,7 @@ import {
   DeletePostResponse,
   UpdatePostResponse,
   LikePostResponse,
+  UnlikePostResponse,
 } from '@/models/posts';
 import { AxiosResponse } from 'axios';
 import { PayloadAction } from '@reduxjs/toolkit';
@@ -17,18 +18,20 @@ import {
   updatePost as updatePostAct,
   deletePost as deletePostAct,
   likePost as likePostAct,
+  unlikePost as unlikePostAct,
 } from '../actions/posts';
 import {
   addCreatedPost,
   addFetchedPostList,
   removeDeletedPost,
   setLikedPost,
+  setUnlikedPost,
   setUpdatedPost,
 } from '../slices/postsSlice';
 import { postsApiClient } from '@/apis/postsApi';
 import { notifySagaError } from '@/helpers/notify';
 
-const { createPost, getPosts, updatePost, deletePost, likePost } =
+const { createPost, getPosts, updatePost, deletePost, likePost, unlikePost } =
   postsApiClient();
 
 function* handleCreatePost(action: PayloadAction<FormData>) {
@@ -110,12 +113,30 @@ function* handleLikePost(action: PayloadAction<string>) {
   }
 }
 
+function* handleUnlikePost(action: PayloadAction<string>) {
+  try {
+    const postId = action.payload;
+
+    yield delay(300); // Block spam like button
+
+    const response: AxiosResponse<UnlikePostResponse> = yield call(
+      unlikePost,
+      postId
+    );
+
+    yield put(setUnlikedPost(response.data));
+  } catch (error) {
+    notifySagaError('Unlike post', error);
+  }
+}
+
 function* postsSaga() {
   yield takeLatest(createPostAct.request().type, handleCreatePost);
   yield takeLatest(getPostsAct.request().type, handleGetPosts);
   yield takeLatest(updatePostAct.request().type, handleUpdatePost);
   yield takeLatest(deletePostAct.request().type, handleDeletePost);
   yield takeLatest(likePostAct.request().type, handleLikePost);
+  yield takeLatest(unlikePostAct.request().type, handleUnlikePost);
 }
 
 export default postsSaga;

@@ -65,3 +65,16 @@ export const likePost = {
     type: 'likePost/failure',
   }),
 };
+
+export const unlikePost = {
+  request: (payload?: string) => ({
+    type: 'unlikePost/request',
+    payload,
+  }),
+  success: () => ({
+    type: 'unlikePost/success',
+  }),
+  failure: () => ({
+    type: 'unlikePost/failure',
+  }),
+};

@@ -7,7 +7,6 @@ import { HYDRATE } from 'next-redux-wrapper';
 import _ from 'lodash';
 
 // types
-import { PayloadAction } from '@reduxjs/toolkit';
 import {
   CreatePostsResponse,
   GetPostsResponse,
@@ -15,7 +14,9 @@ import {
   PostsInitState,
   LikePostResponse,
   UpdatePostResponse,
+  UnlikePostResponse,
 } from '@/models/posts';
+import { PayloadAction } from '@reduxjs/toolkit';
 import { CreateCommentResponse, GetCommentsResponse } from '@/models/comments';
 import { HydrateResponse } from '@/models/common';
 
@@ -97,6 +98,18 @@ const postsSlice = createSlice({
       }
     },
 
+    setUnlikedPost: (state, action: PayloadAction<UnlikePostResponse>) => {
+      const { success, post } = action.payload;
+
+      if (success) {
+        const { _id, likes } = post;
+
+        state.posts.forEach((post) => {
+          if (post._id === _id) post.likes = likes;
+        });
+      }
+    },
+
     setPagination: (state, action: PayloadAction<GetCommentsResponse>) => {
       const { success, comments, nextPage, prevPage, total } = action.payload;
 
@@ -151,6 +164,7 @@ export const {
   setUpdatedPost,
   removeDeletedPost,
   setLikedPost,
+  setUnlikedPost,
   setPagination,
   updateCommentCount,
 } = postsSlice.actions;

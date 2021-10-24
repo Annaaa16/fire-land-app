@@ -1,6 +1,8 @@
 // clsx
 import clsx from 'clsx';
 
+import { useUsersSelector } from '@/redux/selectors';
+
 import like from '@/assets/svgs/NewsFeed/like.svg';
 import haha from '@/assets/svgs/NewsFeed/haha.svg';
 import love from '@/assets/svgs/NewsFeed/love.svg';
@@ -12,6 +14,8 @@ interface PostDetailProps {
 
 function PostDetail(props: PostDetailProps) {
   const { likes, commentCount } = props;
+
+  const { currentUser } = useUsersSelector();
 
   return (
     <div className={clsx('flex items-center justify-between h-5')}>
@@ -66,7 +70,11 @@ function PostDetail(props: PostDetailProps) {
                 'cursor-pointer',
                 'lg:hover:underline'
               )}>
-              {likes.length}
+              {likes.includes(currentUser._id) && likes.length === 1
+                ? currentUser.username
+                : likes.includes(currentUser._id) && likes.length > 1
+                ? `You and ${likes.length - 1} others`
+                : likes.length}
             </span>
           </>
         )}

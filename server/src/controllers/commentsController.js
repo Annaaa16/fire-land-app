@@ -10,18 +10,14 @@ commentsController.createComment = async (req, res) => {
   const { postId, userId, content } = req.body;
 
   if (!content) {
-    return res
-      .status(400)
-      .json({ success: false, message: 'Content is required!' });
+    res.status(400).json({ success: false, message: 'Content is required!' });
   }
 
   try {
     const user = await User.findById(userId).select(['-password', '-__v']);
 
     if (!user) {
-      return res
-        .status(404)
-        .json({ success: false, message: 'User not found' });
+      res.status(404).json({ success: false, message: 'User not found' });
     }
 
     const post = await Post.findOneAndUpdate(
@@ -31,9 +27,7 @@ commentsController.createComment = async (req, res) => {
     );
 
     if (!post) {
-      return res
-        .status(404)
-        .json({ success: false, message: 'Post not found' });
+      res.status(404).json({ success: false, message: 'Post not found' });
     }
 
     const comment = new Comment({ content, user, postId });
@@ -67,17 +61,13 @@ commentsController.getComments = async (req, res) => {
     const user = await User.findById(userId).select(['-password', '-__v']);
 
     if (!user) {
-      return res
-        .status(404)
-        .json({ success: false, message: 'User not found' });
+      res.status(404).json({ success: false, message: 'User not found' });
     }
 
     const post = await Post.findById(postId);
 
     if (!post) {
-      return res
-        .status(404)
-        .json({ success: false, message: 'Post not found' });
+      res.status(404).json({ success: false, message: 'Post not found' });
     }
 
     const total = await Comment.count({ postId });
