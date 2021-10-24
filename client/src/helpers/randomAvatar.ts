@@ -4,6 +4,8 @@ import { nanoid } from 'nanoid';
 import { URLS } from '@/constants';
 
 const avatarList = [
+  'adventurer',
+  'adventurer-neutral',
   'avataaars',
   'big-ears',
   'big-ears-neutral',
@@ -12,7 +14,8 @@ const avatarList = [
   'croodles-neutral',
   'micah',
   'miniavs',
-  'pixel-art-neutral',
+  'open-peeps',
+  'personas',
 ];
 
 const randomAvatar = () => {
