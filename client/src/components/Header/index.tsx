@@ -2,7 +2,6 @@
 import clsx from 'clsx';
 
 import HeaderWidget from './HeaderWidget';
-import HeaderNav from './HeaderNav';
 import HeaderSearch from './HeaderSearch';
 import HeaderOptions from './HeaderOptions';
 
@@ -23,7 +22,6 @@ function Header() {
       />
 
       <HeaderWidget />
-      <HeaderNav />
       <HeaderSearch />
       <HeaderOptions />
     </header>
