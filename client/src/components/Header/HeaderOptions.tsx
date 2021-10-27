@@ -17,8 +17,8 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 
 import { LOCAL_STORAGE, PATHS } from '@/constants';
-import cookies from '@/helpers/cookies';
 import { useGlobalContext } from '@/contexts/GlobalContext';
+import cookies from '@/helpers/cookies';
 
 function HeaderOptions() {
   const [isSetting, setIsSetting] = useState(false);

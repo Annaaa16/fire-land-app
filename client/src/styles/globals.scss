@@ -12,6 +12,12 @@
 
     color: #3e3f5e;
   }
+
+  img,
+  svg,
+  button {
+    user-select: none;
+  }
 }
 
 @layer utilities {

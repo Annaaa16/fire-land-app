@@ -2,9 +2,6 @@ import { Provider } from 'react-redux';
 import { END } from '@redux-saga/core';
 import App from 'next/app';
 
-// react overlayscrollbars
-import 'overlayscrollbars/css/OverlayScrollbars.css';
-
 // types
 import { AppContext, AppInitialProps } from 'next/app';
 import { SagaStore } from '@/models/store';
@@ -15,6 +12,8 @@ import GlobalProvider from '../contexts/GlobalContext';
 
 // styles
 import '../styles/globals.scss';
+import 'overlayscrollbars/css/OverlayScrollbars.css';
+import 'swiper/css';
 
 class WrappedApp extends App<AppInitialProps> {
   static getInitialProps = async ({ Component, ctx }: AppContext) => {
