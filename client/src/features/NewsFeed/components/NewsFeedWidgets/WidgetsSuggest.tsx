@@ -18,7 +18,7 @@ function WidgetsSuggest() {
         </h3>
         <span
           className={clsx(
-            'text-2sm font-bold',
+            'text-sm-1 font-bold',
             'text-lt-gray',
             'transition-all',
             'cursor-pointer',
@@ -54,7 +54,7 @@ function WidgetsSuggest() {
           </div>
           <span
             className={clsx(
-              'text-2sm font-bold',
+              'text-sm-1 font-bold',
               'text-primary-v1 dark:text-primary-v4',
               'transition-all ease-out',
               'cursor-pointer',

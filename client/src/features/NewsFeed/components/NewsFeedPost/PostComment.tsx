@@ -34,7 +34,7 @@ function PostComment({ comment }: PostCommentProps) {
           )}>
           <h4
             className={clsx(
-              'inline-block font-bold mb-1.5 text-xs lg:text-2sm leading-4',
+              'inline-block font-bold mb-1.5 text-xs lg:text-sm-1 leading-4',
               'dark:text-white',
               'cursor-pointer',
               'hover:underline'
@@ -43,7 +43,7 @@ function PostComment({ comment }: PostCommentProps) {
           </h4>
           <p
             className={clsx(
-              'leading-4 text-xs lg:text-2sm',
+              'leading-4 text-xs lg:text-sm-1',
               'dark:text-white'
             )}>
             {content}
