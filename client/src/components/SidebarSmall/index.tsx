@@ -6,7 +6,7 @@ import clsx from 'clsx';
 import sidebarTooltips from '@/utils/sidebarTooltips';
 
 import User from '../User';
-import SidebarSmallTooltip from './SidebarSmallTooltip';
+import SmallTooltip from './SmallTooltip';
 
 import icon from '@/assets/svgs/icon.svg';
 
@@ -41,7 +41,7 @@ function SidebarSmall(props: SidebarSmallProps) {
 
       <ul className={clsx('mt-10 w-full px-4 text-center')}>
         {sidebarTooltips.map(({ title, isActive, icon }) => (
-          <SidebarSmallTooltip
+          <SmallTooltip
             key={title}
             isActive={isActive}
             title={title}

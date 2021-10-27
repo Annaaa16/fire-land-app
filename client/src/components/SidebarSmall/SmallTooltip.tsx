@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import { SvgIconProps } from '@mui/material';
 import { ComponentType } from 'react';
 
-interface SidebarSmallTooltipProps {
+interface SmallTooltipProps {
   title: string;
   icon: ComponentType<SvgIconProps>;
   isActive: boolean;
@@ -13,7 +13,7 @@ interface SidebarSmallTooltipProps {
 
 import Tooltip from '../Tooltip';
 
-function SidebarSmallTooltip(props: SidebarSmallTooltipProps) {
+function SmallTooltip(props: SmallTooltipProps) {
   const { title, isActive, icon: Icon } = props;
 
   const isDark = true;
@@ -46,4 +46,4 @@ function SidebarSmallTooltip(props: SidebarSmallTooltipProps) {
   );
 }
 
-export default SidebarSmallTooltip;
+export default SmallTooltip;
