@@ -15,7 +15,6 @@ function User(props: UserProps) {
 
   const img = avatar || 'https://avatars.dicebear.com/api/micah/uiSvbW.svg';
   const isUser = true;
-  const isDark = false;
 
   return (
     <div

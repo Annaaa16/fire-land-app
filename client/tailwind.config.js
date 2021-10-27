@@ -11,6 +11,16 @@ module.exports = {
       zIndex: {
         '-1': '-1',
       },
+      container: {
+        center: true,
+        screens: {
+          lg: '1440px',
+        },
+        padding: {
+          DEFAULT: '15px',
+          lg: '0',
+        },
+      },
       lineHeight: {
         3: '12px',
         4: '16px',
@@ -72,6 +82,9 @@ module.exports = {
           },
         },
       },
+      height: () => ({
+        'screen/2': '50vh',
+      }),
       boxShadow: {
         'primary-v1': '4px 7px 12px 0 rgb(97 93 250 / 20%)',
         'primary-v2': '4px 7px 12px 0 rgb(35 210 226 / 20%)',
@@ -88,6 +101,7 @@ module.exports = {
       xs: '12px',
       '2sm': '13px',
       sm: '14px',
+      'base-1': '15px',
       base: '16px',
       lg: '18px',
       xl: '20px',
@@ -145,4 +159,5 @@ module.exports = {
   variants: {
     extend: {},
   },
+  plugins: [require('tailwind-scrollbar')],
 };

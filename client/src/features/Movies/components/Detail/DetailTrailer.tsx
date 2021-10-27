@@ -1,0 +1,36 @@
+// clsx
+import clsx from 'clsx';
+
+function DetailTrailer() {
+  return (
+    <div className='container'>
+      <div className={clsx('mb-20')}>
+        <div
+          className={clsx(
+            'inline-flex items-center mb-4',
+            'text-white',
+            'cursor-pointer',
+            'hover:text-primary-v4-hv'
+          )}>
+          <h2
+            className={clsx(
+              'font-bold text-lg leading-none mr-2',
+              'transition-all duration-300 ease-out'
+            )}>
+            Trailer
+          </h2>
+        </div>
+        <iframe
+          src='https://www.youtube.com/embed/--oTQCysVTs'
+          title='YouTube video player'
+          frameBorder='0'
+          allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+          allowFullScreen
+          className={'w-full h-64 md:h-100 lg:h-[700px]'}
+        />
+      </div>
+    </div>
+  );
+}
+
+export default DetailTrailer;
