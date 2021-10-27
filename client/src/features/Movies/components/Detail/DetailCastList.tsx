@@ -43,7 +43,9 @@ function DetailCastList() {
             className={clsx('rounded-xl')}
           />
         </div>
-        <div className={clsx('text-center text-2sm', 'text-white')}>IG Dev</div>
+        <div className={clsx('text-center text-sm-1', 'text-white')}>
+          IG Dev
+        </div>
       </SwiperSlide>
     </Swiper>
   );

@@ -57,10 +57,10 @@ function PostHeaderBox(props: PostHeaderBoxProps) {
             <div className={clsx('flex items-center')}>
               <RssFeedIcon />
               <div className={clsx('ml-1')}>
-                <span className={clsx('text-2sm')}>Followed by </span>
+                <span className={clsx('text-sm-1')}>Followed by </span>
                 <strong
                   className={clsx(
-                    'text-2sm',
+                    'text-sm-1',
                     'cursor-pointer',
                     'hover:underline'
                   )}>
@@ -96,7 +96,7 @@ function PostHeaderBox(props: PostHeaderBoxProps) {
             )}
             <span
               className={clsx(
-                'font-bold text-2sm',
+                'font-bold text-sm-1',
                 !followings.includes(userId) && 'text-white'
               )}>
               {followings.includes(userId) ? 'Unfriend' : 'Add Friend'}
@@ -111,7 +111,7 @@ function PostHeaderBox(props: PostHeaderBoxProps) {
               'hover:bg-gray-300 dark:hover:bg-dk-tooltip-hv'
             )}>
             <ChatIcon className={clsx('!text-lg')} />
-            <span className={clsx('font-bold ml-1 text-2sm')}>Message</span>
+            <span className={clsx('font-bold ml-1 text-sm-1')}>Message</span>
           </button>
 
           <button
