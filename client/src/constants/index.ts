@@ -29,3 +29,14 @@ export const PATHS = {
   REGISTER: '/register',
   NEWSFEED: '/newsfeed',
 };
+
+export const BREAKPOINTS = {
+  PHONE: 0,
+  TABLET: 768,
+  DESKTOP: 1440,
+};
+
+export const COLORS = {
+  LIGHT_BODY: '#f7f7fa',
+  DARK_BODY: '#161b28',
+};
