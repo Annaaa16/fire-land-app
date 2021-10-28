@@ -4,14 +4,14 @@ import { AxiosError } from 'axios';
 
 import { tmdbApiClient } from '@/apis/tmdbApi';
 import { notifyAxiosError } from '@/helpers/notify';
-
-import MoviesDetail from '@/features/Movies/pages/Detail';
 import { wrapper } from '@/redux/store';
 import {
   movieTypes,
   setMovieDetail,
   setMovieList,
 } from '@/redux/slices/tmdbSlice';
+
+import MoviesDetail from '@/features/Movies/pages/Detail';
 
 function MoviesDetailPage() {
   return <MoviesDetail />;
