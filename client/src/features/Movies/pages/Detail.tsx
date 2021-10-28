@@ -4,24 +4,30 @@ import Image from 'next/image';
 import clsx from 'clsx';
 
 import { COLORS } from '@/constants';
+import tmdb from '@/configs/tmdb';
 
 import Meta from '@/layouts/Meta';
 import MainLayout from '../layouts/MainLayout';
-import MoviesGenreList from '../components/MoviesGenreList';
+import MoviesItemList from '../components/MoviesItemList';
 import DetailTrailer from '../components/Detail/DetailTrailer';
 import DetailCastList from '../components/Detail/DetailCastList';
-import DetailChipList from '../components/Detail/DetailChipList';
+import DetailGenreList from '../components/Detail/DetailGenreList';
 
-import img from '@/assets/svgs/thumb.jpg';
+import { useTmdbSelector } from '@/redux/selectors';
 
 function Detail() {
+  const {
+    movieList,
+    movieDetail: { overview, image, title, casts },
+  } = useTmdbSelector();
+
   return (
     <Meta title='Movies Detail' backgroundColor={COLORS.DARK_BODY}>
       <MainLayout>
         <section>
           <div className={clsx('relative', 'w-full h-screen/2')}>
             <Image
-              src={img.src}
+              src={tmdb.originalImage(image)}
               alt='Thumbnail'
               layout='fill'
               objectFit='cover'
@@ -42,10 +48,10 @@ function Detail() {
             <div
               className={clsx(
                 'relative',
-                'hidden lg:block w-80 h-100 flex-shrink-0'
+                'hidden lg:block w-72 h-100 flex-shrink-0'
               )}>
               <Image
-                src={img.src}
+                src={tmdb.originalImage(image)}
                 layout='fill'
                 alt='Thumbnail'
                 objectFit='cover'
@@ -62,27 +68,17 @@ function Detail() {
                   'text-2xl md:text-4xl font-bold leading-tight lg:leading-normal mb-2',
                   'text-white'
                 )}>
-                My Hero Academia: World Heroes' Mission
+                {title}
               </h1>
-              <DetailChipList />
-              <p className={clsx('leading-5 mb-4', 'text-white')}>
-                A mysterious group called Humarize strongly believes in the
-                Quirk Singularity Doomsday theory which states that when quirks
-                get mixed further in with future generations, that power will
-                bring forth the end of humanity. In order to save everyone, the
-                Pro-Heroes around the world ask UA Academy heroes-in-training to
-                assist them and form a world-classic selected hero team. It is
-                up to the heroes to save the world and the future of heroes in
-                what is the most dangerous crisis to take place yet in My Hero
-                Academy.
-              </p>
+              <DetailGenreList />
+              <p className={clsx('leading-5 mb-4', 'text-white')}>{overview}</p>
 
-              <DetailCastList />
+              <DetailCastList casts={casts} />
             </div>
           </div>
           <div className='container'>
             <DetailTrailer />
-            <MoviesGenreList title='Similar' />
+            <MoviesItemList title='Similar' movies={movieList.similar.movies} />
           </div>
         </section>
       </MainLayout>

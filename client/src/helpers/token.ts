@@ -1,7 +1,7 @@
 // jsonwebtoken
 import jwt from 'jsonwebtoken';
 
-import { ACCESS_TOKEN_SECRET } from '@/constants';
+import { SECRETS } from '@/constants';
 
 const token = {
   verifyToken: (accessToken: string) => {
@@ -9,7 +9,7 @@ const token = {
       return { isValid: false, isExpired: false };
     }
 
-    return jwt.verify(accessToken, ACCESS_TOKEN_SECRET!, (error, decoded) => {
+    return jwt.verify(accessToken, SECRETS.ACCESS_TOKEN!, (error, decoded) => {
       if (error) {
         return { isValid: false, isExpired: false };
       }

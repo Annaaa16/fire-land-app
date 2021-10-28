@@ -1,7 +1,13 @@
 // clsx
 import clsx from 'clsx';
 
+import { useTmdbSelector } from '@/redux/selectors';
+
 function DetailTrailer() {
+  const {
+    movieDetail: { videos },
+  } = useTmdbSelector();
+
   return (
     <div className='container'>
       <div className={clsx('mb-20')}>
@@ -21,12 +27,13 @@ function DetailTrailer() {
           </h2>
         </div>
         <iframe
-          src='https://www.youtube.com/embed/--oTQCysVTs'
-          title='YouTube video player'
+          src={'https://www.youtube.com/embed/' + videos[0]?.path}
+          title='Youtube Movie'
           frameBorder='0'
           allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
           allowFullScreen
           className={'w-full h-64 md:h-100 lg:h-[700px]'}
+          loading='lazy'
         />
       </div>
     </div>

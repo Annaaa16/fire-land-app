@@ -6,7 +6,7 @@ import { AxiosResponse } from 'axios';
 import { GetServerSideProps } from 'next';
 import { GetPostsResponse } from '@/models/posts';
 import { GetTokenResponse } from '@/models/auth';
-import { SuccessResponse } from '@/models/common';
+import { StatusResponse } from '@/models/common';
 
 import { LIMITS } from '@/constants';
 import { wrapper } from '@/redux/store';
@@ -41,7 +41,7 @@ export const getServerSideProps: GetServerSideProps =
 
       const {
         data: { success },
-      } = (await verifyToken(access_token)) as AxiosResponse<SuccessResponse>;
+      } = (await verifyToken(access_token)) as AxiosResponse<StatusResponse>;
 
       // Token have not expired yet
       if (!success && !isExpired!) {

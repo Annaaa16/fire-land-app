@@ -1,17 +1,25 @@
-export const URLS = {
-  API: process.env.NEXT_PUBLIC_API_URL,
+export const API_URLS = {
+  BASE: 'http://localhost:5000/api',
+  SOCKET: 'http://localhost:4000',
+  TMDB: 'https://api.themoviedb.org/3',
   AVATAR: 'https://avatars.dicebear.com/api',
+  CLOUDINARY: 'https://res.cloudinary.com/drxhgl7xe/image/upload',
 };
 
-export const CLOUDINARY_PREFIX =
-  'https://res.cloudinary.com/drxhgl7xe/image/upload';
-
-export const LIMITS = {
-  POSTS: 5,
-  COMMENTS: 5,
+export const SECRETS = {
+  ACCESS_TOKEN: process.env.NEXT_PUBLIC_ACCESS_TOKEN_SECRET,
 };
 
-export const ACCESS_TOKEN_SECRET = process.env.NEXT_PUBLIC_ACCESS_TOKEN_SECRET;
+export const TMDB = {
+  API_KEY: '0f36693825733051b8551c9e5b42c008',
+  IMAGE: 'https://image.tmdb.org/t/p',
+};
+
+export const MOVIE_TYPES = {
+  POPULAR: 'popular',
+  UPCOMING: 'upcoming',
+  TOP_RATED: 'top_rated',
+};
 
 export const COOKIES = {
   ACCESS_TOKEN_KEY: 'access_token',
@@ -28,6 +36,13 @@ export const PATHS = {
   LOGIN: '/login',
   REGISTER: '/register',
   NEWSFEED: '/newsfeed',
+  MOVIES: '/movies',
+  MOVIES_DETAIL: '/movies/[id]',
+};
+
+export const LIMITS = {
+  POSTS: 5,
+  COMMENTS: 5,
 };
 
 export const BREAKPOINTS = {

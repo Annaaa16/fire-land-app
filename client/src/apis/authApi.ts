@@ -1,6 +1,6 @@
 // types
 import { AxiosError } from 'axios';
-import { SuccessResponse } from '@/models/common';
+import { StatusResponse } from '@/models/common';
 import {
   GetTokenResponse,
   LoginFormData,
@@ -54,8 +54,8 @@ export const authApiServer = (accessToken: string) => {
   return {
     verifyToken: async (accessToken: string) => {
       try {
-        const response = await axiosInstance.post<SuccessResponse>(
-          'auth/verify-token',
+        const response = await axiosInstance.post<StatusResponse>(
+          '/auth/verify-token',
           {
             accessToken,
           }
@@ -70,7 +70,7 @@ export const authApiServer = (accessToken: string) => {
     getToken: async (refreshToken: string) => {
       try {
         const response = await axiosInstance.post<GetTokenResponse>(
-          'auth/token',
+          '/auth/token',
           {
             refreshToken,
           }
