@@ -1,6 +1,6 @@
-import { URLS } from '@/constants';
+import { API_URLS } from '@/constants';
 
-const { CLOUDINARY } = URLS;
+const { CLOUDINARY } = API_URLS;
 
 // Common
 export const ltBackground = `${CLOUDINARY}/v1631503820/fire-chat-app/common/gmtca69qmkg1jqv9qmkf.jpg`;

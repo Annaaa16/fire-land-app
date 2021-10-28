@@ -3,13 +3,13 @@ import axios from 'axios';
 // query string
 import queryString from 'query-string';
 
-import { URLS } from '@/constants';
+import { API_URLS } from '@/constants';
 import cookies from '@/helpers/cookies';
 import token from '@/helpers/token';
 
 export const axiosClient = (refreshToken?: string) => {
   const axiosInstance = axios.create({
-    baseURL: URLS.API,
+    baseURL: API_URLS.BASE,
     headers: {
       'content-type': 'application/json',
     },

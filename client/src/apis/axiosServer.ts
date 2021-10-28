@@ -3,15 +3,17 @@ import axios from 'axios';
 // query string
 import queryString from 'query-string';
 
-import { URLS } from '@/constants';
+import { API_URLS } from '@/constants';
 
 export const axiosServer = (accessToken?: string) => {
   const axiosInstance = axios.create({
-    baseURL: URLS.API,
+    baseURL: API_URLS.BASE,
     headers: {
       'content-type': 'application/json',
     },
-    paramsSerializer: (params) => queryString.stringify(params),
+    paramsSerializer: (params) => {
+      return queryString.stringify(params);
+    },
   });
 
   axiosInstance.interceptors.request.use((config) => {
