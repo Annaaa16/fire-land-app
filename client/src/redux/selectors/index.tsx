@@ -20,3 +20,6 @@ export const useConversationsSelector = () =>
 
 export const useCommentsSelector = () =>
   useSelector((state: StoreState) => state.comments);
+
+export const useTmdbSelector = () =>
+  useSelector((state: StoreState) => state.tmdb);

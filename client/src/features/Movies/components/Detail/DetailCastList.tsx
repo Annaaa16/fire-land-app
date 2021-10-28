@@ -7,11 +7,17 @@ import clsx from 'clsx';
 // swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
 
+// types
+import { Cast } from '@/models/tmdb';
+
 import { BREAKPOINTS } from '@/constants';
+import tmdb from '@/configs/tmdb';
 
-import img from '@/assets/svgs/thumb.jpg';
+interface DetailCastListProps {
+  casts: Cast[];
+}
 
-function DetailCastList() {
+function DetailCastList({ casts }: DetailCastListProps) {
   const [swiperConfig] = useState({
     slidesPerView: 5.4,
     spaceBetween: 8,
@@ -33,20 +39,29 @@ function DetailCastList() {
 
   return (
     <Swiper {...swiperConfig}>
-      <SwiperSlide>
-        <div className={clsx('relative', 'mb-2 h-32', 'cursor-pointer')}>
-          <Image
-            src={img.src}
-            layout='fill'
-            objectFit='cover'
-            alt='Cast'
-            className={clsx('rounded-xl')}
-          />
-        </div>
-        <div className={clsx('text-center text-sm-1', 'text-white')}>
-          IG Dev
-        </div>
-      </SwiperSlide>
+      {casts?.map(
+        (cast) =>
+          cast.image && (
+            <SwiperSlide key={cast.id}>
+              <div className={clsx('relative', 'mb-2 h-32', 'cursor-pointer')}>
+                <Image
+                  src={tmdb.originalImage(cast.image)}
+                  layout='fill'
+                  objectFit='cover'
+                  alt='Cast'
+                  className={clsx('rounded-xl')}
+                  priority={true}
+                  onLoadingComplete={() => {
+                    console.log('completed!!');
+                  }}
+                />
+              </div>
+              <div className={clsx('text-center text-xs', 'text-white')}>
+                {cast.name}
+              </div>
+            </SwiperSlide>
+          )
+      )}
     </Swiper>
   );
 }

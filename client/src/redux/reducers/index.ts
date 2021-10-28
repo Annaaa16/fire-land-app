@@ -7,6 +7,7 @@ import postsReducer from '../slices/postsSlice';
 import messengerReducer from '../slices/messengerSlice';
 import conversationsReducer from '../slices/conversationsSlice';
 import commentsReducer from '../slices/commentsSlice';
+import tmdbReducer from '../slices/tmdbSlice';
 
 const rootReducer = combineReducers({
   global: globalReducer,
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   messenger: messengerReducer,
   conversations: conversationsReducer,
   comments: commentsReducer,
+  tmdb: tmdbReducer,
 });
 
 export default rootReducer;

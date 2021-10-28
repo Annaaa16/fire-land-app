@@ -1,12 +1,20 @@
+import { useRouter } from 'next/router';
+
 // clsx
 import clsx from 'clsx';
+
+import { PATHS } from '@/constants';
 
 import logo from '@/assets/svgs/icon.svg';
 
 function HeaderLeft() {
+  const router = useRouter();
+
   return (
     <div className={clsx('flex items-center')}>
-      <div className={clsx('w-11 md:w-12 mr-6', 'cursor-pointer')}>
+      <div
+        onClick={() => router.push(PATHS.MOVIES)}
+        className={clsx('w-11 md:w-12 mr-6', 'cursor-pointer')}>
         <img src={logo.src} alt='Logo' className={clsx('w-full h-full')} />
       </div>
       <ul

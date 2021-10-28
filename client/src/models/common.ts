@@ -1,6 +1,7 @@
 // types
 import { AuthInitState } from './auth';
 import { PostsInitState } from './posts';
+import { TmdbInitState } from './tmdb';
 
 export interface User {
   readonly _id: string;
@@ -37,13 +38,31 @@ export interface Post {
   updatedAt: string;
 }
 
+export interface Movie {
+  poster_path: string;
+  adult: boolean;
+  overview: string;
+  release_date: string;
+  genre_ids: number[];
+  id: number;
+  original_title: string;
+  original_language: string;
+  title: string;
+  backdrop_path: string;
+  popularity: number;
+  vote_count: number;
+  video: string;
+  vote_average: number;
+}
+
 // === Responses ===
 export interface HydrateResponse {
   auth: AuthInitState;
   posts: PostsInitState;
+  tmdb: TmdbInitState;
 }
 
-export interface SuccessResponse {
+export interface StatusResponse {
   success: boolean;
   message: string;
 }

@@ -1,16 +1,23 @@
 import { COLORS } from '@/constants';
 
+import { useTmdbSelector } from '@/redux/selectors';
+
 import Meta from '@/layouts/Meta';
 import MainLayout from '../layouts/MainLayout';
-import MoviesGenreList from '../components/MoviesGenreList';
+import MoviesItemList from '../components/MoviesItemList';
 import MoviesHeroSlider from '../components/MoviesHeroSlider';
 
 function Movies() {
+  const {
+    movieList: { upcoming, topRated },
+  } = useTmdbSelector();
+
   return (
     <Meta title='Movies' backgroundColor={COLORS.DARK_BODY}>
       <MainLayout>
         <MoviesHeroSlider />
-        <MoviesGenreList title='Upcoming Movies' />
+        <MoviesItemList title='Upcoming Movies' movies={upcoming.movies} />
+        <MoviesItemList title='Top Rated' movies={topRated.movies} />
       </MainLayout>
     </Meta>
   );
