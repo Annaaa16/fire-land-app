@@ -1,17 +1,18 @@
-import { useRouter } from 'next/dist/client/router';
-
 // clsx
 import clsx from 'clsx';
 
-import { LOCAL_STORAGE } from '@/constants';
+import { PATHS, LOCAL_STORAGE } from '@/constants';
 import { clearMessage } from '@/redux/slices/authSlice';
 import { useGlobalContext } from '@/contexts/GlobalContext';
+import { useAuthSelector } from '@/redux/selectors';
+import { useEffect } from 'react';
+import { useRouter } from 'next/dist/client/router';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 import Meta from '@/layouts/Meta';
-import LoginForm from './components/LoginForm';
-import LoginSocial from './components/LoginSocial';
 import LandingLeft from '@/components/LandingLeft';
+import LoginForm from '@/features/Login/components/LoginForm';
+import LoginSocial from '@/features/Login/components/LoginSocial';
 
 import {
   ltBackground,
@@ -21,7 +22,8 @@ import {
   dkDot,
 } from '@/utils/images';
 
-import styles from './styles.module.scss';
+// styles
+import styles from '@/styles/common.module.scss';
 
 function Login() {
   const { theme } = useGlobalContext();
@@ -29,10 +31,18 @@ function Login() {
   const router = useRouter();
   const dispatch = useStoreDispatch();
 
+  const {
+    authStatus: { isAuthenticated },
+  } = useAuthSelector();
+
   const moveToRegister = () => {
     dispatch(clearMessage());
     router.push('/register');
   };
+
+  useEffect(() => {
+    if (isAuthenticated) router.push(PATHS.NEWSFEED);
+  }, [isAuthenticated, router]);
 
   return (
     <Meta title='Login'>
