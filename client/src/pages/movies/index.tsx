@@ -15,6 +15,7 @@ import { tmdbCategories, tvShowsEndpoints } from '@/configs/tmdb';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 import Meta from '@/layouts/Meta';
+import SearchField from '@/components/SearchField';
 import MainLayout from '@/features/Movies/layouts/MainLayout';
 import MoviesItemList from '@/features/Movies/components/MoviesItemList';
 import MoviesHeroSlider from '@/features/Movies/components/MoviesHeroSlider';
@@ -58,6 +59,7 @@ function Movies() {
     <Meta title='Movies' backgroundColor={COLORS.DARK_BODY}>
       <MainLayout>
         <MoviesHeroSlider />
+        <SearchField />
         <MoviesItemList
           title='Upcoming Movies'
           movies={movieCategories.upcoming.movies}

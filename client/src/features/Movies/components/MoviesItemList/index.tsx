@@ -13,7 +13,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 // types
 import { Movie } from '@/models/common';
 
-import { BREAKPOINTS } from '@/constants';
+import { BREAKPOINTS, PATHS } from '@/constants';
 import tmdb, { tmdbCategories } from '@/configs/tmdb';
 
 import Image from '@/components/Image';
@@ -45,7 +45,7 @@ function MoviesGenreList({ title, movies, category }: MoviesGenreList) {
   const router = useRouter();
 
   const moveToDetail = (id: string) => {
-    router.push(`/movies/${id}?category=${category}`);
+    router.push(`${PATHS.MOVIES}/${id}?category=${category}`);
   };
 
   return (
