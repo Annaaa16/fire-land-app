@@ -6,7 +6,7 @@ import { TmdbGetMoviesResponse, TmdbGetTvShowsResponse } from '@/models/tmdb';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { GetMovies, GetTvShows } from '@/models/movies';
 
-import { moviesApiClient } from '@/apis/moviesApi';
+import { moviesApi } from '@/apis/moviesApi';
 import {
   movieCategoryKeys,
   setMovies,
@@ -21,7 +21,7 @@ import {
 } from '../actions/movies';
 
 const { getMovies, getSimilarMovies, getTvShows, getSimilarTvShows } =
-  moviesApiClient();
+  moviesApi();
 
 function* handleGetMovies(action: PayloadAction<GetMovies>) {
   const { query, params, moviesType } = action.payload;

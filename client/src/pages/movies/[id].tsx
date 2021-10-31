@@ -9,7 +9,7 @@ import { AxiosError } from 'axios';
 import clsx from 'clsx';
 
 import { COLORS } from '@/constants';
-import { moviesApiClient } from '@/apis/moviesApi';
+import { moviesApi } from '@/apis/moviesApi';
 import { notifyAxiosError } from '@/helpers/notify';
 import { setMovieDetail, setTvShowDetail } from '@/redux/slices/moviesSlice';
 import { wrapper } from '@/redux/store';
@@ -142,7 +142,7 @@ export const getServerSideProps: GetServerSideProps =
       getTvShowDetail,
       getTvShowCasts,
       getTvShowVideos,
-    } = moviesApiClient();
+    } = moviesApi();
 
     if (query.category === movie) {
       try {

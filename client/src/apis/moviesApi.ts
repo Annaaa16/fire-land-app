@@ -18,7 +18,7 @@ import {
 
 import { notifyAxiosError } from '@/helpers/notify';
 
-export const moviesApiClient = () => {
+export const moviesApi = () => {
   return {
     // === Movies ===
     getMovies: async (query: string, params: TmdbParams) => {

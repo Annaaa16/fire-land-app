@@ -5,7 +5,7 @@ import { GetServerSideProps } from 'next';
 
 import { COLORS } from '@/constants';
 import { movieCategoryKeys, setMovies } from '@/redux/slices/moviesSlice';
-import { moviesApiClient } from '@/apis/moviesApi';
+import { moviesApi } from '@/apis/moviesApi';
 import { wrapper } from '@/redux/store';
 import { tmdbMoviesEndpoints } from '@/configs/tmdb';
 import { useMoviesSelector } from '@/redux/selectors';
@@ -99,7 +99,7 @@ export default Movies;
 
 export const getServerSideProps: GetServerSideProps =
   wrapper.getServerSideProps((store) => async (ctx) => {
-    const { getMovies } = moviesApiClient();
+    const { getMovies } = moviesApi();
 
     const { popular, upcoming, topRated, nowPlaying } = tmdbMoviesEndpoints;
 
