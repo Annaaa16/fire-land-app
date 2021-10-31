@@ -1,3 +1,8 @@
+export interface TmdbCategories {
+  movie: 'movie';
+  tv: 'tv';
+}
+
 export interface TmdbParams {
   page: number;
 }

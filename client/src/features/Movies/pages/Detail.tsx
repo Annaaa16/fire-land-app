@@ -44,7 +44,7 @@ function Detail() {
   }, [router.query, movie, tv, dispatch]);
 
   return (
-    <Meta title='Movies Detail' backgroundColor={COLORS.DARK_BODY}>
+    <Meta title={'Movies - ' + title} backgroundColor={COLORS.DARK_BODY}>
       <MainLayout>
         <section>
           <div className={clsx('relative', 'w-full h-screen/2')}>

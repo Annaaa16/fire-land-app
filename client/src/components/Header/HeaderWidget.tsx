@@ -12,7 +12,6 @@ function HeaderWidget() {
         className={clsx(
           '!w-full',
           'text-white lg:text-primary-v1-text',
-          '!transition-all !duration-250',
           'cursor-pointer',
           'hover:text-white'
         )}

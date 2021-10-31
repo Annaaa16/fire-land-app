@@ -47,7 +47,6 @@ function PostActions(props: PostActionsProps) {
             className={clsx(
               'mr-1.5 !text-lg md:!text-xl',
               'text-[#2d86ff] dark:text-primary-v4',
-              '!transition-all ease-out',
               'dark:group-hover:text-primary-v4'
             )}
           />
@@ -56,7 +55,6 @@ function PostActions(props: PostActionsProps) {
             className={clsx(
               'mr-1.5 !text-lg md:!text-xl',
               'text-gray-500',
-              '!transition-all ease-out',
               'dark:group-hover:text-primary-v4'
             )}
           />
@@ -84,7 +82,6 @@ function PostActions(props: PostActionsProps) {
           className={clsx(
             'mr-1.5 !text-lg md:!text-xl',
             'text-gray-500',
-            '!transition-all ease-out',
             'dark:group-hover:text-primary-v4'
           )}
         />
@@ -110,7 +107,6 @@ function PostActions(props: PostActionsProps) {
           className={clsx(
             'mr-1.5 !text-lg md:!text-xl',
             'text-gray-500',
-            '!transition-all ease-out',
             'dark:group-hover:text-primary-v4'
           )}
         />

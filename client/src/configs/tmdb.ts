@@ -1,9 +1,7 @@
 import { API_URLS, TMDB } from '../constants';
 
-interface TmdbCategories {
-  movie: 'movie';
-  tv: 'tv';
-}
+// types
+import { TmdbCategories } from '@/models/tmdb';
 
 export const tmdbCategories: TmdbCategories = {
   movie: 'movie',

@@ -24,7 +24,6 @@ function LoginSocial() {
             className={clsx(
               '!text-2xl',
               'text-[#139df8]',
-              '!transition-all',
               'lg:hover:scale-125'
             )}
           />
@@ -38,7 +37,6 @@ function LoginSocial() {
             className={clsx(
               '!text-2xl',
               'text-[#139df8]',
-              '!transition-all',
               'lg:hover:scale-125'
             )}
           />
@@ -52,7 +50,6 @@ function LoginSocial() {
             className={clsx(
               '!text-2xl',
               'text-[#fd434f]',
-              '!transition-all',
               'lg:hover:scale-125'
             )}
           />
@@ -66,7 +63,6 @@ function LoginSocial() {
             className={clsx(
               '!text-2xl',
               'text-[#c13584]',
-              '!transition-all',
               'lg:hover:scale-125'
             )}
           />

@@ -2,15 +2,20 @@ import { Provider } from 'react-redux';
 import { END } from '@redux-saga/core';
 import App from 'next/app';
 
+// swiper
+import SwiperCore, { Autoplay } from 'swiper';
+
+// material ui core
+import { ThemeProvider } from '@mui/material';
+
 // types
 import { AppContext, AppInitialProps } from 'next/app';
 import { SagaStore } from '@/models/store';
 
-// swiper
-import SwiperCore, { Autoplay } from 'swiper';
-
 import { redirect } from '@/helpers/server';
 import store, { wrapper } from '@/redux/store';
+import theme from '@/configs/materialUi';
+
 import GlobalProvider from '../contexts/GlobalContext';
 
 // styles
@@ -50,7 +55,9 @@ class WrappedApp extends App<AppInitialProps> {
     return (
       <Provider store={store}>
         <GlobalProvider>
-          <Component {...pageProps} />
+          <ThemeProvider theme={theme}>
+            <Component {...pageProps} />
+          </ThemeProvider>
         </GlobalProvider>
       </Provider>
     );

@@ -24,7 +24,6 @@ function ContactHeader() {
             className={clsx(
               '!text-2xl',
               'text-lt-gray',
-              '!transition-all ease-out',
               'group-hover:text-gray-500 dark:group-hover:text-white'
             )}
           />

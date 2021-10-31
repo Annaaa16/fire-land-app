@@ -70,7 +70,6 @@ function PostHeader(props: PostHeaderProps) {
           fontSize='large'
           className={clsx(
             'text-gray-400',
-            '!transition-all !ease-out',
             'lg:group-hover:text-gray-500 lg:dark:group-hover:text-white'
           )}
         />
