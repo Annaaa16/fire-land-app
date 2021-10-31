@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Image from 'next/image';
+import Image from '@/components/Image';
 
 // clsx
 import clsx from 'clsx';
@@ -8,7 +8,7 @@ import clsx from 'clsx';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 // types
-import { Cast } from '@/models/tmdb';
+import { Cast } from '@/models/movies';
 
 import { BREAKPOINTS } from '@/constants';
 import tmdb from '@/configs/tmdb';
@@ -45,15 +45,12 @@ function DetailCastList({ casts }: DetailCastListProps) {
             <SwiperSlide key={cast.id}>
               <div className={clsx('relative', 'mb-2 h-32', 'cursor-pointer')}>
                 <Image
-                  src={tmdb.originalImage(cast.image)}
+                  src={tmdb.getW780Image(cast.image)}
                   layout='fill'
                   objectFit='cover'
                   alt='Cast'
                   className={clsx('rounded-xl')}
                   priority={true}
-                  onLoadingComplete={() => {
-                    console.log('completed!!');
-                  }}
                 />
               </div>
               <div className={clsx('text-center text-xs', 'text-white')}>

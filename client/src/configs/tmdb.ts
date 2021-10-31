@@ -1,10 +1,36 @@
 import { API_URLS, TMDB } from '../constants';
 
+interface TmdbCategories {
+  movie: 'movie';
+  tv: 'tv';
+}
+
+export const tmdbCategories: TmdbCategories = {
+  movie: 'movie',
+  tv: 'tv',
+};
+
+export const tmdbMoviesEndpoints = {
+  popular: 'popular',
+  topRated: 'top_rated',
+  upcoming: 'upcoming',
+  nowPlaying: 'now_playing',
+  similar: 'similar',
+};
+
+export const tvShowsEndpoints = {
+  popular: 'popular',
+  topRated: 'top_rated',
+  onTheAir: 'on_the_air',
+  airingToday: 'airing_today',
+  similar: 'similar',
+};
+
 const tmdb = {
   baseUrl: API_URLS.TMDB,
   apiKey: TMDB.API_KEY,
-  originalImage: (imgPath: string) => `${TMDB.IMAGE}/original/${imgPath}`,
-  w500Image: (imgPath: string) => `${TMDB.IMAGE}/w500/${imgPath}`,
+  getOriginalImage: (imgPath: string) => `${TMDB.IMAGE}/original/${imgPath}`,
+  getW780Image: (imgPath: string) => `${TMDB.IMAGE}/w780/${imgPath}`,
 };
 
 export default tmdb;

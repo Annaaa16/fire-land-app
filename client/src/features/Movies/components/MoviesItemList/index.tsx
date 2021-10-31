@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import Image from 'next/image';
 
 // clsx
 import clsx from 'clsx';
@@ -14,15 +13,18 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 // types
 import { Movie } from '@/models/common';
 
-import { BREAKPOINTS, PATHS } from '@/constants';
-import tmdb from '@/configs/tmdb';
+import { BREAKPOINTS } from '@/constants';
+import tmdb, { tmdbCategories } from '@/configs/tmdb';
+
+import Image from '@/components/Image';
 
 interface MoviesGenreList {
   title: string;
   movies: Movie[];
+  category: keyof typeof tmdbCategories;
 }
 
-function MoviesGenreList({ title, movies }: MoviesGenreList) {
+function MoviesGenreList({ title, movies, category }: MoviesGenreList) {
   const [swiperConfig] = useState({
     breakpoints: {
       [BREAKPOINTS.PHONE]: {
@@ -43,7 +45,7 @@ function MoviesGenreList({ title, movies }: MoviesGenreList) {
   const router = useRouter();
 
   const moveToDetail = (id: string) => {
-    router.push({ pathname: PATHS.MOVIES_DETAIL, query: { id: id } });
+    router.push(`/movies/${id}?category=${category}`);
   };
 
   return (
@@ -68,18 +70,17 @@ function MoviesGenreList({ title, movies }: MoviesGenreList) {
               <KeyboardArrowRightIcon />
             </div>
             <Swiper {...swiperConfig}>
-              {movies.map((movie) => (
+              {movies.map((movie, idx) => (
                 <SwiperSlide
                   onClick={() => moveToDetail(movie.id.toString())}
                   key={movie.id}>
                   <div className={clsx('relative', 'h-36', 'cursor-pointer')}>
                     <Image
-                      src={tmdb.originalImage(movie.backdrop_path)}
+                      src={tmdb.getW780Image(movie.image)}
                       objectFit='cover'
                       alt='Thumbnail'
                       layout='fill'
                       className={clsx('rounded-lg')}
-                      priority={true}
                     />
                   </div>
                 </SwiperSlide>

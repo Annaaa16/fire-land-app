@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import Image from 'next/image';
+import { useState, useEffect } from 'react';
+import Image from '@/components/Image';
 
 // clsx
 import clsx from 'clsx';
@@ -10,19 +10,16 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 
 // swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
-import SwiperCore, { Autoplay } from 'swiper';
 
-import { useTmdbSelector } from '@/redux/selectors';
+import { useMoviesSelector } from '@/redux/selectors';
 import tmdb from '@/configs/tmdb';
-
-SwiperCore.use([Autoplay]);
 
 function HomeHeroSlider() {
   const {
-    movieList: { popular },
-  } = useTmdbSelector();
+    movieCategories: { popular },
+  } = useMoviesSelector();
 
-  const [swiperConfig] = useState({
+  const [swiperConfig] = useState<any>({
     slidesPerView: 1,
     loop: true,
     autoplay: {
@@ -38,7 +35,7 @@ function HomeHeroSlider() {
             <SwiperSlide key={movie.id}>
               <div className={clsx('relative', 'w-full h-screen')}>
                 <Image
-                  src={tmdb.originalImage(movie.backdrop_path)}
+                  src={tmdb.getOriginalImage(movie.image)}
                   alt='Thumbnail'
                   layout='fill'
                   objectFit='cover'
@@ -110,7 +107,7 @@ function HomeHeroSlider() {
                       'hidden lg:block w-72 h-100 flex-shrink-0'
                     )}>
                     <Image
-                      src={tmdb.originalImage(movie.backdrop_path)}
+                      src={tmdb.getOriginalImage(movie.image)}
                       layout='fill'
                       alt='Thumbnail'
                       objectFit='cover'

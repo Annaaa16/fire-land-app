@@ -15,12 +15,6 @@ export const TMDB = {
   IMAGE: 'https://image.tmdb.org/t/p',
 };
 
-export const MOVIE_TYPES = {
-  POPULAR: 'popular',
-  UPCOMING: 'upcoming',
-  TOP_RATED: 'top_rated',
-};
-
 export const COOKIES = {
   ACCESS_TOKEN_KEY: 'access_token',
   REFRESH_TOKEN_KEY: 'refresh_token',

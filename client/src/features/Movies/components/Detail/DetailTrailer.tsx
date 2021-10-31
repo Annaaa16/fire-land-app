@@ -1,12 +1,12 @@
 // clsx
 import clsx from 'clsx';
 
-import { useTmdbSelector } from '@/redux/selectors';
+import { useMoviesSelector } from '@/redux/selectors';
 
 function DetailTrailer() {
   const {
-    movieDetail: { videos },
-  } = useTmdbSelector();
+    detailInfo: { videos },
+  } = useMoviesSelector();
 
   return (
     <div className='container'>

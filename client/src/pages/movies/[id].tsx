@@ -1,15 +1,12 @@
 // types
-import { GetStaticProps, GetStaticPaths } from 'next';
+import { GetServerSideProps } from 'next';
 import { AxiosError } from 'axios';
 
-import { tmdbApiClient } from '@/apis/tmdbApi';
+import { moviesApiClient } from '@/apis/moviesApi';
 import { notifyAxiosError } from '@/helpers/notify';
+import { setMovieDetail, setTvShowDetail } from '@/redux/slices/moviesSlice';
+import { tmdbCategories } from '@/configs/tmdb';
 import { wrapper } from '@/redux/store';
-import {
-  movieTypes,
-  setMovieDetail,
-  setMovieList,
-} from '@/redux/slices/tmdbSlice';
 
 import MoviesDetail from '@/features/Movies/pages/Detail';
 
@@ -19,46 +16,57 @@ function MoviesDetailPage() {
 
 export default MoviesDetailPage;
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  return { paths: [], fallback: true };
-};
+export const getServerSideProps: GetServerSideProps =
+  wrapper.getServerSideProps((store) => async ({ params, query }) => {
+    const { movie, tv } = tmdbCategories;
+    const {
+      getMovieDetail,
+      getMovieCasts,
+      getMovieVideos,
+      getTvShowDetail,
+      getTvShowCasts,
+      getTvShowVideos,
+    } = moviesApiClient();
 
-export const getStaticProps: GetStaticProps = wrapper.getStaticProps(
-  (store) =>
-    async ({ params }) => {
-      const { getMovieDetail, getSimilarMovies, getCasts, getVideos } =
-        tmdbApiClient();
-
+    if (query.category === movie) {
       try {
-        const { data: movieDetailData } = (await getMovieDetail(
-          params?.id as string
-        ))!;
-        const { data: moviesData } = (await getSimilarMovies(
-          params?.id as string
-        ))!;
-        const { data: castsData } = (await getCasts(params?.id as string))!;
-        const { data: videosData } = (await getVideos(params?.id as string))!;
+        const promises = await Promise.all([
+          getMovieDetail(params?.id as string),
+          getMovieCasts(params?.id as string),
+          getMovieVideos(params?.id as string),
+        ]);
 
         store.dispatch(
           setMovieDetail({
-            casts: castsData,
-            videos: videosData,
-            detail: movieDetailData,
-          })
-        );
-        store.dispatch(
-          setMovieList({
-            listType: movieTypes.similar,
-            movies: moviesData,
+            detail: promises[0]?.data!,
+            casts: promises[1]?.data!,
+            videos: promises[2]?.data!,
           })
         );
       } catch (error) {
         notifyAxiosError('Get movie detail', error as AxiosError);
       }
+    } else if (query.category === tv) {
+      try {
+        const promises = await Promise.all([
+          getTvShowDetail(params?.id as string),
+          getTvShowCasts(params?.id as string),
+          getTvShowVideos(params?.id as string),
+        ]);
 
-      return {
-        props: {},
-        revalidate: 1,
-      };
+        store.dispatch(
+          setTvShowDetail({
+            detail: promises[0]?.data!,
+            casts: promises[1]?.data!,
+            videos: promises[2]?.data!,
+          })
+        );
+      } catch (error) {
+        notifyAxiosError('Get TV Shows detail', error as AxiosError);
+      }
     }
-);
+
+    return {
+      props: {},
+    };
+  });

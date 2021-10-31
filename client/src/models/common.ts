@@ -1,7 +1,7 @@
 // types
 import { AuthInitState } from './auth';
 import { PostsInitState } from './posts';
-import { TmdbInitState } from './tmdb';
+import { MoviesInitState } from './movies';
 
 export interface User {
   readonly _id: string;
@@ -39,27 +39,30 @@ export interface Post {
 }
 
 export interface Movie {
-  poster_path: string;
-  adult: boolean;
-  overview: string;
-  release_date: string;
-  genre_ids: number[];
-  id: number;
-  original_title: string;
-  original_language: string;
+  readonly id: string;
   title: string;
-  backdrop_path: string;
+  image: string;
+  overview: string;
+  releaseDate: string;
+  voteCount: number;
   popularity: number;
-  vote_count: number;
-  video: string;
-  vote_average: number;
+}
+
+export interface TvShow {
+  readonly id: string;
+  title: string;
+  image: string;
+  overview: string;
+  releaseDate: string;
+  voteCount: number;
+  popularity: number;
 }
 
 // === Responses ===
 export interface HydrateResponse {
   auth: AuthInitState;
   posts: PostsInitState;
-  tmdb: TmdbInitState;
+  movies: MoviesInitState;
 }
 
 export interface StatusResponse {

@@ -1,10 +1,11 @@
 // types
 import { GetServerSideProps } from 'next';
 
-import { MOVIE_TYPES } from '@/constants';
-import { movieTypes, setMovieList } from '@/redux/slices/tmdbSlice';
-import { tmdbApiClient } from '@/apis/tmdbApi';
+import { movieCategoryKeys, setMovies } from '@/redux/slices/moviesSlice';
+import { moviesApiClient } from '@/apis/moviesApi';
 import { wrapper } from '@/redux/store';
+
+import { tmdbMoviesEndpoints } from '@/configs/tmdb';
 
 import Movies from '@/features/Movies/pages';
 
@@ -16,27 +17,51 @@ export default MoviesPage;
 
 export const getServerSideProps: GetServerSideProps =
   wrapper.getServerSideProps((store) => async (ctx) => {
-    const { getMovies } = tmdbApiClient();
+    const { getMovies } = moviesApiClient();
 
-    const { data: popularData } = (await getMovies(MOVIE_TYPES.POPULAR, {
-      page: 1,
-    }))!;
-    const { data: upcomingData } = (await getMovies(MOVIE_TYPES.UPCOMING, {
-      page: 1,
-    }))!;
-    const { data: topRatedData } = (await getMovies(MOVIE_TYPES.TOP_RATED, {
-      page: 1,
-    }))!;
+    const { popular, upcoming, topRated, nowPlaying } = tmdbMoviesEndpoints;
 
-    store.dispatch(
-      setMovieList({ listType: movieTypes.popular, movies: popularData })
-    );
-    store.dispatch(
-      setMovieList({ listType: movieTypes.upcoming, movies: upcomingData })
-    );
-    store.dispatch(
-      setMovieList({ listType: movieTypes.topRated, movies: topRatedData })
-    );
+    const promises = await Promise.all([
+      getMovies(popular, {
+        page: 1,
+      }),
+      getMovies(upcoming, {
+        page: 1,
+      }),
+      getMovies(topRated, {
+        page: 1,
+      }),
+      getMovies(nowPlaying, {
+        page: 1,
+      }),
+    ]);
+
+    promises.forEach((promise) => {
+      const getMovieType = () => {
+        const path = promise?.config.url;
+        const endpoint = path?.split('/')[2]; // '/movie/popular' => ['', 'movie', 'popular']
+
+        switch (endpoint) {
+          case popular:
+            return movieCategoryKeys.popular;
+          case upcoming:
+            return movieCategoryKeys.upcoming;
+          case topRated:
+            return movieCategoryKeys.topRated;
+          case nowPlaying:
+            return movieCategoryKeys.nowPlaying;
+          default:
+            return '';
+        }
+      };
+
+      store.dispatch(
+        setMovies({
+          moviesType: getMovieType() as keyof typeof movieCategoryKeys,
+          movies: promise?.data!,
+        })
+      );
+    });
 
     return {
       props: {},
