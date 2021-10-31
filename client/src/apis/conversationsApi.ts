@@ -24,7 +24,7 @@ export const conversationsApiClient = () => {
 
         return response;
       } catch (error) {
-        return notifyAxiosError('Create conversation', error as AxiosError);
+        notifyAxiosError('Create conversation', error as AxiosError);
       }
     },
 
@@ -36,7 +36,7 @@ export const conversationsApiClient = () => {
 
         return response;
       } catch (error) {
-        return notifyAxiosError('Get conversations', error as AxiosError);
+        notifyAxiosError('Get conversations', error as AxiosError);
       }
     },
   };

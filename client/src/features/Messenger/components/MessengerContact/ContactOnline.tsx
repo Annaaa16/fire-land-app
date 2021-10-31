@@ -4,8 +4,6 @@ import { useEffect, useState } from 'react';
 import clsx from 'clsx';
 
 // types
-import { AxiosResponse } from 'axios';
-import { GetUserResponse } from '@/models/auth';
 import { User as UserType } from '@/models/common';
 
 import { useConversationsSelector } from '@/redux/selectors';
@@ -48,11 +46,9 @@ function ContactOnline(props: ContactOnlineProps) {
 
     (async () => {
       try {
-        const response = (await getUserById(
-          friendId!
-        )) as AxiosResponse<GetUserResponse>;
+        const response = await getUserById(friendId!);
 
-        setOnlineFriend(response.data.user);
+        setOnlineFriend(response!.data.user);
       } catch (error) {
         console.log('Get online friend error 👉', error);
       }

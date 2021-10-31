@@ -14,11 +14,11 @@ import useStoreDispatch from '@/hooks/useStoreDispatch';
 interface PostActionsProps {
   postId: string;
   likes: string[];
-  handleFetchComments: () => void;
+  onFetchComments: () => void;
 }
 
 function PostActions(props: PostActionsProps) {
-  const { postId, likes, handleFetchComments } = props;
+  const { postId, likes, onFetchComments } = props;
 
   const { currentUser } = useUsersSelector();
   const dispatch = useStoreDispatch();
@@ -71,7 +71,7 @@ function PostActions(props: PostActionsProps) {
       </div>
 
       <div
-        onClick={handleFetchComments}
+        onClick={onFetchComments}
         className={clsx(
           'group i-flex-center flex-1 py-2.5 rounded-md',
           'transition-all ease-out',

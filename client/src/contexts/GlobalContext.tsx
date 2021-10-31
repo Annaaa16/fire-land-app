@@ -2,8 +2,6 @@ import { createContext, useContext, useState, useEffect } from 'react';
 
 // types
 import { ReactNode } from 'react';
-import { AxiosResponse } from 'axios';
-import { GetUserResponse } from '@/models/auth';
 
 import { LOCAL_STORAGE } from '@/constants';
 import { usersApiClient } from '@/apis/usersApi';
@@ -61,11 +59,10 @@ function GlobalProvider({ children }: GlobalProviderProps) {
       (async () => {
         const { getCurrentUser } = usersApiClient();
 
-        const response =
-          (await getCurrentUser()) as AxiosResponse<GetUserResponse>;
+        const response = await getCurrentUser();
 
-        dispatch(setAuthStatus(response.data));
-        dispatch(setUser(response.data));
+        dispatch(setAuthStatus(response!.data));
+        dispatch(setUser(response!.data));
       })();
     } else {
       cookies.removeAll();

@@ -29,7 +29,7 @@ export const postsApiClient = () => {
 
         return response;
       } catch (error) {
-        return notifyAxiosError('Create post', error as AxiosError);
+        notifyAxiosError('Create post', error as AxiosError);
       }
     },
 
@@ -41,7 +41,7 @@ export const postsApiClient = () => {
 
         return response;
       } catch (error) {
-        return notifyAxiosError('Get posts', error as AxiosError);
+        notifyAxiosError('Get posts', error as AxiosError);
       }
     },
 
@@ -56,7 +56,7 @@ export const postsApiClient = () => {
 
         return response;
       } catch (error) {
-        return notifyAxiosError('Update post', error as AxiosError);
+        notifyAxiosError('Update post', error as AxiosError);
       }
     },
 
@@ -68,7 +68,7 @@ export const postsApiClient = () => {
 
         return response;
       } catch (error) {
-        return notifyAxiosError('Delete post', error as AxiosError);
+        notifyAxiosError('Delete post', error as AxiosError);
       }
     },
 
@@ -80,7 +80,7 @@ export const postsApiClient = () => {
 
         return response;
       } catch (error) {
-        return notifyAxiosError('Like post', error as AxiosError);
+        notifyAxiosError('Like post', error as AxiosError);
       }
     },
 
@@ -92,7 +92,7 @@ export const postsApiClient = () => {
 
         return response;
       } catch (error) {
-        return notifyAxiosError('Unlike post', error as AxiosError);
+        notifyAxiosError('Unlike post', error as AxiosError);
       }
     },
   };
@@ -110,7 +110,7 @@ export const postsApiServer = (accessToken: string) => {
 
         return response;
       } catch (error) {
-        return notifyAxiosError('Get posts', error as AxiosError);
+        notifyAxiosError('Get posts', error as AxiosError);
       }
     },
   };

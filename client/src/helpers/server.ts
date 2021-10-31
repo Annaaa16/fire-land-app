@@ -5,8 +5,6 @@ import { parseCookies } from 'nookies';
 
 // types
 import { NextPageContext } from 'next';
-import { AxiosResponse } from 'axios';
-import { StatusResponse } from '@/models/common';
 
 import { PATHS } from '@/constants';
 import { authApiServer } from '@/apis/authApi';
@@ -44,13 +42,11 @@ export const redirect = async (ctx: NextPageContext) => {
   if (isFully && isValid && !isExpired) {
     const { verifyToken } = authApiServer(access_token);
 
-    const {
-      data: { success },
-    } = (await verifyToken(access_token)) as AxiosResponse<StatusResponse>;
+    const response = await verifyToken(access_token);
 
     // Redirect back if try to go to login or register
     if (
-      success &&
+      response?.data.success &&
       (originalUrl === PATHS.LOGIN || originalUrl === PATHS.REGISTER)
     ) {
       redirectToLocation(PATHS.NEWSFEED);

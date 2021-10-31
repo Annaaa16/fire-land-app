@@ -24,7 +24,7 @@ export const messagesApiClient = () => {
 
         return response;
       } catch (error) {
-        return notifyAxiosError('Create message', error as AxiosError);
+        notifyAxiosError('Create message', error as AxiosError);
       }
     },
     getMessages: async (conversationId: string) => {
@@ -35,7 +35,7 @@ export const messagesApiClient = () => {
 
         return response;
       } catch (error) {
-        return notifyAxiosError('Get messages', error as AxiosError);
+        notifyAxiosError('Get messages', error as AxiosError);
       }
     },
   };

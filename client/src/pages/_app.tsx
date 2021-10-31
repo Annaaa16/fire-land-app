@@ -14,7 +14,7 @@ import { SagaStore } from '@/models/store';
 
 import { redirect } from '@/helpers/server';
 import store, { wrapper } from '@/redux/store';
-import theme from '@/configs/materialUi';
+import theme from '@/configs/materialUI';
 
 import GlobalProvider from '../contexts/GlobalContext';
 

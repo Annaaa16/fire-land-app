@@ -25,7 +25,7 @@ export const commentsApiClient = () => {
 
         return response;
       } catch (error) {
-        return notifyAxiosError('Comment post', error as AxiosError);
+        notifyAxiosError('Comment post', error as AxiosError);
       }
     },
 

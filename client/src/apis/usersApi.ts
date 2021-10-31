@@ -22,7 +22,7 @@ export const usersApiClient = () => {
 
         return response;
       } catch (error) {
-        return notifyAxiosError('Get current user', error as AxiosError);
+        notifyAxiosError('Get current user', error as AxiosError);
       }
     },
 
@@ -34,7 +34,7 @@ export const usersApiClient = () => {
 
         return response;
       } catch (error) {
-        return notifyAxiosError('Get user by ID', error as AxiosError);
+        notifyAxiosError('Get user by ID', error as AxiosError);
       }
     },
 
@@ -46,7 +46,7 @@ export const usersApiClient = () => {
 
         return response;
       } catch (error) {
-        return notifyAxiosError('Follow user', error as AxiosError);
+        notifyAxiosError('Follow user', error as AxiosError);
       }
     },
 
@@ -58,7 +58,7 @@ export const usersApiClient = () => {
 
         return response;
       } catch (error) {
-        return notifyAxiosError('Unfollow user', error as AxiosError);
+        notifyAxiosError('Unfollow user', error as AxiosError);
       }
     },
   };
@@ -76,7 +76,7 @@ export const usersApiServer = (accessToken: string) => {
 
         return response;
       } catch (error) {
-        return notifyAxiosError('Get current user', error as AxiosError);
+        notifyAxiosError('Get current user', error as AxiosError);
       }
     },
   };
