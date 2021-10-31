@@ -6,6 +6,9 @@ import App from 'next/app';
 import { AppContext, AppInitialProps } from 'next/app';
 import { SagaStore } from '@/models/store';
 
+// swiper
+import SwiperCore, { Autoplay } from 'swiper';
+
 import { redirect } from '@/helpers/server';
 import store, { wrapper } from '@/redux/store';
 import GlobalProvider from '../contexts/GlobalContext';
@@ -41,6 +44,8 @@ class WrappedApp extends App<AppInitialProps> {
 
   render() {
     const { Component, pageProps } = this.props;
+
+    SwiperCore.use([Autoplay]);
 
     return (
       <Provider store={store}>
