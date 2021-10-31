@@ -20,11 +20,11 @@ import Tooltip from '@/components/Tooltip';
 
 interface PostSenderProps {
   postId: string;
-  setIsOpenComments: Dispatch<SetStateAction<boolean>>;
+  onSetIsOpenComments: Dispatch<SetStateAction<boolean>>;
 }
 
 function PostSender(props: PostSenderProps) {
-  const { postId, setIsOpenComments } = props;
+  const { postId, onSetIsOpenComments } = props;
 
   const {
     currentUser: { _id: userId, avatar },
@@ -42,7 +42,7 @@ function PostSender(props: PostSenderProps) {
     const payload = { content, userId, postId };
 
     dispatch(createComment.request(payload));
-    setIsOpenComments(true);
+    onSetIsOpenComments(true);
     setContent('');
   };
 

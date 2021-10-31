@@ -1,42 +1,147 @@
+import { useEffect } from 'react';
+
 // types
 import { GetServerSideProps } from 'next';
 
-import { MOVIE_TYPES } from '@/constants';
-import { movieTypes, setMovieList } from '@/redux/slices/tmdbSlice';
-import { tmdbApiClient } from '@/apis/tmdbApi';
+import { COLORS } from '@/constants';
+import { movieCategoryKeys, setMovies } from '@/redux/slices/moviesSlice';
+import { moviesApiClient } from '@/apis/moviesApi';
 import { wrapper } from '@/redux/store';
+import { tmdbMoviesEndpoints } from '@/configs/tmdb';
+import { useMoviesSelector } from '@/redux/selectors';
+import { tvShowCategoryKeys } from '@/redux/slices/moviesSlice';
+import { getTvShows } from '@/redux/actions/movies';
+import { tmdbCategories, tvShowsEndpoints } from '@/configs/tmdb';
+import useStoreDispatch from '@/hooks/useStoreDispatch';
 
-import Movies from '@/features/Movies/pages';
+import Meta from '@/layouts/Meta';
+import MainLayout from '@/features/Movies/layouts/MainLayout';
+import MoviesItemList from '@/features/Movies/components/MoviesItemList';
+import MoviesHeroSlider from '@/features/Movies/components/MoviesHeroSlider';
 
-function MoviesPage() {
-  return <Movies />;
+function Movies() {
+  const { movieCategories, tvShowCategories } = useMoviesSelector();
+
+  const dispatch = useStoreDispatch();
+
+  useEffect(() => {
+    dispatch(
+      getTvShows.request({
+        query: tvShowsEndpoints.popular,
+        params: {
+          page: 1,
+        },
+        tvShowsType: tvShowCategoryKeys.popular,
+      })
+    );
+    dispatch(
+      getTvShows.request({
+        query: tvShowsEndpoints.airingToday,
+        params: {
+          page: 1,
+        },
+        tvShowsType: tvShowCategoryKeys.airingToday,
+      })
+    );
+    dispatch(
+      getTvShows.request({
+        query: tvShowsEndpoints.onTheAir,
+        params: {
+          page: 1,
+        },
+        tvShowsType: tvShowCategoryKeys.onTheAir,
+      })
+    );
+  }, [dispatch]);
+
+  return (
+    <Meta title='Movies' backgroundColor={COLORS.DARK_BODY}>
+      <MainLayout>
+        <MoviesHeroSlider />
+        <MoviesItemList
+          title='Upcoming Movies'
+          movies={movieCategories.upcoming.movies}
+          category={tmdbCategories.movie}
+        />
+        <MoviesItemList
+          title='Top Rated'
+          movies={movieCategories.topRated.movies}
+          category={tmdbCategories.movie}
+        />
+        <MoviesItemList
+          title='Now Playing'
+          movies={movieCategories.nowPlaying.movies}
+          category={tmdbCategories.movie}
+        />
+        <MoviesItemList
+          title='TV Shows Popular'
+          movies={tvShowCategories.popular.tvShows}
+          category={tmdbCategories.tv}
+        />
+        <MoviesItemList
+          title='TV Shows Airing Today'
+          movies={tvShowCategories.airingToday.tvShows}
+          category={tmdbCategories.tv}
+        />
+        <MoviesItemList
+          title='TV Shows On The Air'
+          movies={tvShowCategories.onTheAir.tvShows}
+          category={tmdbCategories.tv}
+        />
+      </MainLayout>
+    </Meta>
+  );
 }
 
-export default MoviesPage;
+export default Movies;
 
 export const getServerSideProps: GetServerSideProps =
   wrapper.getServerSideProps((store) => async (ctx) => {
-    const { getMovies } = tmdbApiClient();
+    const { getMovies } = moviesApiClient();
 
-    const { data: popularData } = (await getMovies(MOVIE_TYPES.POPULAR, {
-      page: 1,
-    }))!;
-    const { data: upcomingData } = (await getMovies(MOVIE_TYPES.UPCOMING, {
-      page: 1,
-    }))!;
-    const { data: topRatedData } = (await getMovies(MOVIE_TYPES.TOP_RATED, {
-      page: 1,
-    }))!;
+    const { popular, upcoming, topRated, nowPlaying } = tmdbMoviesEndpoints;
 
-    store.dispatch(
-      setMovieList({ listType: movieTypes.popular, movies: popularData })
-    );
-    store.dispatch(
-      setMovieList({ listType: movieTypes.upcoming, movies: upcomingData })
-    );
-    store.dispatch(
-      setMovieList({ listType: movieTypes.topRated, movies: topRatedData })
-    );
+    const promises = await Promise.all([
+      getMovies(popular, {
+        page: 1,
+      }),
+      getMovies(upcoming, {
+        page: 1,
+      }),
+      getMovies(topRated, {
+        page: 1,
+      }),
+      getMovies(nowPlaying, {
+        page: 1,
+      }),
+    ]);
+
+    promises.forEach((promise) => {
+      const getMovieType = () => {
+        const path = promise?.config.url;
+        const endpoint = path?.split('/')[2]; // '/movie/popular' => ['', 'movie', 'popular']
+
+        switch (endpoint) {
+          case popular:
+            return movieCategoryKeys.popular;
+          case upcoming:
+            return movieCategoryKeys.upcoming;
+          case topRated:
+            return movieCategoryKeys.topRated;
+          case nowPlaying:
+            return movieCategoryKeys.nowPlaying;
+          default:
+            return '';
+        }
+      };
+
+      store.dispatch(
+        setMovies({
+          moviesType: getMovieType() as keyof typeof movieCategoryKeys,
+          movies: promise?.data!,
+        })
+      );
+    });
 
     return {
       props: {},

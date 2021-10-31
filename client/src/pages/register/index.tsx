@@ -1,9 +1,14 @@
+import { useEffect } from 'react';
 import { useRouter } from 'next/dist/client/router';
 
 // clsx
 import clsx from 'clsx';
 
 import { LOCAL_STORAGE, PATHS } from '@/constants';
+import { useGlobalContext } from '@/contexts/GlobalContext';
+import { useAuthSelector } from '@/redux/selectors';
+import { clearMessage } from '@/redux/slices/authSlice';
+import useStoreDispatch from '@/hooks/useStoreDispatch';
 import {
   ltBackground,
   dkBackground,
@@ -11,27 +16,31 @@ import {
   ltDot,
   dkDot,
 } from '@/utils/images';
-import { useGlobalContext } from '@/contexts/GlobalContext';
-import { clearMessage } from '@/redux/slices/authSlice';
-import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 import Meta from '@/layouts/Meta';
-import RegisterForm from './components/RegisterForm';
 import LandingLeft from '@/components/LandingLeft';
+import RegisterForm from '@/features/Register/components/RegisterForm';
 
 // styles
-import styles from './styles.module.scss';
+import styles from '@/styles/common.module.scss';
 
 function Register() {
+  const {
+    registerStatus: { success },
+  } = useAuthSelector();
   const { theme } = useGlobalContext();
 
-  const router = useRouter();
   const dispatch = useStoreDispatch();
+  const router = useRouter();
 
   const moveToLogin = () => {
     dispatch(clearMessage());
     router.push(PATHS.LOGIN);
   };
+
+  useEffect(() => {
+    if (success) router.push(PATHS.LOGIN);
+  }, [success, router]);
 
   return (
     <Meta title='Register'>

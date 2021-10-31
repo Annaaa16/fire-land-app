@@ -14,11 +14,11 @@ import useStoreDispatch from '@/hooks/useStoreDispatch';
 interface PostActionsProps {
   postId: string;
   likes: string[];
-  handleFetchComments: () => void;
+  onFetchComments: () => void;
 }
 
 function PostActions(props: PostActionsProps) {
-  const { postId, likes, handleFetchComments } = props;
+  const { postId, likes, onFetchComments } = props;
 
   const { currentUser } = useUsersSelector();
   const dispatch = useStoreDispatch();
@@ -47,7 +47,6 @@ function PostActions(props: PostActionsProps) {
             className={clsx(
               'mr-1.5 !text-lg md:!text-xl',
               'text-[#2d86ff] dark:text-primary-v4',
-              '!transition-all ease-out',
               'dark:group-hover:text-primary-v4'
             )}
           />
@@ -56,7 +55,6 @@ function PostActions(props: PostActionsProps) {
             className={clsx(
               'mr-1.5 !text-lg md:!text-xl',
               'text-gray-500',
-              '!transition-all ease-out',
               'dark:group-hover:text-primary-v4'
             )}
           />
@@ -73,7 +71,7 @@ function PostActions(props: PostActionsProps) {
       </div>
 
       <div
-        onClick={handleFetchComments}
+        onClick={onFetchComments}
         className={clsx(
           'group i-flex-center flex-1 py-2.5 rounded-md',
           'transition-all ease-out',
@@ -84,7 +82,6 @@ function PostActions(props: PostActionsProps) {
           className={clsx(
             'mr-1.5 !text-lg md:!text-xl',
             'text-gray-500',
-            '!transition-all ease-out',
             'dark:group-hover:text-primary-v4'
           )}
         />
@@ -110,7 +107,6 @@ function PostActions(props: PostActionsProps) {
           className={clsx(
             'mr-1.5 !text-lg md:!text-xl',
             'text-gray-500',
-            '!transition-all ease-out',
             'dark:group-hover:text-primary-v4'
           )}
         />

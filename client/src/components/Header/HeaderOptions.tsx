@@ -56,7 +56,6 @@ function HeaderOptions() {
             className={clsx(
               '!text-2xl !w-11',
               'text-primary-v1-text',
-              '!transition-all !duration-250',
               'cursor-pointer',
               'hover:text-white'
             )}
@@ -67,7 +66,6 @@ function HeaderOptions() {
             className={clsx(
               '!text-2xl !w-11',
               'text-primary-v1-text',
-              '!transition-all !duration-250',
               'cursor-pointer',
               'hover:text-white'
             )}
@@ -78,7 +76,6 @@ function HeaderOptions() {
             className={clsx(
               '!text-2xl !w-11',
               'text-primary-v1-text',
-              '!transition-all !duration-250',
               'cursor-pointer',
               'hover:text-white'
             )}
@@ -89,7 +86,6 @@ function HeaderOptions() {
             className={clsx(
               '!text-2xl !w-11',
               'text-white',
-              '!transition-all !duration-250',
               'cursor-pointer',
               'hover:text-white'
             )}
@@ -132,7 +128,6 @@ function HeaderOptions() {
             <SettingsIcon
               className={clsx(
                 'text-white',
-                '!transition-all !ease-out',
                 'group-hover:text-primary-v2 dark:group-hover:text-primary-v4'
               )}
             />
@@ -156,7 +151,6 @@ function HeaderOptions() {
             <AssignmentIndIcon
               className={clsx(
                 'text-white',
-                '!transition-all !ease-out',
                 'group-hover:text-primary-v2 dark:group-hover:text-primary-v4'
               )}
             />
@@ -182,7 +176,6 @@ function HeaderOptions() {
               <Brightness4Icon
                 className={clsx(
                   'text-white',
-                  '!transition-all !ease-out',
                   'group-hover:text-primary-v2 dark:group-hover:text-primary-v4'
                 )}
               />
@@ -190,7 +183,6 @@ function HeaderOptions() {
               <Brightness7Icon
                 className={clsx(
                   'text-white',
-                  '!transition-all !ease-out',
                   'group-hover:text-primary-v2 dark:group-hover:text-primary-v4'
                 )}
               />
@@ -218,7 +210,6 @@ function HeaderOptions() {
             <ExitToAppIcon
               className={clsx(
                 'text-white',
-                '!transition-all !ease-out',
                 'group-hover:text-primary-v2 dark:group-hover:text-primary-v4'
               )}
             />

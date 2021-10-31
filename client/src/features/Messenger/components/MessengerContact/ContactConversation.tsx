@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import clsx from 'clsx';
 
 // types
-import { AxiosResponse } from 'axios';
 import { Conversation } from '@/models/conversations';
 import { GetUserResponse } from '@/models/auth';
 
@@ -53,11 +52,9 @@ function ContactConversation({
 
     (async () => {
       try {
-        const response = (await getUserById(
-          friendId!
-        )) as AxiosResponse<GetUserResponse>;
+        const response = await getUserById(friendId!);
 
-        setFriend(response.data);
+        setFriend(response!.data);
       } catch (error) {
         console.log('Get friend error 👉', error);
       }

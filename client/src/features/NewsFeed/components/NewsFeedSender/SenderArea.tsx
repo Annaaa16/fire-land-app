@@ -204,7 +204,6 @@ function NewsFeedSenderArea() {
                 className={clsx(
                   '!text-[28px]',
                   'text-gray-300 dark:text-gray-300 lg:dark:text-gray-500',
-                  '!transition-all',
                   'hover:text-gray-400 dark:hover:text-white'
                 )}
               />

@@ -34,7 +34,6 @@ function SidebarTooltip(props: SidebarTooltipProps) {
           className={clsx(
             '!text-2xl',
             isActive ? 'text-white' : 'text-lt-gray dark:text-dk-gray',
-            '!transition-all !duration-250',
             !isActive &&
               'group-hover:text-primary-v2 dark:group-hover:text-primary-v4'
           )}
