@@ -1,5 +1,6 @@
 // types
 import { GetMovies, GetTvShows } from '@/models/movies';
+import { TmdbSearchQuery } from '@/models/tmdb';
 
 export const getMovies = {
   request: (payload?: GetMovies) => ({
@@ -24,6 +25,19 @@ export const getSimilarMovies = {
   }),
   failure: () => ({
     type: 'getSimilarMovies/failure',
+  }),
+};
+
+export const searchMovies = {
+  request: (payload?: TmdbSearchQuery) => ({
+    type: 'searchMovies/request',
+    payload,
+  }),
+  success: () => ({
+    type: 'searchMovies/success',
+  }),
+  failure: () => ({
+    type: 'searchMovies/failure',
   }),
 };
 

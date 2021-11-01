@@ -1,6 +1,3 @@
-import { useState } from 'react';
-import { useRouter } from 'next/router';
-
 // clsx
 import clsx from 'clsx';
 
@@ -13,10 +10,10 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 // types
 import { Movie } from '@/models/common';
 
-import { BREAKPOINTS, PATHS } from '@/constants';
-import tmdb, { tmdbCategories } from '@/configs/tmdb';
+import { BREAKPOINTS } from '@/constants';
+import { tmdbCategories } from '@/configs/tmdb';
 
-import Image from '@/components/Image';
+import MoviesItem from '../MoviesItem';
 
 interface MoviesGenreList {
   title: string;
@@ -25,7 +22,7 @@ interface MoviesGenreList {
 }
 
 function MoviesGenreList({ title, movies, category }: MoviesGenreList) {
-  const [swiperConfig] = useState({
+  const swiperConfig = {
     breakpoints: {
       [BREAKPOINTS.PHONE]: {
         slidesPerView: 1.4,
@@ -40,12 +37,6 @@ function MoviesGenreList({ title, movies, category }: MoviesGenreList) {
         spaceBetween: 8,
       },
     },
-  });
-
-  const router = useRouter();
-
-  const moveToDetail = (id: string) => {
-    router.push(`${PATHS.MOVIES}/${id}?category=${category}`);
   };
 
   return (
@@ -70,21 +61,14 @@ function MoviesGenreList({ title, movies, category }: MoviesGenreList) {
               <KeyboardArrowRightIcon />
             </div>
             <Swiper {...swiperConfig}>
-              {movies.map((movie, idx) => (
-                <SwiperSlide
-                  onClick={() => moveToDetail(movie.id.toString())}
-                  key={movie.id}>
-                  <div className={clsx('relative', 'h-36', 'cursor-pointer')}>
-                    <Image
-                      src={tmdb.getW780Image(movie.image)}
-                      objectFit='cover'
-                      alt='Thumbnail'
-                      layout='fill'
-                      className={clsx('rounded-lg')}
-                    />
-                  </div>
-                </SwiperSlide>
-              ))}
+              {movies.map(
+                (movie) =>
+                  movie.image && (
+                    <SwiperSlide key={movie.id}>
+                      <MoviesItem movie={movie} category={category} />
+                    </SwiperSlide>
+                  )
+              )}
             </Swiper>
           </div>
         </section>

@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import Image from '@/components/Image';
 
 // clsx
@@ -18,7 +17,7 @@ interface DetailCastListProps {
 }
 
 function DetailCastList({ casts }: DetailCastListProps) {
-  const [swiperConfig] = useState({
+  const swiperConfig = {
     slidesPerView: 5.4,
     spaceBetween: 8,
     breakpoints: {
@@ -27,7 +26,7 @@ function DetailCastList({ casts }: DetailCastListProps) {
         spaceBetween: 8,
       },
       [BREAKPOINTS.TABLET]: {
-        slidesPerView: 3.4,
+        slidesPerView: 6.4,
         spaceBetween: 8,
       },
       [BREAKPOINTS.DESKTOP]: {
@@ -35,7 +34,7 @@ function DetailCastList({ casts }: DetailCastListProps) {
         spaceBetween: 8,
       },
     },
-  });
+  };
 
   return (
     <Swiper {...swiperConfig}>
@@ -49,8 +48,9 @@ function DetailCastList({ casts }: DetailCastListProps) {
                   layout='fill'
                   objectFit='cover'
                   alt='Cast'
-                  className={clsx('rounded-xl')}
+                  subClass={clsx('rounded-xl')}
                   priority={true}
+                  height={12}
                 />
               </div>
               <div className={clsx('text-center text-xs', 'text-white')}>

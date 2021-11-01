@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 // clsx
 import clsx from 'clsx';
 
@@ -11,10 +9,10 @@ import { useMoviesSelector } from '@/redux/selectors';
 function DetailGenreList() {
   const { detailInfo } = useMoviesSelector();
 
-  const [swiperConfig] = useState({
+  const swiperConfig = {
     slidesPerView: 'auto' as 'auto',
     spaceBetween: 8,
-  });
+  };
 
   return (
     <Swiper {...swiperConfig} className='mb-2'>
