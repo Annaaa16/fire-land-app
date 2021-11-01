@@ -6,6 +6,7 @@ import {
   TmdbGetTvShowCreditsResponse,
   TmdbGetTvShowVideosResponse,
   TmdbParams,
+  TmdbSearchQuery,
   TmdbTvShowDetail,
 } from '@/models/tmdb';
 import {
@@ -25,9 +26,7 @@ export const moviesApi = () => {
       try {
         const response = await axiosTmdb.get<TmdbGetMoviesResponse>(
           '/movie/' + query,
-          {
-            params,
-          }
+          { params }
         );
         return response;
       } catch (error) {
@@ -88,14 +87,25 @@ export const moviesApi = () => {
       }
     },
 
+    searchMovies: async (params: TmdbSearchQuery) => {
+      try {
+        const response = await axiosTmdb.get<TmdbGetMoviesResponse>(
+          '/search/movie',
+          { params }
+        );
+
+        return response;
+      } catch (error) {
+        notifyAxiosError('Search movie', error as AxiosError);
+      }
+    },
+
     // === Tv Shows ===
     getTvShows: async (query: string, params: TmdbParams) => {
       try {
         const response = await axiosTmdb.get<TmdbGetTvShowsResponse>(
           '/tv/' + query,
-          {
-            params,
-          }
+          { params }
         );
 
         return response;
@@ -121,9 +131,7 @@ export const moviesApi = () => {
       try {
         const response = await axiosTmdb.get<TmdbTvShowDetail>(
           '/tv/' + showId,
-          {
-            params: {},
-          }
+          { params: {} }
         );
 
         return response;
