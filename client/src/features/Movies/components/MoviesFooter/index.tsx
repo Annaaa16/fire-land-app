@@ -9,7 +9,7 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 
 function MoviesFooter() {
   return (
-    <footer className={clsx('pb-5 mt-28')}>
+    <footer className={clsx('pb-10 mt-28')}>
       <div className={clsx('flex items-center justify-center mb-2')}>
         <div className={clsx('group px-2', 'cursor-pointer')}>
           <InstagramIcon

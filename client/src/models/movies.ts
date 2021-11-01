@@ -23,14 +23,14 @@ export interface TvShowCategoryKeys {
   similar: 'similar';
 }
 
-export interface DefaultMovie {
+export interface DefaultMovies {
   page: number;
   movies: Movie[];
   totalMovies: number;
   totalPages: number;
 }
 
-export interface DefaultTvShow {
+export interface DefaultTvShows {
   page: number;
   tvShows: TvShow[];
   totalTvShows: number;
@@ -56,10 +56,10 @@ interface MovieGenre {
 
 export interface MoviesInitState {
   movieCategories: {
-    [key in keyof typeof movieCategoryKeys]: DefaultMovie;
+    [key in keyof typeof movieCategoryKeys]: DefaultMovies;
   };
   tvShowCategories: {
-    [key in keyof typeof tvShowCategoryKeys]: DefaultTvShow;
+    [key in keyof typeof tvShowCategoryKeys]: DefaultTvShows;
   };
   detailInfo: {
     readonly id: string;
@@ -70,6 +70,7 @@ export interface MoviesInitState {
     videos: MovieVideo[];
     genres: MovieGenre[];
   };
+  searchedMovies: DefaultMovies;
 }
 
 export interface GetMovies {

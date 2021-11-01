@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import Image from '@/components/Image';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 // clsx
 import clsx from 'clsx';
@@ -11,114 +11,176 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 // swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
 
+import { PATHS } from '@/constants';
 import { useMoviesSelector } from '@/redux/selectors';
-import tmdb from '@/configs/tmdb';
+import tmdb, { tmdbCategories } from '@/configs/tmdb';
+
+import Paragraph from '@/components/Paragraph';
 
 function HomeHeroSlider() {
   const {
     movieCategories: { popular },
   } = useMoviesSelector();
 
-  const [swiperConfig] = useState<any>({
+  const router = useRouter();
+
+  const swiperConfig = {
     slidesPerView: 1,
     loop: true,
     autoplay: {
       delay: 5000,
+      disableOnInteraction: false,
     },
-  });
+  };
+
+  const moveToDetail = (id: string) => {
+    router.push(`${PATHS.MOVIES}/${id}?category=${tmdbCategories.movie}`);
+  };
 
   return (
     <>
       {popular.movies.length > 0 && (
         <Swiper {...swiperConfig}>
-          {popular.movies.map((movie) => (
-            <SwiperSlide key={movie.id}>
-              <div className={clsx('relative', 'w-full h-screen')}>
-                <Image
-                  src={tmdb.getOriginalImage(movie.image)}
-                  alt='Thumbnail'
-                  layout='fill'
-                  objectFit='cover'
-                  priority={true}
-                />
-
-                <div
-                  className={clsx(
-                    'absolute inset-0',
-                    'bg-gradient-to-t from-dk-body to-transparent'
-                  )}
-                />
-
-                <div
-                  className={clsx(
-                    'relative',
-                    'i-flex-center container h-full'
-                  )}>
-                  <div
-                    className={clsx(
-                      'text-center lg:text-left lg:w-1/2 lg:mr-6'
-                    )}>
-                    <h1
-                      className={clsx(
-                        'text-2xl md:text-4xl font-bold leading-tight lg:leading-normal mb-0.5',
-                        'text-white'
-                      )}>
-                      {movie.title}
-                    </h1>
-                    <p className={clsx('leading-5 mb-4', 'text-white')}>
-                      {movie.overview}
-                    </p>
+          {popular.movies.map(
+            (movie) =>
+              movie.image &&
+              movie.title && (
+                <SwiperSlide key={movie.id}>
+                  {({ isActive }) => (
                     <div
                       className={clsx(
-                        'flex items-center justify-center lg:justify-start'
+                        'relative',
+                        'w-full h-[85vh] md:h-[60vh] lg:h-screen'
                       )}>
-                      <button
+                      <Image
+                        src={tmdb.getOriginalImage(movie.image)}
+                        alt='Thumbnail'
+                        layout='fill'
+                        objectFit='cover'
+                        priority={true}
                         className={clsx(
-                          'i-flex-center px-6 py-2.5 mr-4 shadow-primary-v4 rounded-lg',
-                          'text-white bg-primary-v4',
-                          'transition-all duration-300 ease-out',
-                          'select-none',
-                          'lg:hover:bg-primary-v4-hv'
-                        )}>
-                        <PlayArrowIcon className={clsx('!text-2xl mr-px')} />
-                        <span className={clsx('font-bold text-base')}>
-                          Play
-                        </span>
-                      </button>
-                      <button
-                        className={clsx(
-                          'i-flex-center px-5 py-2.5 mr-4 shadow-md rounded-lg',
-                          'text-white bg-gray',
-                          'transition-all duration-300 ease-out',
-                          'select-none',
-                          'lg:hover:bg-gray-500'
-                        )}>
-                        <InfoOutlinedIcon className={clsx('!text-2xl mr-1')} />
-                        <span className={clsx('font-bold text-base')}>
-                          More Info
-                        </span>
-                      </button>
-                    </div>
-                  </div>
+                          isActive ? 'opacity-100' : 'opacity-0',
+                          'transition-all duration-500 ease-linear'
+                        )}
+                      />
 
-                  <div
-                    className={clsx(
-                      'relative',
-                      'hidden lg:block w-72 h-100 flex-shrink-0'
-                    )}>
-                    <Image
-                      src={tmdb.getOriginalImage(movie.image)}
-                      layout='fill'
-                      alt='Thumbnail'
-                      objectFit='cover'
-                      className={clsx('rounded-2xl')}
-                      priority={true}
-                    />
-                  </div>
-                </div>
-              </div>
-            </SwiperSlide>
-          ))}
+                      <div
+                        className={clsx(
+                          'absolute inset-0',
+                          'bg-gradient-to-t from-dk-body to-transparent'
+                        )}
+                      />
+
+                      <div
+                        className={clsx(
+                          'relative',
+                          'i-flex-center container h-full'
+                        )}>
+                        <div
+                          className={clsx(
+                            'text-center lg:text-left lg:w-1/2 lg:mr-6'
+                          )}>
+                          <h1
+                            className={clsx(
+                              'text-2xl md:text-4xl font-bold leading-tight lg:leading-normal mb-0.5',
+                              isActive
+                                ? 'translate-y-0 opacity-100'
+                                : '-translate-y-8 opacity-0',
+                              'transition-all duration-700 ease-in-out ',
+                              'text-white'
+                            )}>
+                            {movie.title}
+                          </h1>
+                          <Paragraph
+                            lengthInit={250}
+                            bodyClass={clsx('mb-3')}
+                            paragraphClass={clsx(
+                              'leading-5 mb-1',
+                              'text-white',
+                              isActive
+                                ? 'translate-x-0 opacity-100'
+                                : '-translate-x-5 opacity-0',
+                              'text-white',
+                              'transition-all duration-700 ease-out delay-500'
+                            )}
+                            buttonClass={clsx(
+                              isActive
+                                ? 'opacity-100 visible'
+                                : 'opacity-0 invisible',
+                              'text-white',
+                              'transition-all duration-700 ease-out delay-1000',
+                              'hover:underline'
+                            )}>
+                            {movie.overview}
+                          </Paragraph>
+                          <div
+                            className={clsx(
+                              'flex items-center justify-center lg:justify-start'
+                            )}>
+                            <button
+                              onClick={() => moveToDetail(movie.id)}
+                              className={clsx(
+                                'i-flex-center px-4 lg:px-6 py-2 lg:py-2.5 mr-4 shadow-primary-v4 rounded-lg',
+                                'text-white bg-primary-v4',
+                                'transition-all duration-300 ease-out',
+                                'select-none',
+                                'lg:hover:bg-primary-v4-hv'
+                              )}>
+                              <PlayArrowIcon
+                                className={clsx('!text-xl lg:!text-2xl mr-px')}
+                              />
+                              <span
+                                className={clsx(
+                                  'font-bold text-sm lg:text-base'
+                                )}>
+                                Play
+                              </span>
+                            </button>
+                            <button
+                              className={clsx(
+                                'i-flex-center px-4 lg:px-5 py-2 lg:py-2.5 mr-4 shadow-md rounded-lg',
+                                'text-white bg-gray',
+                                'transition-all duration-300 ease-out',
+                                'select-none',
+                                'lg:hover:bg-gray-500'
+                              )}>
+                              <InfoOutlinedIcon
+                                className={clsx('!text-xl lg:!text-2xl mr-1')}
+                              />
+                              <span
+                                className={clsx(
+                                  'font-bold text-sm lg:text-base'
+                                )}>
+                                More Info
+                              </span>
+                            </button>
+                          </div>
+                        </div>
+
+                        <div
+                          className={clsx(
+                            'relative',
+                            'hidden lg:block w-72 h-100 flex-shrink-0',
+                            isActive
+                              ? 'translate-y-0 scale-100 opacity-100'
+                              : '-translate-y-4 scale-75 opacity-0',
+                            'transition-all duration-700 ease-out delay-200'
+                          )}>
+                          <Image
+                            src={tmdb.getOriginalImage(movie.image)}
+                            layout='fill'
+                            alt='Thumbnail'
+                            objectFit='cover'
+                            className={clsx('rounded-2xl')}
+                            priority={true}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </SwiperSlide>
+              )
+          )}
         </Swiper>
       )}
     </>

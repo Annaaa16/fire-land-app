@@ -31,7 +31,7 @@ export const PATHS = {
   REGISTER: '/register',
   NEWSFEED: '/newsfeed',
   MOVIES: '/movies',
-  MOVIES_DETAIL: '/movies/[id]',
+  MOVIES_SEARCH: '/movies/search',
 };
 
 export const LIMITS = {

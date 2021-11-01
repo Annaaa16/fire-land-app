@@ -7,8 +7,8 @@ import { HYDRATE } from 'next-redux-wrapper';
 import { HydrateResponse } from '@/models/common';
 import {
   MoviesInitState,
-  DefaultMovie,
-  DefaultTvShow,
+  DefaultMovies,
+  DefaultTvShows,
   MovieCategoryKeys,
   TvShowCategoryKeys,
 } from '@/models/movies';
@@ -19,7 +19,9 @@ import {
   TmdbGetTvShowCreditsResponse,
   TmdbGetTvShowsResponse,
   TmdbGetTvShowVideosResponse,
+  TmdbMovie,
   TmdbMovieDetail,
+  TmdbTvShow,
   TmdbTvShowDetail,
 } from '@/models/tmdb';
 
@@ -39,14 +41,14 @@ export const tvShowCategoryKeys: TvShowCategoryKeys = {
   similar: 'similar',
 };
 
-const defaultMovies: DefaultMovie = {
+const defaultMovies: DefaultMovies = {
   page: 0,
   movies: [],
   totalMovies: 0,
   totalPages: 0,
 };
 
-const defaultTvShows: DefaultTvShow = {
+const defaultTvShows: DefaultTvShows = {
   page: 0,
   tvShows: [],
   totalTvShows: 0,
@@ -77,6 +79,55 @@ const initialState: MoviesInitState = {
     videos: [],
     genres: [],
   },
+  searchedMovies: defaultMovies,
+};
+
+const filterMovies = (movies: TmdbMovie[]) => {
+  return movies.map((movie) => {
+    const {
+      id,
+      backdrop_path,
+      overview,
+      title,
+      vote_count,
+      release_date,
+      popularity,
+    } = movie;
+
+    return {
+      id: id.toString(),
+      image: backdrop_path,
+      overview,
+      title,
+      voteCount: vote_count,
+      releaseDate: release_date,
+      popularity,
+    };
+  });
+};
+
+const filterTvShows = (tvShows: TmdbTvShow[]) => {
+  return tvShows.map((show) => {
+    const {
+      id,
+      backdrop_path,
+      overview,
+      name,
+      vote_count,
+      first_air_date,
+      popularity,
+    } = show;
+
+    return {
+      id: id.toString(),
+      image: backdrop_path,
+      overview,
+      title: name,
+      voteCount: vote_count,
+      releaseDate: first_air_date,
+      popularity,
+    };
+  });
 };
 
 const moviesSlice = createSlice({
@@ -94,31 +145,9 @@ const moviesSlice = createSlice({
       const { moviesType, movies } = action.payload;
       const { page, results, total_pages, total_results } = movies;
 
-      const filteredMovies = results.map((movie) => {
-        const {
-          id,
-          backdrop_path,
-          overview,
-          title,
-          vote_count,
-          release_date,
-          popularity,
-        } = movie;
-
-        return {
-          id: id.toString(),
-          image: backdrop_path,
-          overview,
-          title,
-          voteCount: vote_count,
-          releaseDate: release_date,
-          popularity,
-        };
-      });
-
       state.movieCategories[moviesType] = {
         page,
-        movies: filteredMovies,
+        movies: filterMovies(results),
         totalMovies: total_results,
         totalPages: total_pages,
       };
@@ -163,6 +192,35 @@ const moviesSlice = createSlice({
       };
     },
 
+    setSearchedMovies: (
+      state,
+      action: PayloadAction<TmdbGetMoviesResponse>
+    ) => {
+      const { page, results, total_pages, total_results } = action.payload;
+
+      return {
+        ...state,
+        searchedMovies: {
+          page,
+          movies: [...state.searchedMovies.movies, ...filterMovies(results)],
+          totalPages: total_pages,
+          totalMovies: total_results,
+        },
+      };
+    },
+
+    clearSearchedMovies: (state) => {
+      return {
+        ...state,
+        searchedMovies: {
+          page: 0,
+          movies: [],
+          totalPages: 0,
+          totalMovies: 0,
+        },
+      };
+    },
+
     // === Tv Shows ===
     setTvShows: (
       state,
@@ -174,31 +232,9 @@ const moviesSlice = createSlice({
       const { tvShowsType, tvShows } = action.payload;
       const { page, results, total_pages, total_results } = tvShows;
 
-      const filteredTvShows = results.map((show) => {
-        const {
-          id,
-          backdrop_path,
-          overview,
-          name,
-          vote_count,
-          first_air_date,
-          popularity,
-        } = show;
-
-        return {
-          id: id.toString(),
-          image: backdrop_path,
-          overview,
-          title: name,
-          voteCount: vote_count,
-          releaseDate: first_air_date,
-          popularity,
-        };
-      });
-
       state.tvShowCategories[tvShowsType] = {
         page,
-        tvShows: filteredTvShows,
+        tvShows: filterTvShows(results),
         totalTvShows: total_results,
         totalPages: total_pages,
       };
@@ -250,7 +286,13 @@ const moviesSlice = createSlice({
   },
 });
 
-export const { setMovies, setMovieDetail, setTvShows, setTvShowDetail } =
-  moviesSlice.actions;
+export const {
+  setMovies,
+  setMovieDetail,
+  setTvShows,
+  setTvShowDetail,
+  setSearchedMovies,
+  clearSearchedMovies,
+} = moviesSlice.actions;
 
 export default moviesSlice.reducer;

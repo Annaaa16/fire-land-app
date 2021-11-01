@@ -3,9 +3,12 @@ import { useEffect } from 'react';
 // types
 import { GetServerSideProps } from 'next';
 
-import { COLORS } from '@/constants';
-import { movieCategoryKeys, setMovies } from '@/redux/slices/moviesSlice';
-import { moviesApiClient } from '@/apis/moviesApi';
+import {
+  clearSearchedMovies,
+  movieCategoryKeys,
+  setMovies,
+} from '@/redux/slices/moviesSlice';
+import { moviesApi } from '@/apis/moviesApi';
 import { wrapper } from '@/redux/store';
 import { tmdbMoviesEndpoints } from '@/configs/tmdb';
 import { useMoviesSelector } from '@/redux/selectors';
@@ -14,7 +17,7 @@ import { getTvShows } from '@/redux/actions/movies';
 import { tmdbCategories, tvShowsEndpoints } from '@/configs/tmdb';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
-import Meta from '@/layouts/Meta';
+import SearchField from '@/components/SearchField';
 import MainLayout from '@/features/Movies/layouts/MainLayout';
 import MoviesItemList from '@/features/Movies/components/MoviesItemList';
 import MoviesHeroSlider from '@/features/Movies/components/MoviesHeroSlider';
@@ -52,44 +55,44 @@ function Movies() {
         tvShowsType: tvShowCategoryKeys.onTheAir,
       })
     );
+    dispatch(clearSearchedMovies());
   }, [dispatch]);
 
   return (
-    <Meta title='Movies' backgroundColor={COLORS.DARK_BODY}>
-      <MainLayout>
-        <MoviesHeroSlider />
-        <MoviesItemList
-          title='Upcoming Movies'
-          movies={movieCategories.upcoming.movies}
-          category={tmdbCategories.movie}
-        />
-        <MoviesItemList
-          title='Top Rated'
-          movies={movieCategories.topRated.movies}
-          category={tmdbCategories.movie}
-        />
-        <MoviesItemList
-          title='Now Playing'
-          movies={movieCategories.nowPlaying.movies}
-          category={tmdbCategories.movie}
-        />
-        <MoviesItemList
-          title='TV Shows Popular'
-          movies={tvShowCategories.popular.tvShows}
-          category={tmdbCategories.tv}
-        />
-        <MoviesItemList
-          title='TV Shows Airing Today'
-          movies={tvShowCategories.airingToday.tvShows}
-          category={tmdbCategories.tv}
-        />
-        <MoviesItemList
-          title='TV Shows On The Air'
-          movies={tvShowCategories.onTheAir.tvShows}
-          category={tmdbCategories.tv}
-        />
-      </MainLayout>
-    </Meta>
+    <MainLayout title='Movies'>
+      <MoviesHeroSlider />
+      <SearchField />
+      <MoviesItemList
+        title='Upcoming Movies'
+        movies={movieCategories.upcoming.movies}
+        category={tmdbCategories.movie}
+      />
+      <MoviesItemList
+        title='Top Rated'
+        movies={movieCategories.topRated.movies}
+        category={tmdbCategories.movie}
+      />
+      <MoviesItemList
+        title='Now Playing'
+        movies={movieCategories.nowPlaying.movies}
+        category={tmdbCategories.movie}
+      />
+      <MoviesItemList
+        title='TV Shows Popular'
+        movies={tvShowCategories.popular.tvShows}
+        category={tmdbCategories.tv}
+      />
+      <MoviesItemList
+        title='TV Shows Airing Today'
+        movies={tvShowCategories.airingToday.tvShows}
+        category={tmdbCategories.tv}
+      />
+      <MoviesItemList
+        title='TV Shows On The Air'
+        movies={tvShowCategories.onTheAir.tvShows}
+        category={tmdbCategories.tv}
+      />
+    </MainLayout>
   );
 }
 
@@ -97,7 +100,7 @@ export default Movies;
 
 export const getServerSideProps: GetServerSideProps =
   wrapper.getServerSideProps((store) => async (ctx) => {
-    const { getMovies } = moviesApiClient();
+    const { getMovies } = moviesApi();
 
     const { popular, upcoming, topRated, nowPlaying } = tmdbMoviesEndpoints;
 

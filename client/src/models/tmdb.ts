@@ -56,6 +56,16 @@ export interface TmdbVideo {
   published_at: string;
 }
 
+export interface TmdbSearchQuery {
+  query: string;
+  language?: string;
+  page?: number;
+  include_adult?: boolean;
+  region?: string;
+  year?: number;
+  primary_release_year?: number;
+}
+
 // === Movies ===
 export interface TmdbMovie {
   readonly id: number;
