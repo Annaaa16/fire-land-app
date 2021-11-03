@@ -22,7 +22,7 @@ export const usersApiClient = () => {
 
         return response;
       } catch (error) {
-        notifyAxiosError('Get current user', error as AxiosError);
+        return notifyAxiosError('Get current user', error as AxiosError);
       }
     },
 
@@ -34,7 +34,7 @@ export const usersApiClient = () => {
 
         return response;
       } catch (error) {
-        notifyAxiosError('Get user by ID', error as AxiosError);
+        return notifyAxiosError('Get user by ID', error as AxiosError);
       }
     },
 
@@ -46,7 +46,7 @@ export const usersApiClient = () => {
 
         return response;
       } catch (error) {
-        notifyAxiosError('Follow user', error as AxiosError);
+        return notifyAxiosError('Follow user', error as AxiosError);
       }
     },
 
@@ -58,25 +58,7 @@ export const usersApiClient = () => {
 
         return response;
       } catch (error) {
-        notifyAxiosError('Unfollow user', error as AxiosError);
-      }
-    },
-  };
-};
-
-export const usersApiServer = (accessToken: string) => {
-  const axiosInstance = axiosServer(accessToken);
-
-  return {
-    getCurrentUser: async () => {
-      try {
-        const response = await axiosInstance.get<GetUserResponse>(
-          '/users/current'
-        );
-
-        return response;
-      } catch (error) {
-        notifyAxiosError('Get current user', error as AxiosError);
+        return notifyAxiosError('Unfollow user', error as AxiosError);
       }
     },
   };

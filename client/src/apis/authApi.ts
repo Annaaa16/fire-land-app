@@ -63,7 +63,7 @@ export const authApiServer = (accessToken: string) => {
 
         return response;
       } catch (error) {
-        notifyAxiosError('Verify token', error as AxiosError);
+        return notifyAxiosError('Verify token', error as AxiosError);
       }
     },
 
@@ -78,7 +78,7 @@ export const authApiServer = (accessToken: string) => {
 
         return response;
       } catch (error) {
-        notifyAxiosError('Get token', error as AxiosError);
+        return notifyAxiosError('Get token', error as AxiosError);
       }
     },
   };
