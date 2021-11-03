@@ -24,9 +24,10 @@ export const messagesApiClient = () => {
 
         return response;
       } catch (error) {
-        notifyAxiosError('Create message', error as AxiosError);
+        return notifyAxiosError('Create message', error as AxiosError);
       }
     },
+
     getMessages: async (conversationId: string) => {
       try {
         const response = await axiosInstance.get<GetMessagesResponse>(
@@ -35,7 +36,7 @@ export const messagesApiClient = () => {
 
         return response;
       } catch (error) {
-        notifyAxiosError('Get messages', error as AxiosError);
+        return notifyAxiosError('Get messages', error as AxiosError);
       }
     },
   };

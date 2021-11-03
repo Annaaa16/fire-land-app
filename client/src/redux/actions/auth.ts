@@ -26,15 +26,3 @@ export const registerUser = {
     type: 'registerUser/failure',
   }),
 };
-
-export const getCurrentUser = {
-  request: () => ({
-    type: 'getCurrentUser/request',
-  }),
-  success: () => ({
-    type: 'getCurrentUser/success',
-  }),
-  failure: () => ({
-    type: 'getCurrentUser/failure',
-  }),
-};
