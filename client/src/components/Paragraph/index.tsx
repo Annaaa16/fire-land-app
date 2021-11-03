@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useLayoutEffect } from 'react';
 
 // clsx
 import clsx from 'clsx';
@@ -15,11 +15,12 @@ function Paragraph(props: ParagraphProps) {
   const { lengthInit, children, bodyClass, paragraphClass, buttonClass } =
     props;
 
-  const [isMore, setIsMore] = useState<boolean>(lengthInit < children.length);
   const [trimmedText, setTrimmedText] = useState<string>('');
+  const [isMore, setIsMore] = useState<boolean>(false);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setTrimmedText(children.slice(0, lengthInit));
+    setIsMore(lengthInit < children.length);
   }, [children, lengthInit]);
 
   return (

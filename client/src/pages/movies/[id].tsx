@@ -117,7 +117,7 @@ function Detail() {
         {router.query.category && (
           <MoviesItemList
             title='Similar'
-            movies={
+            items={
               router.query.category === movie
                 ? movieCategories.similar.movies
                 : tvShowCategories.similar.tvShows
@@ -164,7 +164,7 @@ export const getServerSideProps: GetServerSideProps =
           })
         );
       } catch (error) {
-        notifyAxiosError('Get movie detail', error as AxiosError);
+        return notifyAxiosError('Get movie detail', error as AxiosError);
       }
     } else if (query.category === tv) {
       try {
@@ -182,7 +182,7 @@ export const getServerSideProps: GetServerSideProps =
           })
         );
       } catch (error) {
-        notifyAxiosError('Get TV Shows detail', error as AxiosError);
+        return notifyAxiosError('Get TV Shows detail', error as AxiosError);
       }
     }
 

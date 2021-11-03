@@ -15,13 +15,13 @@ import { tmdbCategories } from '@/configs/tmdb';
 
 import MoviesItem from '../MoviesItem';
 
-interface MoviesGenreList {
+interface MoviesItemListProps {
   title: string;
-  movies: Movie[];
+  items: Movie[];
   category: keyof typeof tmdbCategories;
 }
 
-function MoviesGenreList({ title, movies, category }: MoviesGenreList) {
+function MoviesItemList({ title, items, category }: MoviesItemListProps) {
   const swiperConfig = {
     breakpoints: {
       [BREAKPOINTS.PHONE]: {
@@ -41,7 +41,7 @@ function MoviesGenreList({ title, movies, category }: MoviesGenreList) {
 
   return (
     <>
-      {movies.length > 0 && (
+      {items.length > 0 && (
         <section className={clsx('container mb-14')}>
           <div className={clsx('mb-6')}>
             <div
@@ -61,11 +61,11 @@ function MoviesGenreList({ title, movies, category }: MoviesGenreList) {
               <KeyboardArrowRightIcon />
             </div>
             <Swiper {...swiperConfig}>
-              {movies.map(
-                (movie) =>
-                  movie.image && (
-                    <SwiperSlide key={movie.id}>
-                      <MoviesItem movie={movie} category={category} />
+              {items.map(
+                (item) =>
+                  item.image && (
+                    <SwiperSlide key={item.id}>
+                      <MoviesItem movie={item} category={category} />
                     </SwiperSlide>
                   )
               )}
@@ -77,4 +77,4 @@ function MoviesGenreList({ title, movies, category }: MoviesGenreList) {
   );
 }
 
-export default MoviesGenreList;
+export default MoviesItemList;

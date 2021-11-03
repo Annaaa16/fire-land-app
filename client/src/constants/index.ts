@@ -6,10 +6,6 @@ export const API_URLS = {
   CLOUDINARY: 'https://res.cloudinary.com/drxhgl7xe/image/upload',
 };
 
-export const SECRETS = {
-  ACCESS_TOKEN: process.env.NEXT_PUBLIC_ACCESS_TOKEN_SECRET,
-};
-
 export const TMDB = {
   API_KEY: '0f36693825733051b8551c9e5b42c008',
   IMAGE: 'https://image.tmdb.org/t/p',

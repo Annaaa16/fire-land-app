@@ -64,32 +64,32 @@ function Movies() {
       <SearchField />
       <MoviesItemList
         title='Upcoming Movies'
-        movies={movieCategories.upcoming.movies}
+        items={movieCategories.upcoming.movies}
         category={tmdbCategories.movie}
       />
       <MoviesItemList
         title='Top Rated'
-        movies={movieCategories.topRated.movies}
+        items={movieCategories.topRated.movies}
         category={tmdbCategories.movie}
       />
       <MoviesItemList
         title='Now Playing'
-        movies={movieCategories.nowPlaying.movies}
+        items={movieCategories.nowPlaying.movies}
         category={tmdbCategories.movie}
       />
       <MoviesItemList
         title='TV Shows Popular'
-        movies={tvShowCategories.popular.tvShows}
+        items={tvShowCategories.popular.tvShows}
         category={tmdbCategories.tv}
       />
       <MoviesItemList
         title='TV Shows Airing Today'
-        movies={tvShowCategories.airingToday.tvShows}
+        items={tvShowCategories.airingToday.tvShows}
         category={tmdbCategories.tv}
       />
       <MoviesItemList
         title='TV Shows On The Air'
-        movies={tvShowCategories.onTheAir.tvShows}
+        items={tvShowCategories.onTheAir.tvShows}
         category={tmdbCategories.tv}
       />
     </MainLayout>
