@@ -1,26 +1,22 @@
-// jsonwebtoken
-import jwt from 'jsonwebtoken';
+// jwt decode
+import jwt_decode from 'jwt-decode';
 
-import { SECRETS } from '@/constants';
+// types
+import { JwtPayload } from 'jwt-decode';
 
 const token = {
   verifyToken: (accessToken: string) => {
-    if (!accessToken) {
-      return { isValid: false, isExpired: false };
-    }
+    try {
+      const decoded: JwtPayload = jwt_decode(accessToken);
 
-    return jwt.verify(accessToken, SECRETS.ACCESS_TOKEN!, (error, decoded) => {
-      if (error) {
-        return { isValid: false, isExpired: false };
+      if (decoded.exp) {
+        const isExpired = new Date().getTime() >= decoded.exp * 1000;
+
+        return { isExpired };
       }
-
-      const tokenExp = decoded?.tokenExp;
-
-      // Expired token
-      return new Date().getTime() >= new Date(tokenExp).getTime()
-        ? { isValid: true, isExpired: true }
-        : { isValid: true, isExpired: false };
-    });
+    } catch (error) {
+      return { isExpired: true };
+    }
   },
 };
 

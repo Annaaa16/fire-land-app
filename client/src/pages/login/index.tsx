@@ -41,7 +41,9 @@ function Login() {
   };
 
   useEffect(() => {
-    if (isAuthenticated) router.push(PATHS.NEWSFEED);
+    if (isAuthenticated) {
+      router.push(PATHS.NEWSFEED);
+    }
   }, [isAuthenticated, router]);
 
   return (

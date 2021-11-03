@@ -39,7 +39,9 @@ function Register() {
   };
 
   useEffect(() => {
-    if (success) router.push(PATHS.LOGIN);
+    if (success) {
+      router.push(PATHS.LOGIN);
+    }
   }, [success, router]);
 
   return (

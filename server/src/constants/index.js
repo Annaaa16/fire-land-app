@@ -5,7 +5,7 @@ exports.MONGO_URI = `mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.M
 exports.TOKENS = {
   ACCESS_TOKEN_SECRET: process.env.ACCESS_TOKEN_SECRET,
   REFRESH_TOKEN_SECRET: process.env.REFRESH_TOKEN_SECRET,
-  ACCESS_TOKEN_EXP: 7 * 24 * 60 * 60 * 1000, // 7 days (by milliseconds)
+  ACCESS_TOKEN_EXP: 7 * 24 * 60 * 60, // 7 days (by seconds)
 };
 
 exports.CLOUDINARY = {

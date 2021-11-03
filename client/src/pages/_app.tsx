@@ -12,7 +12,7 @@ import { ThemeProvider } from '@mui/material';
 import { AppContext, AppInitialProps } from 'next/app';
 import { SagaStore } from '@/models/store';
 
-import { redirect } from '@/helpers/server';
+import { handleAuthenticate } from '@/helpers/server';
 import store, { wrapper } from '@/redux/store';
 import theme from '@/configs/materialUI';
 
@@ -23,10 +23,12 @@ import '../styles/globals.scss';
 import 'overlayscrollbars/css/OverlayScrollbars.css';
 import 'swiper/css';
 
-class WrappedApp extends App<AppInitialProps> {
+class WrappedApp extends App<
+  AppInitialProps & { isAuthenticated: boolean; newToken: string }
+> {
   static getInitialProps = async ({ Component, ctx }: AppContext) => {
     // Init check
-    await redirect(ctx);
+    const { isAuthenticated, newToken } = await handleAuthenticate(ctx);
 
     // Wait for all page actions to dispatch
     if (ctx.req) {
@@ -44,17 +46,19 @@ class WrappedApp extends App<AppInitialProps> {
     // Return props
     return {
       pageProps,
+      isAuthenticated,
+      newToken,
     };
   };
 
   render() {
-    const { Component, pageProps } = this.props;
+    const { Component, pageProps, isAuthenticated, newToken } = this.props;
 
     SwiperCore.use([Autoplay]);
 
     return (
       <Provider store={store}>
-        <GlobalProvider>
+        <GlobalProvider isAuthenticated={isAuthenticated} newToken={newToken}>
           <ThemeProvider theme={theme}>
             <Component {...pageProps} />
           </ThemeProvider>

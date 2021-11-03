@@ -4,9 +4,7 @@ import { createContext, useContext, useState, useEffect } from 'react';
 import { ReactNode } from 'react';
 
 import { LOCAL_STORAGE } from '@/constants';
-import { usersApiClient } from '@/apis/usersApi';
-import { setAuthStatus } from '@/redux/slices/authSlice';
-import { setUser } from '@/redux/slices/usersSlice';
+import { getCurrentUser } from '@/redux/actions/users';
 import cookies from '@/helpers/cookies';
 import token from '@/helpers/token';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
@@ -22,6 +20,8 @@ export interface GlobalInitContext {
 
 interface GlobalProviderProps {
   children: ReactNode;
+  isAuthenticated: boolean;
+  newToken: string;
 }
 
 const initialState: GlobalInitContext = {
@@ -33,7 +33,11 @@ const initialState: GlobalInitContext = {
 
 export const GlobalContext = createContext(initialState);
 
-function GlobalProvider({ children }: GlobalProviderProps) {
+function GlobalProvider({
+  children,
+  isAuthenticated,
+  newToken,
+}: GlobalProviderProps) {
   const useLayoutEffect = useIsomorphicLayoutEffect();
 
   const { storedValue: theme, setValue: toggleTheme } = useLocalStorage(
@@ -50,24 +54,22 @@ function GlobalProvider({ children }: GlobalProviderProps) {
     setIsShowSenderArea(isOpen);
   };
 
+  // Set new token for client
+  if (newToken) {
+    cookies.setAccessToken(newToken);
+  }
+
   // Set current user
   useEffect(() => {
     const accessToken = cookies.getAccessToken();
-    const { isValid, isExpired } = token.verifyToken(accessToken!)!;
+    const { isExpired } = token.verifyToken(accessToken!)!;
 
-    if (isValid && !isExpired) {
-      (async () => {
-        const { getCurrentUser } = usersApiClient();
-
-        const response = await getCurrentUser();
-
-        dispatch(setAuthStatus(response!.data));
-        dispatch(setUser(response!.data));
-      })();
+    if (isAuthenticated && !isExpired) {
+      dispatch(getCurrentUser.request());
     } else {
       cookies.removeAll();
     }
-  }, [dispatch]);
+  }, [isAuthenticated, newToken, dispatch]);
 
   const value = {
     isShowSenderArea,
