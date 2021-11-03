@@ -14,13 +14,13 @@ function HeaderLeft() {
     <div className={clsx('flex items-center')}>
       <div
         onClick={() => router.push(PATHS.MOVIES)}
-        className={clsx('w-11 md:w-12 mr-6', 'cursor-pointer')}>
+        className={clsx('w-11 mr-6', 'cursor-pointer')}>
         <img src={logo.src} alt='Logo' className={clsx('w-full h-full')} />
       </div>
       <ul
         className={clsx(
           'fixed md:static bottom-0 left-0 right-0',
-          'flex items-center py-5 px-3 overflow-x-auto shadow-lg md:shadow-none scrollbar-none',
+          'flex items-center py-5 px-3 overflow-x-auto scrollbar-none',
           'bg-dk-body md:bg-transparent'
         )}>
         <li
