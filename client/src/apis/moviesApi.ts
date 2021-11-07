@@ -30,7 +30,7 @@ export const moviesApi = () => {
         );
         return response;
       } catch (error) {
-        return notifyAxiosError('Get movies', error as AxiosError);
+        notifyAxiosError('Get movies', error as AxiosError);
       }
     },
 
@@ -44,7 +44,7 @@ export const moviesApi = () => {
         console.log('response', response.data);
         return response;
       } catch (error) {
-        return notifyAxiosError('Get similar movies', error as AxiosError);
+        notifyAxiosError('Get similar movies', error as AxiosError);
       }
     },
 
@@ -57,7 +57,7 @@ export const moviesApi = () => {
 
         return response;
       } catch (error) {
-        return notifyAxiosError('Get movie detail', error as AxiosError);
+        notifyAxiosError('Get movie detail', error as AxiosError);
       }
     },
 
@@ -70,7 +70,7 @@ export const moviesApi = () => {
 
         return response;
       } catch (error) {
-        return notifyAxiosError('Get movie casts', error as AxiosError);
+        notifyAxiosError('Get movie casts', error as AxiosError);
       }
     },
 
@@ -83,7 +83,7 @@ export const moviesApi = () => {
 
         return response;
       } catch (error) {
-        return notifyAxiosError('Get movie videos', error as AxiosError);
+        notifyAxiosError('Get movie videos', error as AxiosError);
       }
     },
 
@@ -96,7 +96,7 @@ export const moviesApi = () => {
 
         return response;
       } catch (error) {
-        return notifyAxiosError('Search movie', error as AxiosError);
+        notifyAxiosError('Search movie', error as AxiosError);
       }
     },
 
@@ -110,7 +110,7 @@ export const moviesApi = () => {
 
         return response;
       } catch (error) {
-        return notifyAxiosError('Get shows', error as AxiosError);
+        notifyAxiosError('Get shows', error as AxiosError);
       }
     },
 
@@ -123,7 +123,7 @@ export const moviesApi = () => {
 
         return response;
       } catch (error) {
-        return notifyAxiosError('Get similar shows', error as AxiosError);
+        notifyAxiosError('Get similar shows', error as AxiosError);
       }
     },
 
@@ -136,7 +136,7 @@ export const moviesApi = () => {
 
         return response;
       } catch (error) {
-        return notifyAxiosError('Get show detail', error as AxiosError);
+        notifyAxiosError('Get show detail', error as AxiosError);
       }
     },
 
@@ -149,7 +149,7 @@ export const moviesApi = () => {
 
         return response;
       } catch (error) {
-        return notifyAxiosError('Get show casts', error as AxiosError);
+        notifyAxiosError('Get show casts', error as AxiosError);
       }
     },
 
@@ -162,7 +162,7 @@ export const moviesApi = () => {
 
         return response;
       } catch (error) {
-        return notifyAxiosError('Get show videos', error as AxiosError);
+        notifyAxiosError('Get show videos', error as AxiosError);
       }
     },
   };

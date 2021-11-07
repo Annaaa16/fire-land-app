@@ -164,7 +164,7 @@ export const getServerSideProps: GetServerSideProps =
           })
         );
       } catch (error) {
-        return notifyAxiosError('Get movie detail', error as AxiosError);
+        notifyAxiosError('Get movie detail', error as AxiosError);
       }
     } else if (query.category === tv) {
       try {
@@ -182,7 +182,7 @@ export const getServerSideProps: GetServerSideProps =
           })
         );
       } catch (error) {
-        return notifyAxiosError('Get TV Shows detail', error as AxiosError);
+        notifyAxiosError('Get TV Shows detail', error as AxiosError);
       }
     }
 
