@@ -3,9 +3,10 @@ const jwt = require('jsonwebtoken');
 
 const User = require('../models/userModel');
 
-const { TOKENS } = require('../constants');
+const { COOKIES, TOKENS } = require('../constants');
 const { notifyServerError } = require('../helpers/notifyServerError');
-const getTokens = require('../helpers/getTokens');
+const { setTokens, getTokens } = require('../helpers/tokens');
+const cookieOptions = require('../configs/cookieOptionsConfig');
 
 const authController = {};
 
@@ -78,62 +79,60 @@ authController.login = async (req, res) => {
         .json({ success: false, message: 'Incorrect username or password' });
     }
 
+    setTokens.accessToken(res, user._id);
+    setTokens.refreshToken(res, user._id);
+
     res.json({
       success: true,
       message: 'User has successfully logged in',
       user,
-      accessToken: getTokens.accessToken(user._id),
-      refreshToken: getTokens.refreshToken(user._id),
     });
   } catch (error) {
     notifyServerError(res, error);
   }
 };
 
-authController.getAccessToken = (req, res) => {
-  const { refreshToken } = req.body;
+authController.logout = (req, res) => {
+  res.clearCookie(COOKIES.ACCESS_TOKEN_KEY);
+  res.clearCookie(COOKIES.REFRESH_TOKEN_KEY);
 
-  // Empty refresh token
-  if (!refreshToken) {
-    res
-      .status(401)
-      .json({ success: false, message: 'Refresh token not found' });
-  }
-
-  try {
-    jwt.verify(refreshToken, TOKENS.REFRESH_TOKEN_SECRET, (error, decoded) => {
-      if (error) {
-        res
-          .status(401)
-          .json({ success: false, message: 'Invalid refresh token' });
-      }
-
-      // Sign with userId after decoded user param
-      res.json({
-        success: true,
-        accessToken: getTokens.accessToken(decoded?.userId),
-      });
-    });
-  } catch (error) {
-    notifyServerError(res, error);
-  }
-};
-
-authController.verifyToken = (req, res) => {
-  const { accessToken } = req.body;
-
-  // Empty access token
-  if (!accessToken) {
-    res.status(401).json({ success: false, message: 'Access token not found' });
-  }
-
-  jwt.verify(accessToken, TOKENS.ACCESS_TOKEN_SECRET, (error) => {
-    if (error) {
-      res.status(401).json({ success: false, message: 'Token is expired' });
-    }
-
-    res.json({ success: true, message: 'Valid access token' });
+  res.json({
+    success: true,
+    message: 'User has successfully logged out',
   });
+};
+
+authController.refreshToken = (req, res) => {
+  res.json({
+    success: true,
+    message: 'Refresh token successful',
+    accessToken: getTokens.accessToken(req.userId),
+    cookieOptions,
+  });
+};
+
+authController.verifyTokens = (req, res) => {
+  const cookies = req.cookies;
+
+  let success = true;
+
+  if (!cookies?.access_token || !cookies?.refresh_token) {
+    return res.status(401).json({ success: false, message: 'Token not found' });
+  }
+
+  jwt.verify(cookies.access_token, TOKENS.ACCESS_TOKEN_SECRET, (error) => {
+    if (error && !error.expiredAt) {
+      success = false;
+    }
+  });
+
+  jwt.verify(cookies.refresh_token, TOKENS.REFRESH_TOKEN_SECRET, (error) => {
+    if (error && !error.expiredAt) {
+      success = false;
+    }
+  });
+
+  res.json({ success, message: 'Valid tokens' });
 };
 
 module.exports = authController;

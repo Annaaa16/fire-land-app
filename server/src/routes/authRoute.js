@@ -15,14 +15,19 @@ router.post('/register', authController.register);
 // @access Public
 router.post('/login', authController.login);
 
-// @route POST api/auth/token
+// @route POST api/auth/logout
+// @desc Log out user
+// @access Public
+router.get('/logout', authController.logout);
+
+// @route GET api/auth/refresh-token
 // @desc Generate new access token
 // @access Private
-router.post('/token', verifyToken, authController.getAccessToken);
+router.get('/refresh-token', verifyToken, authController.refreshToken);
 
-// @route POST api/auth/verify-token
+// @route GET api/auth/verify-token
 // @desc Validate access token
-// @access Private
-router.post('/verify-token', verifyToken, authController.verifyToken);
+// @access Public
+router.get('/verify-tokens', authController.verifyTokens);
 
 module.exports = router;

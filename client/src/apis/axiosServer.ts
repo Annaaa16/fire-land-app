@@ -3,33 +3,37 @@ import axios from 'axios';
 // query string
 import queryString from 'query-string';
 
-import { API_URLS } from '@/constants';
+// types
+import { GetServerSidePropsContext, NextPageContext } from 'next';
 
-export const axiosServer = (accessToken?: string) => {
+import { API_URLS } from '@/constants';
+import tokens from '@/helpers/tokens';
+
+export const axiosServer = (
+  ctx: GetServerSidePropsContext | NextPageContext
+) => {
   const axiosInstance = axios.create({
     baseURL: API_URLS.BASE,
     headers: {
       'content-type': 'application/json',
+      Cookie: tokens.covertTokenObjectToString(ctx),
     },
-    paramsSerializer: (params) => {
-      return queryString.stringify(params);
-    },
+    withCredentials: true,
+    paramsSerializer: (params) => queryString.stringify(params),
   });
 
   axiosInstance.interceptors.request.use((config) => {
-    if (accessToken) {
-      config.headers.Authorization = `Bearer ${accessToken}`;
-    }
-
     return config;
   });
 
   axiosInstance.interceptors.response.use(
     (response) => {
-      return response;
+      if (response && response.data) {
+        return response;
+      }
     },
     async (error) => {
-      return Promise.reject(error);
+      throw error;
     }
   );
 

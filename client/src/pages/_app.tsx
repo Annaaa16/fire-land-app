@@ -11,8 +11,9 @@ import { ThemeProvider } from '@mui/material';
 // types
 import { AppContext, AppInitialProps } from 'next/app';
 import { SagaStore } from '@/models/store';
+import { GetUserResponse } from '@/models/users';
 
-import { handleAuthenticate } from '@/helpers/server';
+import { handleAuthentication } from '@/helpers/server';
 import store, { wrapper } from '@/redux/store';
 import theme from '@/configs/materialUI';
 
@@ -24,11 +25,13 @@ import 'overlayscrollbars/css/OverlayScrollbars.css';
 import 'swiper/css';
 
 class WrappedApp extends App<
-  AppInitialProps & { isAuthenticated: boolean; newToken: string }
+  AppInitialProps & { currentUserResponse: GetUserResponse }
 > {
   static getInitialProps = async ({ Component, ctx }: AppContext) => {
     // Init check
-    const { isAuthenticated, newToken } = await handleAuthenticate(ctx);
+    const currentUserResponse = await handleAuthentication(ctx);
+
+    // console.log('getInitialProps =>', ctx.req);
 
     // Wait for all page actions to dispatch
     if (ctx.req) {
@@ -44,21 +47,17 @@ class WrappedApp extends App<
     };
 
     // Return props
-    return {
-      pageProps,
-      isAuthenticated,
-      newToken,
-    };
+    return { pageProps, currentUserResponse };
   };
 
   render() {
-    const { Component, pageProps, isAuthenticated, newToken } = this.props;
+    const { Component, pageProps, currentUserResponse } = this.props;
 
     SwiperCore.use([Autoplay]);
 
     return (
       <Provider store={store}>
-        <GlobalProvider isAuthenticated={isAuthenticated} newToken={newToken}>
+        <GlobalProvider currentUserResponse={currentUserResponse}>
           <ThemeProvider theme={theme}>
             <Component {...pageProps} />
           </ThemeProvider>

@@ -26,12 +26,6 @@ export interface RegisterFormData {
 }
 
 // === Responses ===
-export interface GetUserResponse {
-  success: boolean;
-  message: string;
-  user: User;
-}
-
 export interface LoginResponse {
   success: boolean;
   message: string;
@@ -48,4 +42,11 @@ export interface RegisterResponse {
 export interface GetTokenResponse {
   success: boolean;
   accessToken: string;
+}
+
+export interface RefreshTokenResponse {
+  success: boolean;
+  message: string;
+  accessToken: string;
+  cookieOptions: any;
 }

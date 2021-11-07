@@ -14,6 +14,7 @@ export const TMDB = {
 export const COOKIES = {
   ACCESS_TOKEN_KEY: 'access_token',
   REFRESH_TOKEN_KEY: 'refresh_token',
+  PREV_PATH_KEY: 'prev_path',
 };
 
 export const LOCAL_STORAGE = {

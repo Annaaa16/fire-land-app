@@ -1,26 +1,45 @@
 const jwt = require('jsonwebtoken');
 
-const { TOKENS } = require('../constants');
+const { TOKENS, COOKIES } = require('../constants');
+const { setTokens } = require('../helpers/tokens');
 
 const verifyToken = (req, res, next) => {
-  const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
+  const { access_token, refresh_token } = req.cookies;
 
-  if (!token) {
-    res
-      .status(401)
-      .json({ success: false, message: 'Header access token not found' });
+  if (!access_token || !refresh_token) {
+    res.status(401).json({ success: false, message: 'Token not found' });
   }
 
-  jwt.verify(token, TOKENS.ACCESS_TOKEN_SECRET, (error, decoded) => {
+  jwt.verify(access_token, TOKENS.ACCESS_TOKEN_SECRET, (error, decoded) => {
     if (error) {
-      res.status(401).json({ success: false, message: 'Invalid token' });
+      // Access token has expired
+      if (error.expiredAt) {
+        jwt.verify(
+          refresh_token,
+          TOKENS.REFRESH_TOKEN_SECRET,
+          (error, decoded) => {
+            if (error) {
+              res
+                .status(401)
+                .json({ success: false, message: 'Invalid refresh token' });
+            } else {
+              req.userId = decoded.userId;
+
+              res.clearCookie(COOKIES.ACCESS_TOKEN_KEY);
+              setTokens.accessToken(res, decoded.userId);
+
+              next();
+            }
+          }
+        );
+      } else {
+        res.status(401).json({ success: false, message: 'Invalid token' });
+      }
+    } else {
+      req.userId = decoded.userId;
+
+      next();
     }
-
-    // Sign with userId after decoded user param
-    req.userId = decoded.userId;
-
-    next();
   });
 };
 

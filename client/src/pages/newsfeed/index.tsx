@@ -24,6 +24,7 @@ import NewsFeedBanner from '@/features/NewsFeed/components/NewsFeedBanner';
 import NewsFeedMembers from '@/features/NewsFeed/components/NewsFeedSummary';
 import NewsFeedContent from '@/features/NewsFeed/components/NewsFeedContent';
 import NewsFeedWidgets from '@/features/NewsFeed/components/NewsFeedWidgets';
+import tokens from '@/helpers/tokens';
 
 function NewsFeed() {
   return (
@@ -54,15 +55,17 @@ export default NewsFeed;
 
 export const getServerSideProps: GetServerSideProps =
   wrapper.getServerSideProps((store) => async (ctx) => {
-    const { access_token } = parseCookies(ctx);
-    const { getPosts } = postsApiServer(access_token);
+    const { getPosts } = postsApiServer(ctx);
+    const { isRefreshTokenExpired, isFully } = tokens.checkTokenValid(ctx)!;
 
-    const response = (await getPosts({
-      page: 1,
-      limit: LIMITS.POSTS,
-    })) as AxiosResponse<GetPostsResponse>;
+    if (isFully && !isRefreshTokenExpired) {
+      const response = (await getPosts({
+        page: 1,
+        limit: LIMITS.POSTS,
+      })) as AxiosResponse<GetPostsResponse>;
 
-    store.dispatch(addFetchedPostList(response.data));
+      store.dispatch(addFetchedPostList(response.data));
+    }
 
     return {
       props: {},

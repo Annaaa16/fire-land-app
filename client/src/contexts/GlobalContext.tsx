@@ -1,15 +1,19 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import {
+  createContext,
+  useContext,
+  useLayoutEffect,
+  useState,
+  useEffect,
+} from 'react';
 
 // types
 import { ReactNode } from 'react';
+import { GetUserResponse } from '@/models/users';
 
 import { LOCAL_STORAGE } from '@/constants';
-import { getCurrentUser } from '@/redux/actions/users';
-import cookies from '@/helpers/cookies';
-import token from '@/helpers/token';
+import { setUser } from '@/redux/slices/usersSlice';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 import useLocalStorage from '@/hooks/useLocalStorage';
-import useIsomorphicLayoutEffect from '@/hooks/useIsomorphicLayoutEffect';
 
 export interface GlobalInitContext {
   isShowSenderArea: boolean;
@@ -20,8 +24,7 @@ export interface GlobalInitContext {
 
 interface GlobalProviderProps {
   children: ReactNode;
-  isAuthenticated: boolean;
-  newToken: string;
+  currentUserResponse?: GetUserResponse;
 }
 
 const initialState: GlobalInitContext = {
@@ -35,15 +38,12 @@ export const GlobalContext = createContext(initialState);
 
 function GlobalProvider({
   children,
-  isAuthenticated,
-  newToken,
+  currentUserResponse,
 }: GlobalProviderProps) {
-  const useLayoutEffect = useIsomorphicLayoutEffect();
-
   const { storedValue: theme, setValue: toggleTheme } = useLocalStorage(
     LOCAL_STORAGE.THEME_KEY,
     LOCAL_STORAGE.LIGHT_THEME_VALUE,
-    useLayoutEffect
+    typeof window !== 'undefined' ? useLayoutEffect : useEffect
   );
 
   const [isShowSenderArea, setIsShowSenderArea] = useState<boolean>(false);
@@ -54,22 +54,12 @@ function GlobalProvider({
     setIsShowSenderArea(isOpen);
   };
 
-  // Set new token for client
-  if (newToken) {
-    cookies.setAccessToken(newToken);
-  }
-
-  // Set current user
+  // Set current user for every page re-load
   useEffect(() => {
-    const accessToken = cookies.getAccessToken();
-    const { isExpired } = token.verifyToken(accessToken!)!;
-
-    if (isAuthenticated && !isExpired) {
-      dispatch(getCurrentUser.request());
-    } else {
-      cookies.removeAll();
+    if (currentUserResponse?.success) {
+      dispatch(setUser(currentUserResponse));
     }
-  }, [isAuthenticated, newToken, dispatch]);
+  }, [currentUserResponse, dispatch]);
 
   const value = {
     isShowSenderArea,

@@ -9,11 +9,9 @@ import {
 
 import { axiosClient } from './axiosClient';
 import { notifyAxiosError } from '@/helpers/notify';
-import cookies from '@/helpers/cookies';
 
 export const commentsApiClient = () => {
-  const refreshToken = cookies.getRefreshToken();
-  const axiosInstance = axiosClient(refreshToken);
+  const axiosInstance = axiosClient();
 
   return {
     createComment: async (payload: CreateComment) => {

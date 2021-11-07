@@ -1,3 +1,6 @@
+// types
+import { User } from './common';
+
 interface CurrentUser {
   readonly _id: string;
   username: string;
@@ -11,6 +14,12 @@ export interface UsersInitState {
 }
 
 // === Responses ===
+export interface GetUserResponse {
+  success: boolean;
+  message: string;
+  user: User;
+}
+
 export interface FollowResponse {
   success: boolean;
   message: string;

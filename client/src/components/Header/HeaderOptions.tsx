@@ -16,9 +16,13 @@ import Brightness4Icon from '@mui/icons-material/Brightness4';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 
+// types
+import { AxiosResponse } from 'axios';
+import { StatusResponse } from '@/models/common';
+
 import { LOCAL_STORAGE, PATHS } from '@/constants';
 import { useGlobalContext } from '@/contexts/GlobalContext';
-import cookies from '@/helpers/cookies';
+import { authApiClient } from '@/apis/authApi';
 
 function HeaderOptions() {
   const [isSetting, setIsSetting] = useState(false);
@@ -27,9 +31,14 @@ function HeaderOptions() {
 
   const { theme, toggleTheme } = useGlobalContext();
 
-  const handleLogout = () => {
-    cookies.removeAll();
-    router.push(PATHS.LOGIN);
+  const handleLogout = async () => {
+    const { logoutUser } = authApiClient();
+
+    const response = (await logoutUser()) as AxiosResponse<StatusResponse>;
+
+    if (response.data.success) {
+      router.push(PATHS.LOGIN);
+    }
   };
 
   const handleToggleTheme = () => {
