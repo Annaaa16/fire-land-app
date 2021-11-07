@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 
 // types
 import { GetServerSideProps } from 'next';
+import { TmdbGetMoviesResponse } from '@/models/tmdb';
 
 import {
   clearSearchedMovies,
@@ -141,7 +142,7 @@ export const getServerSideProps: GetServerSideProps =
       store.dispatch(
         setMovies({
           moviesType: getMovieType() as keyof typeof movieCategoryKeys,
-          movies: promise?.data!,
+          movies: promise?.data as TmdbGetMoviesResponse,
         })
       );
     });

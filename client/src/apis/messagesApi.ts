@@ -7,12 +7,10 @@ import {
 } from '@/models/messenger';
 
 import { axiosClient } from './axiosClient';
-import cookies from '@/helpers/cookies';
 import { notifyAxiosError } from '@/helpers/notify';
 
 export const messagesApiClient = () => {
-  const refreshToken = cookies.getRefreshToken();
-  const axiosInstance = axiosClient(refreshToken);
+  const axiosInstance = axiosClient();
 
   return {
     createMessage: async (messageData: MessageData) => {

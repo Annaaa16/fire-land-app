@@ -5,7 +5,7 @@ import clsx from 'clsx';
 
 // types
 import { Conversation } from '@/models/conversations';
-import { GetUserResponse } from '@/models/auth';
+import { GetUserResponse } from '@/models/users';
 
 import {
   setConversationId,
@@ -54,7 +54,7 @@ function ContactConversation({
       try {
         const response = await getUserById(friendId!);
 
-        setFriend(response!.data);
+        setFriend(response!.data as GetUserResponse);
       } catch (error) {
         console.log('Get friend error 👉', error);
       }

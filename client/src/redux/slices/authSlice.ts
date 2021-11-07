@@ -4,12 +4,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import _ from 'lodash';
 
 // types
-import {
-  AuthInitState,
-  GetUserResponse,
-  LoginResponse,
-  RegisterResponse,
-} from '@/models/auth';
+import { GetUserResponse } from '@/models/users';
+import { AuthInitState, LoginResponse, RegisterResponse } from '@/models/auth';
 
 export const initialState: AuthInitState = {
   authStatus: {

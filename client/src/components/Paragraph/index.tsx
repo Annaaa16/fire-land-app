@@ -1,4 +1,4 @@
-import { useState, useLayoutEffect } from 'react';
+import { useState, useLayoutEffect, useEffect } from 'react';
 
 // clsx
 import clsx from 'clsx';
@@ -18,7 +18,10 @@ function Paragraph(props: ParagraphProps) {
   const [trimmedText, setTrimmedText] = useState<string>('');
   const [isMore, setIsMore] = useState<boolean>(false);
 
-  useLayoutEffect(() => {
+  const useIsomorphicLayoutEffect =
+    typeof window !== 'undefined' ? useLayoutEffect : useEffect;
+
+  useIsomorphicLayoutEffect(() => {
     setTrimmedText(children.slice(0, lengthInit));
     setIsMore(lengthInit < children.length);
   }, [children, lengthInit]);

@@ -1,10 +1,11 @@
 // types
 import { AxiosError } from 'axios';
 import { StatusResponse } from '@/models/common';
+import { GetServerSidePropsContext, NextPageContext } from 'next';
 import {
-  GetTokenResponse,
   LoginFormData,
   LoginResponse,
+  RefreshTokenResponse,
   RegisterFormData,
   RegisterResponse,
 } from '@/models/auth';
@@ -12,27 +13,11 @@ import {
 import { axiosServer } from './axiosServer';
 import { axiosClient } from './axiosClient';
 import { notifyAxiosError } from '@/helpers/notify';
-import cookies from '@/helpers/cookies';
 
 export const authApiClient = () => {
-  const refreshToken = cookies.getRefreshToken();
-
-  const axiosInstance = axiosClient(refreshToken);
+  const axiosInstance = axiosClient();
 
   return {
-    loginUser: async (formData: LoginFormData) => {
-      try {
-        const response = await axiosInstance.post<LoginResponse>(
-          '/auth/login',
-          formData
-        );
-
-        return response;
-      } catch (error) {
-        return notifyAxiosError('Login user', error as AxiosError);
-      }
-    },
-
     registerUser: async (formData: RegisterFormData) => {
       try {
         const response = await axiosInstance.post<RegisterResponse>(
@@ -45,20 +30,44 @@ export const authApiClient = () => {
         return notifyAxiosError('Register user', error as AxiosError);
       }
     },
+
+    loginUser: async (formData: LoginFormData) => {
+      try {
+        const response = await axiosInstance.post<LoginResponse>(
+          '/auth/login',
+          formData
+        );
+        console.log('response', response.data);
+        return response;
+      } catch (error) {
+        return notifyAxiosError('Login user', error as AxiosError);
+      }
+    },
+
+    logoutUser: async () => {
+      try {
+        const response = await axiosInstance.get<StatusResponse>(
+          '/auth/logout'
+        );
+
+        return response;
+      } catch (error) {
+        return notifyAxiosError('Logout user', error as AxiosError);
+      }
+    },
   };
 };
 
-export const authApiServer = (accessToken: string) => {
-  const axiosInstance = axiosServer(accessToken);
+export const authApiServer = (
+  ctx: GetServerSidePropsContext | NextPageContext
+) => {
+  const axiosInstance = axiosServer(ctx);
 
   return {
-    verifyToken: async (accessToken: string) => {
+    verifyTokens: async () => {
       try {
-        const response = await axiosInstance.post<StatusResponse>(
-          '/auth/verify-token',
-          {
-            accessToken,
-          }
+        const response = await axiosInstance.get<StatusResponse>(
+          '/auth/verify-tokens'
         );
 
         return response;
@@ -67,18 +76,15 @@ export const authApiServer = (accessToken: string) => {
       }
     },
 
-    getToken: async (refreshToken: string) => {
+    refreshToken: async () => {
       try {
-        const response = await axiosInstance.post<GetTokenResponse>(
-          '/auth/token',
-          {
-            refreshToken,
-          }
+        const response = await axiosInstance.get<RefreshTokenResponse>(
+          '/auth/refresh-token'
         );
 
         return response;
       } catch (error) {
-        return notifyAxiosError('Get token', error as AxiosError);
+        return notifyAxiosError('Refresh token', error as AxiosError);
       }
     },
   };

@@ -1,15 +1,3 @@
-export const getCurrentUser = {
-  request: () => ({
-    type: 'getCurrentUser/request',
-  }),
-  success: () => ({
-    type: 'getCurrentUser/success',
-  }),
-  failure: () => ({
-    type: 'getCurrentUser/failure',
-  }),
-};
-
 export const followUser = {
   request: (payload?: string) => ({
     type: 'followUser/request',

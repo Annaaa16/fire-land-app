@@ -1,24 +1,26 @@
-// js cookie
-import cookie from 'js-cookie';
+// nookies
+import { setCookie, parseCookies, destroyCookie } from 'nookies';
 
-import { COOKIES } from '@/constants';
+// types
+import { NextPageContext } from 'next';
+
+import { COOKIES, PATHS } from '@/constants';
 
 const cookies = {
-  setAccessToken: (accessToken: string) => {
-    cookie.set(COOKIES.ACCESS_TOKEN_KEY, accessToken);
+  setPrevPath: (ctx: NextPageContext, path: string) => {
+    setCookie(ctx, COOKIES.PREV_PATH_KEY, path || PATHS.NEWSFEED);
   },
-  getAccessToken: () => {
-    return cookie.get(COOKIES.ACCESS_TOKEN_KEY);
+
+  getPrevPath: (ctx: NextPageContext) => {
+    const cookies = parseCookies(ctx);
+
+    return cookies.prev_path || PATHS.NEWSFEED;
   },
-  setRefreshToken: (refreshToken: string) => {
-    cookie.set(COOKIES.REFRESH_TOKEN_KEY, refreshToken);
-  },
-  getRefreshToken: () => {
-    return cookie.get(COOKIES.REFRESH_TOKEN_KEY);
-  },
-  removeAll: () => {
-    cookie.remove(COOKIES.ACCESS_TOKEN_KEY);
-    cookie.remove(COOKIES.REFRESH_TOKEN_KEY);
+
+  deleteAll: (ctx: NextPageContext) => {
+    destroyCookie(ctx, COOKIES.ACCESS_TOKEN_KEY);
+    destroyCookie(ctx, COOKIES.REFRESH_TOKEN_KEY);
+    destroyCookie(ctx, COOKIES.PREV_PATH_KEY);
   },
 };
 

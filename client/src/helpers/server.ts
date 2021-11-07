@@ -1,25 +1,25 @@
 import Router from 'next/router';
 
-// nookies
-import { parseCookies } from 'nookies';
-
 // types
 import { NextPageContext } from 'next';
+import { AxiosResponse } from 'axios';
+import { GetUserResponse } from '@/models/users';
+import { RefreshTokenResponse } from '@/models/auth';
 
 import { PATHS } from '@/constants';
 import { authApiServer } from '@/apis/authApi';
-import { AxiosResponse } from 'axios';
-import { GetTokenResponse } from '@/models/auth';
-import token from './token';
+import { usersApiServer } from '@/apis/usersApi';
+import tokens from './tokens';
+import cookies from './cookies';
 
-export const handleAuthenticate = async (ctx: NextPageContext) => {
+const handleAuthentication = async (ctx: NextPageContext) => {
   const originalUrl = ctx.pathname;
-  const { access_token, refresh_token } = parseCookies(ctx);
-  const { isExpired } = token.verifyToken(access_token)!;
-  const isFully = access_token && refresh_token;
+  const { verifyTokens } = authApiServer(ctx);
+  const { isRefreshTokenExpired, isAccessTokenExpired, isFully } =
+    tokens.checkTokenValid(ctx)!;
 
   let isAuthenticated = false;
-  let newToken = '';
+  let currentUserResponse: GetUserResponse | undefined;
 
   const redirectToLocation = (location: string) => {
     if (ctx.req) {
@@ -33,51 +33,59 @@ export const handleAuthenticate = async (ctx: NextPageContext) => {
     }
   };
 
-  // Miss info or token has expired
+  // Miss info or refresh token has expired
   if (
-    (!isFully || isExpired) &&
+    (!isFully || isRefreshTokenExpired) &&
     originalUrl !== PATHS.LOGIN &&
     originalUrl !== PATHS.REGISTER
   ) {
+    cookies.deleteAll(ctx);
     redirectToLocation(PATHS.LOGIN);
-  }
+  } else if (isFully) {
+    cookies.setPrevPath(ctx, originalUrl);
 
-  if (isFully && !isExpired) {
-    const { verifyToken } = authApiServer(access_token);
-    const response = await verifyToken(access_token);
-    const success = response?.data.success;
+    // Redirect back if try to go to login or register
+    if (originalUrl === PATHS.LOGIN || originalUrl === PATHS.REGISTER) {
+      console.log('path =>', cookies.getPrevPath(ctx));
+      redirectToLocation(cookies.getPrevPath(ctx));
+    }
 
-    isAuthenticated = success || false;
+    const response = await verifyTokens();
 
-    // Refresh token
-    if (!success) {
-      const { getToken } = authApiServer(refresh_token);
+    // Invalid tokens
+    if (!response?.data.success) {
+      cookies.deleteAll(ctx);
+      redirectToLocation(PATHS.LOGIN);
+    } else if (isAccessTokenExpired) {
+      const { refreshToken } = authApiServer(ctx);
 
-      const { data } = (await getToken(
-        refresh_token
-      )) as AxiosResponse<GetTokenResponse>;
+      const response =
+        (await refreshToken()) as AxiosResponse<RefreshTokenResponse>;
 
-      if (data.success) {
-        newToken = data.accessToken;
+      // Invalid refresh token or expired
+      if (!response?.data.success) {
+        cookies.deleteAll(ctx);
+        redirectToLocation(PATHS.LOGIN);
+      }
+      // Set new access token
+      else {
+        tokens.setAccessToken(ctx, response?.data);
       }
     }
 
-    // Redirect back if try to go to login or register
-    if (
-      success &&
-      (originalUrl === PATHS.LOGIN || originalUrl === PATHS.REGISTER)
-    ) {
-      redirectToLocation(PATHS.NEWSFEED);
-    }
-    // Invalid token
-    else if (
-      !success &&
-      originalUrl !== PATHS.LOGIN &&
-      originalUrl !== PATHS.REGISTER
-    ) {
-      redirectToLocation(PATHS.LOGIN);
-    }
+    isAuthenticated = true;
   }
 
-  return { isAuthenticated, newToken };
+  // Get current user
+  if (isAuthenticated) {
+    const { getCurrentUser } = usersApiServer(ctx);
+    const currentUser =
+      (await getCurrentUser()) as AxiosResponse<GetUserResponse>;
+
+    currentUserResponse = currentUser.data;
+  }
+
+  return currentUserResponse;
 };
+
+export { handleAuthentication };

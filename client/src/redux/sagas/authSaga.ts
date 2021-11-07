@@ -14,7 +14,6 @@ import { authApiClient } from '@/apis/authApi';
 import { setRegisterStatus, setAuthStatus } from '../slices/authSlice';
 import { notifySagaError } from '@/helpers/notify';
 import { setUser } from '../slices/usersSlice';
-import cookies from '@/helpers/cookies';
 import {
   loginUser as loginUserAct,
   registerUser as registerUserAct,
@@ -30,15 +29,6 @@ function* handleLoginUser(action: PayloadAction<LoginFormData>) {
       loginUser,
       formData
     );
-
-    const {
-      data: { success, accessToken, refreshToken },
-    } = response;
-
-    if (success) {
-      cookies.setAccessToken(accessToken);
-      cookies.setRefreshToken(refreshToken);
-    }
 
     yield put(setAuthStatus(response.data));
     yield put(setUser(response.data));

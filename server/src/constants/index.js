@@ -6,6 +6,12 @@ exports.TOKENS = {
   ACCESS_TOKEN_SECRET: process.env.ACCESS_TOKEN_SECRET,
   REFRESH_TOKEN_SECRET: process.env.REFRESH_TOKEN_SECRET,
   ACCESS_TOKEN_EXP: 7 * 24 * 60 * 60, // 7 days (by seconds)
+  REFRESH_TOKEN_EXP: 14 * 24 * 60 * 60, // 14 days (by seconds)
+};
+
+exports.COOKIES = {
+  ACCESS_TOKEN_KEY: 'access_token',
+  REFRESH_TOKEN_KEY: 'refresh_token',
 };
 
 exports.CLOUDINARY = {

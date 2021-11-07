@@ -1,17 +1,18 @@
 // types
+import { GetServerSidePropsContext, NextPageContext } from 'next';
 import { AxiosError } from 'axios';
-import { FollowResponse, UnfollowResponse } from '@/models/users';
-import { GetUserResponse } from '@/models/auth';
+import {
+  FollowResponse,
+  GetUserResponse,
+  UnfollowResponse,
+} from '@/models/users';
 
 import { axiosClient } from './axiosClient';
-import { axiosServer } from './axiosServer';
 import { notifyAxiosError } from '@/helpers/notify';
-import cookies from '@/helpers/cookies';
+import { axiosServer } from './axiosServer';
 
 export const usersApiClient = () => {
-  const refreshToken = cookies.getRefreshToken();
-
-  const axiosInstance = axiosClient(refreshToken);
+  const axiosInstance = axiosClient();
 
   return {
     getCurrentUser: async () => {
@@ -59,6 +60,26 @@ export const usersApiClient = () => {
         return response;
       } catch (error) {
         return notifyAxiosError('Unfollow user', error as AxiosError);
+      }
+    },
+  };
+};
+
+export const usersApiServer = (
+  ctx: GetServerSidePropsContext | NextPageContext
+) => {
+  const axiosInstance = axiosServer(ctx);
+
+  return {
+    getCurrentUser: async () => {
+      try {
+        const response = await axiosInstance.get<GetUserResponse>(
+          '/users/current'
+        );
+
+        return response;
+      } catch (error) {
+        return notifyAxiosError('Get current user', error as AxiosError);
       }
     },
   };

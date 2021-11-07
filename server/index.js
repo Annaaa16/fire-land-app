@@ -7,19 +7,24 @@ const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
-
-const connectToRoutes = require('./src/routes');
+const cookieParser = require('cookie-parser');
 
 const { LIMIT_UPLOAD, MONGO_URI } = require('./src/constants');
+const connectToRoutes = require('./src/routes');
 
 const app = express();
-
 const PORT = process.env.PORT || 5000;
 
 // Init configs
 app.use(express.json({ limit: LIMIT_UPLOAD, extended: true }));
 app.use(express.urlencoded({ limit: LIMIT_UPLOAD, extended: true }));
-app.use(cors());
+app.use(cookieParser());
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+  })
+);
 
 // Connect to routes
 connectToRoutes(app);
