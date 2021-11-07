@@ -7,12 +7,10 @@ import {
 } from '@/models/conversations';
 
 import { axiosClient } from './axiosClient';
-import cookies from '@/helpers/cookies';
 import { notifyAxiosError } from '@/helpers/notify';
 
 export const conversationsApiClient = () => {
-  const refreshToken = cookies.getRefreshToken();
-  const axiosInstance = axiosClient(refreshToken);
+  const axiosInstance = axiosClient();
 
   return {
     createConversation: async (memberIds: CreateConversation) => {

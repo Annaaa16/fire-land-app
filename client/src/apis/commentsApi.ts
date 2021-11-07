@@ -8,8 +8,8 @@ import {
 } from '@/models/comments';
 
 import { axiosClient } from './axiosClient';
-import cookies from '@/helpers/cookies';
 import { notifyAxiosError } from '@/helpers/notify';
+import cookies from '@/helpers/cookies';
 
 export const commentsApiClient = () => {
   const refreshToken = cookies.getRefreshToken();

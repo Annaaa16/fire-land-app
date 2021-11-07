@@ -1,4 +1,6 @@
 // types
+import { AxiosError } from 'axios';
+import { GetServerSidePropsContext, NextPageContext } from 'next';
 import {
   CreatePostsResponse,
   DeletePostResponse,
@@ -8,16 +10,13 @@ import {
   UpdatePost,
   UpdatePostResponse,
 } from '@/models/posts';
-import { AxiosError } from 'axios';
 
 import { axiosClient } from './axiosClient';
 import { axiosServer } from './axiosServer';
 import { notifyAxiosError } from '@/helpers/notify';
-import cookies from '@/helpers/cookies';
 
 export const postsApiClient = () => {
-  const refreshToken = cookies.getRefreshToken();
-  const axiosInstance = axiosClient(refreshToken);
+  const axiosInstance = axiosClient();
 
   return {
     createPost: async (uploadData: FormData) => {
@@ -98,8 +97,10 @@ export const postsApiClient = () => {
   };
 };
 
-export const postsApiServer = (accessToken: string) => {
-  const axiosInstance = axiosServer(accessToken);
+export const postsApiServer = (
+  ctx: GetServerSidePropsContext | NextPageContext
+) => {
+  const axiosInstance = axiosServer(ctx);
 
   return {
     getPosts: async (params: GetPosts) => {
