@@ -5,6 +5,8 @@ import clsx from 'clsx';
 
 // types
 import { User as UserType } from '@/models/common';
+import { AxiosResponse } from 'axios';
+import { GetUserResponse } from '@/models/users';
 
 import { useConversationsSelector } from '@/redux/selectors';
 import { usersApiClient } from '@/apis/usersApi';
@@ -46,7 +48,9 @@ function ContactOnline(props: ContactOnlineProps) {
 
     (async () => {
       try {
-        const response = await getUserById(friendId!);
+        const response = (await getUserById(
+          friendId!
+        )) as AxiosResponse<GetUserResponse>;
 
         setOnlineFriend(response!.data.user);
       } catch (error) {
