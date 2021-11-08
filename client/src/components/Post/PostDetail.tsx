@@ -3,9 +3,10 @@ import clsx from 'clsx';
 
 import { useUsersSelector } from '@/redux/selectors';
 
-import like from '@/assets/svgs/NewsFeed/like.svg';
-import haha from '@/assets/svgs/NewsFeed/haha.svg';
-import love from '@/assets/svgs/NewsFeed/love.svg';
+// svgs
+import like from '@/assets/svgs/newsfeed/like.svg';
+import haha from '@/assets/svgs/newsfeed/haha.svg';
+import love from '@/assets/svgs/newsfeed/love.svg';
 
 interface PostDetailProps {
   likes: string[];

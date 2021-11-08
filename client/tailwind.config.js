@@ -97,7 +97,8 @@ module.exports = {
       },
     },
     fontSize: {
-      '2xs': '10px',
+      'xs-2': '10px',
+      'xs-1': '11px',
       xs: '12px',
       'sm-1': '13px',
       sm: '14px',
@@ -133,6 +134,7 @@ module.exports = {
       10: '40px',
       11: '44px',
       12: '48px',
+      13: '52px',
       14: '56px',
       16: '64px',
       17: '68px',
@@ -154,6 +156,7 @@ module.exports = {
       80: '320px',
       96: '384px',
       100: '400px',
+      296: '1184px',
     },
   },
   variants: {

@@ -5,33 +5,51 @@ import clsx from 'clsx';
 import CheckIcon from '@mui/icons-material/Check';
 
 interface UserProps {
-  view: string;
+  view?: 'sm';
   avatar?: string;
   subClass?: string;
+  currentUser?: boolean;
+  online?: boolean;
+  rounded?: boolean;
+  width?: number;
+  height?: number;
 }
 
 function User(props: UserProps) {
-  const { view, avatar, subClass } = props;
+  const {
+    view,
+    avatar,
+    subClass,
+    currentUser,
+    online,
+    rounded,
+    width,
+    height,
+  } = props;
 
   const img = avatar || 'https://avatars.dicebear.com/api/micah/uiSvbW.svg';
-  const isUser = true;
 
   return (
     <div
       className={clsx(
         'relative',
-        view === 'small' ? 'w-9 h-9' : 'w-16 h-16',
-        'group rounded-full flex-shrink-0',
+        view === 'sm' && 'w-9 h-9',
+        'group flex-shrink-0',
+        rounded && 'rounded-full',
         'cursor-pointer',
         subClass
       )}>
       <img
         src={img}
         alt='Avatar'
-        className={clsx('relative', 'w-full h-full object-cover rounded-full')}
+        className={clsx(
+          'relative',
+          'w-full h-full object-cover',
+          rounded && 'rounded-full'
+        )}
       />
 
-      {isUser ? (
+      {currentUser && (
         <div
           className={clsx(
             'absolute left-1/2 -bottom-2.5',
@@ -40,15 +58,15 @@ function User(props: UserProps) {
           )}>
           <CheckIcon className={clsx('!w-full !h-full', 'text-white')} />
         </div>
-      ) : (
+      )}
+      {online && (
         <span
           className={clsx(
             'absolute -left-px top-0.5 z-[1]',
             'w-2.5 h-2.5 border-2 border-white rounded-full',
             'bg-green'
-          )}>
-          .
-        </span>
+          )}
+        />
       )}
     </div>
   );

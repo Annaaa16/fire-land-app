@@ -52,7 +52,7 @@ function PostSender(props: PostSenderProps) {
       className={clsx(
         'flex items-center border-t border-lt-line dark:border-dk-line mt-1 pt-4 pb-3'
       )}>
-      <User avatar={avatar} view='small' />
+      <User avatar={avatar} view='sm' rounded />
       <div
         className={clsx(
           'flex flex-1 ml-2.5 justify-between rounded-3xl',
@@ -63,7 +63,7 @@ function PostSender(props: PostSenderProps) {
           value={content}
           placeholder='Write a comment...'
           className={clsx(
-            'flex-1 pl-4 outline-none py-3 text-xs md:text-sm',
+            'pl-4 max-w-[128px] md:max-w-full outline-none py-3 text-xs md:text-sm',
             'dark:text-white bg-transparent'
           )}
         />
@@ -71,7 +71,7 @@ function PostSender(props: PostSenderProps) {
           <li
             className={clsx(
               'relative',
-              'group i-flex-center w-10 h-10 rounded-full',
+              'group hidden md:i-flex-center w-10 h-10 rounded-full',
               'transition-all ease-out',
               'cursor-pointer',
               'lg:hover:bg-gray-200 lg:dark:hover:bg-dk-tooltip-hv'

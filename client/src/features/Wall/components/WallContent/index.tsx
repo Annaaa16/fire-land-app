@@ -3,19 +3,20 @@ import { useEffect, useRef } from 'react';
 // clsx
 import clsx from 'clsx';
 
-import { usePostsSelector } from '@/redux/selectors';
+import { usePostsSelector, useUsersSelector } from '@/redux/selectors';
 import { getPosts } from '@/redux/actions/posts';
 import { LIMITS } from '@/constants';
 import useMeeting from '@/hooks/useMeeting';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 import Post from '@/components/Post';
-import NewsFeedSender from '../NewsFeedSender';
+import NewsFeedSender from '@/features/NewsFeed/components/NewsFeedSender';
 
-function NewsFeedContent() {
+function WallContent() {
   const loaderRef = useRef<HTMLDivElement>(null);
 
   const { nextPage, total, posts } = usePostsSelector();
+  const { currentUser } = useUsersSelector();
 
   const dispatch = useStoreDispatch();
 
@@ -31,16 +32,18 @@ function NewsFeedContent() {
   }, [total, isMeeting, dispatch]);
 
   return (
-    <div className={clsx('w-full lg:w-2/3 lg:mr-5')}>
+    <div className={clsx('w-full lg:w-2/3')}>
       <NewsFeedSender />
 
-      {posts.map((post) => (
-        <Post key={post._id} {...post} />
-      ))}
+      {posts.map((post) => {
+        return (
+          currentUser._id === post.user._id && <Post key={post._id} {...post} />
+        );
+      })}
 
       <div ref={loaderRef} />
     </div>
   );
 }
 
-export default NewsFeedContent;
+export default WallContent;

@@ -139,7 +139,7 @@ function NewsFeedSenderArea() {
 
         <div className={clsx('relative', 'p-3')}>
           <div className={clsx('flex items-center mt-2 pb-2 ml-2')}>
-            <User view='small' avatar={currentUser.avatar} />
+            <User view='sm' avatar={currentUser.avatar} />
             <div className={clsx('ml-5')}>
               <span className={clsx('font-bold', 'dark:text-white')}>
                 {currentUser.username}

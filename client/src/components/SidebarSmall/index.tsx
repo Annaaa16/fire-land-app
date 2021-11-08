@@ -14,14 +14,12 @@ interface SidebarSmallProps {
   isMessenger?: boolean;
 }
 
-function SidebarSmall(props: SidebarSmallProps) {
-  const { isMessenger } = props;
-
+function SidebarSmall({ isMessenger }: SidebarSmallProps) {
   return (
-    <div
+    <aside
       className={clsx(
-        isMessenger ? 'z-50' : 'fixed left-0 z-50',
-        'flex flex-col items-center w-[80px] py-6',
+        isMessenger ? 'z-50' : 'fixed left-0 top-16 z-50',
+        'hidden lg:block w-20 py-6',
         isMessenger
           ? 'border-r border-lt-line dark:border-dk-line'
           : 'shadow-xl',
@@ -31,15 +29,15 @@ function SidebarSmall(props: SidebarSmallProps) {
       {isMessenger && (
         <div
           className={clsx(
-            'w-12 pb-5 mb-6 border-b border-lt-line dark:border-dk-line',
+            'w-12 pb-5 mx-auto mb-6 border-b border-lt-line dark:border-dk-line',
             'cursor-pointer'
           )}>
           <img src={icon.src} alt='Logo' className={clsx('w-full')} />
         </div>
       )}
-      <User view='small' />
+      <User view='sm' subClass='mx-auto' rounded />
 
-      <ul className={clsx('mt-10 w-full px-4 text-center')}>
+      <ul className={clsx('mt-8 w-full px-4 text-center')}>
         {sidebarTooltips.map(({ title, isActive, icon }) => (
           <SmallTooltip
             key={title}
@@ -49,7 +47,7 @@ function SidebarSmall(props: SidebarSmallProps) {
           />
         ))}
       </ul>
-    </div>
+    </aside>
   );
 }
 

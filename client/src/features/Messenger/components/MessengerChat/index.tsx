@@ -43,7 +43,7 @@ function MessagesChat() {
   return conversationId ? (
     <div
       className={clsx(
-        'flex flex-col flex-grow overflow-x-hidden',
+        'flex flex-col flex-grow flex-shrink-0 overflow-x-hidden',
         'bg-lt-body dark:bg-dk-body'
       )}>
       <ChatHeader />
