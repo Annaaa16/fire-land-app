@@ -31,6 +31,7 @@ function NewsFeedSenderInput() {
           view='sm'
           avatar={currentUser.avatar}
           subClass={clsx('ml-1 md:ml-0')}
+          rounded
         />
         <input
           onClick={openSenderArea}

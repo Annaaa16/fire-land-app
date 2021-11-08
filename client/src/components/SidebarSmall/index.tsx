@@ -19,7 +19,7 @@ function SidebarSmall({ isMessenger }: SidebarSmallProps) {
     <aside
       className={clsx(
         isMessenger ? 'z-50' : 'fixed left-0 top-16 z-50',
-        'items-center w-20 py-6',
+        'hidden lg:block w-20 py-6',
         isMessenger
           ? 'border-r border-lt-line dark:border-dk-line'
           : 'shadow-xl',
@@ -35,9 +35,9 @@ function SidebarSmall({ isMessenger }: SidebarSmallProps) {
           <img src={icon.src} alt='Logo' className={clsx('w-full')} />
         </div>
       )}
-      <User view='sm' subClass='mx-auto' />
+      <User view='sm' subClass='mx-auto' rounded />
 
-      <ul className={clsx('mt-10 w-full px-4 text-center')}>
+      <ul className={clsx('mt-8 w-full px-4 text-center')}>
         {sidebarTooltips.map(({ title, isActive, icon }) => (
           <SmallTooltip
             key={title}

@@ -18,7 +18,7 @@ function CenterContent({ children }: CenterContentProps) {
       <SidebarSmall />
       <div
         className={clsx(
-          'lg:max-w-[1184px] px-4 lg:px-0 mx-auto py-10 mt-12',
+          'lg:max-w-[1184px] px-4 lg:px-0 mx-auto py-10 mt-14',
           'bg-lt-body dark:bg-dk-body'
         )}>
         {children}

@@ -9,7 +9,7 @@ import { LIMITS } from '@/constants';
 import useMeeting from '@/hooks/useMeeting';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
-import NewsFeedPost from '../NewsFeedPost';
+import Post from '@/components/Post';
 import NewsFeedSender from '../NewsFeedSender';
 
 function NewsFeedContent() {
@@ -31,11 +31,11 @@ function NewsFeedContent() {
   }, [total, isMeeting, dispatch]);
 
   return (
-    <div className={clsx('col-span-2')}>
+    <div className={clsx('w-full lg:w-2/3 lg:mr-5')}>
       <NewsFeedSender />
 
       {posts.map((post) => (
-        <NewsFeedPost key={post._id} {...post} />
+        <Post key={post._id} {...post} />
       ))}
 
       <div ref={loaderRef} />

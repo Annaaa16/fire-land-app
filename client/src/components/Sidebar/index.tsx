@@ -14,7 +14,7 @@ function Sidebar() {
         'flex flex-col items-center w-[300px] h-[calc(100vh-64px)] py-6 shadow-2xl',
         'bg-lt-cpn dark:bg-dk-cpn'
       )}>
-      <User view='lg' />
+      <User />
 
       <ul className={clsx('mt-12 w-full px-4 text-center')}>
         {sidebarTooltips.map(({ title, isActive, icon }) => (
