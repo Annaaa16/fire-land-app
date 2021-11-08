@@ -11,13 +11,13 @@ import Tooltip from '@/components/Tooltip';
 // images
 import cover from '@/assets/images/profile/cover.jpg';
 
-function ProfileCover() {
+function WallCover() {
   return (
     <section
       style={{ backgroundImage: `url(${cover.src})` }}
       className={clsx(
         'relative',
-        'h-80 rounded-lg flex justify-between items-end object-cover pb-8 px-6 overflow-hidden',
+        'h-60 lg:h-80 rounded-lg flex justify-between items-end object-cover pb-5 lg:pb-8 px-6 overflow-hidden',
         'bg-cover bg-center'
       )}>
       <div
@@ -27,17 +27,26 @@ function ProfileCover() {
           'bg-gradient-to-t from-dk-body to-transparent'
         )}
       />
-      <div className={clsx('relative', 'flex items-center')}>
+      <div
+        className={clsx(
+          'relative',
+          'flex items-center justify-center md:justify-start w-full'
+        )}>
         <User
           avatar='https://avatars.dicebear.com/api/avataaars/wYqKSN.svg'
-          subClass={clsx('w-24 h-24 mr-2')}
+          subClass={clsx('w-18 h-18 lg:w-24 lg:h-24 mr-2')}
+          rounded
         />
         <div>
-          <div className={clsx('mb-4', 'text-white')}>
-            <h1 className={clsx('text-lg leading-normal', 'font-bold')}>
+          <div className={clsx('mb-1 md:mb-4', 'text-white')}>
+            <h1
+              className={clsx(
+                'text-base md:text-lg leading-normal',
+                'font-bold'
+              )}>
               IG Dev
             </h1>
-            <p className={clsx('text-sm-1')}>Fuck you bitch!</p>
+            <p className={clsx('text-xs md:text-sm-1')}>Fuck you bitch!</p>
           </div>
           <div className={clsx('relative', 'inline-block group')}>
             <AddToPhotosIcon className={clsx('text-white', 'cursor-pointer')} />
@@ -45,7 +54,12 @@ function ProfileCover() {
           </div>
         </div>
       </div>
-      <ul className={clsx('relative', 'flex items-center', 'text-white')}>
+      <ul
+        className={clsx(
+          'relative',
+          'hidden md:flex items-center',
+          'text-white'
+        )}>
         <li className={clsx('mr-2')}>
           Posts: <strong>30</strong>
         </li>
@@ -57,4 +71,4 @@ function ProfileCover() {
   );
 }
 
-export default ProfileCover;
+export default WallCover;
