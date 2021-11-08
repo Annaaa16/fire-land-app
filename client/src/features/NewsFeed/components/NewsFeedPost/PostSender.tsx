@@ -52,7 +52,7 @@ function PostSender(props: PostSenderProps) {
       className={clsx(
         'flex items-center border-t border-lt-line dark:border-dk-line mt-1 pt-4 pb-3'
       )}>
-      <User avatar={avatar} view='small' />
+      <User avatar={avatar} view='sm' />
       <div
         className={clsx(
           'flex flex-1 ml-2.5 justify-between rounded-3xl',

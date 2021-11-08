@@ -28,7 +28,7 @@ function NewsFeedSenderInput() {
       )}>
       <div className={clsx('flex items-center')}>
         <User
-          view='small'
+          view='sm'
           avatar={currentUser.avatar}
           subClass={clsx('ml-1 md:ml-0')}
         />

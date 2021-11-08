@@ -28,7 +28,7 @@ function WidgetsGroups() {
       <ul className={clsx('mt-5 -mb-3')}>
         <li className={clsx('flex items-center justify-between pb-7')}>
           <div className={clsx('flex items-center')}>
-            <User view='small' />
+            <User view='sm' />
             <div className={clsx('ml-4')}>
               <div
                 className={clsx(

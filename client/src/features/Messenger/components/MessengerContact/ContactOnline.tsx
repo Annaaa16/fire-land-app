@@ -67,7 +67,7 @@ function ContactOnline(props: ContactOnlineProps) {
         'dark:bg-dk-cpn',
         'cursor-pointer'
       )}>
-      <User view='small' />
+      <User view='sm' />
       <div className={clsx('ml-3 max-w-[60%]')}>
         <span className={clsx('font-bold', 'dark:text-white')}>
           {onlineFriend?.username}

@@ -1,6 +1,3 @@
-// nookies
-import { parseCookies } from 'nookies';
-
 // types
 import { GetServerSideProps } from 'next';
 
@@ -17,36 +14,29 @@ import { postsApiServer } from '@/apis/postsApi';
 import { addFetchedPostList } from '@/redux/slices/postsSlice';
 
 import Meta from '@/layouts/Meta';
-import Header from '@/components/Header';
-import Sidebar from '@/components/Sidebar';
-import SidebarSmall from '@/components/SidebarSmall';
+import CenterContent from '@/layouts/CenterContent';
 import NewsFeedBanner from '@/features/NewsFeed/components/NewsFeedBanner';
 import NewsFeedMembers from '@/features/NewsFeed/components/NewsFeedSummary';
 import NewsFeedContent from '@/features/NewsFeed/components/NewsFeedContent';
 import NewsFeedWidgets from '@/features/NewsFeed/components/NewsFeedWidgets';
+
 import tokens from '@/helpers/tokens';
 
 function NewsFeed() {
   return (
     <Meta title='News Feed'>
-      <Header />
-      {/* <Sidebar /> */}
-      <SidebarSmall />
+      <CenterContent>
+        <NewsFeedBanner />
+        <NewsFeedMembers />
 
-      <main className={clsx('mt-[64px]', 'bg-lt-body dark:bg-dk-body')}>
-        <div className={clsx('lg:w-[1184px] px-4 lg:px-0 mx-auto py-10')}>
-          <NewsFeedBanner />
-          <NewsFeedMembers />
-
-          <section
-            className={clsx(
-              'grid grid-cols-1 lg:grid-cols-3 gap-5 justify-between mt-7'
-            )}>
-            <NewsFeedContent />
-            <NewsFeedWidgets />
-          </section>
-        </div>
-      </main>
+        <section
+          className={clsx(
+            'grid grid-cols-1 lg:grid-cols-3 gap-5 justify-between mt-7'
+          )}>
+          <NewsFeedContent />
+          <NewsFeedWidgets />
+        </section>
+      </CenterContent>
     </Meta>
   );
 }

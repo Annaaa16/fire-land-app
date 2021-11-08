@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import CheckIcon from '@mui/icons-material/Check';
 
 interface UserProps {
-  view: string;
+  view?: 'sm' | 'lg';
   avatar?: string;
   subClass?: string;
 }
@@ -20,7 +20,7 @@ function User(props: UserProps) {
     <div
       className={clsx(
         'relative',
-        view === 'small' ? 'w-9 h-9' : 'w-16 h-16',
+        view === 'sm' ? 'w-9 h-9' : 'w-16 h-16',
         'group rounded-full flex-shrink-0',
         'cursor-pointer',
         subClass

@@ -8,13 +8,13 @@ import SidebarTooltip from './SidebarTooltip';
 
 function Sidebar() {
   return (
-    <div
+    <aside
       className={clsx(
         'fixed top-[64px] left-0 z-50',
         'flex flex-col items-center w-[300px] h-[calc(100vh-64px)] py-6 shadow-2xl',
         'bg-lt-cpn dark:bg-dk-cpn'
       )}>
-      <User view='large' />
+      <User view='lg' />
 
       <ul className={clsx('mt-12 w-full px-4 text-center')}>
         {sidebarTooltips.map(({ title, isActive, icon }) => (
@@ -26,7 +26,7 @@ function Sidebar() {
           />
         ))}
       </ul>
-    </div>
+    </aside>
   );
 }
 

@@ -31,7 +31,7 @@ function PostHeader(props: PostHeaderProps) {
     <div className={clsx('relative', 'flex items-center px-2 md:px-4 py-4')}>
       <div className={clsx('flex items-center')}>
         <div className={clsx('relative', 'group ml-1 md:ml-0 z-0')}>
-          <User avatar={avatar} view='small' />
+          <User avatar={avatar} view='sm' />
           {currentUser._id !== userId && (
             <PostHeaderBox
               userId={userId}

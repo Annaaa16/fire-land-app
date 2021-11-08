@@ -32,7 +32,7 @@ function ChatContent() {
       ref={scrollRef}
       options={{ scrollbars: { autoHide: 'scroll' } }}
       className={clsx('flex-1 pl-2 pr-4')}>
-      {/* <User view='small' /> */}
+      {/* <User view='sm' /> */}
       {currentChat?.map(({ senderId, text }) =>
         senderId !== currentUser._id ? (
           <ChatFriend key={nanoid(6)} message={text} />
