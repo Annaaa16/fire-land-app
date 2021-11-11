@@ -13,7 +13,7 @@ router.get('/current', verifyToken, usersController.getCurrentUser);
 // @route GET api/users/:userId
 // @desc Get user by id
 // @access Private
-router.get('/:userId', verifyToken, usersController.getUserById);
+router.get('/:userId', verifyToken, usersController.getUser);
 
 // @route PATCH api/users/:userId/follow
 // @desc Follow an user
@@ -24,5 +24,10 @@ router.patch('/:userId/follow', verifyToken, usersController.followUser);
 // @desc Unfollow an user
 // @access Private
 router.patch('/:userId/unfollow', verifyToken, usersController.unfollowUser);
+
+// @route GET api/users/:userId/friends
+// @desc Get user's friends
+// @access Private
+router.get('/:userId/friends', verifyToken, usersController.getUserFriends);
 
 module.exports = router;

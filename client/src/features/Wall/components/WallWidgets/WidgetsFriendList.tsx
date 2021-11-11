@@ -3,9 +3,15 @@ import Link from 'next/link';
 // clsx
 import clsx from 'clsx';
 
+import { useUsersSelector } from '@/redux/selectors';
+import { useGlobalContext } from '@/contexts/GlobalContext';
+
 import User from '@/components/User';
 
 function WidgetsFriendList() {
+  const { visitWall } = useGlobalContext();
+  const { fetchedFriends } = useUsersSelector();
+
   return (
     <div
       className={clsx(
@@ -29,19 +35,22 @@ function WidgetsFriendList() {
         </Link>
       </div>
       <div className={clsx('mt-3', 'dark:text-white')}>246 friends</div>
-      <ul className={clsx('flex flex-wrap mt-2')}>
-        <li className={clsx('w-1/5 mt-3')}>
-          <User subClass='mx-auto' />
-          <div className={clsx('text-center text-xs mt-1', 'dark:text-white')}>
-            IG Dev
-          </div>
-        </li>
-        <li className={clsx('w-1/5 mt-3')}>
-          <User subClass='mx-auto' />
-          <div className={clsx('text-center text-xs mt-1', 'dark:text-white')}>
-            IG Dev
-          </div>
-        </li>
+      <ul className={clsx('grid grid-cols-4 mt-2 gap-x-2')}>
+        {fetchedFriends.map((friend) => (
+          <li
+            key={friend._id}
+            onClick={() => visitWall(friend._id)}
+            className={clsx('mt-3')}>
+            <User
+              subClass='rounded-lg mx-auto overflow-hidden'
+              avatar={friend.avatar}
+            />
+            <div
+              className={clsx('text-center text-xs mt-1', 'dark:text-white')}>
+              {friend.username}
+            </div>
+          </li>
+        ))}
       </ul>
     </div>
   );

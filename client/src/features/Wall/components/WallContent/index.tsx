@@ -1,9 +1,10 @@
 import { useEffect, useRef } from 'react';
+import { useRouter } from 'next/router';
 
 // clsx
 import clsx from 'clsx';
 
-import { usePostsSelector, useUsersSelector } from '@/redux/selectors';
+import { usePostsSelector } from '@/redux/selectors';
 import { getPosts } from '@/redux/actions/posts';
 import { LIMITS } from '@/constants';
 import useMeeting from '@/hooks/useMeeting';
@@ -16,16 +17,23 @@ function WallContent() {
   const loaderRef = useRef<HTMLDivElement>(null);
 
   const { nextPage, total, posts } = usePostsSelector();
-  const { currentUser } = useUsersSelector();
+  const router = useRouter();
 
   const dispatch = useStoreDispatch();
-
   const isMeeting = useMeeting(loaderRef, '500px');
 
   // Get new posts when scrolled to bottom
   useEffect(() => {
-    if (isMeeting && nextPage) {
-      dispatch(getPosts.request({ page: nextPage, limit: LIMITS.POSTS }));
+    const { id } = router.query;
+
+    if (isMeeting && nextPage && id) {
+      dispatch(
+        getPosts.request({
+          user_id: id as string,
+          page: nextPage,
+          limit: LIMITS.POSTS,
+        })
+      );
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -36,9 +44,7 @@ function WallContent() {
       <NewsFeedSender />
 
       {posts.map((post) => {
-        return (
-          currentUser._id === post.user._id && <Post key={post._id} {...post} />
-        );
+        return <Post key={post._id} {...post} />;
       })}
 
       <div ref={loaderRef} />

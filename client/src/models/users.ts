@@ -1,16 +1,10 @@
 // types
-import { User } from './common';
-
-interface CurrentUser {
-  readonly _id: string;
-  username: string;
-  avatar: string;
-  followings: string[];
-  followers: string[];
-}
+import { Pagination, User } from './common';
 
 export interface UsersInitState {
-  currentUser: CurrentUser;
+  currentUser: User;
+  userProfile: User;
+  fetchedFriends: User[];
 }
 
 // === Responses ===
@@ -30,4 +24,10 @@ export interface UnfollowResponse {
   success: boolean;
   message: string;
   userId: string;
+}
+
+export interface GetUserFriendsResponse extends Pagination {
+  success: boolean;
+  message: string;
+  friends: User[];
 }

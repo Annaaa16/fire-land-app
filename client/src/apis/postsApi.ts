@@ -22,7 +22,7 @@ export const postsApiClient = () => {
     createPost: async (uploadData: FormData) => {
       try {
         const response = await axiosInstance.post<CreatePostsResponse>(
-          '/posts',
+          '/posts/create',
           uploadData
         );
 

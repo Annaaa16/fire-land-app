@@ -44,7 +44,7 @@ function ContactConversation({
 
   // Fetch friend by friend ID
   useEffect(() => {
-    const { getUserById } = usersApiClient();
+    const { getUser } = usersApiClient();
 
     const friendId = conversation.memberIds.find(
       (memberId: string) => memberId !== userId
@@ -52,7 +52,7 @@ function ContactConversation({
 
     (async () => {
       try {
-        const response = await getUserById(friendId!);
+        const response = await getUser(friendId!);
 
         setFriend(response!.data as GetUserResponse);
       } catch (error) {

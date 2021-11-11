@@ -3,17 +3,23 @@ import { call, delay, put, takeLatest } from '@redux-saga/core/effects';
 // types
 import { PayloadAction } from '@reduxjs/toolkit';
 import { AxiosResponse } from 'axios';
-import { FollowResponse } from '@/models/users';
+import { FollowResponse, GetUserFriendsResponse } from '@/models/users';
+import { PaginationParams } from '@/models/common';
 
 import { usersApiClient } from '@/apis/usersApi';
 import { notifySagaError } from '@/helpers/notify';
-import { addFollowingUser, deleteFollowingUser } from '../slices/usersSlice';
+import {
+  addFollowingUser,
+  deleteFollowingUser,
+  setFetchedFriends,
+} from '../slices/usersSlice';
 import {
   followUser as followUserAct,
   unfollowUser as unfollowUserAct,
+  getUserFriends as getUserFriendsAct,
 } from '../actions/users';
 
-const { getCurrentUser, followUser, unfollowUser } = usersApiClient();
+const { followUser, unfollowUser, getUserFriends } = usersApiClient();
 
 function* handleFollowUser(action: PayloadAction<string>) {
   const userId = action.payload;
@@ -49,9 +55,28 @@ function* handleUnfollowUser(action: PayloadAction<string>) {
   }
 }
 
+function* handleGetUserFriends(
+  action: PayloadAction<{ userId: string; params: PaginationParams }>
+) {
+  const { userId, params } = action.payload;
+
+  try {
+    const response: AxiosResponse<GetUserFriendsResponse> = yield call(
+      getUserFriends,
+      userId,
+      params
+    );
+
+    yield put(setFetchedFriends(response.data));
+  } catch (error) {
+    notifySagaError('Get user friends', error);
+  }
+}
+
 function* usersSaga() {
   yield takeLatest(followUserAct.request().type, handleFollowUser);
   yield takeLatest(unfollowUserAct.request().type, handleUnfollowUser);
+  yield takeLatest(getUserFriendsAct.request().type, handleGetUserFriends);
 }
 
 export default usersSaga;

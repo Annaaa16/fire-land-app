@@ -9,6 +9,7 @@ import GroupIcon from '@mui/icons-material/Group';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 import { useUsersSelector } from '@/redux/selectors';
+import { useGlobalContext } from '@/contexts/GlobalContext';
 
 import User from '@/components/User';
 import PostHeaderOptions from './PostHeaderOptions';
@@ -25,13 +26,19 @@ interface PostHeaderProps {
 function PostHeader(props: PostHeaderProps) {
   const { postId, username, avatar, userId, createdAt } = props;
 
+  const { visitWall } = useGlobalContext();
   const { currentUser } = useUsersSelector();
 
   return (
     <div className={clsx('relative', 'flex items-center px-2 md:px-4 py-4')}>
       <div className={clsx('flex items-center')}>
         <div className={clsx('relative', 'group ml-1 md:ml-0 z-0')}>
-          <User avatar={avatar} view='sm' rounded />
+          <User
+            avatar={avatar}
+            view='sm'
+            rounded
+            onHandleClick={() => visitWall(userId)}
+          />
           {currentUser._id !== userId && (
             <PostHeaderBox
               userId={userId}

@@ -4,7 +4,7 @@ import { useState } from 'react';
 import clsx from 'clsx';
 
 // types
-import { PostInit } from '@/models/posts';
+import { Pagination, Post as PostType } from '@/models/common';
 
 import { LIMITS } from '@/constants';
 import { getComments } from '@/redux/actions/comments';
@@ -18,7 +18,7 @@ import PostDetail from './PostDetail';
 import PostSender from './PostSender';
 import PostCommentList from './PostCommentList';
 
-function NewsFeedPost(props: PostInit) {
+function Post(props: PostType & Pagination) {
   const {
     _id,
     content,
@@ -113,4 +113,4 @@ function NewsFeedPost(props: PostInit) {
   );
 }
 
-export default NewsFeedPost;
+export default Post;

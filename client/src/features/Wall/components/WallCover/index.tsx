@@ -4,14 +4,17 @@ import clsx from 'clsx';
 // material ui icons
 import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
 
-import User from '@/components/User';
+import { useUsersSelector } from '@/redux/selectors';
 
+import User from '@/components/User';
 import Tooltip from '@/components/Tooltip';
 
 // images
 import cover from '@/assets/images/profile/cover.jpg';
 
 function WallCover() {
+  const { userProfile } = useUsersSelector();
+
   return (
     <section
       style={{ backgroundImage: `url(${cover.src})` }}
@@ -33,7 +36,7 @@ function WallCover() {
           'flex items-center justify-center md:justify-start w-full'
         )}>
         <User
-          avatar='https://avatars.dicebear.com/api/avataaars/wYqKSN.svg'
+          avatar={userProfile.avatar}
           subClass={clsx('w-18 h-18 lg:w-24 lg:h-24 mr-2')}
           rounded
         />
@@ -41,10 +44,10 @@ function WallCover() {
           <div className={clsx('mb-1 md:mb-4', 'text-white')}>
             <h1
               className={clsx(
-                'text-base md:text-lg leading-normal',
+                'text-base mb-1 md:text-lg leading-normal',
                 'font-bold'
               )}>
-              IG Dev
+              {userProfile.username}
             </h1>
             <p className={clsx('text-xs md:text-sm-1')}>Fuck you bitch!</p>
           </div>
@@ -54,19 +57,6 @@ function WallCover() {
           </div>
         </div>
       </div>
-      <ul
-        className={clsx(
-          'relative',
-          'hidden md:flex items-center',
-          'text-white'
-        )}>
-        <li className={clsx('mr-2')}>
-          Posts: <strong>30</strong>
-        </li>
-        <li className={clsx('mr-2')}>
-          Posts: <strong>30</strong>
-        </li>
-      </ul>
     </section>
   );
 }

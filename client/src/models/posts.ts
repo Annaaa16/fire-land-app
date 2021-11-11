@@ -1,25 +1,22 @@
 // types
-import { Pagination, Post } from './common';
-
-export type PostInit = Post & Pagination;
+import { Pagination, PaginationParams, Post } from './common';
 
 export interface PostsInitState {
   success: boolean;
   prevPage: number | null;
   nextPage: number | null;
   total: number;
-  posts: PostInit[];
+  posts: Array<Post & Pagination>;
   updatePost: Post | null;
-}
-
-export interface GetPosts {
-  page: number;
-  limit: number;
 }
 
 export interface UpdatePost {
   postId: string;
   updateData: FormData;
+}
+
+export interface GetPosts extends PaginationParams {
+  user_id?: string;
 }
 
 // === Responses ===
@@ -29,12 +26,9 @@ export interface CreatePostsResponse {
   post: Post;
 }
 
-export interface GetPostsResponse {
+export interface GetPostsResponse extends Pagination {
   success: boolean;
   message: string;
-  prevPage: number | null;
-  nextPage: number | null;
-  total: number;
   posts: Post[];
 }
 

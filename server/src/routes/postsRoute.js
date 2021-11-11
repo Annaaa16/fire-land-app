@@ -11,7 +11,7 @@ const router = express.Router();
 // @desc Create new post
 // @access Private
 router.post(
-  '/',
+  '/create',
   verifyToken,
   upload.single('file'),
   postsController.createPost

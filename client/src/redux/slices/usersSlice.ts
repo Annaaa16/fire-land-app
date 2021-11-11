@@ -5,7 +5,9 @@ import _ from 'lodash';
 
 // types
 import { LoginResponse } from '@/models/auth';
-import { GetUserResponse } from '@/models/users';
+import { GetUserFriendsResponse, GetUserResponse } from '@/models/users';
+import { HydrateResponse } from '@/models/common';
+import { HYDRATE } from 'next-redux-wrapper';
 import {
   FollowResponse,
   UnfollowResponse,
@@ -19,7 +21,17 @@ export const initialState: UsersInitState = {
     avatar: '',
     followings: [],
     followers: [],
+    createdAt: '',
   },
+  userProfile: {
+    _id: '',
+    username: '',
+    avatar: '',
+    followings: [],
+    followers: [],
+    createdAt: '',
+  },
+  fetchedFriends: [],
 };
 
 const usersSlice = createSlice({
@@ -41,6 +53,7 @@ const usersSlice = createSlice({
             avatar: user.avatar,
             followings: user.followings,
             followers: user.followers,
+            createdAt: user.createdAt,
           },
         };
       }
@@ -57,10 +70,49 @@ const usersSlice = createSlice({
 
       if (success) _.remove(state.currentUser.followings, (n) => n === userId);
     },
+
+    setFetchedFriends: (
+      state,
+      action: PayloadAction<GetUserFriendsResponse>
+    ) => {
+      const { success, friends } = action.payload;
+
+      if (success) {
+        state.fetchedFriends = friends;
+      }
+    },
+
+    setUserProfile: (state, action: PayloadAction<GetUserResponse>) => {
+      const { user, success } = action.payload;
+
+      if (success) {
+        return {
+          ...state,
+          userProfile: {
+            _id: user._id,
+            username: user.username,
+            avatar: user.avatar,
+            followings: user.followings,
+            followers: user.followers,
+            createdAt: user.createdAt,
+          },
+        };
+      }
+    },
+  },
+  extraReducers: {
+    [HYDRATE]: (state, action: PayloadAction<HydrateResponse>) => {
+      return { ...state, ...action.payload.users };
+    },
   },
 });
 
-export const { setUser, addFollowingUser, deleteFollowingUser } =
-  usersSlice.actions;
+export const {
+  setUser,
+  addFollowingUser,
+  deleteFollowingUser,
+  setFetchedFriends,
+  setUserProfile,
+} = usersSlice.actions;
 
 export default usersSlice.reducer;

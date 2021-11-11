@@ -42,11 +42,8 @@ const handleAuthentication = async (ctx: NextPageContext) => {
     cookies.deleteAll(ctx);
     redirectToLocation(PATHS.LOGIN);
   } else if (isFully) {
-    cookies.setPrevPath(ctx, originalUrl);
-
     // Redirect back if try to go to login or register
     if (originalUrl === PATHS.LOGIN || originalUrl === PATHS.REGISTER) {
-      console.log('path =>', cookies.getPrevPath(ctx));
       redirectToLocation(cookies.getPrevPath(ctx));
     }
 
@@ -54,7 +51,6 @@ const handleAuthentication = async (ctx: NextPageContext) => {
 
     // Invalid tokens
     if (!response?.data.success) {
-      cookies.deleteAll(ctx);
       redirectToLocation(PATHS.LOGIN);
     } else if (isAccessTokenExpired) {
       const { refreshToken } = authApiServer(ctx);
@@ -82,7 +78,7 @@ const handleAuthentication = async (ctx: NextPageContext) => {
     const currentUser =
       (await getCurrentUser()) as AxiosResponse<GetUserResponse>;
 
-    currentUserResponse = currentUser.data;
+    currentUserResponse = currentUser?.data;
   }
 
   return currentUserResponse;

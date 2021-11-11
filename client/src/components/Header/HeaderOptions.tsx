@@ -23,6 +23,7 @@ import { StatusResponse } from '@/models/common';
 import { LOCAL_STORAGE, PATHS } from '@/constants';
 import { useGlobalContext } from '@/contexts/GlobalContext';
 import { authApiClient } from '@/apis/authApi';
+import cookies from '@/helpers/cookies';
 
 function HeaderOptions() {
   const [isSetting, setIsSetting] = useState(false);
@@ -37,6 +38,7 @@ function HeaderOptions() {
     const response = (await logoutUser()) as AxiosResponse<StatusResponse>;
 
     if (response.data.success) {
+      cookies.deleteAll(null);
       router.push(PATHS.LOGIN);
     }
   };

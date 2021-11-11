@@ -1,4 +1,4 @@
-import router from 'next/router';
+import { useRouter } from 'next/router';
 
 // clsx
 import clsx from 'clsx';
@@ -13,6 +13,8 @@ import HeaderOptions from './HeaderOptions';
 import icon from '@/assets/svgs/icon.svg';
 
 function Header() {
+  const router = useRouter();
+
   return (
     <header
       className={clsx(

@@ -2,6 +2,7 @@
 import { AuthInitState } from './auth';
 import { PostsInitState } from './posts';
 import { MoviesInitState } from './movies';
+import { UsersInitState } from './users';
 
 export interface User {
   readonly _id: string;
@@ -9,6 +10,7 @@ export interface User {
   avatar: string;
   followings: string[];
   followers: string[];
+  createdAt: string;
 }
 
 export interface Comment {
@@ -21,8 +23,8 @@ export interface Comment {
 }
 
 export interface Pagination {
-  prevPage?: number;
-  nextPage?: number;
+  prevPage?: number | null;
+  nextPage?: number | null;
   total?: number;
 }
 
@@ -58,11 +60,17 @@ export interface TvShow {
   popularity: number;
 }
 
+export interface PaginationParams {
+  page: number;
+  limit: number;
+}
+
 // === Responses ===
 export interface HydrateResponse {
   auth: AuthInitState;
   posts: PostsInitState;
   movies: MoviesInitState;
+  users: UsersInitState;
 }
 
 export interface StatusResponse {

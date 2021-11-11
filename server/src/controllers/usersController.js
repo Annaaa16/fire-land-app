@@ -23,7 +23,7 @@ usersController.getCurrentUser = async (req, res) => {
 
     res.json({
       success: true,
-      message: 'User has successfully logged in',
+      message: 'Get current user successfully',
       user: filteredUser,
     });
   } catch (error) {
@@ -31,8 +31,12 @@ usersController.getCurrentUser = async (req, res) => {
   }
 };
 
-usersController.getUserById = async (req, res) => {
+usersController.getUser = async (req, res) => {
   const { userId } = req.params;
+
+  if (!userId) {
+    res.status(404).json({ success: false, message: 'User ID is required' });
+  }
 
   try {
     const user = await User.findById(userId).select('-password');
@@ -52,7 +56,7 @@ usersController.getUserById = async (req, res) => {
 };
 
 usersController.followUser = async (req, res) => {
-  const { userId } = req.params;
+  const { userId } = req.params; // ID of followed user
 
   // Prevent same user ID
   if (userId !== req.userId) {
@@ -68,7 +72,7 @@ usersController.followUser = async (req, res) => {
 
       if (!currentUser.followings.includes(userId)) {
         await currentUser.updateOne({ $push: { followings: userId } });
-        await followedUser.updateOne({ $push: { followers: userId } });
+        await followedUser.updateOne({ $push: { followers: req.userId } });
 
         res.json({
           success: true,
@@ -92,7 +96,7 @@ usersController.followUser = async (req, res) => {
 };
 
 usersController.unfollowUser = async (req, res) => {
-  const { userId } = req.params;
+  const { userId } = req.params; // ID of unfollowed user
 
   // Prevent same user ID
   if (userId !== req.userId) {
@@ -108,7 +112,7 @@ usersController.unfollowUser = async (req, res) => {
 
       if (currentUser.followings.includes(userId)) {
         await currentUser.updateOne({ $pull: { followings: userId } });
-        await unfollowedUser.updateOne({ $pull: { followers: userId } });
+        await unfollowedUser.updateOne({ $pull: { followers: req.userId } });
 
         res.json({
           success: true,
@@ -128,6 +132,51 @@ usersController.unfollowUser = async (req, res) => {
     res
       .status(403)
       .json({ success: false, message: "You can't unfollow yourself!" });
+  }
+};
+
+usersController.getUserFriends = async (req, res) => {
+  const { userId } = req.params;
+  const page = parseInt(req.query.page);
+  const limit = parseInt(req.query.limit);
+
+  if (!userId) {
+    res.status(404).json({ success: false, message: 'User ID is required' });
+  }
+
+  try {
+    const user = await User.findById(userId).select('-password');
+
+    if (!user) {
+      res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    const total = await User.count({
+      followers: { $in: [userId] },
+    });
+
+    const startPos = (page - 1) * limit;
+    const endPos = page * limit;
+
+    const prevPage = startPos > 0 ? page - 1 : null;
+    const nextPage = endPos < total ? page + 1 : null;
+
+    const friends = await User.find({
+      followers: { $in: [userId] },
+    })
+      .skip(startPos)
+      .limit(limit);
+
+    res.json({
+      success: true,
+      message: 'Get user friends successfully',
+      friends,
+      total,
+      prevPage,
+      nextPage,
+    });
+  } catch (error) {
+    notifyServerError(res, error);
   }
 };
 

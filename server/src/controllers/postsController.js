@@ -1,7 +1,6 @@
 // models
 const Post = require('../models/postModel');
 const User = require('../models/userModel');
-const Comment = require('../models/commentModel');
 
 const { CLOUDINARY } = require('../constants');
 const cloudinary = require('../configs/cloudinaryConfig');
@@ -15,18 +14,14 @@ postsController.createPost = async (req, res) => {
   let photo = req.file?.path; // Read photo file path from client
 
   // Empty content and attachment
-  if (!content.trim() && !photo) {
+  if (!content && !photo) {
     res
       .status(400)
       .json({ success: false, message: 'Content or attachment is required!' });
   }
 
   try {
-    const user = await User.findById(req.userId).select([
-      '-password',
-      '-createdAt',
-      '-__v',
-    ]);
+    const user = await User.findById(req.userId).select(['-password', '-__v']);
 
     let photoId = '';
 
@@ -69,25 +64,22 @@ postsController.createPost = async (req, res) => {
 };
 
 postsController.getPosts = async (req, res) => {
+  const { user_id } = req.query;
   const page = parseInt(req.query.page);
   const limit = parseInt(req.query.limit);
 
   // Not specify page or limit then return all posts
   if (!page || !limit) {
-    try {
-      const posts = await Post.find()
-        .sort({ createdAt: 'desc' })
-        .populate('user', ['username', 'avatar'])
-        .select(['-__v'])
-        .lean();
-
-      res.json({ success: true, posts });
-    } catch (error) {
-      notifyServerError(res, error);
-    }
+    res
+      .status(400)
+      .json({ success: false, message: 'Page and limit params is required!' });
   }
 
-  const total = await Post.count();
+  const total = await Post.count(
+    user_id && {
+      user: { $eq: user_id },
+    }
+  );
 
   const startPos = (page - 1) * limit;
   const endPos = page * limit;
@@ -97,7 +89,11 @@ postsController.getPosts = async (req, res) => {
 
   // Pagination
   try {
-    const posts = await Post.find()
+    const posts = await Post.find(
+      user_id && {
+        user: { $eq: user_id },
+      }
+    )
       .sort({ createdAt: 'desc' })
       .skip(startPos)
       .limit(limit)
