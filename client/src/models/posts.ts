@@ -19,6 +19,16 @@ export interface GetPosts extends PaginationParams {
   user_id?: string;
 }
 
+export interface LikePost {
+  postId: string;
+  userId: string;
+}
+
+export interface UnlikePost {
+  postId: string;
+  userId: string;
+}
+
 // === Responses ===
 export interface CreatePostsResponse {
   success: boolean;

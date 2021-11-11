@@ -1,6 +1,5 @@
 import { combineReducers } from '@reduxjs/toolkit';
 
-import globalReducer from '../slices/globalSlice';
 import authReducer from '../slices/authSlice';
 import usersReducer from '../slices/usersSlice';
 import postsReducer from '../slices/postsSlice';
@@ -10,7 +9,6 @@ import commentsReducer from '../slices/commentsSlice';
 import moviesReducer from '../slices/moviesSlice';
 
 const rootReducer = combineReducers({
-  global: globalReducer,
   auth: authReducer,
   users: usersReducer,
   posts: postsReducer,

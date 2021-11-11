@@ -5,9 +5,9 @@ import {
   GetPostsResponse,
   DeletePostResponse,
   UpdatePostResponse,
-  LikePostResponse,
-  UnlikePostResponse,
   GetPosts,
+  UnlikePost,
+  LikePost,
 } from '@/models/posts';
 import { AxiosResponse } from 'axios';
 import { PayloadAction } from '@reduxjs/toolkit';
@@ -25,10 +25,11 @@ import {
   addCreatedPost,
   addFetchedPosts,
   removeDeletedPost,
-  setLikedPost,
-  setUnlikedPost,
+  setUserLiked,
+  clearUserUnliked,
   setUpdatedPost,
 } from '../slices/postsSlice';
+import { DELAYS } from '@/constants';
 import { postsApiClient } from '@/apis/postsApi';
 import { notifySagaError } from '@/helpers/notify';
 
@@ -37,7 +38,7 @@ const { createPost, getPosts, updatePost, deletePost, likePost, unlikePost } =
 
 function* handleCreatePost(action: PayloadAction<FormData>) {
   try {
-    yield delay(300); // Block spam upload button
+    yield delay(DELAYS.DEFAULT); // Block spam upload button
 
     const response: AxiosResponse<UpdatePostResponse> = yield call(
       createPost,
@@ -65,7 +66,7 @@ function* handleGetPosts(action: PayloadAction<GetPosts>) {
 
 function* handleUpdatePost(action: PayloadAction<UpdatePost>) {
   try {
-    yield delay(300); // Block spam update button
+    yield delay(DELAYS.DEFAULT); // Block spam update button
 
     const response: AxiosResponse<UpdatePostResponse> = yield call(
       updatePost,
@@ -82,7 +83,7 @@ function* handleDeletePost(action: PayloadAction<string>) {
   try {
     const postId = action.payload;
 
-    yield delay(300); // Block spam delete button
+    yield delay(DELAYS.DEFAULT); // Block spam delete button
 
     const response: AxiosResponse<DeletePostResponse> = yield call(
       deletePost,
@@ -95,35 +96,29 @@ function* handleDeletePost(action: PayloadAction<string>) {
   }
 }
 
-function* handleLikePost(action: PayloadAction<string>) {
+function* handleLikePost(action: PayloadAction<LikePost>) {
   try {
-    const postId = action.payload;
+    const { postId } = action.payload;
 
-    yield delay(300); // Block spam like button
+    yield put(setUserLiked(action.payload));
 
-    const response: AxiosResponse<LikePostResponse> = yield call(
-      likePost,
-      postId
-    );
+    yield delay(DELAYS.DOUBLE); // Block spam like button
 
-    yield put(setLikedPost(response.data));
+    yield call(likePost, postId);
   } catch (error) {
     notifySagaError('Like post', error);
   }
 }
 
-function* handleUnlikePost(action: PayloadAction<string>) {
+function* handleUnlikePost(action: PayloadAction<UnlikePost>) {
   try {
-    const postId = action.payload;
+    const { postId } = action.payload;
 
-    yield delay(300); // Block spam like button
+    yield put(clearUserUnliked(action.payload));
 
-    const response: AxiosResponse<UnlikePostResponse> = yield call(
-      unlikePost,
-      postId
-    );
+    yield delay(DELAYS.DOUBLE); // Block spam like button
 
-    yield put(setUnlikedPost(response.data));
+    yield call(unlikePost, postId);
   } catch (error) {
     notifySagaError('Unlike post', error);
   }

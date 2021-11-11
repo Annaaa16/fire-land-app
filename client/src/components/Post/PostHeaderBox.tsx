@@ -8,9 +8,8 @@ import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 
+import { useGlobalContext } from '@/contexts/GlobalContext';
 import { useUsersSelector } from '@/redux/selectors';
-import { followUser, unfollowUser } from '@/redux/actions/users';
-import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 import User from '@/components/User';
 
@@ -18,16 +17,16 @@ interface PostHeaderBoxProps {
   userId: string;
   username: string;
   avatar: string;
+  followers: string[];
 }
 
 function PostHeaderBox(props: PostHeaderBoxProps) {
-  const { username, avatar, userId } = props;
+  const { username, avatar, userId, followers } = props;
 
+  const { handleMakeFriend, visitWall } = useGlobalContext();
   const {
     currentUser: { followings },
   } = useUsersSelector();
-
-  const dispatch = useStoreDispatch();
 
   return (
     <div
@@ -44,9 +43,15 @@ function PostHeaderBox(props: PostHeaderBoxProps) {
           'dark:text-white bg-white dark:bg-dk-cpn'
         )}>
         <div className={clsx('flex items-center mb-6')}>
-          <User avatar={avatar} subClass={clsx('w-14 h-14 mr-2')} rounded />
+          <User
+            onHandleClick={() => visitWall(userId)}
+            avatar={avatar}
+            subClass={clsx('w-14 h-14 mr-2')}
+            rounded
+          />
           <div>
             <h2
+              onClick={() => visitWall(userId)}
               className={clsx(
                 'font-bold text-lg mb-4 ml-0.5',
                 'cursor-pointer',
@@ -64,7 +69,7 @@ function PostHeaderBox(props: PostHeaderBoxProps) {
                     'cursor-pointer',
                     'hover:underline'
                   )}>
-                  1000 people
+                  {followers?.length} people
                 </strong>
               </div>
             </div>
@@ -72,13 +77,7 @@ function PostHeaderBox(props: PostHeaderBoxProps) {
         </div>
         <div className={clsx('flex items-center h-9 justify-between')}>
           <button
-            onClick={() =>
-              dispatch(
-                followings.includes(userId)
-                  ? unfollowUser.request(userId)
-                  : followUser.request(userId)
-              )
-            }
+            onClick={() => handleMakeFriend(userId)}
             className={clsx(
               'i-flex-center flex-grow h-full rounded-lg px-6',
               followings.includes(userId)

@@ -10,7 +10,7 @@ import User from '@/components/User';
 
 function WidgetsFriendList() {
   const { visitWall } = useGlobalContext();
-  const { fetchedFriends } = useUsersSelector();
+  const { fetchedFriends, userProfile } = useUsersSelector();
 
   return (
     <div
@@ -34,7 +34,9 @@ function WidgetsFriendList() {
           </a>
         </Link>
       </div>
-      <div className={clsx('mt-3', 'dark:text-white')}>246 friends</div>
+      <div className={clsx('mt-3', 'dark:text-white')}>
+        {userProfile.followings.length} friends
+      </div>
       <ul className={clsx('grid grid-cols-4 mt-2 gap-x-2')}>
         {fetchedFriends.map((friend) => (
           <li

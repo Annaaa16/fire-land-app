@@ -23,9 +23,7 @@ interface ContactOnlineProps {
   friendId: string;
 }
 
-function ContactOnline(props: ContactOnlineProps) {
-  const { friendId } = props;
-
+function ContactOnline({ friendId }: ContactOnlineProps) {
   const { conversations } = useConversationsSelector();
 
   const [onlineFriend, setOnlineFriend] = useState<UserType | null>(null);

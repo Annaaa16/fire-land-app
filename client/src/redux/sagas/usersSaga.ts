@@ -6,8 +6,6 @@ import { AxiosResponse } from 'axios';
 import { FollowResponse, GetUserFriendsResponse } from '@/models/users';
 import { PaginationParams } from '@/models/common';
 
-import { usersApiClient } from '@/apis/usersApi';
-import { notifySagaError } from '@/helpers/notify';
 import {
   addFollowingUser,
   deleteFollowingUser,
@@ -18,6 +16,9 @@ import {
   unfollowUser as unfollowUserAct,
   getUserFriends as getUserFriendsAct,
 } from '../actions/users';
+import { DELAYS } from '@/constants';
+import { usersApiClient } from '@/apis/usersApi';
+import { notifySagaError } from '@/helpers/notify';
 
 const { followUser, unfollowUser, getUserFriends } = usersApiClient();
 
@@ -25,7 +26,7 @@ function* handleFollowUser(action: PayloadAction<string>) {
   const userId = action.payload;
 
   try {
-    yield delay(300); // Block spam follow button
+    yield delay(DELAYS.DEFAULT); // Block spam add friend button
 
     const response: AxiosResponse<FollowResponse> = yield call(
       followUser,
@@ -42,14 +43,14 @@ function* handleUnfollowUser(action: PayloadAction<string>) {
   const userId = action.payload;
 
   try {
-    yield delay(300); // Block spam unfollow button
+    yield delay(DELAYS.DEFAULT); // Block spam unfriend button
+
+    yield put(deleteFollowingUser(userId));
 
     const response: AxiosResponse<FollowResponse> = yield call(
       unfollowUser,
       userId
     );
-
-    yield put(deleteFollowingUser(response.data));
   } catch (error) {
     notifySagaError('Unfollow user', error);
   }

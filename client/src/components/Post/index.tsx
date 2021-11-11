@@ -28,7 +28,7 @@ function Post(props: PostType & Pagination) {
     total,
     commentCount,
     createdAt,
-    user: { username, _id: userId, avatar },
+    user: { username, _id: userId, avatar, followers },
   } = props;
 
   const [isOpenComments, setIsOpenComments] = useState<boolean>(false);
@@ -80,6 +80,7 @@ function Post(props: PostType & Pagination) {
         userId={userId}
         avatar={avatar}
         createdAt={createdAt}
+        followers={followers}
       />
       <PostContent content={content} photo={photo} />
 

@@ -31,8 +31,6 @@ class WrappedApp extends App<
     // Init check
     const currentUserResponse = await handleAuthentication(ctx);
 
-    // console.log('getInitialProps =>', ctx.req);
-
     // Wait for all page actions to dispatch
     if (ctx.req) {
       ctx.store?.dispatch(END);

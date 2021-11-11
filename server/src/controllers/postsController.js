@@ -97,7 +97,7 @@ postsController.getPosts = async (req, res) => {
       .sort({ createdAt: 'desc' })
       .skip(startPos)
       .limit(limit)
-      .populate('user', ['username', 'avatar'])
+      .populate('user', ['-__v'])
       .select(['-__v'])
       .lean();
 
@@ -269,7 +269,7 @@ postsController.unlikePost = async (req, res) => {
     const unlikeCondition = { _id: req.params.id };
 
     if (post.likes.includes(req.userId)) {
-      const unlikePost = await Post.findOneAndUpdate(
+      const unlikedPost = await Post.findOneAndUpdate(
         unlikeCondition,
         { $pull: { likes: req.userId } },
         { new: true }
@@ -277,13 +277,13 @@ postsController.unlikePost = async (req, res) => {
 
       res.json({
         success: true,
-        message: 'The post has been unliked',
-        post: unlikePost,
+        message: 'Unlike post successfully',
+        post: unlikedPost,
       });
     } else {
       res.status(400).json({
         success: false,
-        message: 'The post has already been unliked',
+        message: 'Post already unliked',
       });
     }
   } catch (error) {

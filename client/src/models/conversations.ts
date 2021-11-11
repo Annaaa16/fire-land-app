@@ -9,7 +9,7 @@ export interface ConversationsInitState {
 }
 
 export interface CreateConversation {
-  userId: string;
+  senderId: string;
   receiverId: string;
 }
 
@@ -24,4 +24,10 @@ export interface CreateConversationResponse {
   success: boolean;
   message: string;
   conversation: Conversation;
+}
+
+export interface DeleteConversationResponse {
+  success: boolean;
+  message: string;
+  conversationId: string;
 }

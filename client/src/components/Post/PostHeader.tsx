@@ -21,10 +21,11 @@ interface PostHeaderProps {
   username: string;
   avatar: string;
   createdAt: string;
+  followers: string[];
 }
 
 function PostHeader(props: PostHeaderProps) {
-  const { postId, username, avatar, userId, createdAt } = props;
+  const { postId, username, avatar, userId, followers, createdAt } = props;
 
   const { visitWall } = useGlobalContext();
   const { currentUser } = useUsersSelector();
@@ -44,11 +45,13 @@ function PostHeader(props: PostHeaderProps) {
               userId={userId}
               username={username}
               avatar={avatar}
+              followers={followers}
             />
           )}
         </div>
         <div className={clsx('ml-3')}>
           <span
+            onClick={() => visitWall(userId)}
             className={clsx(
               'font-bold',
               'dark:text-white',

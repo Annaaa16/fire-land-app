@@ -7,23 +7,26 @@ import {
 } from 'react';
 import { useRouter } from 'next/router';
 
+// lodash
+import _ from 'lodash';
+
 // types
 import { ReactNode } from 'react';
 import { GetUserResponse } from '@/models/users';
+import { GlobalInitContext } from '@/models/global';
 
+import {
+  createConversation,
+  deleteConversation,
+  getConversations,
+} from '@/redux/actions/conversations';
 import { LOCAL_STORAGE, PATHS } from '@/constants';
 import { setUser } from '@/redux/slices/usersSlice';
+import { followUser, unfollowUser } from '@/redux/actions/users';
+import { useConversationsSelector, useUsersSelector } from '@/redux/selectors';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import cookies from '@/helpers/cookies';
-
-export interface GlobalInitContext {
-  isShowSenderArea: boolean;
-  toggleSenderArea: (isOpen: boolean) => void;
-  theme: string;
-  toggleTheme: (value: string) => void;
-  visitWall: (userId: string) => void;
-}
 
 interface GlobalProviderProps {
   children: ReactNode;
@@ -36,9 +39,10 @@ const initialState: GlobalInitContext = {
   theme: '',
   toggleTheme: () => {},
   visitWall: () => {},
+  handleMakeFriend: () => {},
 };
 
-export const GlobalContext = createContext(initialState);
+const GlobalContext = createContext(initialState);
 
 function GlobalProvider({
   children,
@@ -49,6 +53,9 @@ function GlobalProvider({
     LOCAL_STORAGE.LIGHT_THEME_VALUE,
     typeof window !== 'undefined' ? useLayoutEffect : useEffect
   );
+
+  const { conversations } = useConversationsSelector();
+  const { currentUser } = useUsersSelector();
 
   const [isShowSenderArea, setIsShowSenderArea] = useState<boolean>(false);
 
@@ -63,14 +70,44 @@ function GlobalProvider({
     router.push({ pathname: PATHS.WALL + '/[id]', query: { id: userId } });
   };
 
-  // Set current user for every page re-load
+  const handleMakeFriend = (followedUserId: string) => {
+    const { _id, followings } = currentUser;
+
+    if (!_id || !followedUserId) return;
+
+    const addFriend = () => {
+      dispatch(
+        createConversation.request({
+          senderId: _id as string,
+          receiverId: followedUserId,
+        })
+      );
+
+      dispatch(followUser.request(followedUserId));
+    };
+
+    const unfriend = () => {
+      const conversation = conversations.find(
+        ({ memberIds }) =>
+          memberIds.includes(_id) && memberIds.includes(followedUserId)
+      );
+
+      dispatch(unfollowUser.request(followedUserId));
+      conversation && dispatch(deleteConversation.request(conversation._id));
+    };
+
+    followings.includes(followedUserId) ? unfriend() : addFriend();
+  };
+
+  // Set init user info
   useEffect(() => {
     if (currentUserResponse?.success) {
       dispatch(setUser(currentUserResponse));
+      dispatch(getConversations.request(currentUserResponse.user._id));
     }
   }, [currentUserResponse, dispatch]);
 
-  // Set previous path for invalid redirect to login or register when logged in
+  // Set previous path for handle redirect when logged in
   useEffect(() => {
     const { query, pathname } = router;
 
@@ -87,6 +124,7 @@ function GlobalProvider({
     theme,
     toggleTheme,
     visitWall,
+    handleMakeFriend,
   };
 
   return (
@@ -94,6 +132,8 @@ function GlobalProvider({
   );
 }
 
-export const useGlobalContext = () => useContext(GlobalContext);
+const useGlobalContext = () => useContext(GlobalContext);
+
+export { GlobalContext, useGlobalContext };
 
 export default GlobalProvider;

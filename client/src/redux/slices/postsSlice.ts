@@ -12,9 +12,9 @@ import {
   GetPostsResponse,
   DeletePostResponse,
   PostsInitState,
-  LikePostResponse,
   UpdatePostResponse,
-  UnlikePostResponse,
+  UnlikePost,
+  LikePost,
 } from '@/models/posts';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { CreateCommentResponse, GetCommentsResponse } from '@/models/comments';
@@ -90,28 +90,24 @@ const postsSlice = createSlice({
       }
     },
 
-    setLikedPost: (state, action: PayloadAction<LikePostResponse>) => {
-      const { success, post } = action.payload;
+    setUserLiked: (state, action: PayloadAction<LikePost>) => {
+      const { userId, postId } = action.payload;
 
-      if (success) {
-        const { _id, likes } = post;
-
-        state.posts.forEach((post) => {
-          if (post._id === _id) post.likes = likes;
-        });
-      }
+      state.posts.forEach((post) => {
+        if (post._id === postId) {
+          post.likes[post.likes.length] = userId;
+        }
+      });
     },
 
-    setUnlikedPost: (state, action: PayloadAction<UnlikePostResponse>) => {
-      const { success, post } = action.payload;
+    clearUserUnliked: (state, action: PayloadAction<UnlikePost>) => {
+      const { userId, postId } = action.payload;
 
-      if (success) {
-        const { _id, likes } = post;
-
-        state.posts.forEach((post) => {
-          if (post._id === _id) post.likes = likes;
-        });
-      }
+      state.posts.forEach(
+        (post) =>
+          post._id === postId &&
+          post.likes.splice(post.likes.indexOf(userId), 1)
+      );
     },
 
     setPagination: (state, action: PayloadAction<GetCommentsResponse>) => {
@@ -168,8 +164,8 @@ export const {
   setUpdatePost,
   setUpdatedPost,
   removeDeletedPost,
-  setLikedPost,
-  setUnlikedPost,
+  setUserLiked,
+  clearUserUnliked,
   setPagination,
   updateCommentCount,
 } = postsSlice.actions;
