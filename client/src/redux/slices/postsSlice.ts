@@ -42,7 +42,7 @@ const postsSlice = createSlice({
       }
     },
 
-    addFetchedPostList: (state, action: PayloadAction<GetPostsResponse>) => {
+    addFetchedPosts: (state, action: PayloadAction<GetPostsResponse>) => {
       const { success, posts, ...others } = action.payload;
 
       if (success) {
@@ -52,6 +52,10 @@ const postsSlice = createSlice({
           posts: [...state.posts, ...posts],
         };
       }
+    },
+
+    clearPosts: (state) => {
+      state.posts.length = 0;
     },
 
     setUpdatePost: (state, action: PayloadAction<string | null>) => {
@@ -159,7 +163,8 @@ const postsSlice = createSlice({
 
 export const {
   addCreatedPost,
-  addFetchedPostList,
+  addFetchedPosts,
+  clearPosts,
   setUpdatePost,
   setUpdatedPost,
   removeDeletedPost,

@@ -5,7 +5,12 @@ import clsx from 'clsx';
 import RssFeedIcon from '@mui/icons-material/RssFeed';
 import WatchLaterIcon from '@mui/icons-material/WatchLater';
 
+import { useUsersSelector } from '@/redux/selectors';
+import time from '@/helpers/time';
+
 function WidgetsIntro() {
+  const { userProfile } = useUsersSelector();
+
   return (
     <div
       className={clsx(
@@ -18,7 +23,9 @@ function WidgetsIntro() {
           <WatchLaterIcon className={clsx('dark:text-gray')} />
           <div className={clsx('ml-1')}>
             <span className={clsx('text-sm-1', 'dark:text-white')}>
-              Joined November 2017
+              {`Joined ${time.getMonth(userProfile.createdAt)} ${time.getYear(
+                userProfile.createdAt
+              )}`}
             </span>
           </div>
         </li>
@@ -33,7 +40,7 @@ function WidgetsIntro() {
                   'cursor-pointer',
                   'hover:underline'
                 )}>
-                1000 people
+                {userProfile.followers.length} people
               </strong>
             </span>
           </div>

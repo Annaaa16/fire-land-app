@@ -29,6 +29,7 @@ export const PATHS = {
   NEWSFEED: '/newsfeed',
   MOVIES: '/movies',
   MOVIES_SEARCH: '/movies/search',
+  WALL: '/wall',
 };
 
 export const LIMITS = {

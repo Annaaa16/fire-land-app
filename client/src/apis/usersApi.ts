@@ -1,8 +1,10 @@
 // types
 import { GetServerSidePropsContext, NextPageContext } from 'next';
 import { AxiosError } from 'axios';
+import { PaginationParams } from '@/models/common';
 import {
   FollowResponse,
+  GetUserFriendsResponse,
   GetUserResponse,
   UnfollowResponse,
 } from '@/models/users';
@@ -27,7 +29,7 @@ export const usersApiClient = () => {
       }
     },
 
-    getUserById: async (userId: string) => {
+    getUser: async (userId: string) => {
       try {
         const response = await axiosInstance.get<GetUserResponse>(
           '/users/' + userId
@@ -62,6 +64,19 @@ export const usersApiClient = () => {
         return notifyAxiosError('Unfollow user', error as AxiosError);
       }
     },
+
+    getUserFriends: async (userId: string, params: PaginationParams) => {
+      try {
+        const response = await axiosInstance.get<GetUserFriendsResponse>(
+          `/users/${userId}/friends`,
+          { params }
+        );
+
+        return response;
+      } catch (error) {
+        return notifyAxiosError('Get user friends', error as AxiosError);
+      }
+    },
   };
 };
 
@@ -80,6 +95,18 @@ export const usersApiServer = (
         return response;
       } catch (error) {
         return notifyAxiosError('Get current user', error as AxiosError);
+      }
+    },
+
+    getUser: async (userId: string) => {
+      try {
+        const response = await axiosInstance.get<GetUserResponse>(
+          '/users/' + userId
+        );
+
+        return response;
+      } catch (error) {
+        return notifyAxiosError('Get user by ID', error as AxiosError);
       }
     },
   };
