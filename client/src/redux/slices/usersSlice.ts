@@ -62,13 +62,15 @@ const usersSlice = createSlice({
     addFollowingUser: (state, action: PayloadAction<FollowResponse>) => {
       const { success, userId } = action.payload;
 
-      if (success) state.currentUser.followings.push(userId);
+      if (success) {
+        state.currentUser.followings.push(userId);
+      }
     },
 
-    deleteFollowingUser: (state, action: PayloadAction<UnfollowResponse>) => {
-      const { success, userId } = action.payload;
+    deleteFollowingUser: (state, action: PayloadAction<string>) => {
+      const userId = action.payload;
 
-      if (success) _.remove(state.currentUser.followings, (n) => n === userId);
+      _.remove(state.currentUser.followings, (n) => n === userId);
     },
 
     setFetchedFriends: (

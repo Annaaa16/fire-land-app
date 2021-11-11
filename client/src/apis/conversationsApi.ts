@@ -16,7 +16,7 @@ export const conversationsApiClient = () => {
     createConversation: async (memberIds: CreateConversation) => {
       try {
         const response = await axiosInstance.post<CreateConversationResponse>(
-          '/conversations',
+          '/conversations/create',
           memberIds
         );
 
@@ -28,13 +28,26 @@ export const conversationsApiClient = () => {
 
     getConversations: async (userId: string) => {
       try {
-        const response = await axiosInstance.get<GetConversationsResponse>(
-          '/conversations/' + userId
+        const response = await axiosInstance.post<GetConversationsResponse>(
+          '/conversations',
+          { userId }
         );
 
         return response;
       } catch (error) {
         return notifyAxiosError('Get conversations', error as AxiosError);
+      }
+    },
+
+    deleteConversation: async (conversationId: string) => {
+      try {
+        const response = await axiosInstance.delete<GetConversationsResponse>(
+          '/conversations/' + conversationId
+        );
+
+        return response;
+      } catch (error) {
+        return notifyAxiosError('Delete conversation', error as AxiosError);
       }
     },
   };

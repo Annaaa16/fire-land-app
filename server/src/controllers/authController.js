@@ -23,7 +23,6 @@ authController.register = async (req, res) => {
   try {
     const userExisting = await User.findOne({ username });
 
-    // User already exists
     if (userExisting) {
       res
         .status(400)

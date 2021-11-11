@@ -33,7 +33,9 @@ function PostActions(props: PostActionsProps) {
       <div
         onClick={() =>
           dispatch(
-            isLiked ? unlikePost.request(postId) : likePost.request(postId)
+            isLiked
+              ? unlikePost.request({ postId, userId: currentUser._id })
+              : likePost.request({ postId, userId: currentUser._id })
           )
         }
         className={clsx(

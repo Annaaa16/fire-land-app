@@ -1,5 +1,5 @@
 // types
-import { GetPosts, UpdatePost } from '@/models/posts';
+import { GetPosts, LikePost, UnlikePost, UpdatePost } from '@/models/posts';
 
 export const createPost = {
   request: (payload?: FormData) => ({
@@ -54,7 +54,7 @@ export const deletePost = {
 };
 
 export const likePost = {
-  request: (payload?: string) => ({
+  request: (payload?: LikePost) => ({
     type: 'likePost/request',
     payload,
   }),
@@ -67,7 +67,7 @@ export const likePost = {
 };
 
 export const unlikePost = {
-  request: (payload?: string) => ({
+  request: (payload?: UnlikePost) => ({
     type: 'unlikePost/request',
     payload,
   }),

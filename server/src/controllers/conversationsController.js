@@ -10,6 +10,17 @@ conversationsController.createConversation = async (req, res) => {
   const { senderId, receiverId } = req.body;
 
   try {
+    const conversationExisting = await Conversation.findOne({
+      memberIds: { $in: [senderId, receiverId] },
+    });
+
+    if (conversationExisting) {
+      return res.status(400).json({
+        success: false,
+        message: 'Conversation already exists',
+      });
+    }
+
     const conversation = new Conversation({
       memberIds: [senderId, receiverId],
     });
@@ -27,7 +38,7 @@ conversationsController.createConversation = async (req, res) => {
 };
 
 conversationsController.getConversations = async (req, res) => {
-  const { userId } = req.params;
+  const { userId } = req.body;
 
   try {
     const user = await User.findById(userId);
@@ -46,6 +57,31 @@ conversationsController.getConversations = async (req, res) => {
       success: true,
       message: 'Get conversations successfully',
       conversations,
+    });
+  } catch (error) {
+    notifyServerError(res, error);
+  }
+};
+
+conversationsController.deleteConversation = async (req, res) => {
+  const { conversationId } = req.params;
+
+  try {
+    const conversationExisting = await Conversation.findById(conversationId);
+
+    if (!conversationExisting) {
+      return res.status(400).json({
+        success: false,
+        message: 'Conversation already deleted',
+      });
+    }
+
+    await Conversation.deleteOne({ _id: conversationId });
+
+    res.json({
+      success: true,
+      message: 'Delete conversation successfully',
+      conversationId,
     });
   } catch (error) {
     notifyServerError(res, error);

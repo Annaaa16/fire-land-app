@@ -1,33 +1,43 @@
-import { call, put, takeLatest } from '@redux-saga/core/effects';
+import { call, delay, put, takeLatest } from '@redux-saga/core/effects';
 
 // types
-import { PayloadAction } from '@reduxjs/toolkit';
-import { AxiosResponse } from 'axios';
 import {
   CreateConversation,
+  CreateConversationResponse,
   GetConversationsResponse,
 } from '@/models/conversations';
+import { PayloadAction } from '@reduxjs/toolkit';
+import { AxiosResponse } from 'axios';
 
-import { conversationsApiClient } from '@/apis/conversationsApi';
-import { setConversations } from '../slices/conversationsSlice';
 import {
   createConversation as createConversationAct,
   getConversations as getConversationsAct,
+  deleteConversation as deleteConversationAct,
 } from '../actions/conversations';
+import {
+  addConversation,
+  clearDeletedConversation,
+  setConversations,
+} from '../slices/conversationsSlice';
+import { DELAYS } from '@/constants';
+import { conversationsApiClient } from '@/apis/conversationsApi';
 import { notifySagaError } from '@/helpers/notify';
 
-const { createConversation, getConversations } = conversationsApiClient();
+const { createConversation, getConversations, deleteConversation } =
+  conversationsApiClient();
 
 function* handleCreateConversation(action: PayloadAction<CreateConversation>) {
   try {
+    yield delay(DELAYS.DEFAULT); // Block spam add friend button
+
     const memberIds = action.payload;
 
-    const response: AxiosResponse<GetConversationsResponse> = yield call(
+    const response: AxiosResponse<CreateConversationResponse> = yield call(
       createConversation,
       memberIds
     );
 
-    yield put(setConversations(response.data));
+    yield put(addConversation(response.data));
   } catch (error) {
     notifySagaError('Create conversation', error);
   }
@@ -48,12 +58,30 @@ function* handleGetConversations(action: PayloadAction<string>) {
   }
 }
 
+function* handleDeleteConversations(action: PayloadAction<string>) {
+  const conversationId = action.payload;
+
+  try {
+    yield delay(DELAYS.DEFAULT); // Block spam add unfriend button
+
+    yield put(clearDeletedConversation(conversationId));
+
+    yield call(deleteConversation, conversationId);
+  } catch (error) {
+    notifySagaError('Delete conversation', error);
+  }
+}
+
 function* conversationSaga() {
   yield takeLatest(
     createConversationAct.request().type,
     handleCreateConversation
   );
   yield takeLatest(getConversationsAct.request().type, handleGetConversations);
+  yield takeLatest(
+    deleteConversationAct.request().type,
+    handleDeleteConversations
+  );
 }
 
 export default conversationSaga;

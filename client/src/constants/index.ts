@@ -47,3 +47,8 @@ export const COLORS = {
   LIGHT_BODY: '#f7f7fa',
   DARK_BODY: '#161b28',
 };
+
+export const DELAYS = {
+  DEFAULT: 300,
+  DOUBLE: 600,
+};

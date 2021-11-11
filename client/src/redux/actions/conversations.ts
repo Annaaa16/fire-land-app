@@ -26,3 +26,16 @@ export const getConversations = {
     type: 'getConversations/failure',
   }),
 };
+
+export const deleteConversation = {
+  request: (payload?: string) => ({
+    type: 'deleteConversation/request',
+    payload,
+  }),
+  success: () => ({
+    type: 'deleteConversation/success',
+  }),
+  failure: () => ({
+    type: 'deleteConversation/failure',
+  }),
+};

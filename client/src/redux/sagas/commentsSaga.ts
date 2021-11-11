@@ -15,6 +15,7 @@ import {
   addCreatedComment,
   addFetchedCommentList,
 } from '../slices/commentsSlice';
+import { DELAYS } from '@/constants';
 import { setPagination, updateCommentCount } from '../slices/postsSlice';
 import { createComment as createCommentAct } from '../actions/comments';
 import { getComments as getCommentsAct } from '../actions/comments';
@@ -24,7 +25,7 @@ const { createComment, getComments } = commentsApiClient();
 
 function* handleCreateComment(action: PayloadAction<CreateComment>) {
   try {
-    yield delay(300); // Block spam comment
+    yield delay(DELAYS.DEFAULT); // Block spam comment
 
     const response: AxiosResponse<CreateCommentResponse> = yield call(
       createComment,
@@ -40,7 +41,7 @@ function* handleCreateComment(action: PayloadAction<CreateComment>) {
 
 function* handleGetComments(action: PayloadAction<GetComments>) {
   try {
-    yield delay(300); // Block spam get comments
+    yield delay(DELAYS.DEFAULT); // Block spam get comments
 
     const response: AxiosResponse<GetCommentsResponse> = yield call(
       getComments,
