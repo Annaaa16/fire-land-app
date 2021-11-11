@@ -34,9 +34,8 @@ function NewsFeedContent() {
     <div className={clsx('w-full lg:w-2/3 lg:mr-5')}>
       <NewsFeedSender />
 
-      {posts.map((post) => (
-        <Post key={post._id} {...post} />
-      ))}
+      {posts.length > 0 &&
+        posts.map((post) => <Post key={post._id} {...post} />)}
 
       <div ref={loaderRef} />
     </div>

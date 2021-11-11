@@ -44,11 +44,11 @@ function ContactOnline(props: ContactOnlineProps) {
 
   // Fetch online friend by friend ID
   useEffect(() => {
-    const { getUserById } = usersApiClient();
+    const { getUser } = usersApiClient();
 
     (async () => {
       try {
-        const response = (await getUserById(
+        const response = (await getUser(
           friendId!
         )) as AxiosResponse<GetUserResponse>;
 

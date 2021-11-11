@@ -11,8 +11,7 @@ interface UserProps {
   currentUser?: boolean;
   online?: boolean;
   rounded?: boolean;
-  width?: number;
-  height?: number;
+  onHandleClick?: (event: any) => void;
 }
 
 function User(props: UserProps) {
@@ -23,14 +22,14 @@ function User(props: UserProps) {
     currentUser,
     online,
     rounded,
-    width,
-    height,
+    onHandleClick,
   } = props;
 
   const img = avatar || 'https://avatars.dicebear.com/api/micah/uiSvbW.svg';
 
   return (
     <div
+      onClick={onHandleClick}
       className={clsx(
         'relative',
         view === 'sm' && 'w-9 h-9',

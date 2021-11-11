@@ -44,7 +44,7 @@ function PostHeaderBox(props: PostHeaderBoxProps) {
           'dark:text-white bg-white dark:bg-dk-cpn'
         )}>
         <div className={clsx('flex items-center mb-6')}>
-          <User avatar={avatar} subClass={clsx('mr-2')} rounded />
+          <User avatar={avatar} subClass={clsx('w-14 h-14 mr-2')} rounded />
           <div>
             <h2
               className={clsx(

@@ -7,10 +7,11 @@ import {
   UpdatePostResponse,
   LikePostResponse,
   UnlikePostResponse,
+  GetPosts,
 } from '@/models/posts';
 import { AxiosResponse } from 'axios';
 import { PayloadAction } from '@reduxjs/toolkit';
-import { GetPosts, UpdatePost } from '@/models/posts';
+import { UpdatePost } from '@/models/posts';
 
 import {
   createPost as createPostAct,
@@ -22,7 +23,7 @@ import {
 } from '../actions/posts';
 import {
   addCreatedPost,
-  addFetchedPostList,
+  addFetchedPosts,
   removeDeletedPost,
   setLikedPost,
   setUnlikedPost,
@@ -51,14 +52,12 @@ function* handleCreatePost(action: PayloadAction<FormData>) {
 
 function* handleGetPosts(action: PayloadAction<GetPosts>) {
   try {
-    const params = action.payload;
-
     const response: AxiosResponse<GetPostsResponse> = yield call(
       getPosts,
-      params
+      action.payload
     );
 
-    yield put(addFetchedPostList(response.data));
+    yield put(addFetchedPosts(response.data));
   } catch (error) {
     notifySagaError('Get posts', error);
   }

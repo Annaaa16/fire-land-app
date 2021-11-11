@@ -63,7 +63,7 @@ function PostSender(props: PostSenderProps) {
           value={content}
           placeholder='Write a comment...'
           className={clsx(
-            'pl-4 max-w-[128px] md:max-w-full outline-none py-3 text-xs md:text-sm',
+            'pl-4 flex-1 md:max-w-full outline-none py-3 text-xs md:text-sm',
             'dark:text-white bg-transparent'
           )}
         />
