@@ -5,10 +5,17 @@ import { setCookie, parseCookies, destroyCookie } from 'nookies';
 import { NextPageContext } from 'next';
 
 import { COOKIES, PATHS } from '@/constants';
+import cookieOptions from '@/configs/cookies';
 
 const cookies = {
-  setPrevPath: (ctx: NextPageContext, path: string) => {
-    setCookie(ctx, COOKIES.PREV_PATH_KEY, path || PATHS.NEWSFEED);
+  setPrevPath: (path: string) => {
+    destroyCookie(null, COOKIES.PREV_PATH_KEY);
+    setCookie(
+      null,
+      COOKIES.PREV_PATH_KEY,
+      path || PATHS.NEWSFEED,
+      cookieOptions
+    );
   },
 
   getPrevPath: (ctx: NextPageContext) => {
@@ -17,7 +24,7 @@ const cookies = {
     return cookies.prev_path || PATHS.NEWSFEED;
   },
 
-  deleteAll: (ctx: NextPageContext) => {
+  deleteAll: (ctx: NextPageContext | null) => {
     destroyCookie(ctx, COOKIES.ACCESS_TOKEN_KEY);
     destroyCookie(ctx, COOKIES.REFRESH_TOKEN_KEY);
     destroyCookie(ctx, COOKIES.PREV_PATH_KEY);
