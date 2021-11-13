@@ -7,7 +7,7 @@ const verifyToken = (req, res, next) => {
   const { access_token, refresh_token } = req.cookies;
 
   if (!access_token || !refresh_token) {
-    res.status(401).json({ success: false, message: 'Token not found' });
+    return res.status(401).json({ success: false, message: 'Token not found' });
   }
 
   jwt.verify(access_token, TOKENS.ACCESS_TOKEN_SECRET, (error, decoded) => {
@@ -33,7 +33,9 @@ const verifyToken = (req, res, next) => {
           }
         );
       } else {
-        res.status(401).json({ success: false, message: 'Invalid token' });
+        return res
+          .status(401)
+          .json({ success: false, message: 'Invalid token' });
       }
     } else {
       req.userId = decoded.userId;

@@ -10,14 +10,18 @@ commentsController.createComment = async (req, res) => {
   const { postId, userId, content } = req.body;
 
   if (!content) {
-    res.status(400).json({ success: false, message: 'Content is required!' });
+    return res
+      .status(400)
+      .json({ success: false, message: 'Content is required!' });
   }
 
   try {
-    const user = await User.findById(userId).select(['-password', '-__v']);
+    const user = await User.findById(userId).select(['-password']);
 
     if (!user) {
-      res.status(404).json({ success: false, message: 'User not found' });
+      return res
+        .status(404)
+        .json({ success: false, message: 'User not found' });
     }
 
     const post = await Post.findOneAndUpdate(
@@ -27,22 +31,20 @@ commentsController.createComment = async (req, res) => {
     );
 
     if (!post) {
-      res.status(404).json({ success: false, message: 'Post not found' });
+      return res
+        .status(404)
+        .json({ success: false, message: 'Post not found' });
     }
 
-    const comment = new Comment({ content, user, postId });
+    const comment = new Comment({ content, user: user._id, postId });
 
-    // Save to db
     await comment.save();
-
-    // Filter unnecessary fields of comment
-    const { __v, ...others } = comment.toObject();
 
     res.status(201).json({
       success: true,
       message: 'New comment has been created successfully',
       comment: {
-        ...others,
+        ...comment.toObject(),
         user,
       },
     });
@@ -58,16 +60,20 @@ commentsController.getComments = async (req, res) => {
   const limit = parseInt(req.query.limit);
 
   try {
-    const user = await User.findById(userId).select(['-password', '-__v']);
+    const user = await User.findById(userId).select(['-password']);
 
     if (!user) {
-      res.status(404).json({ success: false, message: 'User not found' });
+      return res
+        .status(404)
+        .json({ success: false, message: 'User not found' });
     }
 
     const post = await Post.findById(postId);
 
     if (!post) {
-      res.status(404).json({ success: false, message: 'Post not found' });
+      return res
+        .status(404)
+        .json({ success: false, message: 'Post not found' });
     }
 
     const total = await Comment.count({ postId });
@@ -79,10 +85,9 @@ commentsController.getComments = async (req, res) => {
     const nextPage = endPos < total ? page + 1 : null;
 
     const comments = await Comment.find({ postId })
-      .populate('user', ['username', 'avatar'])
+      .populate('user')
       .skip(startPos)
       .limit(limit)
-      .select(['-__v'])
       .lean();
 
     res.json({

@@ -15,7 +15,7 @@ authController.register = async (req, res) => {
 
   // Empty username or password
   if (!username || !password) {
-    res
+    return res
       .status(400)
       .json({ success: false, message: 'Missing username or password' });
   }
@@ -24,7 +24,7 @@ authController.register = async (req, res) => {
     const userExisting = await User.findOne({ username });
 
     if (userExisting) {
-      res
+      return res
         .status(400)
         .json({ success: false, message: 'Username is already taken' });
     }
@@ -37,7 +37,6 @@ authController.register = async (req, res) => {
       avatar,
     });
 
-    // Save to db
     await user.save();
 
     res.json({
@@ -54,22 +53,22 @@ authController.login = async (req, res) => {
 
   // Empty username or password
   if (!username || !password) {
-    res
+    return res
       .status(400)
       .json({ success: false, message: 'Missing username or password' });
   }
 
   try {
-    const user = await User.findOne({ username }).select(['-__v']).lean();
+    const user = await User.findOne({ username }).lean();
 
     // User does not exist or incorrect username
     if (!user) {
-      res
+      return res
         .status(400)
         .json({ success: false, message: 'Incorrect username or password' });
     }
 
-    const isPasswordCorrect = bcrypt.compare(password, user.password);
+    const isPasswordCorrect = await bcrypt.compare(password, user.password);
 
     // Incorrect password or not match
     if (!isPasswordCorrect) {
