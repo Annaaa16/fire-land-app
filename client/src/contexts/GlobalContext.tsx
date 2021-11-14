@@ -15,14 +15,9 @@ import { ReactNode } from 'react';
 import { GetUserResponse } from '@/models/users';
 import { GlobalInitContext } from '@/models/global';
 
-import {
-  createConversation,
-  deleteConversation,
-  getConversations,
-} from '@/redux/actions/conversations';
 import { LOCAL_STORAGE, PATHS } from '@/constants';
-import { setUser } from '@/redux/slices/usersSlice';
-import { followUser, unfollowUser } from '@/redux/actions/users';
+import { conversationsActions } from '@/redux/slices/conversationsSlice';
+import { usersActions } from '@/redux/slices/usersSlice';
 import { useConversationsSelector, useUsersSelector } from '@/redux/selectors';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 import useLocalStorage from '@/hooks/useLocalStorage';
@@ -77,23 +72,25 @@ function GlobalProvider({
 
     const addFriend = () => {
       dispatch(
-        createConversation.request({
+        conversationsActions.createConversationRequest({
           senderId: _id as string,
           receiverId: followedUserId,
         })
       );
 
-      dispatch(followUser.request(followedUserId));
+      dispatch(usersActions.followUserRequest(followedUserId));
     };
 
-    const unfriend = () => {
+    const unfriend = async () => {
       const conversation = conversations.find(
         ({ memberIds }) =>
           memberIds.includes(_id) && memberIds.includes(followedUserId)
       );
 
-      dispatch(unfollowUser.request(followedUserId));
-      conversation && dispatch(deleteConversation.request(conversation._id));
+      dispatch(usersActions.unfollowUserRequest(followedUserId));
+      dispatch(
+        conversationsActions.deleteConversationRequest(conversation!._id)
+      );
     };
 
     followings.includes(followedUserId) ? unfriend() : addFriend();
@@ -102,8 +99,12 @@ function GlobalProvider({
   // Set init user info
   useEffect(() => {
     if (currentUserResponse?.success) {
-      dispatch(setUser(currentUserResponse));
-      dispatch(getConversations.request(currentUserResponse.user._id));
+      dispatch(usersActions.setCurrentUser(currentUserResponse));
+      dispatch(
+        conversationsActions.getConversationsRequest(
+          currentUserResponse.user._id
+        )
+      );
     }
   }, [currentUserResponse, dispatch]);
 

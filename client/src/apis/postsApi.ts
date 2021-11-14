@@ -1,19 +1,19 @@
 // types
-import { AxiosError } from 'axios';
-import { GetServerSidePropsContext, NextPageContext } from 'next';
 import {
   CreatePostsResponse,
   DeletePostResponse,
-  GetPosts,
+  GetPostsPayload,
   GetPostsResponse,
   LikePostResponse,
-  UpdatePost,
+  UpdatePostPayload,
   UpdatePostResponse,
 } from '@/models/posts';
+import { AxiosError } from 'axios';
+import { GetServerSidePropsContext, NextPageContext } from 'next';
 
 import { axiosClient } from './axiosClient';
 import { axiosServer } from './axiosServer';
-import { notifyAxiosError } from '@/helpers/notify';
+import { notifyAxiosError } from '@/helpers/notifyError';
 
 export const postsApiClient = () => {
   const axiosInstance = axiosClient();
@@ -32,7 +32,7 @@ export const postsApiClient = () => {
       }
     },
 
-    getPosts: async (params: GetPosts) => {
+    getPosts: async (params: GetPostsPayload) => {
       try {
         const response = await axiosInstance.get<GetPostsResponse>('/posts', {
           params,
@@ -44,13 +44,13 @@ export const postsApiClient = () => {
       }
     },
 
-    updatePost: async (payload: UpdatePost) => {
-      const { postId, updateData } = payload;
+    updatePost: async (payload: UpdatePostPayload) => {
+      const { postId, updatePayload } = payload;
 
       try {
         const response = await axiosInstance.put<UpdatePostResponse>(
           '/posts/' + postId,
-          updateData
+          updatePayload
         );
 
         return response;
@@ -103,7 +103,7 @@ export const postsApiServer = (
   const axiosInstance = axiosServer(ctx);
 
   return {
-    getPosts: async (params: GetPosts) => {
+    getPosts: async (params: GetPostsPayload) => {
       try {
         const response = await axiosInstance.get<GetPostsResponse>('/posts', {
           params,

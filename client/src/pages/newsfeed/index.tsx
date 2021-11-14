@@ -11,7 +11,7 @@ import { GetPostsResponse } from '@/models/posts';
 import { LIMITS } from '@/constants';
 import { wrapper } from '@/redux/store';
 import { postsApiServer } from '@/apis/postsApi';
-import { addFetchedPosts } from '@/redux/slices/postsSlice';
+import { postsActions } from '@/redux/slices/postsSlice';
 import tokens from '@/helpers/tokens';
 
 import Meta from '@/layouts/Meta';
@@ -50,7 +50,7 @@ export const getServerSideProps: GetServerSideProps =
         limit: LIMITS.POSTS,
       })) as AxiosResponse<GetPostsResponse>;
 
-      response && store.dispatch(addFetchedPosts(response.data));
+      response && store.dispatch(postsActions.getPostsSuccess(response.data));
     }
 
     return {

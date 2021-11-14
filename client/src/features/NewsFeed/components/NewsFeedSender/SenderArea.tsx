@@ -20,9 +20,8 @@ import { useDropzone } from 'react-dropzone';
 import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
 
 import { usePostsSelector, useUsersSelector } from '@/redux/selectors';
-import { createPost, updatePost } from '@/redux/actions/posts';
 import { useGlobalContext } from '@/contexts/GlobalContext';
-import { setUpdatePost } from '@/redux/slices/postsSlice';
+import { postsActions } from '@/redux/slices/postsSlice';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 import useDetectKeydown from '@/hooks/useDetectKeydown';
 
@@ -47,7 +46,7 @@ function NewsFeedSenderArea() {
 
   const closeSenderArea = () => {
     toggleSenderArea(false);
-    dispatch(setUpdatePost(null));
+    dispatch(postsActions.setUpdatePost(null));
   };
 
   const handleSubmitPost = () => {
@@ -58,7 +57,7 @@ function NewsFeedSenderArea() {
     formData.append('content', content);
     formData.append('file', file as Blob);
 
-    dispatch(createPost.request(formData));
+    dispatch(postsActions.createPostRequest(formData));
     toggleSenderArea(false);
   };
 
@@ -73,7 +72,9 @@ function NewsFeedSenderArea() {
     formData.append('photoId', photoId);
     formData.append('file', file as Blob);
 
-    dispatch(updatePost.request({ postId: _id, updateData: formData }));
+    dispatch(
+      postsActions.updatePostRequest({ postId: _id, updatePayload: formData })
+    );
     toggleSenderArea(false);
   };
 

@@ -4,16 +4,19 @@ import { useRouter } from 'next/router';
 // types
 import { GetServerSideProps } from 'next';
 import { AxiosError } from 'axios';
+import {
+  TmdbGetMovieCreditsResponse,
+  TmdbGetMovieVideosResponse,
+  TmdbMovieDetail,
+} from '@/models/tmdb';
 
 // clsx
 import clsx from 'clsx';
 
 import { moviesApi } from '@/apis/moviesApi';
-import { notifyAxiosError } from '@/helpers/notify';
-import { setMovieDetail, setTvShowDetail } from '@/redux/slices/moviesSlice';
-import { wrapper } from '@/redux/store';
+import { notifyAxiosError } from '@/helpers/notifyError';
 import { useMoviesSelector } from '@/redux/selectors';
-import { getSimilarMovies, getSimilarTvShows } from '@/redux/actions/movies';
+import { filterMovieDetail } from '@/helpers/filterMovies';
 import tmdb, { tmdbCategories } from '@/configs/tmdb';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
@@ -24,15 +27,22 @@ import MoviesItemList from '@/features/Movies/components/MoviesItemList';
 import DetailTrailer from '@/features/Movies/components/Detail/DetailTrailer';
 import DetailCastList from '@/features/Movies/components/Detail/DetailCastList';
 import DetailGenreList from '@/features/Movies/components/Detail/DetailGenreList';
+import { moviesActions } from '@/redux/slices/moviesSlice';
 
-function Detail() {
+export interface DetailProps {
+  movieDetail: {
+    casts: TmdbGetMovieCreditsResponse;
+    detail: TmdbMovieDetail;
+    videos: TmdbGetMovieVideosResponse;
+  };
+}
+
+function Detail(props: DetailProps) {
   const { movie, tv } = tmdbCategories;
+  const { title, image, casts, overview, genres, videos } =
+    filterMovieDetail(props);
 
-  const {
-    movieCategories,
-    tvShowCategories,
-    detailInfo: { overview, image, title, casts },
-  } = useMoviesSelector();
+  const { movieCategories, tvShowCategories } = useMoviesSelector();
 
   const dispatch = useStoreDispatch();
   const router = useRouter();
@@ -44,9 +54,9 @@ function Detail() {
     if (!id) return;
 
     if (category === movie) {
-      dispatch(getSimilarMovies.request(id! as string));
+      dispatch(moviesActions.getSimilarMoviesRequest(id! as string));
     } else if (category === tv) {
-      dispatch(getSimilarTvShows.request(id! as string));
+      dispatch(moviesActions.getSimilarTvShowsRequest(id! as string));
     }
   }, [router.query, movie, tv, dispatch]);
 
@@ -101,7 +111,7 @@ function Detail() {
               )}>
               {title}
             </h1>
-            <DetailGenreList />
+            <DetailGenreList genres={genres} />
             <Paragraph
               lengthInit={250}
               bodyClass={clsx('mb-3')}
@@ -113,7 +123,7 @@ function Detail() {
             <DetailCastList casts={casts} />
           </div>
         </div>
-        <DetailTrailer />
+        <DetailTrailer videos={videos} />
         {router.query.category && (
           <MoviesItemList
             title='Similar'
@@ -136,57 +146,59 @@ function Detail() {
 
 export default Detail;
 
-export const getServerSideProps: GetServerSideProps =
-  wrapper.getServerSideProps((store) => async ({ params, query }) => {
-    const { movie, tv } = tmdbCategories;
-    const {
-      getMovieDetail,
-      getMovieCasts,
-      getMovieVideos,
-      getTvShowDetail,
-      getTvShowCasts,
-      getTvShowVideos,
-    } = moviesApi();
+export const getServerSideProps: GetServerSideProps = async ({
+  params,
+  query,
+}) => {
+  const { movie, tv } = tmdbCategories;
+  const {
+    getMovieDetail,
+    getMovieCasts,
+    getMovieVideos,
+    getTvShowDetail,
+    getTvShowCasts,
+    getTvShowVideos,
+  } = moviesApi();
 
-    if (query.category === movie) {
-      try {
-        const promises = await Promise.all([
-          getMovieDetail(params?.id as string),
-          getMovieCasts(params?.id as string),
-          getMovieVideos(params?.id as string),
-        ]);
+  let movieDetail = {};
 
-        store.dispatch(
-          setMovieDetail({
-            detail: promises[0]?.data!,
-            casts: promises[1]?.data!,
-            videos: promises[2]?.data!,
-          })
-        );
-      } catch (error) {
-        notifyAxiosError('Get movie detail', error as AxiosError);
-      }
-    } else if (query.category === tv) {
-      try {
-        const promises = await Promise.all([
-          getTvShowDetail(params?.id as string),
-          getTvShowCasts(params?.id as string),
-          getTvShowVideos(params?.id as string),
-        ]);
+  if (query.category === movie) {
+    try {
+      const promises = await Promise.all([
+        getMovieDetail(params?.id as string),
+        getMovieCasts(params?.id as string),
+        getMovieVideos(params?.id as string),
+      ]);
 
-        store.dispatch(
-          setTvShowDetail({
-            detail: promises[0]?.data!,
-            casts: promises[1]?.data!,
-            videos: promises[2]?.data!,
-          })
-        );
-      } catch (error) {
-        notifyAxiosError('Get TV Shows detail', error as AxiosError);
-      }
+      movieDetail = {
+        detail: promises[0]?.data!,
+        casts: promises[1]?.data!,
+        videos: promises[2]?.data!,
+      };
+    } catch (error) {
+      notifyAxiosError('Get movie detail', error as AxiosError);
     }
+  } else if (query.category === tv) {
+    try {
+      const promises = await Promise.all([
+        getTvShowDetail(params?.id as string),
+        getTvShowCasts(params?.id as string),
+        getTvShowVideos(params?.id as string),
+      ]);
 
-    return {
-      props: {},
-    };
-  });
+      movieDetail = {
+        detail: promises[0]?.data!,
+        casts: promises[1]?.data!,
+        videos: promises[2]?.data!,
+      };
+    } catch (error) {
+      notifyAxiosError('Get TV Shows detail', error as AxiosError);
+    }
+  }
+
+  return {
+    props: {
+      movieDetail,
+    },
+  };
+};

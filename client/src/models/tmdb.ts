@@ -56,7 +56,7 @@ export interface TmdbVideo {
   published_at: string;
 }
 
-export interface TmdbSearchQuery {
+export interface TmdbSearchPayload {
   query: string;
   language?: string;
   page?: number;

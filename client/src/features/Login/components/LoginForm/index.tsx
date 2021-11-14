@@ -1,5 +1,3 @@
-import { useRouter } from 'next/dist/client/router';
-
 // clsx
 import clsx from 'clsx';
 
@@ -11,11 +9,11 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 // types
+import { LoginPayload } from '@/models/auth';
 import FormInput from '@/components/FormInput';
-import { LoginFormData } from '@/models/auth';
 
-import { loginUser } from '@/redux/actions/auth';
 import { formLoginSchema } from '@/utils/formSchemas';
+import { authActions } from '@/redux/slices/authSlice';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 function LoginForm() {
@@ -29,8 +27,8 @@ function LoginForm() {
 
   const dispatch = useStoreDispatch();
 
-  const handleOnSubmit = (data: LoginFormData) => {
-    dispatch(loginUser.request(data));
+  const handleOnSubmit = (data: LoginPayload) => {
+    dispatch(authActions.loginRequest(data));
   };
 
   return (

@@ -1,17 +1,17 @@
 // types
-import { Comment, Pagination } from './common';
+import { Comment, Loadings, Pagination } from './common';
 
-export interface CommentsInitState {
+export interface CommentsInitState extends Loadings {
   comments: Comment[];
 }
 
-export interface CreateComment {
+export interface CreateCommentPayload {
   postId: string;
   userId: string;
   content: string;
 }
 
-export interface GetComments {
+export interface GetCommentsPayload {
   postId: string;
   userId: string;
   params: {

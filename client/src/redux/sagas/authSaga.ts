@@ -4,57 +4,51 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { AxiosResponse } from 'axios';
 import { PayloadAction } from '@reduxjs/toolkit';
 import {
-  LoginFormData,
+  LoginPayload,
   LoginResponse,
-  RegisterFormData,
+  RegisterPayload,
   RegisterResponse,
 } from '@/models/auth';
 
+import { authActions } from '../slices/authSlice';
 import { authApiClient } from '@/apis/authApi';
-import { setRegisterStatus, setAuthStatus } from '../slices/authSlice';
-import { notifySagaError } from '@/helpers/notify';
-import { setUser } from '../slices/usersSlice';
-import {
-  loginUser as loginUserAct,
-  registerUser as registerUserAct,
-} from '../actions/auth';
+import { notifySagaError } from '@/helpers/notifyError';
+import { usersActions } from '../slices/usersSlice';
 
 const { loginUser, registerUser } = authApiClient();
 
-function* handleLoginUser(action: PayloadAction<LoginFormData>) {
+function* handleLoginRequest(action: PayloadAction<LoginPayload>) {
   try {
-    const formData = action.payload;
-
     const response: AxiosResponse<LoginResponse> = yield call(
       loginUser,
-      formData
+      action.payload
     );
 
-    yield put(setAuthStatus(response.data));
-    yield put(setUser(response.data));
+    yield put(authActions.loginSuccess(response.data));
+    yield put(usersActions.setCurrentUser(response.data));
   } catch (error) {
-    notifySagaError('Login', error);
+    notifySagaError(authActions.loginFailed, error);
+    yield put(authActions.loginFailed());
   }
 }
 
-function* handleRegisterUser(action: PayloadAction<RegisterFormData>) {
+function* handleRegisterRequest(action: PayloadAction<RegisterPayload>) {
   try {
-    const formData = action.payload;
-
     const response: AxiosResponse<RegisterResponse> = yield call(
       registerUser,
-      formData
+      action.payload
     );
 
-    yield put(setRegisterStatus(response.data));
+    yield put(authActions.registerSuccess(response.data));
   } catch (error) {
-    notifySagaError('Register', error);
+    notifySagaError(authActions.registerFailed, error);
+    yield put(authActions.registerFailed());
   }
 }
 
 function* authSaga() {
-  yield takeLatest(loginUserAct.request().type, handleLoginUser);
-  yield takeLatest(registerUserAct.request().type, handleRegisterUser);
+  yield takeLatest(authActions.loginRequest, handleLoginRequest);
+  yield takeLatest(authActions.registerRequest, handleRegisterRequest);
 }
 
 export default authSaga;

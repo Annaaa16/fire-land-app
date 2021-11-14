@@ -1,8 +1,7 @@
 // types
-import { Pagination, PaginationParams, Post } from './common';
+import { Loadings, Pagination, PaginationParams, Post } from './common';
 
-export interface PostsInitState {
-  success: boolean;
+export interface PostsInitState extends Loadings {
   prevPage: number | null;
   nextPage: number | null;
   total: number;
@@ -10,21 +9,21 @@ export interface PostsInitState {
   updatePost: Post | null;
 }
 
-export interface UpdatePost {
+export interface UpdatePostPayload {
   postId: string;
-  updateData: FormData;
+  updatePayload: FormData;
 }
 
-export interface GetPosts extends PaginationParams {
+export interface GetPostsPayload extends PaginationParams {
   user_id?: string;
 }
 
-export interface LikePost {
+export interface LikePostPayload {
   postId: string;
   userId: string;
 }
 
-export interface UnlikePost {
+export interface UnlikePostPayload {
   postId: string;
   userId: string;
 }
@@ -49,7 +48,7 @@ export interface UpdatePostResponse {
 }
 
 export interface DeletePostResponse {
-  readonly _id: string;
+  readonly postId: string;
   success: boolean;
   message: string;
 }

@@ -1,4 +1,5 @@
 // types
+import { ActionCreatorWithoutPayload } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
 import { ErrorResponse } from '@/models/common';
 
@@ -10,6 +11,9 @@ export const notifyAxiosError = (
   return error?.response;
 };
 
-export const notifySagaError = (message: string, error: any) => {
-  console.log(message + ' error from saga 👉', error);
+export const notifySagaError = (
+  action: ActionCreatorWithoutPayload<string>,
+  error: any
+) => {
+  console.log(action.type + ' error from saga 👉', error);
 };

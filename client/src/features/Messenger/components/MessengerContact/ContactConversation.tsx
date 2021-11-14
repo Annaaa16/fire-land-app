@@ -7,10 +7,7 @@ import clsx from 'clsx';
 import { Conversation } from '@/models/conversations';
 import { GetUserResponse } from '@/models/users';
 
-import {
-  setConversationId,
-  setReceiverId,
-} from '@/redux/slices/messengerSlice';
+import { messengerActions } from '@/redux/slices/messengerSlice';
 import { getMessages } from '@/redux/actions/messenger';
 import { usersApiClient } from '@/apis/usersApi';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
@@ -37,9 +34,9 @@ function ContactConversation({
       (memberId) => memberId !== userId
     );
 
-    dispatch(getMessages.request({ conversationId: conversation._id }));
-    dispatch(setConversationId(conversation._id));
-    dispatch(setReceiverId(receiverId!));
+    dispatch(messengerActions.getMessagesRequest(conversation._id));
+    dispatch(messengerActions.setConversationId(conversation._id));
+    dispatch(messengerActions.setReceiverId(receiverId!));
   };
 
   // Fetch friend by friend ID

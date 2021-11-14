@@ -5,38 +5,23 @@ import {
   GetPostsResponse,
   DeletePostResponse,
   UpdatePostResponse,
-  GetPosts,
-  UnlikePost,
-  LikePost,
+  GetPostsPayload,
+  UnlikePostPayload,
+  LikePostPayload,
 } from '@/models/posts';
 import { AxiosResponse } from 'axios';
 import { PayloadAction } from '@reduxjs/toolkit';
-import { UpdatePost } from '@/models/posts';
+import { UpdatePostPayload } from '@/models/posts';
 
-import {
-  createPost as createPostAct,
-  getPosts as getPostsAct,
-  updatePost as updatePostAct,
-  deletePost as deletePostAct,
-  likePost as likePostAct,
-  unlikePost as unlikePostAct,
-} from '../actions/posts';
-import {
-  addCreatedPost,
-  addFetchedPosts,
-  removeDeletedPost,
-  setUserLiked,
-  clearUserUnliked,
-  setUpdatedPost,
-} from '../slices/postsSlice';
+import { postsActions } from '../slices/postsSlice';
 import { DELAYS } from '@/constants';
 import { postsApiClient } from '@/apis/postsApi';
-import { notifySagaError } from '@/helpers/notify';
+import { notifySagaError } from '@/helpers/notifyError';
 
 const { createPost, getPosts, updatePost, deletePost, likePost, unlikePost } =
   postsApiClient();
 
-function* handleCreatePost(action: PayloadAction<FormData>) {
+function* handleCreatePostRequest(action: PayloadAction<FormData>) {
   try {
     yield delay(DELAYS.DEFAULT); // Block spam upload button
 
@@ -45,26 +30,28 @@ function* handleCreatePost(action: PayloadAction<FormData>) {
       action.payload
     );
 
-    yield put(addCreatedPost(response.data));
+    yield put(postsActions.createPostSuccess(response.data));
   } catch (error) {
-    console.log('Create post error 👉', error);
+    notifySagaError(postsActions.createPostFailed, error);
+    yield put(postsActions.createPostFailed());
   }
 }
 
-function* handleGetPosts(action: PayloadAction<GetPosts>) {
+function* handleGetPostsRequest(action: PayloadAction<GetPostsPayload>) {
   try {
     const response: AxiosResponse<GetPostsResponse> = yield call(
       getPosts,
       action.payload
     );
 
-    yield put(addFetchedPosts(response.data));
+    yield put(postsActions.getPostsSuccess(response.data));
   } catch (error) {
-    notifySagaError('Get posts', error);
+    notifySagaError(postsActions.getPostsFailed, error);
+    yield put(postsActions.getPostsFailed());
   }
 }
 
-function* handleUpdatePost(action: PayloadAction<UpdatePost>) {
+function* handleUpdatePostRequest(action: PayloadAction<UpdatePostPayload>) {
   try {
     yield delay(DELAYS.DEFAULT); // Block spam update button
 
@@ -73,13 +60,14 @@ function* handleUpdatePost(action: PayloadAction<UpdatePost>) {
       action.payload
     );
 
-    yield put(setUpdatedPost(response.data));
+    yield put(postsActions.updatePostSuccess(response.data));
   } catch (error) {
-    notifySagaError('Update post', error);
+    notifySagaError(postsActions.updatePostFailed, error);
+    yield put(postsActions.updatePostFailed());
   }
 }
 
-function* handleDeletePost(action: PayloadAction<string>) {
+function* handleDeletePostRequest(action: PayloadAction<string>) {
   try {
     const postId = action.payload;
 
@@ -90,47 +78,50 @@ function* handleDeletePost(action: PayloadAction<string>) {
       postId
     );
 
-    yield put(removeDeletedPost(response.data));
+    yield put(postsActions.deletePostSuccess(response.data));
   } catch (error) {
-    notifySagaError('Delete post', error);
+    notifySagaError(postsActions.deletePostFailed, error);
+    yield put(postsActions.deletePostFailed());
   }
 }
 
-function* handleLikePost(action: PayloadAction<LikePost>) {
+function* handleLikePostRequest(action: PayloadAction<LikePostPayload>) {
   try {
     const { postId } = action.payload;
 
-    yield put(setUserLiked(action.payload));
+    yield put(postsActions.likePostSuccess(action.payload));
 
     yield delay(DELAYS.DOUBLE); // Block spam like button
 
     yield call(likePost, postId);
   } catch (error) {
-    notifySagaError('Like post', error);
+    notifySagaError(postsActions.likePostFailure, error);
+    yield put(postsActions.likePostFailure());
   }
 }
 
-function* handleUnlikePost(action: PayloadAction<UnlikePost>) {
+function* handleUnlikePostRequest(action: PayloadAction<UnlikePostPayload>) {
   try {
     const { postId } = action.payload;
 
-    yield put(clearUserUnliked(action.payload));
+    yield put(postsActions.unlikePostSuccess(action.payload));
 
     yield delay(DELAYS.DOUBLE); // Block spam like button
 
     yield call(unlikePost, postId);
   } catch (error) {
-    notifySagaError('Unlike post', error);
+    notifySagaError(postsActions.unlikePostFailure, error);
+    yield put(postsActions.unlikePostFailure());
   }
 }
 
 function* postsSaga() {
-  yield takeLatest(createPostAct.request().type, handleCreatePost);
-  yield takeLatest(getPostsAct.request().type, handleGetPosts);
-  yield takeLatest(updatePostAct.request().type, handleUpdatePost);
-  yield takeLatest(deletePostAct.request().type, handleDeletePost);
-  yield takeLatest(likePostAct.request().type, handleLikePost);
-  yield takeLatest(unlikePostAct.request().type, handleUnlikePost);
+  yield takeLatest(postsActions.createPostRequest, handleCreatePostRequest);
+  yield takeLatest(postsActions.getPostsRequest, handleGetPostsRequest);
+  yield takeLatest(postsActions.updatePostRequest, handleUpdatePostRequest);
+  yield takeLatest(postsActions.deletePostRequest, handleDeletePostRequest);
+  yield takeLatest(postsActions.likePostRequest, handleLikePostRequest);
+  yield takeLatest(postsActions.unlikePostRequest, handleUnlikePostRequest);
 }
 
 export default postsSaga;

@@ -12,7 +12,7 @@ import { usersApiServer } from '@/apis/usersApi';
 import tokens from './tokens';
 import cookies from './cookies';
 
-const handleAuthentication = async (ctx: NextPageContext) => {
+const serverAuthenticate = async (ctx: NextPageContext) => {
   const originalUrl = ctx.pathname;
   const { verifyTokens } = authApiServer(ctx);
   const { isRefreshTokenExpired, isAccessTokenExpired, isFully } =
@@ -42,7 +42,7 @@ const handleAuthentication = async (ctx: NextPageContext) => {
     cookies.deleteAll(ctx);
     redirectToLocation(PATHS.LOGIN);
   } else if (isFully) {
-    // Redirect back if try to go to login or register
+    // Redirect back if try to go to login or register when logged in
     if (originalUrl === PATHS.LOGIN || originalUrl === PATHS.REGISTER) {
       redirectToLocation(cookies.getPrevPath(ctx));
     }
@@ -84,4 +84,4 @@ const handleAuthentication = async (ctx: NextPageContext) => {
   return currentUserResponse;
 };
 
-export { handleAuthentication };
+export default serverAuthenticate;

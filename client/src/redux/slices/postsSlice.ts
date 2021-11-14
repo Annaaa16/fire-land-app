@@ -13,49 +13,143 @@ import {
   DeletePostResponse,
   PostsInitState,
   UpdatePostResponse,
-  UnlikePost,
-  LikePost,
+  UnlikePostPayload,
+  LikePostPayload,
+  GetPostsPayload,
+  UpdatePostPayload,
 } from '@/models/posts';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { CreateCommentResponse, GetCommentsResponse } from '@/models/comments';
 import { HydrateResponse } from '@/models/common';
 
+import { addLoading, removeLoading } from '@/helpers/loadings';
+
+const loadings = {
+  createPost: 'createPost',
+  getPosts: 'getPosts',
+  updatePost: 'updatePost',
+  deletePost: 'deletePost',
+  likePost: 'likePost',
+  unlikePost: 'unlikePost',
+};
+
 const initialState: PostsInitState = {
-  success: false,
   prevPage: null,
   nextPage: null,
   total: 0,
   posts: [],
   updatePost: null,
+  loadings: [],
 };
 
 const postsSlice = createSlice({
   name: 'posts',
   initialState,
   reducers: {
-    addCreatedPost: (state, action: PayloadAction<CreatePostsResponse>) => {
+    createPostRequest: (state, action: PayloadAction<FormData>) => {
+      addLoading(state, loadings.createPost);
+    },
+    createPostSuccess: (state, action: PayloadAction<CreatePostsResponse>) => {
       const { success, post } = action.payload;
 
       if (success) {
-        state.success = success;
         state.posts.unshift(post);
+
+        removeLoading(state, loadings.createPost);
       }
     },
+    createPostFailed: (state) => {
+      removeLoading(state, loadings.createPost);
+    },
 
-    addFetchedPosts: (state, action: PayloadAction<GetPostsResponse>) => {
-      const { success, posts, ...others } = action.payload;
+    getPostsRequest: (state, action: PayloadAction<GetPostsPayload>) => {
+      addLoading(state, loadings.getPosts);
+    },
+    getPostsSuccess: (state, action: PayloadAction<GetPostsResponse>) => {
+      const { success, posts, prevPage, nextPage, total } = action.payload;
 
       if (success) {
-        return {
-          ...state,
-          ...others,
-          posts: [...state.posts, ...posts],
-        };
+        state.posts = [...state.posts, ...posts];
+        state.prevPage = prevPage!;
+        state.nextPage = nextPage!;
+        state.total = total!;
+
+        removeLoading(state, loadings.getPosts);
       }
     },
+    getPostsFailed: (state) => {
+      removeLoading(state, loadings.getPosts);
+    },
 
-    clearPosts: (state) => {
-      state.posts.length = 0;
+    updatePostRequest: (state, action: PayloadAction<UpdatePostPayload>) => {
+      addLoading(state, loadings.updatePost);
+    },
+    updatePostSuccess: (state, action: PayloadAction<UpdatePostResponse>) => {
+      const { success, post: updatedPost } = action.payload;
+
+      if (success) {
+        state.updatePost = null;
+        state.posts = state.posts.map((post) =>
+          post._id === updatedPost._id ? updatedPost : post
+        );
+
+        removeLoading(state, loadings.updatePost);
+      }
+    },
+    updatePostFailed: (state) => {
+      removeLoading(state, loadings.updatePost);
+    },
+
+    deletePostRequest: (state, action: PayloadAction<string>) => {
+      addLoading(state, loadings.deletePost);
+    },
+    deletePostSuccess: (state, action: PayloadAction<DeletePostResponse>) => {
+      const { postId, success } = action.payload;
+
+      if (success) {
+        state.posts = state.posts.filter((post) => post._id !== postId);
+
+        removeLoading(state, loadings.deletePost);
+      }
+    },
+    deletePostFailed: (state) => {
+      removeLoading(state, loadings.deletePost);
+    },
+
+    likePostRequest: (state, action: PayloadAction<LikePostPayload>) => {
+      addLoading(state, loadings.likePost);
+    },
+    likePostSuccess: (state, action: PayloadAction<LikePostPayload>) => {
+      const { userId, postId } = action.payload;
+
+      state.posts.forEach((post) => {
+        if (post._id === postId) {
+          post.likes[post.likes.length] = userId;
+        }
+      });
+
+      removeLoading(state, loadings.likePost);
+    },
+    likePostFailure: (state) => {
+      removeLoading(state, loadings.likePost);
+    },
+
+    unlikePostRequest: (state, action: PayloadAction<UnlikePostPayload>) => {
+      addLoading(state, loadings.unlikePost);
+    },
+    unlikePostSuccess: (state, action: PayloadAction<UnlikePostPayload>) => {
+      const { userId, postId } = action.payload;
+
+      state.posts.forEach(
+        (post) =>
+          post._id === postId &&
+          post.likes.splice(post.likes.indexOf(userId), 1)
+      );
+
+      removeLoading(state, loadings.unlikePost);
+    },
+    unlikePostFailure: (state) => {
+      removeLoading(state, loadings.unlikePost);
     },
 
     setUpdatePost: (state, action: PayloadAction<string | null>) => {
@@ -68,46 +162,8 @@ const postsSlice = createSlice({
       return { ...state, updatePost };
     },
 
-    setUpdatedPost: (state, action: PayloadAction<UpdatePostResponse>) => {
-      const { success, post: updatedPost } = action.payload;
-
-      if (success) {
-        const posts = state.posts.map((post) =>
-          post._id === updatedPost._id ? updatedPost : post
-        );
-
-        return { ...state, updatePost: null, posts };
-      }
-    },
-
-    removeDeletedPost: (state, action: PayloadAction<DeletePostResponse>) => {
-      const { _id, success } = action.payload;
-
-      if (success) {
-        const filteredPosts = state.posts.filter((post) => post._id !== _id);
-
-        return { ...state, posts: filteredPosts };
-      }
-    },
-
-    setUserLiked: (state, action: PayloadAction<LikePost>) => {
-      const { userId, postId } = action.payload;
-
-      state.posts.forEach((post) => {
-        if (post._id === postId) {
-          post.likes[post.likes.length] = userId;
-        }
-      });
-    },
-
-    clearUserUnliked: (state, action: PayloadAction<UnlikePost>) => {
-      const { userId, postId } = action.payload;
-
-      state.posts.forEach(
-        (post) =>
-          post._id === postId &&
-          post.likes.splice(post.likes.indexOf(userId), 1)
-      );
+    clearPosts: (state) => {
+      state.posts.length = 0;
     },
 
     setPagination: (state, action: PayloadAction<GetCommentsResponse>) => {
@@ -124,20 +180,18 @@ const postsSlice = createSlice({
       }
     },
 
-    updateCommentCount: (
+    increaseCommentCount: (
       state,
       action: PayloadAction<CreateCommentResponse>
     ) => {
       const { success, comment } = action.payload;
 
       if (success) {
-        const posts = state.posts.map((post) => {
-          return post._id === comment.postId
-            ? { ...post, commentCount: post.commentCount + 1 }
-            : post;
+        state.posts.forEach((post) => {
+          if (post._id === comment.postId) {
+            post.commentCount = post.commentCount + 1;
+          }
         });
-
-        return { ...state, posts };
       }
     },
   },
@@ -157,17 +211,8 @@ const postsSlice = createSlice({
   },
 });
 
-export const {
-  addCreatedPost,
-  addFetchedPosts,
-  clearPosts,
-  setUpdatePost,
-  setUpdatedPost,
-  removeDeletedPost,
-  setUserLiked,
-  clearUserUnliked,
-  setPagination,
-  updateCommentCount,
-} = postsSlice.actions;
+export { loadings };
+
+export const postsActions = postsSlice.actions;
 
 export default postsSlice.reducer;

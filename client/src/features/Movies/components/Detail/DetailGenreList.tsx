@@ -4,11 +4,11 @@ import clsx from 'clsx';
 // swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import { useMoviesSelector } from '@/redux/selectors';
+interface DetailGenreListProps {
+  genres: Array<{ id: string; name: string }>;
+}
 
-function DetailGenreList() {
-  const { detailInfo } = useMoviesSelector();
-
+function DetailGenreList({ genres }: DetailGenreListProps) {
   const swiperConfig = {
     slidesPerView: 'auto' as 'auto',
     spaceBetween: 8,
@@ -16,7 +16,7 @@ function DetailGenreList() {
 
   return (
     <Swiper {...swiperConfig} className='mb-2'>
-      {detailInfo.genres.map((genre) => (
+      {genres.map((genre) => (
         <SwiperSlide
           key={genre.id}
           className={clsx(

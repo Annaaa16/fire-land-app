@@ -10,7 +10,9 @@ usersController.getCurrentUser = async (req, res) => {
     const user = await User.findById(req.userId).select('-password');
 
     if (!user) {
-      res.status(404).json({ success: false, message: 'User not found' });
+      return res
+        .status(404)
+        .json({ success: false, message: 'User not found' });
     }
 
     const filteredUser = {
@@ -35,14 +37,18 @@ usersController.getUser = async (req, res) => {
   const { userId } = req.params;
 
   if (!userId) {
-    res.status(404).json({ success: false, message: 'User ID is required' });
+    return res
+      .status(404)
+      .json({ success: false, message: 'User ID is required' });
   }
 
   try {
     const user = await User.findById(userId).select('-password');
 
     if (!user) {
-      res.status(404).json({ success: false, message: 'User not found' });
+      return res
+        .status(404)
+        .json({ success: false, message: 'User not found' });
     }
 
     res.json({
@@ -80,7 +86,7 @@ usersController.followUser = async (req, res) => {
           userId,
         });
       } else {
-        res.status(403).json({
+        return res.status(403).json({
           success: false,
           message: 'You already follow this user',
         });
@@ -89,7 +95,7 @@ usersController.followUser = async (req, res) => {
       notifyServerError(res, error);
     }
   } else {
-    res
+    return res
       .status(403)
       .json({ success: false, message: "You can't follow yourself!" });
   }
@@ -120,7 +126,7 @@ usersController.unfollowUser = async (req, res) => {
           userId,
         });
       } else {
-        res.status(403).json({
+        return res.status(403).json({
           success: false,
           message: 'You already unfollow this user',
         });
@@ -129,26 +135,30 @@ usersController.unfollowUser = async (req, res) => {
       notifyServerError(res, error);
     }
   } else {
-    res
+    return res
       .status(403)
       .json({ success: false, message: "You can't unfollow yourself!" });
   }
 };
 
-usersController.getUserFriends = async (req, res) => {
+usersController.getFriends = async (req, res) => {
   const { userId } = req.params;
   const page = parseInt(req.query.page);
   const limit = parseInt(req.query.limit);
 
   if (!userId) {
-    res.status(404).json({ success: false, message: 'User ID is required' });
+    return res
+      .status(404)
+      .json({ success: false, message: 'User ID is required' });
   }
 
   try {
     const user = await User.findById(userId).select('-password');
 
     if (!user) {
-      res.status(404).json({ success: false, message: 'User not found' });
+      return res
+        .status(404)
+        .json({ success: false, message: 'User not found' });
     }
 
     const total = await User.count({

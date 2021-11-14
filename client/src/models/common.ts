@@ -65,6 +65,10 @@ export interface PaginationParams {
   limit: number;
 }
 
+export interface Loadings {
+  loadings: string[];
+}
+
 // === Responses ===
 export interface HydrateResponse {
   auth: AuthInitState;

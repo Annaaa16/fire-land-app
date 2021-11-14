@@ -1,13 +1,11 @@
 // clsx
 import clsx from 'clsx';
 
-import { useMoviesSelector } from '@/redux/selectors';
+interface DetailTrailerProps {
+  videos: Array<{ id: string; name: string; path: string }>;
+}
 
-function DetailTrailer() {
-  const {
-    detailInfo: { videos },
-  } = useMoviesSelector();
-
+function DetailTrailer({ videos }: DetailTrailerProps) {
   return (
     <div className='container'>
       <div className={clsx('mb-20')}>

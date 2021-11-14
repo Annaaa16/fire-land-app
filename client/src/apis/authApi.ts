@@ -3,22 +3,22 @@ import { AxiosError } from 'axios';
 import { StatusResponse } from '@/models/common';
 import { GetServerSidePropsContext, NextPageContext } from 'next';
 import {
-  LoginFormData,
+  LoginPayload,
   LoginResponse,
   RefreshTokenResponse,
-  RegisterFormData,
+  RegisterPayload,
   RegisterResponse,
 } from '@/models/auth';
 
 import { axiosServer } from './axiosServer';
 import { axiosClient } from './axiosClient';
-import { notifyAxiosError } from '@/helpers/notify';
+import { notifyAxiosError } from '@/helpers/notifyError';
 
 export const authApiClient = () => {
   const axiosInstance = axiosClient();
 
   return {
-    registerUser: async (formData: RegisterFormData) => {
+    registerUser: async (formData: RegisterPayload) => {
       try {
         const response = await axiosInstance.post<RegisterResponse>(
           '/auth/register',
@@ -31,7 +31,7 @@ export const authApiClient = () => {
       }
     },
 
-    loginUser: async (formData: LoginFormData) => {
+    loginUser: async (formData: LoginPayload) => {
       try {
         const response = await axiosInstance.post<LoginResponse>(
           '/auth/login',

@@ -11,11 +11,10 @@ import { GetPostsResponse } from '@/models/posts';
 import { GetUserResponse } from '@/models/users';
 
 import { LIMITS } from '@/constants';
-import { addFetchedPosts, clearPosts } from '@/redux/slices/postsSlice';
+import { postsActions } from '@/redux/slices/postsSlice';
 import { wrapper } from '@/redux/store';
 import { postsApiServer } from '@/apis/postsApi';
-import { getUserFriends } from '@/redux/actions/users';
-import { setUserProfile } from '@/redux/slices/usersSlice';
+import { usersActions } from '@/redux/slices/usersSlice';
 import { usersApiServer } from '@/apis/usersApi';
 import tokens from '@/helpers/tokens';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
@@ -38,7 +37,7 @@ function Wall() {
     // Block first load ID is undefined
     if (id) {
       dispatch(
-        getUserFriends.request({
+        usersActions.getFriendsRequest({
           userId: id as string,
           params: { page: 1, limit: 10 },
         })
@@ -69,7 +68,7 @@ export const getServerSideProps: GetServerSideProps =
     const { isRefreshTokenExpired, isFully } = tokens.checkTokenValid(ctx)!;
 
     if (isFully && !isRefreshTokenExpired) {
-      store.dispatch(clearPosts());
+      store.dispatch(postsActions.clearPosts());
 
       const postsResponse = (await getPosts({
         user_id: id as string,
@@ -81,8 +80,11 @@ export const getServerSideProps: GetServerSideProps =
         id as string
       )) as AxiosResponse<GetUserResponse>;
 
-      postsResponse && store.dispatch(addFetchedPosts(postsResponse.data));
-      userResponse && store.dispatch(setUserProfile(userResponse.data));
+      userResponse &&
+        store.dispatch(usersActions.setUserProfile(userResponse.data));
+
+      postsResponse &&
+        store.dispatch(postsActions.getPostsSuccess(postsResponse.data));
     }
 
     return {

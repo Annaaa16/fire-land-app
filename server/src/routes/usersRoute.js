@@ -28,6 +28,6 @@ router.patch('/:userId/unfollow', verifyToken, usersController.unfollowUser);
 // @route GET api/users/:userId/friends
 // @desc Get user's friends
 // @access Private
-router.get('/:userId/friends', verifyToken, usersController.getUserFriends);
+router.get('/:userId/friends', verifyToken, usersController.getFriends);
 
 module.exports = router;

@@ -15,13 +15,13 @@ postsController.createPost = async (req, res) => {
 
   // Empty content and attachment
   if (!content && !photo) {
-    res
+    return res
       .status(400)
       .json({ success: false, message: 'Content or attachment is required!' });
   }
 
   try {
-    const user = await User.findById(req.userId).select(['-password', '-__v']);
+    const user = await User.findById(req.userId).select(['-password']);
 
     let photoId = '';
 
@@ -47,16 +47,12 @@ postsController.createPost = async (req, res) => {
       photoId,
     });
 
-    // Save to db
     await post.save();
-
-    // Filter unnecessary fields of post
-    const { __v, ...others } = post.toObject();
 
     res.status(201).json({
       success: true,
       message: 'New post has been created successfully',
-      post: { ...others },
+      post: post.toObject(),
     });
   } catch (error) {
     notifyServerError(res, error);
@@ -70,7 +66,7 @@ postsController.getPosts = async (req, res) => {
 
   // Not specify page or limit then return all posts
   if (!page || !limit) {
-    res
+    return res
       .status(400)
       .json({ success: false, message: 'Page and limit params is required!' });
   }
@@ -97,8 +93,7 @@ postsController.getPosts = async (req, res) => {
       .sort({ createdAt: 'desc' })
       .skip(startPos)
       .limit(limit)
-      .populate('user', ['-__v'])
-      .select(['-__v'])
+      .populate('user')
       .lean();
 
     res.json({
@@ -120,7 +115,7 @@ postsController.updatePost = async (req, res) => {
 
   // Empty content and photo
   if (!content?.trim() && !photo) {
-    res
+    return res
       .status(400)
       .json({ success: false, message: 'Content or attachment is required!' });
   }
@@ -167,12 +162,11 @@ postsController.updatePost = async (req, res) => {
       new: true,
     })
       .populate('user')
-      .select(['-__v'])
       .lean();
 
     // Invalid post id or user not authorized
     if (!updatedPost) {
-      res.status(401).json({
+      return res.status(401).json({
         success: false,
         message: 'Post not found or user is not authorized',
       });
@@ -210,7 +204,7 @@ postsController.deletePost = async (req, res) => {
     res.json({
       success: true,
       message: 'Post is deleted!',
-      _id: deletedPost._id,
+      postId: deletedPost._id,
     });
   } catch (error) {
     notifyServerError(res, error);
@@ -222,7 +216,7 @@ postsController.likePost = async (req, res) => {
     const post = await Post.findById(req.params.id);
 
     if (!post) {
-      res.status(404).json({
+      return res.status(404).json({
         success: false,
         message: 'Post not found',
       });
@@ -245,7 +239,7 @@ postsController.likePost = async (req, res) => {
         post: likedPost,
       });
     } else {
-      res.status(400).json({
+      return res.status(400).json({
         success: false,
         message: 'The post has already been liked',
       });
@@ -260,7 +254,7 @@ postsController.unlikePost = async (req, res) => {
     const post = await Post.findById(req.params.id);
 
     if (!post) {
-      res.status(404).json({
+      return res.status(404).json({
         success: false,
         message: 'Post not found',
       });
@@ -281,7 +275,7 @@ postsController.unlikePost = async (req, res) => {
         post: unlikedPost,
       });
     } else {
-      res.status(400).json({
+      return res.status(400).json({
         success: false,
         message: 'Post already unliked',
       });

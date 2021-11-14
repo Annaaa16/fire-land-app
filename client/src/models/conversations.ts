@@ -1,14 +1,17 @@
+// types
+import { Loadings } from './common';
+
 export interface Conversation {
   readonly _id: string;
   memberIds: string[];
   updatedAt: string;
 }
 
-export interface ConversationsInitState {
+export interface ConversationsInitState extends Loadings {
   conversations: Conversation[];
 }
 
-export interface CreateConversation {
+export interface CreateConversationPayload {
   senderId: string;
   receiverId: string;
 }

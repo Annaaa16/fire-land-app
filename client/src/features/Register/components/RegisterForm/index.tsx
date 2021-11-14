@@ -14,10 +14,10 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 // types
-import { RegisterFormData } from '@/models/auth';
+import { RegisterPayload } from '@/models/auth';
 
 import { formRegisterSchema } from '@/utils/formSchemas';
-import { registerUser } from '@/redux/actions/auth';
+import { authActions } from '@/redux/slices/authSlice';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 import randomAvatar from '@/helpers/randomAvatar';
 
@@ -42,14 +42,14 @@ function RegisterForm() {
     setAvatar(avatar);
   };
 
-  const handleOnSubmit = (data: RegisterFormData) => {
+  const handleOnSubmit = (data: RegisterPayload) => {
     const formData = {
       username: data.username,
       password: data.password,
       avatar,
     };
 
-    dispatch(registerUser.request(formData));
+    dispatch(authActions.registerRequest(formData));
   };
 
   // Random avatar when init app

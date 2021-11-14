@@ -1,19 +1,20 @@
 // types
 import { AxiosError } from 'axios';
 import {
-  CreateConversation,
+  CreateConversationPayload,
   CreateConversationResponse,
+  DeleteConversationResponse,
   GetConversationsResponse,
 } from '@/models/conversations';
 
 import { axiosClient } from './axiosClient';
-import { notifyAxiosError } from '@/helpers/notify';
+import { notifyAxiosError } from '@/helpers/notifyError';
 
 export const conversationsApiClient = () => {
   const axiosInstance = axiosClient();
 
   return {
-    createConversation: async (memberIds: CreateConversation) => {
+    createConversation: async (memberIds: CreateConversationPayload) => {
       try {
         const response = await axiosInstance.post<CreateConversationResponse>(
           '/conversations/create',
@@ -41,7 +42,7 @@ export const conversationsApiClient = () => {
 
     deleteConversation: async (conversationId: string) => {
       try {
-        const response = await axiosInstance.delete<GetConversationsResponse>(
+        const response = await axiosInstance.delete<DeleteConversationResponse>(
           '/conversations/' + conversationId
         );
 

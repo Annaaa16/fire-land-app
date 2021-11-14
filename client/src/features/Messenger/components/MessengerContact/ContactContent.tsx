@@ -9,8 +9,8 @@ import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import GroupsIcon from '@mui/icons-material/Groups';
 
+import { conversationsActions } from '@/redux/slices/conversationsSlice';
 import { useUsersSelector } from '@/redux/selectors';
-import { getConversations } from '@/redux/actions/conversations';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 import ContactConversationList from './ContactConversationList';
@@ -33,7 +33,8 @@ function ContactContent() {
 
   // Get conversations of current user
   useEffect(() => {
-    currentUser._id && dispatch(getConversations.request(currentUser._id));
+    currentUser._id &&
+      dispatch(conversationsActions.getConversationsRequest(currentUser._id));
   }, [currentUser, dispatch]);
 
   return (

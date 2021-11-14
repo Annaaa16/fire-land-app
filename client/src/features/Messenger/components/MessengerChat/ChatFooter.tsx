@@ -13,9 +13,8 @@ import SendIcon from '@mui/icons-material/Send';
 // types
 import { FormEvent } from 'react';
 
-import { createMessage } from '@/redux/actions/messenger';
-import { addMessage } from '@/redux/slices/messengerSlice';
 import { useMessengerSelector, useUsersSelector } from '@/redux/selectors';
+import { messengerActions } from '@/redux/slices/messengerSlice';
 import useSocket from '@/hooks/useSocket';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
@@ -49,12 +48,12 @@ function ChatFooter() {
     };
 
     dispatch(
-      addMessage({
+      messengerActions.addMessage({
         ...message,
         updatedAt: new Date().toISOString(),
       })
     );
-    dispatch(createMessage.request(message));
+    dispatch(messengerActions.createMessageRequest(message));
     setInputValue('');
   };
 

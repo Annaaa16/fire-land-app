@@ -2,31 +2,25 @@ import { call, delay, put, takeLatest } from '@redux-saga/core/effects';
 
 // types
 import {
-  CreateConversation,
+  CreateConversationPayload,
   CreateConversationResponse,
+  DeleteConversationResponse,
   GetConversationsResponse,
 } from '@/models/conversations';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { AxiosResponse } from 'axios';
 
-import {
-  createConversation as createConversationAct,
-  getConversations as getConversationsAct,
-  deleteConversation as deleteConversationAct,
-} from '../actions/conversations';
-import {
-  addConversation,
-  clearDeletedConversation,
-  setConversations,
-} from '../slices/conversationsSlice';
 import { DELAYS } from '@/constants';
+import { conversationsActions } from '../slices/conversationsSlice';
 import { conversationsApiClient } from '@/apis/conversationsApi';
-import { notifySagaError } from '@/helpers/notify';
+import { notifySagaError } from '@/helpers/notifyError';
 
 const { createConversation, getConversations, deleteConversation } =
   conversationsApiClient();
 
-function* handleCreateConversation(action: PayloadAction<CreateConversation>) {
+function* handleCreateConversationRequest(
+  action: PayloadAction<CreateConversationPayload>
+) {
   try {
     yield delay(DELAYS.DEFAULT); // Block spam add friend button
 
@@ -37,50 +31,57 @@ function* handleCreateConversation(action: PayloadAction<CreateConversation>) {
       memberIds
     );
 
-    yield put(addConversation(response.data));
+    yield put(conversationsActions.createConversationSuccess(response.data));
   } catch (error) {
-    notifySagaError('Create conversation', error);
+    notifySagaError(conversationsActions.createConversationFailed, error);
+    yield put(conversationsActions.createConversationFailed());
   }
 }
 
-function* handleGetConversations(action: PayloadAction<string>) {
+function* handleGetConversationsRequest(action: PayloadAction<string>) {
   try {
-    const userId = action.payload;
+    const deleteConversation = action.payload;
 
     const response: AxiosResponse<GetConversationsResponse> = yield call(
       getConversations,
-      userId
+      deleteConversation
     );
 
-    yield put(setConversations(response.data));
+    yield put(conversationsActions.getConversationsSuccess(response.data));
   } catch (error) {
-    notifySagaError('Get conversations', error);
+    notifySagaError(conversationsActions.getConversationsFailed, error);
+    yield put(conversationsActions.getConversationsFailed());
   }
 }
 
-function* handleDeleteConversations(action: PayloadAction<string>) {
-  const conversationId = action.payload;
-
+function* handleDeleteConversationRequest(action: PayloadAction<string>) {
   try {
-    yield delay(DELAYS.DEFAULT); // Block spam add unfriend button
+    const conversationId = action.payload;
 
-    yield put(clearDeletedConversation(conversationId));
+    const response: AxiosResponse<DeleteConversationResponse> = yield call(
+      deleteConversation,
+      conversationId
+    );
 
-    yield call(deleteConversation, conversationId);
+    yield put(conversationsActions.deleteConversationSuccess(response.data));
   } catch (error) {
-    notifySagaError('Delete conversation', error);
+    notifySagaError(conversationsActions.deleteConversationFailed, error);
+    yield put(conversationsActions.deleteConversationFailed());
   }
 }
 
 function* conversationSaga() {
   yield takeLatest(
-    createConversationAct.request().type,
-    handleCreateConversation
+    conversationsActions.createConversationRequest,
+    handleCreateConversationRequest
   );
-  yield takeLatest(getConversationsAct.request().type, handleGetConversations);
   yield takeLatest(
-    deleteConversationAct.request().type,
-    handleDeleteConversations
+    conversationsActions.getConversationsRequest,
+    handleGetConversationsRequest
+  );
+  yield takeLatest(
+    conversationsActions.deleteConversationRequest,
+    handleDeleteConversationRequest
   );
 }
 

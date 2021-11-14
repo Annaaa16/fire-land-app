@@ -2,7 +2,7 @@
 import clsx from 'clsx';
 
 import { PATHS, LOCAL_STORAGE } from '@/constants';
-import { clearMessage } from '@/redux/slices/authSlice';
+import { authActions } from '@/redux/slices/authSlice';
 import { useGlobalContext } from '@/contexts/GlobalContext';
 import { useAuthSelector } from '@/redux/selectors';
 import { useEffect } from 'react';
@@ -32,11 +32,11 @@ function Login() {
   const dispatch = useStoreDispatch();
 
   const {
-    authStatus: { isAuthenticated },
+    loginStatus: { isAuthenticated },
   } = useAuthSelector();
 
   const moveToRegister = () => {
-    dispatch(clearMessage());
+    dispatch(authActions.clearMessage());
     router.push('/register');
   };
 
