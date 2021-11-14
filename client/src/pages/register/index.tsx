@@ -7,7 +7,7 @@ import clsx from 'clsx';
 import { LOCAL_STORAGE, PATHS } from '@/constants';
 import { useGlobalContext } from '@/contexts/GlobalContext';
 import { useAuthSelector } from '@/redux/selectors';
-import { clearMessage } from '@/redux/slices/authSlice';
+import { authActions } from '@/redux/slices/authSlice';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 import {
   ltBackground,
@@ -34,7 +34,7 @@ function Register() {
   const router = useRouter();
 
   const moveToLogin = () => {
-    dispatch(clearMessage());
+    dispatch(authActions.clearMessage());
     router.push(PATHS.LOGIN);
   };
 
