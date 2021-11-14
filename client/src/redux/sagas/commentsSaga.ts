@@ -4,26 +4,23 @@ import { call, delay, put, takeLatest } from '@redux-saga/core/effects';
 import { AxiosResponse } from 'axios';
 import { PayloadAction } from '@reduxjs/toolkit';
 import {
-  CreateComment,
+  CreateCommentPayload,
   CreateCommentResponse,
-  GetComments,
+  GetCommentsPayload,
   GetCommentsResponse,
 } from '@/models/comments';
 
-import { commentsApiClient } from '@/apis/commentsApi';
-import {
-  addCreatedComment,
-  addFetchedCommentList,
-} from '../slices/commentsSlice';
 import { DELAYS } from '@/constants';
-import { setPagination, updateCommentCount } from '../slices/postsSlice';
-import { createComment as createCommentAct } from '../actions/comments';
-import { getComments as getCommentsAct } from '../actions/comments';
-import { notifySagaError } from '@/helpers/notify';
+import { commentsActions } from '../slices/commentsSlice';
+import { commentsApiClient } from '@/apis/commentsApi';
+import { postsActions } from '../slices/postsSlice';
+import { notifySagaError } from '@/helpers/notifyError';
 
 const { createComment, getComments } = commentsApiClient();
 
-function* handleCreateComment(action: PayloadAction<CreateComment>) {
+function* handleCreateCommentRequest(
+  action: PayloadAction<CreateCommentPayload>
+) {
   try {
     yield delay(DELAYS.DEFAULT); // Block spam comment
 
@@ -32,14 +29,15 @@ function* handleCreateComment(action: PayloadAction<CreateComment>) {
       action.payload
     );
 
-    yield put(addCreatedComment(response.data));
-    yield put(updateCommentCount(response.data));
+    yield put(commentsActions.createCommentSuccess(response.data));
+    yield put(postsActions.increaseCommentCount(response.data));
   } catch (error) {
-    notifySagaError('Create comment', error);
+    notifySagaError(commentsActions.createCommentFailed, error);
+    yield put(commentsActions.createCommentFailed());
   }
 }
 
-function* handleGetComments(action: PayloadAction<GetComments>) {
+function* handleGetCommentsRequest(action: PayloadAction<GetCommentsPayload>) {
   try {
     yield delay(DELAYS.DEFAULT); // Block spam get comments
 
@@ -48,16 +46,23 @@ function* handleGetComments(action: PayloadAction<GetComments>) {
       action.payload
     );
 
-    yield put(addFetchedCommentList(response.data));
-    yield put(setPagination(response.data));
+    yield put(commentsActions.getCommentsSuccess(response.data));
+    yield put(postsActions.setPagination(response.data));
   } catch (error) {
-    notifySagaError('Get comments', error);
+    notifySagaError(commentsActions.getCommentsFailed, error);
+    yield put(commentsActions.getCommentsFailed());
   }
 }
 
 function* commentsSaga() {
-  yield takeLatest(createCommentAct.request().type, handleCreateComment);
-  yield takeLatest(getCommentsAct.request().type, handleGetComments);
+  yield takeLatest(
+    commentsActions.createCommentRequest,
+    handleCreateCommentRequest
+  );
+  yield takeLatest(
+    commentsActions.getCommentsRequest,
+    handleGetCommentsRequest
+  );
 }
 
 export default commentsSaga;

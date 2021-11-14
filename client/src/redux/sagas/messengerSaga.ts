@@ -3,34 +3,27 @@ import { call, put, takeLatest } from '@redux-saga/core/effects';
 // types
 import { PayloadAction } from '@reduxjs/toolkit';
 import { AxiosResponse } from 'axios';
-import {
-  GetMessagesData,
-  GetMessagesResponse,
-  MessageData,
-} from '@/models/messenger';
+import { GetMessagesResponse, MessagePayload } from '@/models/messenger';
 
+import { messengerActions } from '../slices/messengerSlice';
 import { messagesApiClient } from '@/apis/messagesApi';
-import {
-  createMessage as createMessageAct,
-  getMessages as getMessagesAct,
-} from '../actions/messenger';
-import { setCurrentChat } from '../slices/messengerSlice';
-import { notifySagaError } from '@/helpers/notify';
+import { notifySagaError } from '@/helpers/notifyError';
 
 const { createMessage, getMessages } = messagesApiClient();
 
-function* handleCreateMessage(action: PayloadAction<MessageData>) {
-  const messageData = action.payload;
-
+function* handleCreateMessageRequest(action: PayloadAction<MessagePayload>) {
   try {
-    yield call(createMessage, messageData);
+    yield call(createMessage, action.payload);
+
+    yield put(messengerActions.createMessageSuccess());
   } catch (error) {
-    notifySagaError('Create message', error);
+    notifySagaError(messengerActions.createMessageFailed, error);
+    yield put(messengerActions.createMessageFailed());
   }
 }
 
-function* handleGetMessages(action: PayloadAction<GetMessagesData>) {
-  const { conversationId } = action.payload;
+function* handleGetMessagesRequest(action: PayloadAction<string>) {
+  const conversationId = action.payload;
 
   try {
     const response: AxiosResponse<GetMessagesResponse> = yield call(
@@ -38,15 +31,22 @@ function* handleGetMessages(action: PayloadAction<GetMessagesData>) {
       conversationId
     );
 
-    yield put(setCurrentChat(response.data));
+    yield put(messengerActions.getMessagesSuccess(response.data));
   } catch (error) {
-    notifySagaError('Get messages', error);
+    notifySagaError(messengerActions.getMessagesFailed, error);
+    yield put(messengerActions.getMessagesFailed());
   }
 }
 
 function* messageSaga() {
-  yield takeLatest(createMessageAct.request().type, handleCreateMessage);
-  yield takeLatest(getMessagesAct.request().type, handleGetMessages);
+  yield takeLatest(
+    messengerActions.createMessageRequest,
+    handleCreateMessageRequest
+  );
+  yield takeLatest(
+    messengerActions.getMessagesRequest,
+    handleGetMessagesRequest
+  );
 }
 
 export default messageSaga;

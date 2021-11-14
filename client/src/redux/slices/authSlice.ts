@@ -5,10 +5,23 @@ import _ from 'lodash';
 
 // types
 import { GetUserResponse } from '@/models/users';
-import { AuthInitState, LoginResponse, RegisterResponse } from '@/models/auth';
+import {
+  AuthInitState,
+  LoginPayload,
+  LoginResponse,
+  RegisterPayload,
+  RegisterResponse,
+} from '@/models/auth';
+
+import { addLoading, removeLoading } from '@/helpers/loadings';
+
+const loadings = {
+  login: 'login',
+  register: 'register',
+};
 
 export const initialState: AuthInitState = {
-  authStatus: {
+  loginStatus: {
     message: '',
     success: false,
     isAuthenticated: false,
@@ -17,52 +30,66 @@ export const initialState: AuthInitState = {
     message: '',
     success: false,
   },
+  loadings: [],
 };
 
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setAuthStatus: (
+    loginRequest: (state, action: PayloadAction<LoginPayload>) => {
+      addLoading(state, loadings.login);
+    },
+    loginSuccess: (
       state,
       action: PayloadAction<LoginResponse | GetUserResponse>
     ) => {
       const { success, message } = action.payload;
 
-      if (!success) {
-        return {
-          ...state,
-          authStatus: { ...state.authStatus, message },
-        };
-      }
+      if (success) {
+        state.loginStatus.isAuthenticated = true;
+        state.loginStatus.success = true;
 
-      return {
-        ...state,
-        authStatus: {
-          success,
-          message,
-          isAuthenticated: true,
-        },
-      };
+        removeLoading(state, loadings.login);
+      } else {
+        state.loginStatus.message = message;
+
+        removeLoading(state, loadings.login);
+      }
+    },
+    loginFailed: (state) => {
+      removeLoading(state, loadings.login);
     },
 
-    setRegisterStatus(state, action: PayloadAction<RegisterResponse>) {
+    registerRequest: (state, action: PayloadAction<RegisterPayload>) => {
+      addLoading(state, loadings.register);
+    },
+    registerSuccess(state, action: PayloadAction<RegisterResponse>) {
       const { success, message } = action.payload;
 
-      return {
-        ...state,
-        registerStatus: { ...state.registerStatus, success, message },
-      };
+      if (success) {
+        state.registerStatus.success = true;
+
+        removeLoading(state, loadings.register);
+      } else {
+        state.registerStatus.message = message;
+
+        removeLoading(state, loadings.register);
+      }
+    },
+    registerFailed: (state) => {
+      removeLoading(state, loadings.login);
     },
 
     clearMessage: (state) => {
-      state.authStatus.message = '';
+      state.loginStatus.message = '';
       state.registerStatus.message = '';
     },
   },
 });
 
-export const { setAuthStatus, clearMessage, setRegisterStatus } =
-  authSlice.actions;
+export { loadings };
+
+export const authActions = authSlice.actions;
 
 export default authSlice.reducer;

@@ -1,52 +1,75 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 // types
-
-// types
-import { PayloadAction } from '@reduxjs/toolkit';
 import {
   GetMessagesResponse,
   Message,
+  MessagePayload,
   MessengerInitState,
 } from '@/models/messenger';
+import { PayloadAction } from '@reduxjs/toolkit';
+import { addLoading, removeLoading } from '@/helpers/loadings';
+
+const loadings = {
+  createMessage: 'createMessage',
+  getMessages: 'getMessages',
+};
 
 const initialState: MessengerInitState = {
-  currentChat: [],
+  messageContent: [],
   conversationId: '',
   receiverId: '',
+  loadings: [],
 };
 
 const messengerSlice = createSlice({
   name: 'messenger',
   initialState,
   reducers: {
-    setCurrentChat: (state, action: PayloadAction<GetMessagesResponse>) => {
+    createMessageRequest: (state, action: PayloadAction<MessagePayload>) => {
+      addLoading(state, loadings.createMessage);
+    },
+    createMessageSuccess: (state) => {
+      removeLoading(state, loadings.createMessage);
+    },
+    createMessageFailed: (state) => {
+      removeLoading(state, loadings.createMessage);
+    },
+
+    getMessagesRequest: (state, action: PayloadAction<string>) => {
+      addLoading(state, loadings.getMessages);
+    },
+    getMessagesSuccess: (state, action: PayloadAction<GetMessagesResponse>) => {
       const { success, messages } = action.payload;
 
-      if (success) state.currentChat = messages;
+      if (success) {
+        state.messageContent = messages;
+
+        removeLoading(state, loadings.getMessages);
+      }
+    },
+    getMessagesFailed: (state) => {
+      removeLoading(state, loadings.getMessages);
     },
 
     addMessage: (state, action: PayloadAction<Message>) => {
       const message = action.payload;
 
-      state.currentChat.push(message);
+      state.messageContent.push(message);
     },
 
     setConversationId: (state, action: PayloadAction<string>) => {
-      const conversationId = action.payload;
-
-      state.conversationId = conversationId;
+      state.conversationId = action.payload;
     },
 
     setReceiverId: (state, action: PayloadAction<string>) => {
-      const receiverId = action.payload;
-
-      state.receiverId = receiverId;
+      state.receiverId = action.payload;
     },
   },
 });
 
-export const { setCurrentChat, addMessage, setConversationId, setReceiverId } =
-  messengerSlice.actions;
+export { loadings };
+
+export const messengerActions = messengerSlice.actions;
 
 export default messengerSlice.reducer;

@@ -4,41 +4,48 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import _ from 'lodash';
 
 // types
-import { LoginResponse } from '@/models/auth';
-import { GetUserFriendsResponse, GetUserResponse } from '@/models/users';
-import { HydrateResponse } from '@/models/common';
-import { HYDRATE } from 'next-redux-wrapper';
 import {
-  FollowResponse,
-  UnfollowResponse,
-  UsersInitState,
+  GetFriendsPayload,
+  GetUserFriendsResponse,
+  GetUserResponse,
+  UnfollowUserResponse,
 } from '@/models/users';
+import { HydrateResponse } from '@/models/common';
+import { LoginResponse } from '@/models/auth';
+import { FollowUserResponse, UsersInitState } from '@/models/users';
+
+// next redux wrapper
+import { HYDRATE } from 'next-redux-wrapper';
+
+import { addLoading, removeLoading } from '@/helpers/loadings';
+
+const user = {
+  _id: '',
+  username: '',
+  avatar: '',
+  followings: [],
+  followers: [],
+  createdAt: '',
+};
+
+const loadings = {
+  followUser: 'followUser',
+  unfollowUser: 'unfollowUser',
+  getFriends: 'getFriends',
+};
 
 export const initialState: UsersInitState = {
-  currentUser: {
-    _id: '',
-    username: '',
-    avatar: '',
-    followings: [],
-    followers: [],
-    createdAt: '',
-  },
-  userProfile: {
-    _id: '',
-    username: '',
-    avatar: '',
-    followings: [],
-    followers: [],
-    createdAt: '',
-  },
-  fetchedFriends: [],
+  currentUser: user,
+  userProfile: user,
+  friends: [],
+  loadings: [],
 };
 
 const usersSlice = createSlice({
   name: 'users',
   initialState,
   reducers: {
-    setUser: (
+    setCurrentUser: (
       state,
       action: PayloadAction<LoginResponse | GetUserResponse>
     ) => {
@@ -59,29 +66,58 @@ const usersSlice = createSlice({
       }
     },
 
-    addFollowingUser: (state, action: PayloadAction<FollowResponse>) => {
+    followUserRequest: (state, action: PayloadAction<string>) => {
+      addLoading(state, loadings.followUser);
+    },
+    followUserSuccess: (state, action: PayloadAction<FollowUserResponse>) => {
       const { success, userId } = action.payload;
 
       if (success) {
         state.currentUser.followings.push(userId);
+
+        removeLoading(state, loadings.followUser);
       }
     },
-
-    deleteFollowingUser: (state, action: PayloadAction<string>) => {
-      const userId = action.payload;
-
-      _.remove(state.currentUser.followings, (n) => n === userId);
+    followUserFailed: (state) => {
+      removeLoading(state, loadings.followUser);
     },
 
-    setFetchedFriends: (
+    unfollowUserRequest: (state, action: PayloadAction<string>) => {
+      addLoading(state, loadings.unfollowUser);
+    },
+    unfollowUserSuccess: (
+      state,
+      action: PayloadAction<UnfollowUserResponse>
+    ) => {
+      const { success, userId } = action.payload;
+
+      if (success) {
+        _.remove(state.currentUser.followings, (n) => n === userId);
+
+        removeLoading(state, loadings.unfollowUser);
+      }
+    },
+    unfollowUserFailed: (state) => {
+      removeLoading(state, loadings.unfollowUser);
+    },
+
+    getFriendsRequest: (state, action: PayloadAction<GetFriendsPayload>) => {
+      addLoading(state, loadings.getFriends);
+    },
+    getFriendsSuccess: (
       state,
       action: PayloadAction<GetUserFriendsResponse>
     ) => {
       const { success, friends } = action.payload;
 
       if (success) {
-        state.fetchedFriends = friends;
+        state.friends = friends;
+
+        removeLoading(state, loadings.getFriends);
       }
+    },
+    getFriendsFailed: (state) => {
+      removeLoading(state, loadings.getFriends);
     },
 
     setUserProfile: (state, action: PayloadAction<GetUserResponse>) => {
@@ -109,12 +145,8 @@ const usersSlice = createSlice({
   },
 });
 
-export const {
-  setUser,
-  addFollowingUser,
-  deleteFollowingUser,
-  setFetchedFriends,
-  setUserProfile,
-} = usersSlice.actions;
+export { loadings };
+
+export const usersActions = usersSlice.actions;
 
 export default usersSlice.reducer;

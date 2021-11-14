@@ -6,31 +6,37 @@ import _ from 'lodash';
 // types
 import {
   ConversationsInitState,
+  CreateConversationPayload,
   CreateConversationResponse,
+  DeleteConversationResponse,
   GetConversationsResponse,
 } from '@/models/conversations';
 import { PayloadAction } from '@reduxjs/toolkit';
 
-const initialState: ConversationsInitState = {
-  conversations: [],
+import { addLoading, removeLoading } from '@/helpers/loadings';
+
+const loadings = {
+  createConversation: 'createConversation',
+  getConversations: 'getConversations',
+  deleteConversation: 'deleteConversation',
 };
 
-const conversationSlice = createSlice({
+const initialState: ConversationsInitState = {
+  conversations: [],
+  loadings: [],
+};
+
+const conversationsSlice = createSlice({
   name: 'conversations',
   initialState,
   reducers: {
-    setConversations: (
+    createConversationRequest: (
       state,
-      action: PayloadAction<GetConversationsResponse>
+      action: PayloadAction<CreateConversationPayload>
     ) => {
-      const { success, conversations } = action.payload;
-
-      if (success) {
-        state.conversations = conversations;
-      }
+      addLoading(state, loadings.createConversation);
     },
-
-    addConversation: (
+    createConversationSuccess: (
       state,
       action: PayloadAction<CreateConversationResponse>
     ) => {
@@ -38,18 +44,56 @@ const conversationSlice = createSlice({
 
       if (success) {
         state.conversations.push(conversation);
+
+        removeLoading(state, loadings.createConversation);
       }
     },
+    createConversationFailed: (state) => {
+      removeLoading(state, loadings.createConversation);
+    },
 
-    clearDeletedConversation: (state, action: PayloadAction<string>) => {
-      const conversationId = action.payload;
+    getConversationsRequest: (state, action: PayloadAction<string>) => {
+      addLoading(state, loadings.getConversations);
+    },
+    getConversationsSuccess: (
+      state,
+      action: PayloadAction<GetConversationsResponse>
+    ) => {
+      const { success, conversations } = action.payload;
 
-      _.remove(state.conversations, (n) => n._id === conversationId);
+      if (success) {
+        state.conversations = conversations;
+
+        removeLoading(state, loadings.getConversations);
+      }
+    },
+    getConversationsFailed: (state) => {
+      removeLoading(state, loadings.getConversations);
+    },
+
+    deleteConversationRequest: (state, action: PayloadAction<string>) => {
+      addLoading(state, loadings.deleteConversation);
+    },
+    deleteConversationSuccess: (
+      state,
+      action: PayloadAction<DeleteConversationResponse>
+    ) => {
+      const { success, conversationId } = action.payload;
+
+      if (success) {
+        _.remove(state.conversations, (n) => n._id === conversationId);
+
+        removeLoading(state, loadings.deleteConversation);
+      }
+    },
+    deleteConversationFailed: (state) => {
+      removeLoading(state, loadings.deleteConversation);
     },
   },
 });
 
-export const { setConversations, addConversation, clearDeletedConversation } =
-  conversationSlice.actions;
+export { loadings };
 
-export default conversationSlice.reducer;
+export const conversationsActions = conversationsSlice.actions;
+
+export default conversationsSlice.reducer;

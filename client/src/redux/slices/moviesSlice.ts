@@ -4,28 +4,26 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { HYDRATE } from 'next-redux-wrapper';
 
 // types
-import { HydrateResponse } from '@/models/common';
 import {
   MoviesInitState,
   DefaultMovies,
   DefaultTvShows,
   MovieCategoryKeys,
   TvShowCategoryKeys,
+  GetMoviesPayload,
+  GetTvShowsPayload,
 } from '@/models/movies';
 import {
-  TmdbGetMovieCreditsResponse,
   TmdbGetMoviesResponse,
-  TmdbGetMovieVideosResponse,
-  TmdbGetTvShowCreditsResponse,
   TmdbGetTvShowsResponse,
-  TmdbGetTvShowVideosResponse,
-  TmdbMovie,
-  TmdbMovieDetail,
-  TmdbTvShow,
-  TmdbTvShowDetail,
+  TmdbSearchPayload,
 } from '@/models/tmdb';
+import { HydrateResponse } from '@/models/common';
 
-export const movieCategoryKeys: MovieCategoryKeys = {
+import { filterMovies, filterTvShows } from '@/helpers/filterMovies';
+import { addLoading, removeLoading } from '@/helpers/loadings';
+
+const movieCategoryKeys: MovieCategoryKeys = {
   popular: 'popular',
   topRated: 'topRated',
   upcoming: 'upcoming',
@@ -33,12 +31,18 @@ export const movieCategoryKeys: MovieCategoryKeys = {
   similar: 'similar',
 };
 
-export const tvShowCategoryKeys: TvShowCategoryKeys = {
+const tvShowCategoryKeys: TvShowCategoryKeys = {
   popular: 'popular',
   topRated: 'topRated',
   onTheAir: 'onTheAir',
   airingToday: 'airingToday',
   similar: 'similar',
+};
+
+const loadings = {
+  getMovies: 'getMovies',
+  getTvShows: 'getTvShows',
+  searchMovies: 'searchMovies',
 };
 
 const defaultMovies: DefaultMovies = {
@@ -70,72 +74,18 @@ const initialState: MoviesInitState = {
     airingToday: defaultTvShows,
     similar: defaultTvShows,
   },
-  detailInfo: {
-    id: '',
-    title: '',
-    overview: '',
-    image: '',
-    casts: [],
-    videos: [],
-    genres: [],
-  },
   searchedMovies: defaultMovies,
-};
-
-const filterMovies = (movies: TmdbMovie[]) => {
-  return movies.map((movie) => {
-    const {
-      id,
-      backdrop_path,
-      overview,
-      title,
-      vote_count,
-      release_date,
-      popularity,
-    } = movie;
-
-    return {
-      id: id.toString(),
-      image: backdrop_path,
-      overview,
-      title,
-      voteCount: vote_count,
-      releaseDate: release_date,
-      popularity,
-    };
-  });
-};
-
-const filterTvShows = (tvShows: TmdbTvShow[]) => {
-  return tvShows.map((show) => {
-    const {
-      id,
-      backdrop_path,
-      overview,
-      name,
-      vote_count,
-      first_air_date,
-      popularity,
-    } = show;
-
-    return {
-      id: id.toString(),
-      image: backdrop_path,
-      overview,
-      title: name,
-      voteCount: vote_count,
-      releaseDate: first_air_date,
-      popularity,
-    };
-  });
+  loadings: [],
 };
 
 const moviesSlice = createSlice({
   name: 'movies',
   initialState,
   reducers: {
-    // === Movies ===
-    setMovies: (
+    getMoviesRequest: (state, action: PayloadAction<GetMoviesPayload>) => {
+      addLoading(state, loadings.getMovies);
+    },
+    getMoviesSuccess: (
       state,
       action: PayloadAction<{
         moviesType: keyof typeof movieCategoryKeys;
@@ -151,78 +101,43 @@ const moviesSlice = createSlice({
         totalMovies: total_results,
         totalPages: total_pages,
       };
+
+      removeLoading(state, loadings.getMovies);
+    },
+    getMoviesFailed: (state) => {
+      removeLoading(state, loadings.getMovies);
     },
 
-    setMovieDetail: (
-      state,
-      action: PayloadAction<{
-        casts: TmdbGetMovieCreditsResponse;
-        detail: TmdbMovieDetail;
-        videos: TmdbGetMovieVideosResponse;
-      }>
-    ) => {
-      const { casts, detail, videos } = action.payload;
-      const { id, overview, title, backdrop_path, genres } = detail;
-
-      const filteredCasts = casts.cast.map((cast) => ({
-        id: cast.id.toString(),
-        name: cast.name,
-        image: cast.profile_path,
-      }));
-
-      const filteredVideos = videos.results.map((video) => ({
-        id: video.id.toString(),
-        name: video.name,
-        path: video.key,
-      }));
-
-      const filteredGenres = genres.map((genre) => ({
-        id: genre.id.toString(),
-        name: genre.name,
-      }));
-
-      state.detailInfo = {
-        id: id.toString(),
-        title,
-        overview,
-        image: backdrop_path,
-        casts: filteredCasts,
-        videos: filteredVideos,
-        genres: filteredGenres,
-      };
+    getSimilarMoviesRequest: (state, action: PayloadAction<string>) => {
+      addLoading(state, loadings.getMovies);
     },
 
-    setSearchedMovies: (
+    searchMoviesRequest: (state, action: PayloadAction<TmdbSearchPayload>) => {
+      addLoading(state, loadings.searchMovies);
+    },
+    searchMoviesSuccess: (
       state,
       action: PayloadAction<TmdbGetMoviesResponse>
     ) => {
       const { page, results, total_pages, total_results } = action.payload;
 
-      return {
-        ...state,
-        searchedMovies: {
-          page,
-          movies: [...state.searchedMovies.movies, ...filterMovies(results)],
-          totalPages: total_pages,
-          totalMovies: total_results,
-        },
+      state.searchedMovies = {
+        page,
+        movies: [...state.searchedMovies.movies, ...filterMovies(results)],
+        totalPages: total_pages,
+        totalMovies: total_results,
       };
+
+      removeLoading(state, loadings.searchMovies);
+    },
+    searchMoviesFailed: (state) => {
+      removeLoading(state, loadings.searchMovies);
     },
 
-    clearSearchedMovies: (state) => {
-      return {
-        ...state,
-        searchedMovies: {
-          page: 0,
-          movies: [],
-          totalPages: 0,
-          totalMovies: 0,
-        },
-      };
+    getTvShowsRequest: (state, action: PayloadAction<GetTvShowsPayload>) => {
+      addLoading(state, loadings.getTvShows);
     },
-
-    // === Tv Shows ===
-    setTvShows: (
+    getTvShowsSuccess: (
       state,
       action: PayloadAction<{
         tvShowsType: keyof typeof tvShowCategoryKeys;
@@ -238,44 +153,26 @@ const moviesSlice = createSlice({
         totalTvShows: total_results,
         totalPages: total_pages,
       };
+
+      removeLoading(state, loadings.getTvShows);
+    },
+    getTvShowsFailed: (state) => {
+      removeLoading(state, loadings.getTvShows);
     },
 
-    setTvShowDetail: (
-      state,
-      action: PayloadAction<{
-        casts: TmdbGetTvShowCreditsResponse;
-        detail: TmdbTvShowDetail;
-        videos: TmdbGetTvShowVideosResponse;
-      }>
-    ) => {
-      const { casts, detail, videos } = action.payload;
-      const { id, overview, name, backdrop_path, genres } = detail;
+    getSimilarTvShowsRequest: (state, action: PayloadAction<string>) => {
+      addLoading(state, loadings.getTvShows);
+    },
 
-      const filteredCasts = casts.cast.map((cast) => ({
-        id: cast.id.toString(),
-        name: cast.name,
-        image: cast.profile_path,
-      }));
-
-      const filteredVideos = videos.results.map((video) => ({
-        id: video.id.toString(),
-        name: video.name,
-        path: video.key,
-      }));
-
-      const filteredGenres = genres.map((genre) => ({
-        id: genre.id.toString(),
-        name: genre.name,
-      }));
-
-      state.detailInfo = {
-        id: id.toString(),
-        title: name,
-        overview,
-        image: backdrop_path,
-        casts: filteredCasts,
-        videos: filteredVideos,
-        genres: filteredGenres,
+    clearSearchedMovies: (state) => {
+      return {
+        ...state,
+        searchedMovies: {
+          page: 0,
+          movies: [],
+          totalPages: 0,
+          totalMovies: 0,
+        },
       };
     },
   },
@@ -286,13 +183,8 @@ const moviesSlice = createSlice({
   },
 });
 
-export const {
-  setMovies,
-  setMovieDetail,
-  setTvShows,
-  setTvShowDetail,
-  setSearchedMovies,
-  clearSearchedMovies,
-} = moviesSlice.actions;
+export { movieCategoryKeys, tvShowCategoryKeys, loadings };
+
+export const moviesActions = moviesSlice.actions;
 
 export default moviesSlice.reducer;

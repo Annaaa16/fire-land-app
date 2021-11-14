@@ -1,15 +1,19 @@
 import { configureStore } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
-import { createWrapper } from 'next-redux-wrapper';
+
+// next redux cookie wrapper
 import {
   nextReduxCookieMiddleware,
   wrapMakeStore,
 } from 'next-redux-cookie-wrapper';
 
+// next redux wrapper
+import { createWrapper } from 'next-redux-wrapper';
+
 // types
 import { WrapperStore, SagaStore } from '@/models/store';
 
-import { createPost, updatePost } from './actions/posts';
+import { postsActions } from './slices/postsSlice';
 import rootSaga from './sagas/rootSaga';
 import rootReducer from './reducers';
 
@@ -21,7 +25,10 @@ const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
-        ignoredActions: [createPost.request().type, updatePost.request().type], // Allow FormData type
+        ignoredActions: [
+          postsActions.createPostRequest.type,
+          postsActions.updatePostRequest.type,
+        ], // Allow FormData type
       },
     })
       .prepend(

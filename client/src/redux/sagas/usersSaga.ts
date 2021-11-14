@@ -1,83 +1,79 @@
 import { call, delay, put, takeLatest } from '@redux-saga/core/effects';
 
 // types
+import {
+  FollowUserResponse,
+  GetFriendsPayload,
+  GetUserFriendsResponse,
+  UnfollowUserResponse,
+} from '@/models/users';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { AxiosResponse } from 'axios';
-import { FollowResponse, GetUserFriendsResponse } from '@/models/users';
-import { PaginationParams } from '@/models/common';
 
-import {
-  addFollowingUser,
-  deleteFollowingUser,
-  setFetchedFriends,
-} from '../slices/usersSlice';
-import {
-  followUser as followUserAct,
-  unfollowUser as unfollowUserAct,
-  getUserFriends as getUserFriendsAct,
-} from '../actions/users';
 import { DELAYS } from '@/constants';
+import { usersActions } from '../slices/usersSlice';
 import { usersApiClient } from '@/apis/usersApi';
-import { notifySagaError } from '@/helpers/notify';
+import { notifySagaError } from '@/helpers/notifyError';
 
-const { followUser, unfollowUser, getUserFriends } = usersApiClient();
+const { followUser, unfollowUser, getFriends } = usersApiClient();
 
-function* handleFollowUser(action: PayloadAction<string>) {
+function* handleFollowUserRequest(action: PayloadAction<string>) {
   const userId = action.payload;
 
   try {
     yield delay(DELAYS.DEFAULT); // Block spam add friend button
 
-    const response: AxiosResponse<FollowResponse> = yield call(
+    const response: AxiosResponse<FollowUserResponse> = yield call(
       followUser,
       userId
     );
 
-    yield put(addFollowingUser(response.data));
+    yield put(usersActions.followUserSuccess(response.data));
   } catch (error) {
-    notifySagaError('Follow user', error);
+    notifySagaError(usersActions.followUserFailed, error);
+    yield put(usersActions.followUserFailed());
   }
 }
 
-function* handleUnfollowUser(action: PayloadAction<string>) {
+function* handleUnfollowUserRequest(action: PayloadAction<string>) {
   const userId = action.payload;
 
   try {
     yield delay(DELAYS.DEFAULT); // Block spam unfriend button
 
-    yield put(deleteFollowingUser(userId));
-
-    const response: AxiosResponse<FollowResponse> = yield call(
+    const response: AxiosResponse<UnfollowUserResponse> = yield call(
       unfollowUser,
       userId
     );
+
+    yield put(usersActions.unfollowUserSuccess(response.data));
   } catch (error) {
-    notifySagaError('Unfollow user', error);
+    notifySagaError(usersActions.unfollowUserFailed, error);
+    yield put(usersActions.unfollowUserFailed());
   }
 }
 
-function* handleGetUserFriends(
-  action: PayloadAction<{ userId: string; params: PaginationParams }>
-) {
+function* handleGetFriendsRequest(action: PayloadAction<GetFriendsPayload>) {
   const { userId, params } = action.payload;
 
   try {
     const response: AxiosResponse<GetUserFriendsResponse> = yield call(
-      getUserFriends,
+      getFriends,
       userId,
       params
     );
 
-    yield put(setFetchedFriends(response.data));
+    yield put(usersActions.getFriendsSuccess(response.data));
   } catch (error) {
-    notifySagaError('Get user friends', error);
+    notifySagaError(usersActions.getFriendsFailed, error);
+    yield put(usersActions.getFriendsFailed());
   }
 }
 
 function* usersSaga() {
-  yield takeLatest(followUserAct.request().type, handleFollowUser);
-  yield takeLatest(unfollowUserAct.request().type, handleUnfollowUser);
-  yield takeLatest(getUserFriendsAct.request().type, handleGetUserFriends);
+  yield takeLatest(usersActions.followUserRequest, handleFollowUserRequest);
+  yield takeLatest(usersActions.unfollowUserRequest, handleUnfollowUserRequest);
+  yield takeLatest(usersActions.getFriendsRequest, handleGetFriendsRequest);
 }
 
 export default usersSaga;
