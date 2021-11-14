@@ -1,11 +1,10 @@
-export interface MessageData {
+// types
+import { Loadings } from './common';
+
+export interface MessagePayload {
   conversationId: string;
   senderId: string;
   text: string;
-}
-
-export interface GetMessagesData {
-  conversationId: string;
 }
 
 export interface Message {
@@ -16,8 +15,8 @@ export interface Message {
   updatedAt: string;
 }
 
-export interface MessengerInitState {
-  currentChat: Message[];
+export interface MessengerInitState extends Loadings {
+  messageContent: Message[];
   conversationId: string;
   receiverId: string;
 }

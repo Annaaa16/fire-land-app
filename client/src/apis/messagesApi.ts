@@ -3,17 +3,17 @@ import { AxiosError } from 'axios';
 import {
   CreateMessageResponse,
   GetMessagesResponse,
-  MessageData,
+  MessagePayload,
 } from '@/models/messenger';
 
 import { axiosClient } from './axiosClient';
-import { notifyAxiosError } from '@/helpers/notify';
+import { notifyAxiosError } from '@/helpers/notifyError';
 
 export const messagesApiClient = () => {
   const axiosInstance = axiosClient();
 
   return {
-    createMessage: async (messageData: MessageData) => {
+    createMessage: async (messageData: MessagePayload) => {
       try {
         const response = await axiosInstance.post<CreateMessageResponse>(
           '/messages',

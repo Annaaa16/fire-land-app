@@ -3,14 +3,14 @@ import { GetServerSidePropsContext, NextPageContext } from 'next';
 import { AxiosError } from 'axios';
 import { PaginationParams } from '@/models/common';
 import {
-  FollowResponse,
+  FollowUserResponse,
   GetUserFriendsResponse,
   GetUserResponse,
-  UnfollowResponse,
+  UnfollowUserResponse,
 } from '@/models/users';
 
 import { axiosClient } from './axiosClient';
-import { notifyAxiosError } from '@/helpers/notify';
+import { notifyAxiosError } from '@/helpers/notifyError';
 import { axiosServer } from './axiosServer';
 
 export const usersApiClient = () => {
@@ -43,7 +43,7 @@ export const usersApiClient = () => {
 
     followUser: async (userId: string) => {
       try {
-        const response = await axiosInstance.patch<FollowResponse>(
+        const response = await axiosInstance.patch<FollowUserResponse>(
           `/users/${userId}/follow`
         );
 
@@ -55,7 +55,7 @@ export const usersApiClient = () => {
 
     unfollowUser: async (userId: string) => {
       try {
-        const response = await axiosInstance.patch<UnfollowResponse>(
+        const response = await axiosInstance.patch<UnfollowUserResponse>(
           `/users/${userId}/unfollow`
         );
 
@@ -65,7 +65,7 @@ export const usersApiClient = () => {
       }
     },
 
-    getUserFriends: async (userId: string, params: PaginationParams) => {
+    getFriends: async (userId: string, params: PaginationParams) => {
       try {
         const response = await axiosInstance.get<GetUserFriendsResponse>(
           `/users/${userId}/friends`,

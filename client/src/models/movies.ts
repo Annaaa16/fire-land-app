@@ -1,5 +1,5 @@
 // types
-import { Movie, TvShow } from './common';
+import { Loadings, Movie, TvShow } from './common';
 import { TmdbParams } from './tmdb';
 
 import {
@@ -54,32 +54,23 @@ interface MovieGenre {
   name: string;
 }
 
-export interface MoviesInitState {
+export interface MoviesInitState extends Loadings {
   movieCategories: {
     [key in keyof typeof movieCategoryKeys]: DefaultMovies;
   };
   tvShowCategories: {
     [key in keyof typeof tvShowCategoryKeys]: DefaultTvShows;
   };
-  detailInfo: {
-    readonly id: string;
-    title: string;
-    overview: string;
-    image: string;
-    casts: Cast[];
-    videos: MovieVideo[];
-    genres: MovieGenre[];
-  };
   searchedMovies: DefaultMovies;
 }
 
-export interface GetMovies {
+export interface GetMoviesPayload {
   query: string;
   params: TmdbParams;
   moviesType: keyof typeof movieCategoryKeys;
 }
 
-export interface GetTvShows {
+export interface GetTvShowsPayload {
   query: string;
   params: TmdbParams;
   tvShowsType: keyof typeof tvShowCategoryKeys;

@@ -1,8 +1,8 @@
 // types
-import { User } from './common';
+import { Loadings, User } from './common';
 
-export interface AuthInitState {
-  authStatus: {
+export interface AuthInitState extends Loadings {
+  loginStatus: {
     success: boolean;
     message: string;
     isAuthenticated: boolean;
@@ -13,12 +13,12 @@ export interface AuthInitState {
   };
 }
 
-export interface LoginFormData {
+export interface LoginPayload {
   username: string;
   password: string;
 }
 
-export interface RegisterFormData {
+export interface RegisterPayload {
   username: string;
   password: string;
   confirmPassword?: string;
@@ -37,11 +37,6 @@ export interface LoginResponse {
 export interface RegisterResponse {
   success: boolean;
   message: string;
-}
-
-export interface GetTokenResponse {
-  success: boolean;
-  accessToken: string;
 }
 
 export interface RefreshTokenResponse {

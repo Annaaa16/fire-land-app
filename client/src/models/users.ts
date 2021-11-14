@@ -1,10 +1,15 @@
 // types
-import { Pagination, User } from './common';
+import { Loadings, Pagination, PaginationParams, User } from './common';
 
-export interface UsersInitState {
+export interface UsersInitState extends Loadings {
   currentUser: User;
   userProfile: User;
-  fetchedFriends: User[];
+  friends: User[];
+}
+
+export interface GetFriendsPayload {
+  userId: string;
+  params: PaginationParams;
 }
 
 // === Responses ===
@@ -14,13 +19,13 @@ export interface GetUserResponse {
   user: User;
 }
 
-export interface FollowResponse {
+export interface FollowUserResponse {
   success: boolean;
   message: string;
   userId: string;
 }
 
-export interface UnfollowResponse {
+export interface UnfollowUserResponse {
   success: boolean;
   message: string;
   userId: string;

@@ -1,20 +1,20 @@
 // types
 import { AxiosError } from 'axios';
 import {
-  CreateComment,
+  CreateCommentPayload,
   CreateCommentResponse,
-  GetComments,
+  GetCommentsPayload,
   GetCommentsResponse,
 } from '@/models/comments';
 
 import { axiosClient } from './axiosClient';
-import { notifyAxiosError } from '@/helpers/notify';
+import { notifyAxiosError } from '@/helpers/notifyError';
 
 export const commentsApiClient = () => {
   const axiosInstance = axiosClient();
 
   return {
-    createComment: async (payload: CreateComment) => {
+    createComment: async (payload: CreateCommentPayload) => {
       try {
         const response = await axiosInstance.post<CreateCommentResponse>(
           '/comments',
@@ -27,7 +27,7 @@ export const commentsApiClient = () => {
       }
     },
 
-    getComments: async (payload: GetComments) => {
+    getComments: async (payload: GetCommentsPayload) => {
       const { userId, postId, params } = payload;
 
       try {
