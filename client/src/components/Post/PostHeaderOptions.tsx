@@ -12,9 +12,8 @@ import ArchiveOutlinedIcon from '@mui/icons-material/ArchiveOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import HideImageOutlinedIcon from '@mui/icons-material/HideImageOutlined';
 
-import { setUpdatePost } from '@/redux/slices/postsSlice';
+import { postsActions } from '@/redux/slices/postsSlice';
 import { useGlobalContext } from '@/contexts/GlobalContext';
-import { deletePost } from '@/redux/actions/posts';
 import { useUsersSelector } from '@/redux/selectors';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
@@ -32,12 +31,12 @@ function PostHeaderOptions(props: PostHeaderOptionsProps) {
   const dispatch = useStoreDispatch();
 
   const handleEditPost = () => {
-    dispatch(setUpdatePost(postId));
+    dispatch(postsActions.setUpdatePost(postId));
     toggleSenderArea(true);
   };
 
   const handleDeletePost = () => {
-    dispatch(deletePost.request(postId));
+    dispatch(postsActions.deletePostRequest(postId));
   };
 
   return (

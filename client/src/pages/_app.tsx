@@ -13,7 +13,7 @@ import { AppContext, AppInitialProps } from 'next/app';
 import { SagaStore } from '@/models/store';
 import { GetUserResponse } from '@/models/users';
 
-import { handleAuthentication } from '@/helpers/server';
+import serverAuthenticate from '@/helpers/serverAuthenticate';
 import store, { wrapper } from '@/redux/store';
 import theme from '@/configs/materialUI';
 
@@ -29,7 +29,7 @@ class WrappedApp extends App<
 > {
   static getInitialProps = async ({ Component, ctx }: AppContext) => {
     // Init check
-    const currentUserResponse = await handleAuthentication(ctx);
+    const currentUserResponse = await serverAuthenticate(ctx);
 
     // Wait for all page actions to dispatch
     if (ctx.req) {

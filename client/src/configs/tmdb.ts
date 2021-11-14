@@ -16,7 +16,7 @@ const tmdbMoviesEndpoints = {
   similar: 'similar',
 };
 
-const tvShowsEndpoints = {
+const tmdbTvShowsEndpoints = {
   popular: 'popular',
   topRated: 'top_rated',
   onTheAir: 'on_the_air',
@@ -31,6 +31,6 @@ const tmdb = {
   getW780Image: (imgPath: string) => `${TMDB.IMAGE}/w780/${imgPath}`,
 };
 
-export { tmdbCategories, tmdbMoviesEndpoints, tvShowsEndpoints };
+export { tmdbCategories, tmdbMoviesEndpoints, tmdbTvShowsEndpoints };
 
 export default tmdb;

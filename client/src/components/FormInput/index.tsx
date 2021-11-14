@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import { UseFormRegister } from 'react-hook-form';
 
 // types
-import { LoginFormData, RegisterFormData } from '@/models/auth';
+import { LoginPayload, RegisterPayload } from '@/models/auth';
 
 import { clearMessage } from '@/redux/slices/authSlice';
 import { useAuthSelector } from '@/redux/selectors';
@@ -13,15 +13,15 @@ import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 interface FormInputProps {
   field: string;
-  name: keyof LoginFormData | keyof RegisterFormData;
-  register: UseFormRegister<LoginFormData | RegisterFormData>;
+  name: keyof LoginPayload | keyof RegisterPayload;
+  register: UseFormRegister<LoginPayload | RegisterPayload>;
   errors: any;
 }
 
 function FormInput(props: FormInputProps) {
   const { field, name, register, errors } = props;
 
-  const { authStatus, registerStatus } = useAuthSelector();
+  const { loginStatus, registerStatus } = useAuthSelector();
   const dispatch = useStoreDispatch();
 
   return (
@@ -38,7 +38,7 @@ function FormInput(props: FormInputProps) {
           autoComplete='off'
           onChange={(e) => {
             register(name).onChange(e);
-            (authStatus.message || registerStatus.message) &&
+            (loginStatus.message || registerStatus.message) &&
               dispatch(clearMessage());
           }}
         />
@@ -55,7 +55,7 @@ function FormInput(props: FormInputProps) {
       </div>
       <span className={clsx('block mt-1.5 text-xs', 'text-[#f02849]')}>
         {errors[name]?.message ||
-          (!authStatus.success && authStatus.message) ||
+          (!loginStatus.success && loginStatus.message) ||
           (!registerStatus.success &&
             name === 'username' &&
             registerStatus.message)}

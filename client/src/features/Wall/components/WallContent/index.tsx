@@ -5,8 +5,8 @@ import { useRouter } from 'next/router';
 import clsx from 'clsx';
 
 import { usePostsSelector } from '@/redux/selectors';
-import { getPosts } from '@/redux/actions/posts';
 import { LIMITS } from '@/constants';
+import { postsActions } from '@/redux/slices/postsSlice';
 import useMeeting from '@/hooks/useMeeting';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
@@ -28,16 +28,14 @@ function WallContent() {
 
     if (isMeeting && nextPage && id) {
       dispatch(
-        getPosts.request({
+        postsActions.getPostsRequest({
           user_id: id as string,
           page: nextPage,
           limit: LIMITS.POSTS,
         })
       );
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [total, isMeeting, dispatch]);
+  }, [total, isMeeting, router.query, nextPage, dispatch]);
 
   return (
     <div className={clsx('w-full lg:w-2/3')}>

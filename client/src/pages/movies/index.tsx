@@ -4,18 +4,13 @@ import { useEffect } from 'react';
 import { GetServerSideProps } from 'next';
 import { TmdbGetMoviesResponse } from '@/models/tmdb';
 
-import {
-  clearSearchedMovies,
-  movieCategoryKeys,
-  setMovies,
-} from '@/redux/slices/moviesSlice';
+import { movieCategoryKeys, moviesActions } from '@/redux/slices/moviesSlice';
 import { moviesApi } from '@/apis/moviesApi';
 import { wrapper } from '@/redux/store';
 import { tmdbMoviesEndpoints } from '@/configs/tmdb';
 import { useMoviesSelector } from '@/redux/selectors';
 import { tvShowCategoryKeys } from '@/redux/slices/moviesSlice';
-import { getTvShows } from '@/redux/actions/movies';
-import { tmdbCategories, tvShowsEndpoints } from '@/configs/tmdb';
+import { tmdbCategories, tmdbTvShowsEndpoints } from '@/configs/tmdb';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 import SearchField from '@/components/SearchField';
@@ -30,8 +25,8 @@ function Movies() {
 
   useEffect(() => {
     dispatch(
-      getTvShows.request({
-        query: tvShowsEndpoints.popular,
+      moviesActions.getTvShowsRequest({
+        query: tmdbTvShowsEndpoints.popular,
         params: {
           page: 1,
         },
@@ -39,8 +34,8 @@ function Movies() {
       })
     );
     dispatch(
-      getTvShows.request({
-        query: tvShowsEndpoints.airingToday,
+      moviesActions.getTvShowsRequest({
+        query: tmdbTvShowsEndpoints.airingToday,
         params: {
           page: 1,
         },
@@ -48,15 +43,15 @@ function Movies() {
       })
     );
     dispatch(
-      getTvShows.request({
-        query: tvShowsEndpoints.onTheAir,
+      moviesActions.getTvShowsRequest({
+        query: tmdbTvShowsEndpoints.onTheAir,
         params: {
           page: 1,
         },
         tvShowsType: tvShowCategoryKeys.onTheAir,
       })
     );
-    dispatch(clearSearchedMovies());
+    dispatch(moviesActions.clearSearchedMovies());
   }, [dispatch]);
 
   return (
@@ -140,7 +135,7 @@ export const getServerSideProps: GetServerSideProps =
       };
 
       store.dispatch(
-        setMovies({
+        moviesActions.getMoviesSuccess({
           moviesType: getMovieType() as keyof typeof movieCategoryKeys,
           movies: promise?.data as TmdbGetMoviesResponse,
         })

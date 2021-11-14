@@ -10,12 +10,8 @@ import { GetUserResponse } from '@/models/users';
 
 import { useConversationsSelector } from '@/redux/selectors';
 import { usersApiClient } from '@/apis/usersApi';
-import { getMessages } from '@/redux/actions/messenger';
+import { messengerActions } from '@/redux/slices/messengerSlice';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
-import {
-  setConversationId,
-  setReceiverId,
-} from '@/redux/slices/messengerSlice';
 
 import User from '@/components/User';
 
@@ -35,9 +31,9 @@ function ContactOnline({ friendId }: ContactOnlineProps) {
       conv.memberIds.some((id) => id === onlineFriend?._id)
     );
 
-    dispatch(getMessages.request({ conversationId: conversation!._id }));
-    dispatch(setConversationId(conversation!._id));
-    dispatch(setReceiverId(onlineFriend!._id));
+    dispatch(messengerActions.getMessagesRequest(conversation!._id));
+    dispatch(messengerActions.setConversationId(conversation!._id));
+    dispatch(messengerActions.setReceiverId(onlineFriend!._id));
   };
 
   // Fetch online friend by friend ID

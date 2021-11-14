@@ -11,7 +11,7 @@ import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
 import PhotoCameraBackOutlinedIcon from '@mui/icons-material/PhotoCameraBackOutlined';
 import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
 
-import { createComment } from '@/redux/actions/comments';
+import { commentsActions } from '@/redux/slices/commentsSlice';
 import { useUsersSelector } from '@/redux/selectors';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
@@ -41,7 +41,7 @@ function PostSender(props: PostSenderProps) {
 
     const payload = { content, userId, postId };
 
-    dispatch(createComment.request(payload));
+    dispatch(commentsActions.createCommentRequest(payload));
     onSetIsOpenComments(true);
     setContent('');
   };

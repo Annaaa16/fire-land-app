@@ -7,14 +7,10 @@ import { GetServerSideProps } from 'next';
 // clsx
 import clsx from 'clsx';
 
-import {
-  clearSearchedMovies,
-  setSearchedMovies,
-} from '@/redux/slices/moviesSlice';
+import { moviesActions } from '@/redux/slices/moviesSlice';
 import { wrapper } from '@/redux/store';
 import { moviesApi } from '@/apis/moviesApi';
 import { useMoviesSelector } from '@/redux/selectors';
-import { searchMovies } from '@/redux/actions/movies';
 import { tmdbCategories } from '@/configs/tmdb';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 import useMeeting from '@/hooks/useMeeting';
@@ -36,7 +32,7 @@ function Search() {
   useEffect(() => {
     if (isMeeting && movies.length < totalMovies && page < totalPages) {
       dispatch(
-        searchMovies.request({
+        moviesActions.searchMoviesRequest({
           page: page + 1,
           query: tmdbCategories.movie,
         })
@@ -77,13 +73,14 @@ export const getServerSideProps: GetServerSideProps =
   wrapper.getServerSideProps((store) => async ({ query }) => {
     const { searchMovies } = moviesApi();
 
-    store.dispatch(clearSearchedMovies());
+    store.dispatch(moviesActions.clearSearchedMovies());
 
     const response = await searchMovies({
       query: query.query as string,
     });
 
-    response && store.dispatch(setSearchedMovies(response.data));
+    response &&
+      store.dispatch(moviesActions.searchMoviesSuccess(response.data));
 
     return {
       props: {},
