@@ -8,7 +8,6 @@ import { Conversation } from '@/models/conversations';
 import { GetUserResponse } from '@/models/users';
 
 import { messengerActions } from '@/redux/slices/messengerSlice';
-import { getMessages } from '@/redux/actions/messenger';
 import { usersApiClient } from '@/apis/usersApi';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 

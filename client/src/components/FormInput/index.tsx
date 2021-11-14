@@ -7,7 +7,7 @@ import { UseFormRegister } from 'react-hook-form';
 // types
 import { LoginPayload, RegisterPayload } from '@/models/auth';
 
-import { clearMessage } from '@/redux/slices/authSlice';
+import { authActions } from '@/redux/slices/authSlice';
 import { useAuthSelector } from '@/redux/selectors';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
@@ -39,7 +39,7 @@ function FormInput(props: FormInputProps) {
           onChange={(e) => {
             register(name).onChange(e);
             (loginStatus.message || registerStatus.message) &&
-              dispatch(clearMessage());
+              dispatch(authActions.clearMessage());
           }}
         />
         <label

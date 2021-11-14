@@ -7,7 +7,7 @@ import clsx from 'clsx';
 import { Message } from '@/models/messenger';
 
 import { useMessengerSelector, useUsersSelector } from '@/redux/selectors';
-import { addMessage } from '@/redux/slices/messengerSlice';
+import { messengerActions } from '@/redux/slices/messengerSlice';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 import useSocket from '@/hooks/useSocket';
 
@@ -26,7 +26,7 @@ function MessagesChat() {
   useEffect(() => {
     socket.on('getMessage', (data: Message) => {
       dispatch(
-        addMessage({
+        messengerActions.addMessage({
           senderId: data.senderId,
           text: data.text,
           updatedAt: new Date().toISOString(),
