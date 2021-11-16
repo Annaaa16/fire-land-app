@@ -18,7 +18,7 @@ function Custom404() {
   return (
     <Meta title='Not Found'>
       <Header />
-      <div className='i-flex-center flex-col h-screen'>
+      <div className='flex-center flex-col h-screen'>
         <div className={clsx('relative', 'w-28 h-28 mb-2')}>
           <Image
             src={notFound.src}
@@ -39,7 +39,7 @@ function Custom404() {
         </p>
         <button
           onClick={() => router.push(PATHS.NEWSFEED)}
-          className={clsx('i-flex-center px-3 py-3 rounded-lg', 'btn')}>
+          className={clsx('flex-center px-3 py-3 rounded-lg', 'btn')}>
           Go to News Feed
         </button>
       </div>

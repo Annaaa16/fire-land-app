@@ -63,7 +63,7 @@ function ContactConversation({
       className={clsx(
         'flex items-center px-8 py-5',
         isActive && 'border-l-[3px] border-primary-v1',
-        isActive ? 'bg-gray-100 dark:bg-dk-tooltip-hv' : 'dark:bg-dk-cpn',
+        isActive ? 'bg-gray-100 dark:bg-dk-tooltip' : 'dark:bg-dk-cpn',
         'cursor-pointer'
       )}>
       <User view='sm' />

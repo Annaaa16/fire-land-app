@@ -64,7 +64,7 @@ function LoginForm() {
               <div
                 className={clsx(
                   'absolute top-0 left-0',
-                  'i-flex-center w-full h-full rounded border p-2 border-gray dark:border-dk-line peer-checked:border-primary-v2 dark:peer-checked:border-primary-v4',
+                  'flex-center w-full h-full rounded border p-2 border-gray dark:border-dk-line peer-checked:border-primary-v2 dark:peer-checked:border-primary-v4',
                   'peer-checked:bg-primary-v2 dark:peer-checked:bg-primary-v4'
                 )}>
                 <DoneIcon

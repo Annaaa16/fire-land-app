@@ -54,7 +54,7 @@ function PostHeaderOptions(props: PostHeaderOptionsProps) {
           'pl-2 pr-4 py-3 rounded-lg',
           'dark:bg-dk-cpn',
           'transition-all ease-out',
-          'lg:hover:bg-lt-input lg:dark:hover:bg-dk-tooltip-hv'
+          'lg:hover:bg-lt-input lg:dark:hover:bg-dk-tooltip'
         )}>
         <PushPinOutlinedIcon className={clsx('dark:text-white')} />
         <span
@@ -70,7 +70,7 @@ function PostHeaderOptions(props: PostHeaderOptionsProps) {
           'pl-2 pr-4 py-3 rounded-lg',
           'dark:bg-dk-cpn',
           'transition-all ease-out',
-          'lg:hover:bg-lt-input lg:dark:hover:bg-dk-tooltip-hv'
+          'lg:hover:bg-lt-input lg:dark:hover:bg-dk-tooltip'
         )}>
         <BookmarksOutlinedIcon className={clsx('dark:text-white')} />
         <span
@@ -94,7 +94,7 @@ function PostHeaderOptions(props: PostHeaderOptionsProps) {
               'pl-2 pr-4 py-3 rounded-lg',
               'dark:bg-dk-cpn',
               'transition-all ease-out',
-              'lg:hover:bg-lt-input lg:dark:hover:bg-dk-tooltip-hv'
+              'lg:hover:bg-lt-input lg:dark:hover:bg-dk-tooltip'
             )}>
             <EditOutlinedIcon className={clsx('dark:text-white')} />
             <span
@@ -110,7 +110,7 @@ function PostHeaderOptions(props: PostHeaderOptionsProps) {
               'pl-2 pr-4 py-3 rounded-lg',
               'dark:bg-dk-cpn',
               'transition-all ease-out',
-              'lg:hover:bg-lt-input lg:dark:hover:bg-dk-tooltip-hv'
+              'lg:hover:bg-lt-input lg:dark:hover:bg-dk-tooltip'
             )}>
             <PeopleOutlinedIcon className={clsx('dark:text-white')} />
             <span
@@ -128,7 +128,7 @@ function PostHeaderOptions(props: PostHeaderOptionsProps) {
           'pl-2 pr-4 py-3 rounded-lg',
           'dark:bg-dk-cpn',
           'transition-all ease-out',
-          'lg:hover:bg-lt-input lg:dark:hover:bg-dk-tooltip-hv'
+          'lg:hover:bg-lt-input lg:dark:hover:bg-dk-tooltip'
         )}>
         <NotificationsOffOutlinedIcon className={clsx('dark:text-white')} />
         <span
@@ -144,7 +144,7 @@ function PostHeaderOptions(props: PostHeaderOptionsProps) {
           'pl-2 pr-4 py-3 rounded-lg',
           'dark:bg-dk-cpn',
           'transition-all ease-out',
-          'lg:hover:bg-lt-input lg:dark:hover:bg-dk-tooltip-hv'
+          'lg:hover:bg-lt-input lg:dark:hover:bg-dk-tooltip'
         )}>
         <HideImageOutlinedIcon className={clsx('dark:text-white')} />
         <span
@@ -161,7 +161,7 @@ function PostHeaderOptions(props: PostHeaderOptionsProps) {
             'pl-2 pr-4 py-3 rounded-lg',
             'dark:bg-dk-cpn',
             'transition-all ease-out',
-            'lg:hover:bg-lt-input lg:dark:hover:bg-dk-tooltip-hv'
+            'lg:hover:bg-lt-input lg:dark:hover:bg-dk-tooltip'
           )}>
           <EventNoteOutlinedIcon className={clsx('dark:text-white')} />
           <span
@@ -183,7 +183,7 @@ function PostHeaderOptions(props: PostHeaderOptionsProps) {
           'pl-2 pr-4 py-3 rounded-lg',
           'dark:bg-dk-cpn',
           'transition-all ease-out',
-          'lg:hover:bg-lt-input lg:dark:hover:bg-dk-tooltip-hv'
+          'lg:hover:bg-lt-input lg:dark:hover:bg-dk-tooltip'
         )}>
         <ArchiveOutlinedIcon className={clsx('dark:text-white')} />
         <span
@@ -201,7 +201,7 @@ function PostHeaderOptions(props: PostHeaderOptionsProps) {
             'pl-2 pr-4 py-3 rounded-lg',
             'dark:bg-dk-cpn',
             'transition-all ease-out',
-            'lg:hover:bg-lt-input lg:dark:hover:bg-dk-tooltip-hv'
+            'lg:hover:bg-lt-input lg:dark:hover:bg-dk-tooltip'
           )}>
           <DeleteOutlineOutlinedIcon className={clsx('dark:text-white')} />
           <span

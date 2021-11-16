@@ -11,12 +11,12 @@ function NewsFeedMembers() {
     <div
       className={clsx(
         'flex items-center justify-between mt-7 p-4 shadow-md rounded-xl',
-        'bg-lt-cpn dark:bg-dk-cpn'
+        'bg-white dark:bg-dk-cpn'
       )}>
       <div className={clsx('flex items-center')}>
         <div
           className={clsx(
-            'i-flex-center w-9 h-9 md:w-11 md:h-11 mr-3 rounded-full',
+            'flex-center w-9 h-9 md:w-11 md:h-11 mr-3 rounded-full',
             'bg-[#eff4fb] dark:bg-primary-v4'
           )}>
           <GroupIcon className={clsx('text-primary-v1 dark:text-white')} />
@@ -40,7 +40,7 @@ function NewsFeedMembers() {
       <div
         className={clsx(
           'relative',
-          'i-flex-center group w-9 h-9 md:w-11 md:h-11 mr-2 rounded-full',
+          'flex-center group w-9 h-9 md:w-11 md:h-11 mr-2 rounded-full',
           'bg-[#eff4fb] dark:bg-primary-v4',
           'cursor-pointer'
         )}>

@@ -86,13 +86,13 @@ function PostHeaderBox(props: PostHeaderBoxProps) {
           <button
             onClick={() => !isLoading && handleMakeFriend(userId)}
             className={clsx(
-              'i-flex-center flex-grow h-full rounded-lg px-5',
+              'flex-center flex-grow h-full rounded-lg px-5',
               followings.includes(userId)
                 ? 'bg-gray-200 dark:bg-gray-700'
                 : 'bg-primary-v1 dark:bg-primary-v4',
               'transition-all ease-out',
               followings.includes(userId)
-                ? 'hover:bg-gray-300 dark:hover:bg-dk-tooltip-hv'
+                ? 'hover:bg-gray-300 dark:hover:bg-dk-tooltip'
                 : 'hover:bg-primary-v1-hv dark:hover:bg-primary-v4-hv'
             )}>
             {!isLoading ? (
@@ -122,7 +122,7 @@ function PostHeaderBox(props: PostHeaderBoxProps) {
               'h-full px-5 rounded-lg mx-2',
               'bg-gray-200 dark:bg-gray-700',
               'transition-all ease-out',
-              'hover:bg-gray-300 dark:hover:bg-dk-tooltip-hv'
+              'hover:bg-gray-300 dark:hover:bg-dk-tooltip'
             )}>
             <ChatIcon className={clsx('!text-lg')} />
             <span className={clsx('font-bold ml-1 text-sm-1')}>Message</span>
@@ -133,7 +133,7 @@ function PostHeaderBox(props: PostHeaderBoxProps) {
               'h-full px-4 rounded-lg',
               'bg-gray-200 dark:bg-gray-700',
               'transition-all ease-out',
-              'hover:bg-gray-300 dark:hover:bg-dk-tooltip-hv'
+              'hover:bg-gray-300 dark:hover:bg-dk-tooltip'
             )}>
             <MoreHorizOutlinedIcon />
           </button>

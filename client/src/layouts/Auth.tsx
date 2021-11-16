@@ -49,8 +49,7 @@ function Auth(props: AuthProps) {
               : ltBackground
           })`,
         }}>
-        <div
-          className={clsx('i-flex-center flex-col text-center mb-8 lg:mb-0')}>
+        <div className={clsx('flex-center flex-col text-center mb-8 lg:mb-0')}>
           <h3
             className={clsx(
               'font-bold text-xl lg:text-2xl mb-5',
@@ -79,15 +78,15 @@ function Auth(props: AuthProps) {
           className={clsx(
             'absolute right-[-32%] top-[-20%]',
             'hidden lg:block rounded-full h-[140%] w-[64%]',
-            'bg-lt-cpn dark:bg-dk-cpn'
+            'bg-white dark:bg-dk-cpn'
           )}
         />
 
         <div
           className={clsx(
             'relative',
-            'i-flex-center flex-col w-full md:w-[424px] lg:w-[484px] lg:h-[625px] mr-auto lg:mr-0 ml-auto lg:my-auto pt-12 pb-6 md:pb-8 px-5 md:px-10 lg:px-16 lg:py-16 rounded-lg shadow-lg',
-            'bg-lt-cpn dark:bg-dk-cpn'
+            'flex-center flex-col w-full md:w-[424px] lg:w-[484px] lg:h-[625px] mr-auto lg:mr-0 ml-auto lg:my-auto pt-12 pb-6 md:pb-8 px-5 md:px-10 lg:px-16 lg:py-16 rounded-lg shadow-lg',
+            'bg-white dark:bg-dk-cpn'
           )}>
           <img
             src={rocket}

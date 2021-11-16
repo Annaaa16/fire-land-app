@@ -58,7 +58,7 @@ function Image(
           )}
         </div>
       ) : (
-        <div className={clsx('i-flex-center w-full h-full')}>
+        <div className={clsx('flex-center w-full h-full')}>
           <MovieOutlinedIcon className={clsx('!text-4xl', 'text-gray')} />
         </div>
       )}

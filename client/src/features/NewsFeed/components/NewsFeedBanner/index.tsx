@@ -14,7 +14,7 @@ function NewsFeedBanner() {
         'flex items-center justify-center md:justify-start py-12 lg:h-[200px] rounded-2xl md:px-14',
         'bg-gradient-to-r from-yellow-400 dark:from-yellow-500 to-yellow-300 dark:to-yellow-400'
       )}>
-      <div className={clsx('hidden md:i-flex-center w-20 h-20 mr-4')}>
+      <div className={clsx('hidden md:flex-center w-20 h-20 mr-4')}>
         <SpeakerPhoneIcon className={clsx('!w-full !h-full', 'text-white')} />
       </div>
 

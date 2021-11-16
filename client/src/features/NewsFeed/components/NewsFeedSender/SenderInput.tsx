@@ -24,7 +24,7 @@ function NewsFeedSenderInput() {
     <div
       className={clsx(
         'shadow-md dark:shadow-xl rounded-lg pt-4 px-2 md:px-4',
-        'bg-lt-cpn dark:bg-dk-cpn'
+        'bg-white dark:bg-dk-cpn'
       )}>
       <div className={clsx('flex items-center')}>
         <User
@@ -52,10 +52,10 @@ function NewsFeedSenderInput() {
         )}>
         <li
           className={clsx(
-            'hidden md:i-flex-center flex-1 py-2.5 rounded-lg',
+            'hidden md:flex-center flex-1 py-2.5 rounded-lg',
             'cursor-pointer select-none',
             'transition-all ease-out',
-            'lg:hover:bg-lt-input lg:dark:hover:bg-dk-tooltip-hv'
+            'lg:hover:bg-lt-input lg:dark:hover:bg-dk-tooltip'
           )}>
           <VideoCallIcon
             className={clsx('mr-1.5 !text-2xl', 'text-[#f02849]')}
@@ -64,10 +64,10 @@ function NewsFeedSenderInput() {
         </li>
         <li
           className={clsx(
-            'i-flex-center flex-1 py-2.5 rounded-lg',
+            'flex-center flex-1 py-2.5 rounded-lg',
             'cursor-pointer select-none',
             'transition-all ease-out',
-            'lg:hover:bg-lt-input lg:dark:hover:bg-dk-tooltip-hv'
+            'lg:hover:bg-lt-input lg:dark:hover:bg-dk-tooltip'
           )}>
           <PhotoLibraryIcon
             className={clsx('mr-1.5 text-xl md:!text-2xl', 'text-[#45bd62]')}
@@ -79,10 +79,10 @@ function NewsFeedSenderInput() {
         </li>
         <li
           className={clsx(
-            'i-flex-center flex-1 py-2.5 rounded-lg',
+            'flex-center flex-1 py-2.5 rounded-lg',
             'cursor-pointer select-none',
             'transition-all ease-out',
-            'lg:hover:bg-lt-input lg:dark:hover:bg-dk-tooltip-hv'
+            'lg:hover:bg-lt-input lg:dark:hover:bg-dk-tooltip'
           )}>
           <SentimentVerySatisfiedIcon
             className={clsx('mr-1.5 text-xl md:!text-2xl', 'text-[#f7b928]')}

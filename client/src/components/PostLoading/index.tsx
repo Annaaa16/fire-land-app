@@ -6,7 +6,7 @@ function PostLoading() {
     <div
       className={clsx(
         'w-full h-80 mt-7 rounded-lg p-4 shadow-md',
-        'bg-lt-cpn dark:bg-dk-cpn',
+        'bg-white dark:bg-dk-cpn',
         'animate-pulse'
       )}>
       <div className={clsx('flex items-center mb-5')}>

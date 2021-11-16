@@ -19,7 +19,7 @@ function LoginSocial() {
       </span>
 
       <div className={clsx('flex items-center mt-7')}>
-        <div className={clsx('i-flex-center p-2 rounded-lg', 'cursor-pointer')}>
+        <div className={clsx('flex-center p-2 rounded-lg', 'cursor-pointer')}>
           <FacebookIcon
             className={clsx(
               '!text-2xl',
@@ -29,10 +29,7 @@ function LoginSocial() {
           />
         </div>
         <div
-          className={clsx(
-            'i-flex-center p-2 rounded-lg ml-2',
-            'cursor-pointer'
-          )}>
+          className={clsx('flex-center p-2 rounded-lg ml-2', 'cursor-pointer')}>
           <TwitterIcon
             className={clsx(
               '!text-2xl',
@@ -42,10 +39,7 @@ function LoginSocial() {
           />
         </div>
         <div
-          className={clsx(
-            'i-flex-center p-2 rounded-lg ml-2',
-            'cursor-pointer'
-          )}>
+          className={clsx('flex-center p-2 rounded-lg ml-2', 'cursor-pointer')}>
           <YouTubeIcon
             className={clsx(
               '!text-2xl',
@@ -55,10 +49,7 @@ function LoginSocial() {
           />
         </div>
         <div
-          className={clsx(
-            'i-flex-center p-2 rounded-lg ml-2',
-            'cursor-pointer'
-          )}>
+          className={clsx('flex-center p-2 rounded-lg ml-2', 'cursor-pointer')}>
           <InstagramIcon
             className={clsx(
               '!text-2xl',
