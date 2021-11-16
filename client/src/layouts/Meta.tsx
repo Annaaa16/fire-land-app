@@ -11,11 +11,10 @@ interface MetaProps {
   title: string;
   children: ReactNode;
   backgroundColor?: string;
-  centerLayout?: boolean;
 }
 
 function Meta(props: MetaProps) {
-  const { title, children, backgroundColor, centerLayout } = props;
+  const { title, children, backgroundColor } = props;
 
   const { theme } = useGlobalContext();
 

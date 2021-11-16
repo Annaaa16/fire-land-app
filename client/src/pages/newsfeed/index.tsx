@@ -15,7 +15,7 @@ import { postsActions } from '@/redux/slices/postsSlice';
 import tokens from '@/helpers/tokens';
 
 import Meta from '@/layouts/Meta';
-import CenterContent from '@/layouts/CenterContent';
+import Social from '@/layouts/Social';
 import NewsFeedBanner from '@/features/NewsFeed/components/NewsFeedBanner';
 import NewsFeedMembers from '@/features/NewsFeed/components/NewsFeedSummary';
 import NewsFeedContent from '@/features/NewsFeed/components/NewsFeedContent';
@@ -24,7 +24,7 @@ import NewsFeedWidgets from '@/features/NewsFeed/components/NewsFeedWidgets';
 function NewsFeed() {
   return (
     <Meta title='News Feed'>
-      <CenterContent>
+      <Social>
         <NewsFeedBanner />
         <NewsFeedMembers />
 
@@ -32,7 +32,7 @@ function NewsFeed() {
           <NewsFeedContent />
           <NewsFeedWidgets />
         </section>
-      </CenterContent>
+      </Social>
     </Meta>
   );
 }
