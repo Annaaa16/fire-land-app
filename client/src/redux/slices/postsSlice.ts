@@ -24,7 +24,7 @@ import { HydrateResponse } from '@/models/common';
 
 import { addLoading, removeLoading } from '@/helpers/loadings';
 
-const loadings = {
+const actions = {
   createPost: 'createPost',
   getPosts: 'getPosts',
   updatePost: 'updatePost',
@@ -47,7 +47,7 @@ const postsSlice = createSlice({
   initialState,
   reducers: {
     createPostRequest: (state, action: PayloadAction<FormData>) => {
-      addLoading(state, loadings.createPost);
+      addLoading(state, actions.createPost);
     },
     createPostSuccess: (state, action: PayloadAction<CreatePostsResponse>) => {
       const { success, post } = action.payload;
@@ -55,15 +55,15 @@ const postsSlice = createSlice({
       if (success) {
         state.posts.unshift(post);
 
-        removeLoading(state, loadings.createPost);
+        removeLoading(state, actions.createPost);
       }
     },
     createPostFailed: (state) => {
-      removeLoading(state, loadings.createPost);
+      removeLoading(state, actions.createPost);
     },
 
     getPostsRequest: (state, action: PayloadAction<GetPostsPayload>) => {
-      addLoading(state, loadings.getPosts);
+      addLoading(state, actions.getPosts);
     },
     getPostsSuccess: (state, action: PayloadAction<GetPostsResponse>) => {
       const { success, posts, prevPage, nextPage, total } = action.payload;
@@ -74,15 +74,15 @@ const postsSlice = createSlice({
         state.nextPage = nextPage!;
         state.total = total!;
 
-        removeLoading(state, loadings.getPosts);
+        removeLoading(state, actions.getPosts);
       }
     },
     getPostsFailed: (state) => {
-      removeLoading(state, loadings.getPosts);
+      removeLoading(state, actions.getPosts);
     },
 
     updatePostRequest: (state, action: PayloadAction<UpdatePostPayload>) => {
-      addLoading(state, loadings.updatePost);
+      addLoading(state, actions.updatePost);
     },
     updatePostSuccess: (state, action: PayloadAction<UpdatePostResponse>) => {
       const { success, post: updatedPost } = action.payload;
@@ -93,15 +93,15 @@ const postsSlice = createSlice({
           post._id === updatedPost._id ? updatedPost : post
         );
 
-        removeLoading(state, loadings.updatePost);
+        removeLoading(state, actions.updatePost);
       }
     },
     updatePostFailed: (state) => {
-      removeLoading(state, loadings.updatePost);
+      removeLoading(state, actions.updatePost);
     },
 
     deletePostRequest: (state, action: PayloadAction<string>) => {
-      addLoading(state, loadings.deletePost);
+      addLoading(state, actions.deletePost);
     },
     deletePostSuccess: (state, action: PayloadAction<DeletePostResponse>) => {
       const { postId, success } = action.payload;
@@ -109,15 +109,15 @@ const postsSlice = createSlice({
       if (success) {
         state.posts = state.posts.filter((post) => post._id !== postId);
 
-        removeLoading(state, loadings.deletePost);
+        removeLoading(state, actions.deletePost);
       }
     },
     deletePostFailed: (state) => {
-      removeLoading(state, loadings.deletePost);
+      removeLoading(state, actions.deletePost);
     },
 
     likePostRequest: (state, action: PayloadAction<LikePostPayload>) => {
-      addLoading(state, loadings.likePost);
+      addLoading(state, actions.likePost);
     },
     likePostSuccess: (state, action: PayloadAction<LikePostPayload>) => {
       const { userId, postId } = action.payload;
@@ -128,14 +128,14 @@ const postsSlice = createSlice({
         }
       });
 
-      removeLoading(state, loadings.likePost);
+      removeLoading(state, actions.likePost);
     },
     likePostFailure: (state) => {
-      removeLoading(state, loadings.likePost);
+      removeLoading(state, actions.likePost);
     },
 
     unlikePostRequest: (state, action: PayloadAction<UnlikePostPayload>) => {
-      addLoading(state, loadings.unlikePost);
+      addLoading(state, actions.unlikePost);
     },
     unlikePostSuccess: (state, action: PayloadAction<UnlikePostPayload>) => {
       const { userId, postId } = action.payload;
@@ -146,10 +146,10 @@ const postsSlice = createSlice({
           post.likes.splice(post.likes.indexOf(userId), 1)
       );
 
-      removeLoading(state, loadings.unlikePost);
+      removeLoading(state, actions.unlikePost);
     },
     unlikePostFailure: (state) => {
-      removeLoading(state, loadings.unlikePost);
+      removeLoading(state, actions.unlikePost);
     },
 
     setUpdatePost: (state, action: PayloadAction<string | null>) => {
@@ -211,7 +211,7 @@ const postsSlice = createSlice({
   },
 });
 
-export { loadings };
+export { actions };
 
 export const postsActions = postsSlice.actions;
 

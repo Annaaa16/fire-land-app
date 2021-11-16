@@ -10,7 +10,7 @@ import {
 import { PayloadAction } from '@reduxjs/toolkit';
 import { addLoading, removeLoading } from '@/helpers/loadings';
 
-const loadings = {
+const actions = {
   createMessage: 'createMessage',
   getMessages: 'getMessages',
 };
@@ -27,17 +27,17 @@ const messengerSlice = createSlice({
   initialState,
   reducers: {
     createMessageRequest: (state, action: PayloadAction<MessagePayload>) => {
-      addLoading(state, loadings.createMessage);
+      addLoading(state, actions.createMessage);
     },
     createMessageSuccess: (state) => {
-      removeLoading(state, loadings.createMessage);
+      removeLoading(state, actions.createMessage);
     },
     createMessageFailed: (state) => {
-      removeLoading(state, loadings.createMessage);
+      removeLoading(state, actions.createMessage);
     },
 
     getMessagesRequest: (state, action: PayloadAction<string>) => {
-      addLoading(state, loadings.getMessages);
+      addLoading(state, actions.getMessages);
     },
     getMessagesSuccess: (state, action: PayloadAction<GetMessagesResponse>) => {
       const { success, messages } = action.payload;
@@ -45,11 +45,11 @@ const messengerSlice = createSlice({
       if (success) {
         state.messageContent = messages;
 
-        removeLoading(state, loadings.getMessages);
+        removeLoading(state, actions.getMessages);
       }
     },
     getMessagesFailed: (state) => {
-      removeLoading(state, loadings.getMessages);
+      removeLoading(state, actions.getMessages);
     },
 
     addMessage: (state, action: PayloadAction<Message>) => {
@@ -68,7 +68,7 @@ const messengerSlice = createSlice({
   },
 });
 
-export { loadings };
+export { actions };
 
 export const messengerActions = messengerSlice.actions;
 

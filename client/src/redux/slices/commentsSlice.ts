@@ -14,7 +14,7 @@ import {
 } from '@/models/comments';
 import { addLoading, removeLoading } from '@/helpers/loadings';
 
-const loadings = {
+const actions = {
   createComment: 'createComment',
   getComments: 'getComments',
 };
@@ -32,7 +32,7 @@ const comments = createSlice({
       state,
       action: PayloadAction<CreateCommentPayload>
     ) => {
-      addLoading(state, loadings.createComment);
+      addLoading(state, actions.createComment);
     },
     createCommentSuccess: (
       state,
@@ -43,15 +43,15 @@ const comments = createSlice({
       if (success) {
         state.comments.unshift(comment);
 
-        removeLoading(state, loadings.createComment);
+        removeLoading(state, actions.createComment);
       }
     },
     createCommentFailed: (state) => {
-      removeLoading(state, loadings.createComment);
+      removeLoading(state, actions.createComment);
     },
 
     getCommentsRequest: (state, action: PayloadAction<GetCommentsPayload>) => {
-      addLoading(state, loadings.getComments);
+      addLoading(state, actions.getComments);
     },
     getCommentsSuccess: (state, action: PayloadAction<GetCommentsResponse>) => {
       const { success, comments } = action.payload;
@@ -59,11 +59,11 @@ const comments = createSlice({
       if (success) {
         state.comments.push(...comments);
 
-        removeLoading(state, loadings.getComments);
+        removeLoading(state, actions.getComments);
       }
     },
     getCommentsFailed: (state) => {
-      removeLoading(state, loadings.getComments);
+      removeLoading(state, actions.getComments);
     },
 
     clearComments: (state, action: PayloadAction<string>) => {
@@ -74,7 +74,7 @@ const comments = createSlice({
   },
 });
 
-export { loadings };
+export { actions };
 
 export const commentsActions = comments.actions;
 
