@@ -36,12 +36,6 @@ usersController.getCurrentUser = async (req, res) => {
 usersController.getUser = async (req, res) => {
   const { userId } = req.params;
 
-  if (!userId) {
-    return res
-      .status(404)
-      .json({ success: false, message: 'User ID is required' });
-  }
-
   try {
     const user = await User.findById(userId).select('-password');
 
@@ -82,7 +76,7 @@ usersController.followUser = async (req, res) => {
 
         res.json({
           success: true,
-          message: 'User has been followed',
+          message: 'Follow user successfully',
           userId,
         });
       } else {
@@ -122,7 +116,7 @@ usersController.unfollowUser = async (req, res) => {
 
         res.json({
           success: true,
-          message: 'User has been unfollowed',
+          message: 'Unfollow user successfully',
           userId,
         });
       } else {

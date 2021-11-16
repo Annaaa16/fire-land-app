@@ -1,6 +1,7 @@
 const express = require('express');
 
 const verifyToken = require('../middlewares/authMiddleware');
+const verifyMongooseId = require('../middlewares/mongooseMiddleware');
 const usersController = require('../controllers/usersController');
 
 const router = express.Router();
@@ -13,7 +14,7 @@ router.get('/current', verifyToken, usersController.getCurrentUser);
 // @route GET api/users/:userId
 // @desc Get user by id
 // @access Private
-router.get('/:userId', verifyToken, usersController.getUser);
+router.get('/:userId', verifyToken, verifyMongooseId, usersController.getUser);
 
 // @route PATCH api/users/:userId/follow
 // @desc Follow an user
