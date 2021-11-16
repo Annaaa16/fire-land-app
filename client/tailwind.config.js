@@ -153,7 +153,6 @@ module.exports = {
       87: '348px',
       96: '384px',
       100: '400px',
-      296: '1184px',
     },
   },
   variants: {
