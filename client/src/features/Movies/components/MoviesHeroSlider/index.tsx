@@ -74,7 +74,7 @@ function HomeHeroSlider() {
                       <div
                         className={clsx(
                           'relative',
-                          'i-flex-center container h-full'
+                          'flex-center container h-full'
                         )}>
                         <div
                           className={clsx(
@@ -120,7 +120,7 @@ function HomeHeroSlider() {
                             <button
                               onClick={() => moveToDetail(movie.id)}
                               className={clsx(
-                                'i-flex-center px-4 lg:px-6 py-2 lg:py-2.5 mr-4 shadow-primary-v4 rounded-lg',
+                                'flex-center px-4 lg:px-6 py-2 lg:py-2.5 mr-4 shadow-primary-v4 rounded-lg',
                                 'text-white bg-primary-v4',
                                 'transition-all duration-300 ease-out',
                                 'select-none',
@@ -138,7 +138,7 @@ function HomeHeroSlider() {
                             </button>
                             <button
                               className={clsx(
-                                'i-flex-center px-4 lg:px-5 py-2 lg:py-2.5 mr-4 shadow-md rounded-lg',
+                                'flex-center px-4 lg:px-5 py-2 lg:py-2.5 mr-4 shadow-md rounded-lg',
                                 'text-white bg-gray',
                                 'transition-all duration-300 ease-out',
                                 'select-none',

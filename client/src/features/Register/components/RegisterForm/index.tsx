@@ -87,7 +87,7 @@ function RegisterForm() {
       <div
         onClick={handleRandomAvatar}
         className={clsx(
-          'i-flex-center mx-auto w-12 h-12 mt-5',
+          'flex-center mx-auto w-12 h-12 mt-5',
           'cursor-pointer'
         )}>
         <Avatar src={avatar} alt='Avatar' className={clsx('w-full h-full')} />
@@ -107,7 +107,7 @@ function RegisterForm() {
               <div
                 className={clsx(
                   'absolute top-0 left-0',
-                  'i-flex-center w-full h-full rounded border p-2 border-gray dark:border-dk-line peer-checked:border-primary-v2 dark:peer-checked:border-primary-v4',
+                  'flex-center w-full h-full rounded border p-2 border-gray dark:border-dk-line peer-checked:border-primary-v2 dark:peer-checked:border-primary-v4',
                   'peer-checked:bg-primary-v2 dark:peer-checked:bg-primary-v4'
                 )}>
                 <DoneIcon

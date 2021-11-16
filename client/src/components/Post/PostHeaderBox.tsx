@@ -10,8 +10,10 @@ import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 
 import { useGlobalContext } from '@/contexts/GlobalContext';
 import { useUsersSelector } from '@/redux/selectors';
+import { actions } from '@/redux/slices/usersSlice';
 
 import User from '@/components/User';
+import Loading from '../Loading';
 
 interface PostHeaderBoxProps {
   userId: string;
@@ -26,20 +28,25 @@ function PostHeaderBox(props: PostHeaderBoxProps) {
   const { handleMakeFriend, visitWall } = useGlobalContext();
   const {
     currentUser: { followings },
+    loadings,
   } = useUsersSelector();
+
+  const isLoading =
+    loadings.includes(actions.followUser) ||
+    loadings.includes(actions.unfollowUser);
 
   return (
     <div
       className={clsx(
         'absolute bottom-full left-0',
-        'scale-0 opacity-0 invisible pb-2',
+        'scale-0 opacity-0 invisible pb-4 w-87',
         'transition-all ease-out',
         'pointer-events-none',
-        'group-hover:scale-100 origin-bottom-left group-hover:opacity-100 group-hover:visible group-hover:pointer-events-auto'
+        'lg:group-hover:scale-100 origin-bottom-left lg:group-hover:opacity-100 lg:group-hover:visible group-hover:pointer-events-auto'
       )}>
       <div
         className={clsx(
-          'min-w-max px-3 pb-3 pt-5 shadow-box rounded-xl',
+          'px-3 pb-3 pt-5 shadow-box rounded-xl',
           'dark:text-white bg-white dark:bg-dk-cpn'
         )}>
         <div className={clsx('flex items-center mb-6')}>
@@ -77,37 +84,45 @@ function PostHeaderBox(props: PostHeaderBoxProps) {
         </div>
         <div className={clsx('flex items-center h-9 justify-between')}>
           <button
-            onClick={() => handleMakeFriend(userId)}
+            onClick={() => !isLoading && handleMakeFriend(userId)}
             className={clsx(
-              'i-flex-center flex-grow h-full rounded-lg px-6',
+              'flex-center flex-grow h-full rounded-lg px-5',
               followings.includes(userId)
                 ? 'bg-gray-200 dark:bg-gray-700'
                 : 'bg-primary-v1 dark:bg-primary-v4',
               'transition-all ease-out',
               followings.includes(userId)
-                ? 'hover:bg-gray-300 dark:hover:bg-dk-tooltip-hv'
+                ? 'hover:bg-gray-300 dark:hover:bg-dk-tooltip'
                 : 'hover:bg-primary-v1-hv dark:hover:bg-primary-v4-hv'
             )}>
-            {followings.includes(userId) ? (
-              <PersonRemoveIcon className={clsx('mr-1 !text-lg')} />
+            {!isLoading ? (
+              <>
+                {followings.includes(userId) ? (
+                  <PersonRemoveIcon className={clsx('mr-1 !text-lg')} />
+                ) : (
+                  <PersonAddIcon
+                    className={clsx('mr-1 !text-lg', 'text-white')}
+                  />
+                )}
+                <span
+                  className={clsx(
+                    'font-bold text-sm-1',
+                    !followings.includes(userId) && 'text-white'
+                  )}>
+                  {followings.includes(userId) ? 'Unfriend' : 'Add Friend'}
+                </span>
+              </>
             ) : (
-              <PersonAddIcon className={clsx('mr-1 !text-lg', 'text-white')} />
+              <Loading />
             )}
-            <span
-              className={clsx(
-                'font-bold text-sm-1',
-                !followings.includes(userId) && 'text-white'
-              )}>
-              {followings.includes(userId) ? 'Unfriend' : 'Add Friend'}
-            </span>
           </button>
 
           <button
             className={clsx(
-              'h-full px-6 rounded-lg mx-2',
+              'h-full px-5 rounded-lg mx-2',
               'bg-gray-200 dark:bg-gray-700',
               'transition-all ease-out',
-              'hover:bg-gray-300 dark:hover:bg-dk-tooltip-hv'
+              'hover:bg-gray-300 dark:hover:bg-dk-tooltip'
             )}>
             <ChatIcon className={clsx('!text-lg')} />
             <span className={clsx('font-bold ml-1 text-sm-1')}>Message</span>
@@ -118,7 +133,7 @@ function PostHeaderBox(props: PostHeaderBoxProps) {
               'h-full px-4 rounded-lg',
               'bg-gray-200 dark:bg-gray-700',
               'transition-all ease-out',
-              'hover:bg-gray-300 dark:hover:bg-dk-tooltip-hv'
+              'hover:bg-gray-300 dark:hover:bg-dk-tooltip'
             )}>
             <MoreHorizOutlinedIcon />
           </button>

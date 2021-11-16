@@ -71,10 +71,10 @@ function PostSender(props: PostSenderProps) {
           <li
             className={clsx(
               'relative',
-              'group hidden md:i-flex-center w-10 h-10 rounded-full',
+              'group hidden md:flex-center w-10 h-10 rounded-full',
               'transition-all ease-out',
               'cursor-pointer',
-              'lg:hover:bg-gray-200 lg:dark:hover:bg-dk-tooltip-hv'
+              'lg:hover:bg-gray-200 lg:dark:hover:bg-dk-tooltip'
             )}>
             <SentimentSatisfiedIcon
               fontSize='small'
@@ -85,10 +85,10 @@ function PostSender(props: PostSenderProps) {
           <li
             className={clsx(
               'relative',
-              'group i-flex-center w-10 h-10 rounded-full',
+              'group flex-center w-10 h-10 rounded-full',
               'transition-all ease-out',
               'cursor-pointer',
-              'lg:hover:bg-gray-200 lg:dark:hover:bg-dk-tooltip-hv'
+              'lg:hover:bg-gray-200 lg:dark:hover:bg-dk-tooltip'
             )}>
             <PhotoCameraBackOutlinedIcon
               fontSize='small'
@@ -99,10 +99,10 @@ function PostSender(props: PostSenderProps) {
           <li
             className={clsx(
               'relative',
-              'group i-flex-center w-10 h-10 rounded-full',
+              'group flex-center w-10 h-10 rounded-full',
               'transition-all ease-out',
               'cursor-pointer',
-              'lg:hover:bg-gray-200 lg:dark:hover:bg-dk-tooltip-hv'
+              'lg:hover:bg-gray-200 lg:dark:hover:bg-dk-tooltip'
             )}>
             <StorefrontOutlinedIcon
               fontSize='small'

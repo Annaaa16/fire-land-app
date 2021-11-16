@@ -49,16 +49,13 @@ function SenderPhoto(props: SenderPhotoProps) {
           <div
             {...getRootProps()}
             className={clsx(
-              'i-flex-center flex-col w-full h-full rounded-md',
+              'flex-center flex-col w-full h-full rounded-md',
               'bg-gray-100 dark:bg-gray-700',
               'cursor-pointer'
             )}>
             <input {...getInputProps()} />
             <div
-              className={clsx(
-                'i-flex-center rounded-full p-1.5',
-                'bg-gray-200'
-              )}>
+              className={clsx('flex-center rounded-full p-1.5', 'bg-gray-200')}>
               <AddPhotoAlternateIcon className={clsx('!text-[28px]')} />
             </div>
             <h3 className={clsx('font-bold mt-2 mb-0.5', 'dark:text-gray-200')}>
@@ -79,7 +76,7 @@ function SenderPhoto(props: SenderPhotoProps) {
             'rounded-full p-1 border border-gray-300 dark:border-transparent',
             'bg-white dark:bg-dk-cpn',
             'transition-all ease-out',
-            'hover:bg-gray-100 dark:hover:bg-dk-tooltip-hv',
+            'hover:bg-gray-100 dark:hover:bg-dk-tooltip',
             'cursor-pointer'
           )}>
           <CloseIcon className={clsx('!text-lg', 'dark:text-gray-400')} />

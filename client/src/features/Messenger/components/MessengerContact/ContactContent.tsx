@@ -56,7 +56,7 @@ function ContactContent() {
           <button
             onClick={() => setContact(CONVERSATIONS)}
             className={clsx(
-              'group i-flex-center min-w-[40px] min-h-[40px] rounded-full',
+              'group flex-center min-w-[40px] min-h-[40px] rounded-full',
               'bg-primary-v1 dark:bg-primary-v4',
               'transition-all duration-300 ease-out',
               'hover:pl-5 hover:pr-18 hover:duration-[350ms]'
@@ -76,8 +76,8 @@ function ContactContent() {
           <button
             onClick={() => setContact(ONLINE)}
             className={clsx(
-              'group i-flex-center min-w-[40px] min-h-[40px] rounded-full mx-4',
-              'bg-gray-200 dark:bg-dk-tooltip-hv dark:text-white',
+              'group flex-center min-w-[40px] min-h-[40px] rounded-full mx-4',
+              'bg-gray-200 dark:bg-dk-tooltip dark:text-white',
               'transition-all duration-300 ease-out',
               'hover:pl-5 hover:pr-16 hover:bg-gray-300 hover:duration-[350ms]'
             )}>
@@ -95,8 +95,8 @@ function ContactContent() {
           <button
             onClick={() => setContact(GROUPS)}
             className={clsx(
-              'group i-flex-center min-w-[40px] min-h-[40px] rounded-full',
-              'bg-gray-200 dark:bg-dk-tooltip-hv dark:text-white',
+              'group flex-center min-w-[40px] min-h-[40px] rounded-full',
+              'bg-gray-200 dark:bg-dk-tooltip dark:text-white',
               'transition-all duration-300 ease-out',
               'hover:pl-5 hover:pr-17 hover:bg-gray-300 hover:duration-[350ms]'
             )}>

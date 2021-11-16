@@ -60,7 +60,7 @@ function HeaderOptions() {
       )}>
       <div
         className={clsx(
-          'i-flex-center lg:px-4 lg:mx-4 md:border-l md:border-r border-primary-v1-text'
+          'flex-center lg:px-4 lg:mx-4 md:border-l md:border-r border-primary-v1-text'
         )}>
         <div className={clsx('px-2 lg:px-0 py-4 md:py-0')}>
           <ShoppingBagOutlinedIcon

@@ -6,16 +6,18 @@ import clsx from 'clsx';
 import { LIMITS } from '@/constants';
 import { usePostsSelector } from '@/redux/selectors';
 import { postsActions } from '@/redux/slices/postsSlice';
+import { actions } from '@/redux/slices/postsSlice';
 import useMeeting from '@/hooks/useMeeting';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 import Post from '@/components/Post';
+import PostLoading from '@/components/PostLoading';
 import NewsFeedSender from '../NewsFeedSender';
 
 function NewsFeedContent() {
   const loaderRef = useRef<HTMLDivElement>(null);
 
-  const { nextPage, total, posts } = usePostsSelector();
+  const { nextPage, total, posts, loadings } = usePostsSelector();
 
   const dispatch = useStoreDispatch();
 
@@ -23,12 +25,12 @@ function NewsFeedContent() {
 
   // Get new posts when scrolled to bottom
   useEffect(() => {
-    if (isMeeting && nextPage) {
+    if (isMeeting && nextPage && !loadings.includes(actions.getPosts)) {
       dispatch(
         postsActions.getPostsRequest({ page: nextPage, limit: LIMITS.POSTS })
       );
     }
-  }, [total, isMeeting, nextPage, dispatch]);
+  }, [total, isMeeting, nextPage, loadings, dispatch]);
 
   return (
     <div className={clsx('w-full lg:w-2/3 lg:mr-5')}>
@@ -38,6 +40,13 @@ function NewsFeedContent() {
         posts.map((post) => <Post key={post._id} {...post} />)}
 
       <div ref={loaderRef} />
+
+      {loadings.includes(actions.getPosts) && (
+        <>
+          <PostLoading />
+          <PostLoading />
+        </>
+      )}
     </div>
   );
 }

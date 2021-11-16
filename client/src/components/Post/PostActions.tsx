@@ -45,10 +45,10 @@ function PostActions(props: PostActionsProps) {
           )
         }
         className={clsx(
-          'group i-flex-center flex-1 py-2.5 rounded-md',
+          'group flex-center flex-1 py-2.5 rounded-md',
           'transition-all ease-out',
           'cursor-pointer select-none',
-          'lg:hover:bg-lt-input lg:dark:hover:bg-dk-tooltip-hv'
+          'lg:hover:bg-lt-input lg:dark:hover:bg-dk-tooltip'
         )}>
         {isLiked ? (
           <ThumbUpAltIcon
@@ -81,10 +81,10 @@ function PostActions(props: PostActionsProps) {
       <div
         onClick={onFetchComments}
         className={clsx(
-          'group i-flex-center flex-1 py-2.5 rounded-md',
+          'group flex-center flex-1 py-2.5 rounded-md',
           'transition-all ease-out',
           'cursor-pointer select-none',
-          'lg:hover:bg-lt-input lg:dark:hover:bg-dk-tooltip-hv'
+          'lg:hover:bg-lt-input lg:dark:hover:bg-dk-tooltip'
         )}>
         <ChatBubbleOutlineOutlinedIcon
           className={clsx(
@@ -106,10 +106,10 @@ function PostActions(props: PostActionsProps) {
 
       <div
         className={clsx(
-          'group i-flex-center flex-1 py-2.5 rounded-md',
+          'group flex-center flex-1 py-2.5 rounded-md',
           'transition-all ease-out',
           'cursor-pointer select-none',
-          'lg:hover:bg-lt-input lg:dark:hover:bg-dk-tooltip-hv'
+          'lg:hover:bg-lt-input lg:dark:hover:bg-dk-tooltip'
         )}>
         <ShareOutlinedIcon
           className={clsx(

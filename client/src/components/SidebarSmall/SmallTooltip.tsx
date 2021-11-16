@@ -30,7 +30,7 @@ function SmallTooltip(props: SmallTooltipProps) {
         'cursor-pointer',
         'transition-all duration-200',
         !isActive &&
-          'hover:shadow-lg dark:hover:shadow-3xl hover:bg-lt-tooltip-hv dark:hover:bg-dk-tooltip-hv'
+          'hover:shadow-lg dark:hover:shadow-3xl hover:bg-white dark:hover:bg-dk-tooltip'
       )}>
       <Icon
         className={clsx(

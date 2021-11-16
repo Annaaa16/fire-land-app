@@ -129,9 +129,9 @@ function NewsFeedSenderArea() {
             className={clsx(
               'absolute top-1/2 right-4',
               'rounded-full p-2 -translate-y-1/2',
-              'bg-gray-200 dark:bg-dk-tooltip-hv lg:dark:bg-dk-input',
+              'bg-gray-200 dark:bg-dk-tooltip lg:dark:bg-dk-input',
               'transition-all ease-out',
-              'hover:bg-gray-300 dark:hover:bg-dk-tooltip-hv',
+              'hover:bg-gray-300 dark:hover:bg-dk-tooltip',
               'cursor-pointer'
             )}>
             <CloseIcon className={clsx('dark:text-gray-400')} />
@@ -148,10 +148,10 @@ function NewsFeedSenderArea() {
               <div
                 className={clsx(
                   'flex items-center mt-1.5 px-2 py-1 rounded-md',
-                  'bg-gray-200 dark:bg-dk-tooltip-hv lg:dark:bg-dk-input',
+                  'bg-gray-200 dark:bg-dk-tooltip lg:dark:bg-dk-input',
                   'transition-all ease-out',
                   'cursor-pointer',
-                  'hover:bg-gray-300 dark:hover:bg-dk-tooltip-hv'
+                  'hover:bg-gray-300 dark:hover:bg-dk-tooltip'
                 )}>
                 <span
                   className={clsx(
@@ -235,7 +235,9 @@ function NewsFeedSenderArea() {
               </li>
               <li
                 className={clsx('relative', 'group px-2.5', 'cursor-pointer')}>
-                <PersonAddIcon className={clsx('!text-2xl', 'text-blue')} />
+                <PersonAddIcon
+                  className={clsx('!text-2xl', 'text-[#1877f2]')}
+                />
                 <Tooltip title='Tag People' direction='ttb' />
               </li>
               <li

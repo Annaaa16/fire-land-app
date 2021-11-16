@@ -23,6 +23,7 @@ module.exports = {
         },
       },
       lineHeight: {
+        base: '14px',
         3: '12px',
         4: '16px',
         5: '20px',
@@ -33,6 +34,9 @@ module.exports = {
         10: '40px',
       },
       colors: {
+        txt: {
+          DEFAULT: '#3e3f5e',
+        },
         'primary-v1': {
           DEFAULT: '#615dfa',
           hv: '#5753e4',
@@ -58,16 +62,10 @@ module.exports = {
         gray: {
           DEFAULT: '#65676b',
         },
-        blue: {
-          DEFAULT: '#1877f2',
-          hv: '#1771e6',
-        },
         lt: {
           body: '#f7f7fa',
           line: '#dedeea',
-          cpn: '#fff',
           input: '#f2f2f2',
-          'tooltip-hv': '#fff',
           gray: {
             DEFAULT: '#adafca',
           },
@@ -77,15 +75,12 @@ module.exports = {
           line: '#3f485f',
           cpn: '#1d2333',
           input: '#21283b',
-          'tooltip-hv': '#293249',
+          tooltip: '#293249',
           gray: {
             DEFAULT: '#9aa4bf',
           },
         },
       },
-      height: () => ({
-        'screen/2': '50vh',
-      }),
       boxShadow: {
         'primary-v1': '4px 7px 12px 0 rgb(97 93 250 / 20%)',
         'primary-v2': '4px 7px 12px 0 rgb(35 210 226 / 20%)',
@@ -155,6 +150,7 @@ module.exports = {
       64: '256px',
       72: '288px',
       80: '320px',
+      87: '348px',
       96: '384px',
       100: '400px',
       296: '1184px',

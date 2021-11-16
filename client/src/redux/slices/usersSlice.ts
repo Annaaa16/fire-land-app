@@ -28,7 +28,7 @@ const user = {
   createdAt: '',
 };
 
-const loadings = {
+const actions = {
   followUser: 'followUser',
   unfollowUser: 'unfollowUser',
   getFriends: 'getFriends',
@@ -67,7 +67,7 @@ const usersSlice = createSlice({
     },
 
     followUserRequest: (state, action: PayloadAction<string>) => {
-      addLoading(state, loadings.followUser);
+      addLoading(state, actions.followUser);
     },
     followUserSuccess: (state, action: PayloadAction<FollowUserResponse>) => {
       const { success, userId } = action.payload;
@@ -75,15 +75,15 @@ const usersSlice = createSlice({
       if (success) {
         state.currentUser.followings.push(userId);
 
-        removeLoading(state, loadings.followUser);
+        removeLoading(state, actions.followUser);
       }
     },
     followUserFailed: (state) => {
-      removeLoading(state, loadings.followUser);
+      removeLoading(state, actions.followUser);
     },
 
     unfollowUserRequest: (state, action: PayloadAction<string>) => {
-      addLoading(state, loadings.unfollowUser);
+      addLoading(state, actions.unfollowUser);
     },
     unfollowUserSuccess: (
       state,
@@ -94,15 +94,15 @@ const usersSlice = createSlice({
       if (success) {
         _.remove(state.currentUser.followings, (n) => n === userId);
 
-        removeLoading(state, loadings.unfollowUser);
+        removeLoading(state, actions.unfollowUser);
       }
     },
     unfollowUserFailed: (state) => {
-      removeLoading(state, loadings.unfollowUser);
+      removeLoading(state, actions.unfollowUser);
     },
 
     getFriendsRequest: (state, action: PayloadAction<GetFriendsPayload>) => {
-      addLoading(state, loadings.getFriends);
+      addLoading(state, actions.getFriends);
     },
     getFriendsSuccess: (
       state,
@@ -113,11 +113,11 @@ const usersSlice = createSlice({
       if (success) {
         state.friends = friends;
 
-        removeLoading(state, loadings.getFriends);
+        removeLoading(state, actions.getFriends);
       }
     },
     getFriendsFailed: (state) => {
-      removeLoading(state, loadings.getFriends);
+      removeLoading(state, actions.getFriends);
     },
 
     setUserProfile: (state, action: PayloadAction<GetUserResponse>) => {
@@ -145,7 +145,7 @@ const usersSlice = createSlice({
   },
 });
 
-export { loadings };
+export { actions };
 
 export const usersActions = usersSlice.actions;
 

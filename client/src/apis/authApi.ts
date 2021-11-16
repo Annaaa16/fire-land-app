@@ -37,7 +37,7 @@ export const authApiClient = () => {
           '/auth/login',
           formData
         );
-        console.log('response', response.data);
+
         return response;
       } catch (error) {
         return notifyAxiosError('Login user', error as AxiosError);

@@ -27,7 +27,7 @@ function SidebarTooltip(props: SidebarTooltipProps) {
         'transition-all duration-200',
         'cursor-pointer',
         !isActive &&
-          'hover:shadow-lg dark:hover:shadow-3xl hover:bg-lt-tooltip-hv dark:hover:bg-dk-tooltip-hv'
+          'hover:shadow-lg dark:hover:shadow-3xl hover:bg-white dark:hover:bg-dk-tooltip'
       )}>
       <div className={clsx('flex items-center')}>
         <Icon

@@ -24,7 +24,7 @@ function SidebarSmall({ isMessenger }: SidebarSmallProps) {
           ? 'border-r border-lt-line dark:border-dk-line'
           : 'shadow-xl',
         isMessenger ? 'h-screen' : 'h-[calc(100vh-64px)]',
-        'bg-lt-cpn dark:bg-dk-cpn'
+        'bg-white dark:bg-dk-cpn'
       )}>
       {isMessenger && (
         <div

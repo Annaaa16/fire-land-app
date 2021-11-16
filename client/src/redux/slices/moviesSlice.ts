@@ -39,7 +39,7 @@ const tvShowCategoryKeys: TvShowCategoryKeys = {
   similar: 'similar',
 };
 
-const loadings = {
+const actions = {
   getMovies: 'getMovies',
   getTvShows: 'getTvShows',
   searchMovies: 'searchMovies',
@@ -83,7 +83,7 @@ const moviesSlice = createSlice({
   initialState,
   reducers: {
     getMoviesRequest: (state, action: PayloadAction<GetMoviesPayload>) => {
-      addLoading(state, loadings.getMovies);
+      addLoading(state, actions.getMovies);
     },
     getMoviesSuccess: (
       state,
@@ -102,18 +102,18 @@ const moviesSlice = createSlice({
         totalPages: total_pages,
       };
 
-      removeLoading(state, loadings.getMovies);
+      removeLoading(state, actions.getMovies);
     },
     getMoviesFailed: (state) => {
-      removeLoading(state, loadings.getMovies);
+      removeLoading(state, actions.getMovies);
     },
 
     getSimilarMoviesRequest: (state, action: PayloadAction<string>) => {
-      addLoading(state, loadings.getMovies);
+      addLoading(state, actions.getMovies);
     },
 
     searchMoviesRequest: (state, action: PayloadAction<TmdbSearchPayload>) => {
-      addLoading(state, loadings.searchMovies);
+      addLoading(state, actions.searchMovies);
     },
     searchMoviesSuccess: (
       state,
@@ -128,14 +128,14 @@ const moviesSlice = createSlice({
         totalMovies: total_results,
       };
 
-      removeLoading(state, loadings.searchMovies);
+      removeLoading(state, actions.searchMovies);
     },
     searchMoviesFailed: (state) => {
-      removeLoading(state, loadings.searchMovies);
+      removeLoading(state, actions.searchMovies);
     },
 
     getTvShowsRequest: (state, action: PayloadAction<GetTvShowsPayload>) => {
-      addLoading(state, loadings.getTvShows);
+      addLoading(state, actions.getTvShows);
     },
     getTvShowsSuccess: (
       state,
@@ -154,14 +154,14 @@ const moviesSlice = createSlice({
         totalPages: total_pages,
       };
 
-      removeLoading(state, loadings.getTvShows);
+      removeLoading(state, actions.getTvShows);
     },
     getTvShowsFailed: (state) => {
-      removeLoading(state, loadings.getTvShows);
+      removeLoading(state, actions.getTvShows);
     },
 
     getSimilarTvShowsRequest: (state, action: PayloadAction<string>) => {
-      addLoading(state, loadings.getTvShows);
+      addLoading(state, actions.getTvShows);
     },
 
     clearSearchedMovies: (state) => {
@@ -183,7 +183,7 @@ const moviesSlice = createSlice({
   },
 });
 
-export { movieCategoryKeys, tvShowCategoryKeys, loadings };
+export { movieCategoryKeys, tvShowCategoryKeys, actions };
 
 export const moviesActions = moviesSlice.actions;
 

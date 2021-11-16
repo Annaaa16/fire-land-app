@@ -15,7 +15,7 @@ import {
 
 import { addLoading, removeLoading } from '@/helpers/loadings';
 
-const loadings = {
+const actions = {
   login: 'login',
   register: 'register',
 };
@@ -38,7 +38,7 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     loginRequest: (state, action: PayloadAction<LoginPayload>) => {
-      addLoading(state, loadings.login);
+      addLoading(state, actions.login);
     },
     loginSuccess: (
       state,
@@ -50,19 +50,19 @@ const authSlice = createSlice({
         state.loginStatus.isAuthenticated = true;
         state.loginStatus.success = true;
 
-        removeLoading(state, loadings.login);
+        removeLoading(state, actions.login);
       } else {
         state.loginStatus.message = message;
 
-        removeLoading(state, loadings.login);
+        removeLoading(state, actions.login);
       }
     },
     loginFailed: (state) => {
-      removeLoading(state, loadings.login);
+      removeLoading(state, actions.login);
     },
 
     registerRequest: (state, action: PayloadAction<RegisterPayload>) => {
-      addLoading(state, loadings.register);
+      addLoading(state, actions.register);
     },
     registerSuccess(state, action: PayloadAction<RegisterResponse>) {
       const { success, message } = action.payload;
@@ -70,15 +70,15 @@ const authSlice = createSlice({
       if (success) {
         state.registerStatus.success = true;
 
-        removeLoading(state, loadings.register);
+        removeLoading(state, actions.register);
       } else {
         state.registerStatus.message = message;
 
-        removeLoading(state, loadings.register);
+        removeLoading(state, actions.register);
       }
     },
     registerFailed: (state) => {
-      removeLoading(state, loadings.login);
+      removeLoading(state, actions.login);
     },
 
     clearMessage: (state) => {
@@ -88,7 +88,7 @@ const authSlice = createSlice({
   },
 });
 
-export { loadings };
+export { actions };
 
 export const authActions = authSlice.actions;
 

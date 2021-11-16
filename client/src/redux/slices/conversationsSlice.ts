@@ -15,7 +15,7 @@ import { PayloadAction } from '@reduxjs/toolkit';
 
 import { addLoading, removeLoading } from '@/helpers/loadings';
 
-const loadings = {
+const actions = {
   createConversation: 'createConversation',
   getConversations: 'getConversations',
   deleteConversation: 'deleteConversation',
@@ -34,7 +34,7 @@ const conversationsSlice = createSlice({
       state,
       action: PayloadAction<CreateConversationPayload>
     ) => {
-      addLoading(state, loadings.createConversation);
+      addLoading(state, actions.createConversation);
     },
     createConversationSuccess: (
       state,
@@ -45,15 +45,15 @@ const conversationsSlice = createSlice({
       if (success) {
         state.conversations.push(conversation);
 
-        removeLoading(state, loadings.createConversation);
+        removeLoading(state, actions.createConversation);
       }
     },
     createConversationFailed: (state) => {
-      removeLoading(state, loadings.createConversation);
+      removeLoading(state, actions.createConversation);
     },
 
     getConversationsRequest: (state, action: PayloadAction<string>) => {
-      addLoading(state, loadings.getConversations);
+      addLoading(state, actions.getConversations);
     },
     getConversationsSuccess: (
       state,
@@ -64,15 +64,15 @@ const conversationsSlice = createSlice({
       if (success) {
         state.conversations = conversations;
 
-        removeLoading(state, loadings.getConversations);
+        removeLoading(state, actions.getConversations);
       }
     },
     getConversationsFailed: (state) => {
-      removeLoading(state, loadings.getConversations);
+      removeLoading(state, actions.getConversations);
     },
 
     deleteConversationRequest: (state, action: PayloadAction<string>) => {
-      addLoading(state, loadings.deleteConversation);
+      addLoading(state, actions.deleteConversation);
     },
     deleteConversationSuccess: (
       state,
@@ -83,16 +83,16 @@ const conversationsSlice = createSlice({
       if (success) {
         _.remove(state.conversations, (n) => n._id === conversationId);
 
-        removeLoading(state, loadings.deleteConversation);
+        removeLoading(state, actions.deleteConversation);
       }
     },
     deleteConversationFailed: (state) => {
-      removeLoading(state, loadings.deleteConversation);
+      removeLoading(state, actions.deleteConversation);
     },
   },
 });
 
-export { loadings };
+export { actions };
 
 export const conversationsActions = conversationsSlice.actions;
 

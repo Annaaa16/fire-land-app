@@ -7,11 +7,11 @@ import { ReactNode } from 'react';
 import Header from '@/components/Header';
 import SidebarSmall from '@/components/SidebarSmall';
 
-interface CenterContentProps {
+interface SocialProps {
   children: ReactNode;
 }
 
-function CenterContent({ children }: CenterContentProps) {
+function Social({ children }: SocialProps) {
   return (
     <>
       <Header />
@@ -27,4 +27,4 @@ function CenterContent({ children }: CenterContentProps) {
   );
 }
 
-export default CenterContent;
+export default Social;

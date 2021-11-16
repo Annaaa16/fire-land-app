@@ -7,23 +7,27 @@
 @layer base {
   html {
     font-family: 'Poppins', sans-serif;
-    font-size: 14px;
-    line-height: 14px;
 
-    color: #3e3f5e;
+    @apply text-sm leading-base 
+    text-txt;
   }
 
   img,
   svg,
   button {
-    user-select: none;
+    @apply select-none;
   }
 }
 
 @layer utilities {
-  .i-flex-center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+
+  .btn {
+    @apply shadow-primary-v1 dark:shadow-primary-v4
+    text-white bg-primary-v1 dark:bg-primary-v4 
+    transition-all duration-250 ease-out
+    hover:bg-primary-v1-hv dark:hover:bg-primary-v4-hv;
   }
 }

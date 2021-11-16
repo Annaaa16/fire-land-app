@@ -63,7 +63,7 @@ function Detail(props: DetailProps) {
   return (
     <MainLayout title={'Movies - ' + title}>
       <section>
-        <div className={clsx('relative', 'w-full h-screen/2')}>
+        <div className={clsx('relative', 'w-full h-[50vh]')}>
           <Image
             src={tmdb.getOriginalImage(image)}
             alt='Thumbnail'

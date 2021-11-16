@@ -12,7 +12,7 @@ function Sidebar() {
       className={clsx(
         'fixed top-[64px] left-0 z-50',
         'flex flex-col items-center w-[300px] h-[calc(100vh-64px)] py-6 shadow-2xl',
-        'bg-lt-cpn dark:bg-dk-cpn'
+        'bg-white dark:bg-dk-cpn'
       )}>
       <User />
 
