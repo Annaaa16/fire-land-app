@@ -17,3 +17,7 @@ export const notifySagaError = (
 ) => {
   console.log(action.type + ' error from saga 👉', error);
 };
+
+export const notifyPageError = (page: string, error: any) => {
+  console.log('Error from ' + page + ' page 👉', error);
+};
