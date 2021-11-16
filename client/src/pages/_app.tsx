@@ -1,6 +1,10 @@
+import Router from 'next/router';
 import { Provider } from 'react-redux';
 import { END } from '@redux-saga/core';
 import App from 'next/app';
+
+// bar of progress
+import ProgressBar from '@badrap/bar-of-progress';
 
 // swiper
 import SwiperCore, { Autoplay } from 'swiper';
@@ -15,7 +19,7 @@ import { GetUserResponse } from '@/models/users';
 
 import serverAuthenticate from '@/helpers/serverAuthenticate';
 import store, { wrapper } from '@/redux/store';
-import theme from '@/configs/materialUI';
+import theme from '@/configs/mui';
 
 import GlobalProvider from '../contexts/GlobalContext';
 
@@ -23,6 +27,15 @@ import GlobalProvider from '../contexts/GlobalContext';
 import '../styles/globals.scss';
 import 'overlayscrollbars/css/OverlayScrollbars.css';
 import 'swiper/css';
+
+const progressBar = new ProgressBar({
+  size: 4,
+  className: 'bg-gradient-to-r from-green-200 via-green-300 to-blue-500',
+});
+
+Router.events.on('routeChangeStart', progressBar.start);
+Router.events.on('routeChangeComplete', progressBar.finish);
+Router.events.on('routeChangeError', progressBar.finish);
 
 class WrappedApp extends App<
   AppInitialProps & { currentUserResponse: GetUserResponse }
@@ -57,7 +70,7 @@ class WrappedApp extends App<
       <Provider store={store}>
         <GlobalProvider currentUserResponse={currentUserResponse}>
           <ThemeProvider theme={theme}>
-            <Component {...pageProps} />
+            <Component {...pageProps}></Component>
           </ThemeProvider>
         </GlobalProvider>
       </Provider>
