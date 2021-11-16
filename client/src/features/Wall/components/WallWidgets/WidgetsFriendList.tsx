@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 
 // clsx
@@ -5,12 +7,31 @@ import clsx from 'clsx';
 
 import { useUsersSelector } from '@/redux/selectors';
 import { useGlobalContext } from '@/contexts/GlobalContext';
+import { usersActions } from '@/redux/slices/usersSlice';
+import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 import User from '@/components/User';
 
 function WidgetsFriendList() {
   const { visitWall } = useGlobalContext();
   const { friends, userProfile } = useUsersSelector();
+  const dispatch = useStoreDispatch();
+  const router = useRouter();
+
+  // Fetch init user's friends
+  useEffect(() => {
+    const { id } = router.query;
+
+    // Block first load ID is undefined
+    if (id) {
+      dispatch(
+        usersActions.getFriendsRequest({
+          userId: id as string,
+          params: { page: 1, limit: 10 },
+        })
+      );
+    }
+  }, [router.query, dispatch]);
 
   return (
     <div

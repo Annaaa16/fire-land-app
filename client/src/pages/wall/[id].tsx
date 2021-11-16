@@ -1,6 +1,3 @@
-import { useEffect } from 'react';
-import { useRouter } from 'next/router';
-
 // clsx
 import clsx from 'clsx';
 
@@ -9,51 +6,37 @@ import { GetServerSideProps } from 'next';
 import { AxiosResponse } from 'axios';
 import { GetPostsResponse } from '@/models/posts';
 import { GetUserResponse } from '@/models/users';
+import { User } from '@/models/common';
 
-import { LIMITS } from '@/constants';
+import { LIMITS, STATUS_CODES } from '@/constants';
 import { postsActions } from '@/redux/slices/postsSlice';
 import { wrapper } from '@/redux/store';
 import { postsApiServer } from '@/apis/postsApi';
 import { usersActions } from '@/redux/slices/usersSlice';
 import { usersApiServer } from '@/apis/usersApi';
+import { notifyPageError } from '@/helpers/notifyError';
 import tokens from '@/helpers/tokens';
-import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 import Meta from '@/layouts/Meta';
-import CenterContent from '@/layouts/CenterContent';
+import Social from '@/layouts/Social';
 import WallCover from '@/features/Wall/components/WallCover';
 import WallWidgets from '@/features/Wall/components/WallWidgets';
 import WallContent from '@/features/Wall/components/WallContent';
 
-function Wall() {
-  const router = useRouter();
+interface WallProps {
+  user: User;
+}
 
-  const dispatch = useStoreDispatch();
-
-  // Fetch init user's friends
-  useEffect(() => {
-    const { id } = router.query;
-
-    // Block first load ID is undefined
-    if (id) {
-      dispatch(
-        usersActions.getFriendsRequest({
-          userId: id as string,
-          params: { page: 1, limit: 10 },
-        })
-      );
-    }
-  }, [router.query, dispatch]);
-
+function Wall({ user }: WallProps) {
   return (
-    <Meta title='Wall'>
-      <CenterContent>
+    <Meta title={user ? user.username : 'Not Found'}>
+      <Social>
         <WallCover />
         <section className={clsx('flex mt-7')}>
           <WallWidgets />
           <WallContent />
         </section>
-      </CenterContent>
+      </Social>
     </Meta>
   );
 }
@@ -67,27 +50,47 @@ export const getServerSideProps: GetServerSideProps =
     const { getUser } = usersApiServer(ctx);
     const { isRefreshTokenExpired, isFully } = tokens.checkTokenValid(ctx)!;
 
+    let user: User | null = null;
+    let statusCode: number = STATUS_CODES.DEFAULT;
+
     if (isFully && !isRefreshTokenExpired) {
       store.dispatch(postsActions.clearPosts());
 
-      const postsResponse = (await getPosts({
-        user_id: id as string,
-        page: 1,
-        limit: LIMITS.POSTS,
-      })) as AxiosResponse<GetPostsResponse>;
+      try {
+        const userResponse = (await getUser(
+          id as string
+        )) as AxiosResponse<GetUserResponse>;
 
-      const userResponse = (await getUser(
-        id as string
-      )) as AxiosResponse<GetUserResponse>;
+        if (userResponse?.data.success) {
+          const postsResponse = (await getPosts({
+            user_id: id as string,
+            page: 1,
+            limit: LIMITS.POSTS,
+          })) as AxiosResponse<GetPostsResponse>;
 
-      userResponse &&
-        store.dispatch(usersActions.setUserProfile(userResponse.data));
+          store.dispatch(usersActions.setUserProfile(userResponse.data));
+          postsResponse &&
+            store.dispatch(postsActions.getPostsSuccess(postsResponse.data));
 
-      postsResponse &&
-        store.dispatch(postsActions.getPostsSuccess(postsResponse.data));
+          user = userResponse.data.user;
+        }
+
+        statusCode = userResponse.status;
+      } catch (error) {
+        statusCode = STATUS_CODES.SERVER_ERROR;
+        notifyPageError('Wall', error);
+      }
     }
 
-    return {
-      props: {},
-    };
+    if (statusCode >= 400) {
+      return {
+        notFound: true,
+      };
+    } else {
+      return {
+        props: {
+          user,
+        },
+      };
+    }
   });

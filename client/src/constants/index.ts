@@ -52,3 +52,9 @@ export const DELAYS = {
   DEFAULT: 300,
   DOUBLE: 600,
 };
+
+export const STATUS_CODES = {
+  DEFAULT: 0,
+  NOT_FOUND: 404,
+  SERVER_ERROR: 500,
+};
