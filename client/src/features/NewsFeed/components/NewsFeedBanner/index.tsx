@@ -4,7 +4,7 @@ import clsx from 'clsx';
 // material ui icons
 import SpeakerPhoneIcon from '@mui/icons-material/SpeakerPhone';
 
-import { bannerShape, bannerMembers } from '@/utils/images';
+import { bannerShape, bannerMembers } from '@/utils/cloudinaryImages';
 
 function NewsFeedBanner() {
   return (
