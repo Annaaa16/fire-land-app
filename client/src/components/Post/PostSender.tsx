@@ -11,6 +11,7 @@ import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
 import PhotoCameraBackOutlinedIcon from '@mui/icons-material/PhotoCameraBackOutlined';
 import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
 
+import { useGlobalContext } from '@/contexts/GlobalContext';
 import { commentsActions } from '@/redux/slices/commentsSlice';
 import { useUsersSelector } from '@/redux/selectors';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
@@ -33,6 +34,7 @@ function PostSender(props: PostSenderProps) {
   const [content, setContent] = useState<string>('');
 
   const dispatch = useStoreDispatch();
+  const { visitWall } = useGlobalContext();
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -52,7 +54,12 @@ function PostSender(props: PostSenderProps) {
       className={clsx(
         'flex items-center border-t border-lt-line dark:border-dk-line mt-1 pt-4 pb-3'
       )}>
-      <User avatar={avatar} view='sm' rounded />
+      <User
+        avatar={avatar}
+        view='sm'
+        rounded
+        onHandleClick={() => visitWall(userId)}
+      />
       <div
         className={clsx(
           'flex flex-1 ml-2.5 justify-between rounded-3xl',
