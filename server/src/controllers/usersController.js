@@ -1,7 +1,7 @@
 // models
 const User = require('../models/userModel');
 
-const { notifyServerError } = require('../helpers/notifyServerError');
+const { notifyServerError } = require('../helpers/notifyError');
 
 const usersController = {};
 
