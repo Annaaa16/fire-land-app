@@ -5,7 +5,7 @@ const User = require('../models/userModel');
 const { CLOUDINARY } = require('../constants');
 const cloudinary = require('../configs/cloudinaryConfig');
 
-const { notifyServerError } = require('../helpers/notifyServerError');
+const { notifyServerError } = require('../helpers/notifyError');
 
 const postsController = {};
 
@@ -13,7 +13,7 @@ postsController.createPost = async (req, res) => {
   const { content } = req.body;
   let photo = req.file?.path; // Read photo file path from client
 
-  // Empty content and attachment
+  // Content and attachment is empty
   if (!content && !photo) {
     return res
       .status(400)
@@ -51,7 +51,7 @@ postsController.createPost = async (req, res) => {
 
     res.status(201).json({
       success: true,
-      message: 'New post has been created successfully',
+      message: 'The post has been created successfully',
       post: post.toObject(),
     });
   } catch (error) {
@@ -68,7 +68,7 @@ postsController.getPosts = async (req, res) => {
   if (!page || !limit) {
     return res
       .status(400)
-      .json({ success: false, message: 'Page and limit params is required!' });
+      .json({ success: false, message: 'Page and limit params is required' });
   }
 
   const total = await Post.count(
@@ -121,6 +121,17 @@ postsController.updatePost = async (req, res) => {
   }
 
   try {
+    const updateCondition = { _id: req.params.id, user: req.userId };
+
+    const post = await Post.findOne(updateCondition);
+
+    if (!post) {
+      return res.status(401).json({
+        success: false,
+        message: 'Post not found or user is not authorized',
+      });
+    }
+
     // Replace photo
     if (photo && photoId) {
       const { secure_url, public_id } = await cloudinary.uploader.upload(
@@ -151,30 +162,21 @@ postsController.updatePost = async (req, res) => {
       photoId = '';
     }
 
-    const post = {
+    const newPost = {
       content,
       photo: photo || photoUrl, // New photo or old photo
       photoId,
     };
-    const updateCondition = { _id: req.params.id, user: req.userId };
 
-    const updatedPost = await Post.findOneAndUpdate(updateCondition, post, {
+    const updatedPost = await Post.findByIdAndUpdate(req.params.id, newPost, {
       new: true,
     })
       .populate('user')
       .lean();
 
-    // Invalid post id or user not authorized
-    if (!updatedPost) {
-      return res.status(401).json({
-        success: false,
-        message: 'Post not found or user is not authorized',
-      });
-    }
-
     res.json({
       success: true,
-      message: 'Post is updated!',
+      message: 'Post is updated',
       post: updatedPost,
     });
   } catch (error) {
@@ -211,45 +213,17 @@ postsController.deletePost = async (req, res) => {
   }
 };
 
-postsController.likePost = async (req, res) => {
-  try {
-    const post = await Post.findById(req.params.id);
+postsController.reactPost = async (req, res) => {
+  const { isReact, isUpdate, emotion } = req.body;
 
-    if (!post) {
-      return res.status(404).json({
-        success: false,
-        message: 'Post not found',
-      });
-    }
-
-    const likeCondition = { _id: req.params.id };
-
-    if (!post.likes.includes(req.userId)) {
-      const likedPost = await Post.findOneAndUpdate(
-        likeCondition,
-        { $push: { likes: req.userId } },
-        {
-          new: true,
-        }
-      );
-
-      res.json({
-        success: true,
-        message: 'The post has been liked',
-        post: likedPost,
-      });
-    } else {
-      return res.status(400).json({
-        success: false,
-        message: 'The post has already been liked',
-      });
-    }
-  } catch (error) {
-    notifyServerError(res, error);
+  // React post but not send emotion
+  if (isReact && !emotion) {
+    return res.status(400).json({
+      success: false,
+      message: 'Emotion is required',
+    });
   }
-};
 
-postsController.unlikePost = async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
 
@@ -260,25 +234,63 @@ postsController.unlikePost = async (req, res) => {
       });
     }
 
-    const unlikeCondition = { _id: req.params.id };
+    const reactCondition = { _id: req.params.id };
 
-    if (post.likes.includes(req.userId)) {
-      const unlikedPost = await Post.findOneAndUpdate(
-        unlikeCondition,
-        { $pull: { likes: req.userId } },
-        { new: true }
-      );
+    if (isReact) {
+      let reactedPost = null;
+
+      if (isUpdate) {
+        const updatedReactions = post.reactions.map((reaction) =>
+          reaction.userId === req.userId
+            ? { userId: req.userId, emotion: emotion }
+            : reaction
+        );
+
+        reactedPost = await Post.findOneAndUpdate(
+          reactCondition,
+          { $set: { reactions: updatedReactions } },
+          {
+            new: true,
+          }
+        );
+      } else {
+        reactedPost = await Post.findOneAndUpdate(
+          reactCondition,
+          { $push: { reactions: { userId: req.userId, emotion: emotion } } },
+          {
+            new: true,
+          }
+        );
+      }
 
       res.json({
         success: true,
-        message: 'Unlike post successfully',
-        post: unlikedPost,
+        message: 'React to post successfully',
+        post: reactedPost,
       });
     } else {
-      return res.status(400).json({
-        success: false,
-        message: 'Post already unliked',
-      });
+      const isReacted = post.reactions.some(
+        (reaction) => reaction.userId === req.userId
+      );
+
+      if (isReacted) {
+        const unreactedPost = await Post.findOneAndUpdate(
+          reactCondition,
+          { $pull: { reactions: { userId: req.userId } } },
+          { new: true }
+        );
+
+        res.json({
+          success: true,
+          message: 'Unreact to post successfully',
+          post: unreactedPost,
+        });
+      } else {
+        res.status(400).json({
+          success: false,
+          message: 'Post already unreacted',
+        });
+      }
     }
   } catch (error) {
     notifyServerError(res, error);
