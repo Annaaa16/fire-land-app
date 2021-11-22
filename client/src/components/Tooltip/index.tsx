@@ -2,7 +2,7 @@
 import clsx from 'clsx';
 
 interface TooltipProps {
-  title: string;
+  title: string | number;
   direction?: string;
   subClass?: string;
 }

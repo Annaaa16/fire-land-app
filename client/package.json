@@ -12,6 +12,7 @@
     "@badrap/bar-of-progress": "^0.1.2",
     "@emotion/react": "^11.5.0",
     "@emotion/styled": "^11.3.0",
+    "@headlessui/react": "^1.4.2",
     "@hookform/resolvers": "^2.8.1",
     "@mui/icons-material": "^5.0.0",
     "@mui/material": "^5.0.6",

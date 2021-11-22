@@ -70,7 +70,7 @@ class WrappedApp extends App<
       <Provider store={store}>
         <GlobalProvider currentUserResponse={currentUserResponse}>
           <ThemeProvider theme={theme}>
-            <Component {...pageProps}></Component>
+            <Component {...pageProps} />
           </ThemeProvider>
         </GlobalProvider>
       </Provider>

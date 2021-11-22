@@ -28,11 +28,16 @@ export interface Pagination {
   total?: number;
 }
 
+export interface Reaction {
+  userId: string;
+  emotion: string;
+}
+
 export interface Post {
   readonly _id: string;
   user: User;
   content: string;
-  likes: string[];
+  reactions: Reaction[];
   photo: string;
   photoId: string;
   commentCount: number;

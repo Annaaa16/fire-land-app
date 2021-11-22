@@ -11,6 +11,9 @@ module.exports = {
     extend: {
       zIndex: {
         '-1': '-1',
+        1: 1,
+        2: 2,
+        3: 3,
       },
       container: {
         center: true,
@@ -79,6 +82,7 @@ module.exports = {
           gray: {
             DEFAULT: '#9aa4bf',
           },
+          // refactor gray colors
         },
       },
       boxShadow: {
