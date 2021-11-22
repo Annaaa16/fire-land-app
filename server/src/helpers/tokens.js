@@ -22,11 +22,9 @@ const setTokens = {
 
 const getTokens = {
   accessToken: (userId) => {
-    const accessToken = jwt.sign({ userId }, TOKENS.ACCESS_TOKEN_SECRET, {
+    return jwt.sign({ userId }, TOKENS.ACCESS_TOKEN_SECRET, {
       expiresIn: TOKENS.ACCESS_TOKEN_EXP,
     });
-
-    return accessToken;
   },
 };
 
