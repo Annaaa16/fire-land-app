@@ -12,7 +12,7 @@ import {
   GetCommentsPayload,
   GetCommentsResponse,
 } from '@/models/comments';
-import { addLoading, removeLoading } from '@/helpers/loadings';
+import { addLoading, removeLoading } from '@/helpers/reduxStateLoadings';
 
 const actions = {
   createComment: 'createComment',

@@ -16,7 +16,7 @@ import {
   rocket,
   ltDot,
   dkDot,
-} from '@/utils/images';
+} from '@/utils/cloudinaryImages';
 
 // svgs
 import logo from '@/assets/svgs/logo.svg';

@@ -4,7 +4,8 @@ import {
   DeletePostResponse,
   GetPostsPayload,
   GetPostsResponse,
-  LikePostResponse,
+  ReactPostPayload,
+  ReactPostResponse,
   UpdatePostPayload,
   UpdatePostResponse,
 } from '@/models/posts';
@@ -71,27 +72,18 @@ export const postsApiClient = () => {
       }
     },
 
-    likePost: async (postId: string) => {
+    reactPost: async (payload: ReactPostPayload) => {
+      const { postId, userId, ...others } = payload;
+
       try {
-        const response = await axiosInstance.patch<LikePostResponse>(
-          `/posts/${postId}/like`
+        const response = await axiosInstance.patch<ReactPostResponse>(
+          `/posts/${postId}/reactions`,
+          others
         );
 
         return response;
       } catch (error) {
-        return notifyAxiosError('Like post', error as AxiosError);
-      }
-    },
-
-    unlikePost: async (postId: string) => {
-      try {
-        const response = await axiosInstance.patch<LikePostResponse>(
-          `/posts/${postId}/unlike`
-        );
-
-        return response;
-      } catch (error) {
-        return notifyAxiosError('Unlike post', error as AxiosError);
+        return notifyAxiosError('React post', error as AxiosError);
       }
     },
   };

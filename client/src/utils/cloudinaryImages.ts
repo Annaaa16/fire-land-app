@@ -2,7 +2,7 @@ import { API_URLS } from '@/constants';
 
 const { CLOUDINARY } = API_URLS;
 
-// Common
+// Auth layout
 export const ltBackground = `${CLOUDINARY}/v1631503820/fire-chat-app/common/gmtca69qmkg1jqv9qmkf.jpg`;
 export const dkBackground = `${CLOUDINARY}/v1631544025/fire-chat-app/common/jwmgicokwtgtw0dwhmtk.jpg`;
 export const rocket = `${CLOUDINARY}/v1631503853/fire-chat-app/common/qttqsjesgtwux6vwdi2p.png`;

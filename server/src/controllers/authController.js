@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
 
 const { COOKIES, TOKENS } = require('../constants');
-const { notifyServerError } = require('../helpers/notifyServerError');
+const { notifyServerError } = require('../helpers/notifyError');
 const { setTokens, getTokens } = require('../helpers/tokens');
 const cookieOptions = require('../configs/cookieOptionsConfig');
 

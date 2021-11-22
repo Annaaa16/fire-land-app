@@ -1,10 +1,4 @@
-import {
-  createContext,
-  useContext,
-  useLayoutEffect,
-  useState,
-  useEffect,
-} from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 // lodash
@@ -22,6 +16,7 @@ import { useConversationsSelector, useUsersSelector } from '@/redux/selectors';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import cookies from '@/helpers/cookies';
+import useIsomorphicLayoutEffect from '@/hooks/useIsomorphicLayoutEffect ';
 
 interface GlobalProviderProps {
   children: ReactNode;
@@ -46,7 +41,7 @@ function GlobalProvider({
   const { storedValue: theme, setValue: toggleTheme } = useLocalStorage(
     LOCAL_STORAGE.THEME_KEY,
     LOCAL_STORAGE.LIGHT_THEME_VALUE,
-    typeof window !== 'undefined' ? useLayoutEffect : useEffect
+    useIsomorphicLayoutEffect
   );
 
   const { conversations } = useConversationsSelector();
@@ -112,8 +107,10 @@ function GlobalProvider({
   useEffect(() => {
     const { query, pathname } = router;
 
-    if (query?.id) {
+    if (query?.id && pathname.startsWith(PATHS.WALL)) {
       cookies.setPrevPath(PATHS.WALL + '/' + query.id);
+    } else if (query?.id && pathname.startsWith(PATHS.MOVIES)) {
+      cookies.setPrevPath(PATHS.MOVIES + '/' + query.id);
     } else if (pathname !== PATHS.LOGIN && pathname !== PATHS.REGISTER) {
       cookies.setPrevPath(pathname);
     }

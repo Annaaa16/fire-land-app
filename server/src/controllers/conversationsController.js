@@ -2,7 +2,7 @@
 const Conversation = require('../models/conversationModel');
 const User = require('../models/userModel');
 
-const { notifyServerError } = require('../helpers/notifyServerError');
+const { notifyServerError } = require('../helpers/notifyError');
 
 const conversationsController = {};
 

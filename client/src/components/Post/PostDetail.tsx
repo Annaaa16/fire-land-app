@@ -1,69 +1,33 @@
 // clsx
 import clsx from 'clsx';
 
+// types
+import { Post } from '@/models/common';
+
 import { useUsersSelector } from '@/redux/selectors';
 
-// svgs
-import like from '@/assets/svgs/newsfeed/like.svg';
-import haha from '@/assets/svgs/newsfeed/haha.svg';
-import love from '@/assets/svgs/newsfeed/love.svg';
+import PostDetailReactions from './PostDetailReactions';
 
 interface PostDetailProps {
-  likes: string[];
-  commentCount: number;
+  reactions: Post['reactions'];
+  commentCount: Post['commentCount'];
 }
 
 function PostDetail(props: PostDetailProps) {
-  const { likes, commentCount } = props;
+  const { reactions, commentCount } = props;
 
   const { currentUser } = useUsersSelector();
+
+  const isReacted = reactions.some(
+    (reaction) => reaction.userId === currentUser._id
+  );
 
   return (
     <div className={clsx('flex items-center justify-between h-5')}>
       <div className={clsx('flex items-center')}>
-        {likes.length > 0 && (
+        {reactions.length > 0 && (
           <>
-            <div className={clsx('flex items-center mr-2')}>
-              <div
-                className={clsx(
-                  'z-[3]',
-                  'w-4.5 md:w-5 rounded-full border border-white dark:border-dk-cpn',
-                  'bg-white dark:bg-dk-cpn',
-                  'cursor-pointer'
-                )}>
-                <img
-                  className={clsx('w-full h-full')}
-                  src={like.src}
-                  alt='Like'
-                />
-              </div>
-              <div
-                className={clsx(
-                  'z-[2]',
-                  'w-4.5 md:w-5 -ml-0.5 rounded-full border border-white dark:border-dk-cpn',
-                  'bg-white dark:bg-dk-cpn',
-                  'cursor-pointer'
-                )}>
-                <img
-                  className={clsx('w-full h-full')}
-                  src={love.src}
-                  alt='Love'
-                />
-              </div>
-              <div
-                className={clsx(
-                  'z-[1]',
-                  'w-4.5 md:w-5 -ml-0.5 rounded-full border border-white dark:border-dk-cpn',
-                  'bg-white dark:bg-dk-cpn',
-                  'cursor-pointer'
-                )}>
-                <img
-                  className={clsx('w-full h-full')}
-                  src={haha.src}
-                  alt='Haha'
-                />
-              </div>
-            </div>
+            <PostDetailReactions reactions={reactions} />
             <span
               className={clsx(
                 'pt-0.5 text-xs md:text-sm',
@@ -71,11 +35,11 @@ function PostDetail(props: PostDetailProps) {
                 'cursor-pointer',
                 'lg:hover:underline'
               )}>
-              {likes.includes(currentUser._id) && likes.length === 1
+              {isReacted && reactions.length === 1
                 ? currentUser.username
-                : likes.includes(currentUser._id) && likes.length > 1
-                ? `You and ${likes.length - 1} others`
-                : likes.length}
+                : isReacted && reactions.length > 1
+                ? 'You and ' + (reactions.length - 1) + ' others'
+                : reactions.length}
             </span>
           </>
         )}

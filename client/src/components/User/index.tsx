@@ -11,7 +11,7 @@ interface UserProps {
   currentUser?: boolean;
   online?: boolean;
   rounded?: boolean;
-  onHandleClick?: (event: any) => void;
+  onHandleClick?: () => void;
 }
 
 function User(props: UserProps) {

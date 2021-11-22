@@ -2,7 +2,7 @@ const User = require('../models/userModel');
 const Post = require('../models/postModel');
 const Comment = require('../models/commentModel');
 
-const { notifyServerError } = require('../helpers/notifyServerError');
+const { notifyServerError } = require('../helpers/notifyError');
 
 const commentsController = {};
 

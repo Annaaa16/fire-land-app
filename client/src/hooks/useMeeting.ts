@@ -1,4 +1,7 @@
-import { MutableRefObject, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+
+// types
+import { MutableRefObject } from 'react';
 
 const useMeeting = (
   ref: MutableRefObject<HTMLElement | null>,

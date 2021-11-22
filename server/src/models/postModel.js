@@ -1,5 +1,11 @@
 const mongoose = require('mongoose');
 
+const ReactionSchema = new mongoose.Schema({
+  _id: false,
+  userId: { type: String },
+  emotion: { type: String },
+});
+
 const PostSchema = new mongoose.Schema(
   {
     user: {
@@ -10,10 +16,7 @@ const PostSchema = new mongoose.Schema(
     content: {
       type: String,
     },
-    likes: {
-      type: Array,
-      default: [],
-    },
+    reactions: [ReactionSchema],
     photo: {
       type: String,
     },

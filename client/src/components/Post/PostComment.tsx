@@ -7,6 +7,9 @@ import Timeago from 'react-timeago';
 // types
 import { Comment } from '@/models/common';
 
+import { useGlobalContext } from '@/contexts/GlobalContext';
+import User from '../User';
+
 interface PostCommentProps {
   comment: Comment;
 }
@@ -14,18 +17,16 @@ interface PostCommentProps {
 function PostComment({ comment }: PostCommentProps) {
   const { content, user, createdAt } = comment;
 
+  const { visitWall } = useGlobalContext();
+
   return (
     <div className={clsx('flex mb-2')}>
-      <div className={clsx('h-8 w-8 mt-1 flex-shrink-0 mr-2')}>
-        <img
-          src={user?.avatar}
-          alt='Avatar'
-          className={clsx(
-            'w-full h-full rounded-full object-contain',
-            'cursor-pointer'
-          )}
-        />
-      </div>
+      <User
+        onHandleClick={() => visitWall(user._id)}
+        avatar={user?.avatar}
+        view='sm'
+        subClass='mr-2'
+      />
       <div className={clsx('flex-grow')}>
         <div
           className={clsx(
@@ -33,6 +34,7 @@ function PostComment({ comment }: PostCommentProps) {
             'bg-lt-input dark:bg-dk-input'
           )}>
           <h4
+            onClick={() => visitWall(user._id)}
             className={clsx(
               'inline-block font-bold mb-1.5 text-xs lg:text-sm-1 leading-4',
               'dark:text-white',

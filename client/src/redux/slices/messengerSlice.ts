@@ -8,7 +8,7 @@ import {
   MessengerInitState,
 } from '@/models/messenger';
 import { PayloadAction } from '@reduxjs/toolkit';
-import { addLoading, removeLoading } from '@/helpers/loadings';
+import { addLoading, removeLoading } from '@/helpers/reduxStateLoadings';
 
 const actions = {
   createMessage: 'createMessage',

@@ -21,7 +21,7 @@ import {
 import { HydrateResponse } from '@/models/common';
 
 import { filterMovies, filterTvShows } from '@/helpers/filterMovies';
-import { addLoading, removeLoading } from '@/helpers/loadings';
+import { addLoading, removeLoading } from '@/helpers/reduxStateLoadings';
 
 const movieCategoryKeys: MovieCategoryKeys = {
   popular: 'popular',

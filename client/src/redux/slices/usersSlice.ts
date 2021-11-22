@@ -17,7 +17,7 @@ import { FollowUserResponse, UsersInitState } from '@/models/users';
 // next redux wrapper
 import { HYDRATE } from 'next-redux-wrapper';
 
-import { addLoading, removeLoading } from '@/helpers/loadings';
+import { addLoading, removeLoading } from '@/helpers/reduxStateLoadings';
 
 const user = {
   _id: '',

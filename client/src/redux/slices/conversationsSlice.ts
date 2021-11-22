@@ -13,7 +13,7 @@ import {
 } from '@/models/conversations';
 import { PayloadAction } from '@reduxjs/toolkit';
 
-import { addLoading, removeLoading } from '@/helpers/loadings';
+import { addLoading, removeLoading } from '@/helpers/reduxStateLoadings';
 
 const actions = {
   createConversation: 'createConversation',

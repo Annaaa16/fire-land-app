@@ -18,14 +18,12 @@ export interface GetPostsPayload extends PaginationParams {
   user_id?: string;
 }
 
-export interface LikePostPayload {
+export interface ReactPostPayload {
   postId: string;
   userId: string;
-}
-
-export interface UnlikePostPayload {
-  postId: string;
-  userId: string;
+  isReact: boolean;
+  isUpdate: boolean;
+  emotion: string;
 }
 
 // === Responses ===
@@ -53,13 +51,7 @@ export interface DeletePostResponse {
   message: string;
 }
 
-export interface LikePostResponse {
-  success: boolean;
-  message: string;
-  post: Post;
-}
-
-export interface UnlikePostResponse {
+export interface ReactPostResponse {
   success: boolean;
   message: string;
   post: Post;

@@ -58,3 +58,7 @@ export const STATUS_CODES = {
   NOT_FOUND: 404,
   SERVER_ERROR: 500,
 };
+
+export const PREFIXES = {
+  BASE64_SVG: 'data:image/svg+xml;base64,',
+};

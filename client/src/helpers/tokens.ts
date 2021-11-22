@@ -7,9 +7,9 @@ import nookies, { parseCookies } from 'nookies';
 // types
 import { JwtPayload } from 'jwt-decode';
 import { GetServerSidePropsContext, NextPageContext } from 'next';
+import { RefreshTokenResponse } from '@/models/auth';
 
 import { COOKIES } from '@/constants';
-import { RefreshTokenResponse } from '@/models/auth';
 
 const tokens = {
   checkTokenValid: (ctx: NextPageContext | GetServerSidePropsContext) => {
