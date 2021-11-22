@@ -25,14 +25,16 @@ interface useReactionsProps {
   reaction?: Reaction;
 }
 
+const prefix = PREFIXES.BASE64_SVG;
+
 const emotions: { [key: string]: { type: string; icon: string } } = {
-  like: { type: 'like', icon: PREFIXES.BASE64_SVG + like },
-  love: { type: 'love', icon: PREFIXES.BASE64_SVG + love },
-  haha: { type: 'haha', icon: PREFIXES.BASE64_SVG + haha },
-  care: { type: 'care', icon: PREFIXES.BASE64_SVG + care },
-  wow: { type: 'wow', icon: PREFIXES.BASE64_SVG + wow },
-  sad: { type: 'sad', icon: PREFIXES.BASE64_SVG + sad },
-  angry: { type: 'angry', icon: PREFIXES.BASE64_SVG + angry },
+  like: { type: 'like', icon: prefix + like },
+  love: { type: 'love', icon: prefix + love },
+  haha: { type: 'haha', icon: prefix + haha },
+  care: { type: 'care', icon: prefix + care },
+  wow: { type: 'wow', icon: prefix + wow },
+  sad: { type: 'sad', icon: prefix + sad },
+  angry: { type: 'angry', icon: prefix + angry },
 };
 
 const useReactions = ({ postId, reaction, currentUser }: useReactionsProps) => {

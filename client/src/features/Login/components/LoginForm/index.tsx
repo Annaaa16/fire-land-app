@@ -68,7 +68,7 @@ function LoginForm() {
                   'peer-checked:bg-primary-v2 dark:peer-checked:bg-primary-v4'
                 )}>
                 <DoneIcon
-                  className={clsx('text-lt-cpn dark:text-dk-cpn !w-4')}
+                  className={clsx('text-white dark:text-dk-cpn !w-4')}
                 />
               </div>
             </div>
@@ -80,7 +80,7 @@ function LoginForm() {
         <span
           className={clsx(
             'text-gray font-bold text-xs lg:text-sm',
-            'text-lt-gray dark:text-dk-gray',
+            'text-gray-lt dark:text-gray-dk',
             'transition-all',
             'cursor-pointer',
             'hover:text-primary-v2 dark:hover:text-primary-v4'

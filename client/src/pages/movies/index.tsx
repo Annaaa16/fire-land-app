@@ -95,7 +95,7 @@ function Movies() {
 export default Movies;
 
 export const getServerSideProps: GetServerSideProps =
-  wrapper.getServerSideProps((store) => async (ctx) => {
+  wrapper.getServerSideProps((store) => async () => {
     const { getMovies } = moviesApi();
 
     const { popular, upcoming, topRated, nowPlaying } = tmdbMoviesEndpoints;

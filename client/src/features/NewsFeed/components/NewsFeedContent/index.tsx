@@ -7,7 +7,7 @@ import { LIMITS } from '@/constants';
 import { usePostsSelector } from '@/redux/selectors';
 import { postsActions } from '@/redux/slices/postsSlice';
 import { actions } from '@/redux/slices/postsSlice';
-import useMeeting from '@/hooks/useMeeting';
+import useIntersectionObserver from '@/hooks/useIntersectionObserver';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 import Post from '@/components/Post';
@@ -21,16 +21,16 @@ function NewsFeedContent() {
 
   const dispatch = useStoreDispatch();
 
-  const isMeeting = useMeeting(loaderRef, '500px');
+  const isIntersecting = useIntersectionObserver(loaderRef, '500px');
 
   // Get new posts when scrolled to bottom
   useEffect(() => {
-    if (isMeeting && nextPage && !loadings.includes(actions.getPosts)) {
+    if (isIntersecting && nextPage && !loadings.includes(actions.getPosts)) {
       dispatch(
         postsActions.getPostsRequest({ page: nextPage, limit: LIMITS.POSTS })
       );
     }
-  }, [total, isMeeting, nextPage, loadings, dispatch]);
+  }, [total, isIntersecting, nextPage, loadings, dispatch]);
 
   return (
     <div className={clsx('w-full lg:w-2/3 lg:mr-5')}>

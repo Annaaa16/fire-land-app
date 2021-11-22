@@ -5,5 +5,9 @@
     "@next/next/no-document-import-in-page": "off",
     "@next/next/no-img-element": "off",
     "react/no-unescaped-entities": "off"
+    // "no-unused-vars": [
+    //   "warn",
+    //   { "vars": "all", "args": "after-used", "ignoreRestSiblings": false }
+    // ]
   }
 }

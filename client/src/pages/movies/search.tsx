@@ -13,7 +13,7 @@ import { moviesApi } from '@/apis/moviesApi';
 import { useMoviesSelector } from '@/redux/selectors';
 import { tmdbCategories } from '@/configs/tmdb';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
-import useMeeting from '@/hooks/useMeeting';
+import useIntersectionObserver from '@/hooks/useIntersectionObserver';
 
 import MainLayout from '@/features/Movies/layouts/MainLayout';
 import MoviesItem from '@/features/Movies/components/MoviesItem';
@@ -26,11 +26,11 @@ function Search() {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const router = useRouter();
-  const isMeeting = useMeeting(scrollRef, '500px');
+  const isIntersecting = useIntersectionObserver(scrollRef, '500px');
   const dispatch = useStoreDispatch();
 
   useEffect(() => {
-    if (isMeeting && movies.length < totalMovies && page < totalPages) {
+    if (isIntersecting && movies.length < totalMovies && page < totalPages) {
       dispatch(
         moviesActions.searchMoviesRequest({
           page: page + 1,
@@ -38,7 +38,7 @@ function Search() {
         })
       );
     }
-  }, [isMeeting, page, movies.length, totalMovies, totalPages, dispatch]);
+  }, [isIntersecting, page, movies.length, totalMovies, totalPages, dispatch]);
 
   return (
     <MainLayout title={'Search - ' + router.query.query}>

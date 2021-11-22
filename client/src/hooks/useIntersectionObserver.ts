@@ -3,11 +3,11 @@ import { useEffect, useState } from 'react';
 // types
 import { MutableRefObject } from 'react';
 
-const useMeeting = (
+const useIntersectionObserver = (
   ref: MutableRefObject<HTMLElement | null>,
   rootMargin = '0px'
 ) => {
-  const [isMeeting, setIsMeeting] = useState(false);
+  const [isIntersecting, setIsIntersecting] = useState(false);
 
   useEffect(() => {
     const options = {
@@ -15,19 +15,17 @@ const useMeeting = (
     };
 
     const observer = new IntersectionObserver(([entry]) => {
-      setIsMeeting(entry.isIntersecting);
+      setIsIntersecting(entry.isIntersecting);
     }, options);
 
     if (ref.current) {
       observer.observe(ref.current);
     }
 
-    return () => {
-      observer.disconnect();
-    };
+    return () => observer.disconnect();
   }, [ref, rootMargin]);
 
-  return isMeeting;
+  return isIntersecting;
 };
 
-export default useMeeting;
+export default useIntersectionObserver;

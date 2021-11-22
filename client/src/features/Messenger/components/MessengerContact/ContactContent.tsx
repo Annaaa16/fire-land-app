@@ -49,7 +49,7 @@ function ContactContent() {
             placeholder='Search Messenger'
             className={clsx('flex-1 outline-none px-2 py-3', 'bg-transparent')}
           />
-          <SearchIcon className={clsx('text-lt-gray', 'cursor-pointer')} />
+          <SearchIcon className={clsx('text-gray-lt', 'cursor-pointer')} />
         </div>
 
         <div className={clsx('flex items-center justify-center mt-6')}>

@@ -24,7 +24,7 @@ function NewsFeedMembers() {
         <span
           className={clsx(
             'text-xs md:text-sm',
-            'text-dk-gray dark:text-dk-text'
+            'text-gray-dk dark:text-dk-text'
           )}>
           Total members:
         </span>
