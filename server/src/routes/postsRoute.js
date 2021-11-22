@@ -1,13 +1,14 @@
 const express = require('express');
 
 const verifyToken = require('../middlewares/authMiddleware');
+const verifyMongooseId = require('../middlewares/mongooseMiddleware');
 const upload = require('../middlewares/uploadMiddleware');
 
 const postsController = require('../controllers/postsController');
 
 const router = express.Router();
 
-// @route POST /api/posts
+// @route POST /api/posts/create
 // @desc Create new post
 // @access Private
 router.post(
@@ -17,7 +18,7 @@ router.post(
   postsController.createPost
 );
 
-// @route GET /api/posts
+// @route GET /api/posts?page=...&limit=...
 // @desc Get all posts or limit posts
 // @access Private
 router.get('/', verifyToken, postsController.getPosts);
@@ -28,6 +29,7 @@ router.get('/', verifyToken, postsController.getPosts);
 router.put(
   '/:id',
   verifyToken,
+  verifyMongooseId,
   upload.single('file'),
   postsController.updatePost
 );
@@ -35,16 +37,21 @@ router.put(
 // @route DELETE /api/posts/:id
 // @desc Delete post
 // @access Private
-router.delete('/:id', verifyToken, postsController.deletePost);
+router.delete(
+  '/:id',
+  verifyToken,
+  verifyMongooseId,
+  postsController.deletePost
+);
 
-// @route PATCH /api/posts/:id/like
-// @desc Like post
+// @route PATCH /api/posts/:id/reactions
+// @desc React or unreact to a post
 // @access Private
-router.patch('/:id/like', verifyToken, postsController.likePost);
-
-// @route PATCH /api/posts/:id/unlike
-// @desc Unlike post
-// @access Private
-router.patch('/:id/unlike', verifyToken, postsController.unlikePost);
+router.patch(
+  '/:id/reactions',
+  verifyToken,
+  verifyMongooseId,
+  postsController.reactPost
+);
 
 module.exports = router;

@@ -1,6 +1,7 @@
 const express = require('express');
 
 const verifyToken = require('../middlewares/authMiddleware');
+const verifyMongooseId = require('../middlewares/mongooseMiddleware');
 const conversationsController = require('../controllers/conversationsController');
 
 const router = express.Router();
@@ -21,6 +22,7 @@ router.post('/', verifyToken, conversationsController.getConversations);
 router.delete(
   '/:conversationId',
   verifyToken,
+  verifyMongooseId,
   conversationsController.deleteConversation
 );
 
