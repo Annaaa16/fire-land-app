@@ -35,7 +35,7 @@ function SmallTooltip(props: SmallTooltipProps) {
       <Icon
         className={clsx(
           '!text-2xl',
-          isActive ? 'text-white' : 'text-lt-gray dark:text-dk-gray',
+          isActive ? 'text-white' : 'text-gray-lt dark:text-gray-dk',
           !isActive &&
             'group-hover:text-primary-v2 dark:group-hover:text-primary-v4'
         )}

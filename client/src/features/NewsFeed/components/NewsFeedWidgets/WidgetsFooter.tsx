@@ -7,97 +7,97 @@ function WidgetsFooter() {
       <li
         className={clsx(
           'text-xs leading-5',
-          'text-lt-gray',
+          'text-gray-lt',
           'cursor-pointer',
           'hover:underline'
         )}>
         <a href='#'>About</a>
       </li>
-      <li className={clsx('text-lg mx-1 -mt-1.5', 'text-lt-gray')}>.</li>
+      <li className={clsx('text-lg mx-1 -mt-1.5', 'text-gray-lt')}>.</li>
       <li
         className={clsx(
           'text-xs leading-5',
-          'text-lt-gray',
+          'text-gray-lt',
           'cursor-pointer',
           'hover:underline'
         )}>
         <a href='#'>Help</a>
       </li>
-      <li className={clsx('text-lg mx-1 -mt-1.5', 'text-lt-gray')}>.</li>
+      <li className={clsx('text-lg mx-1 -mt-1.5', 'text-gray-lt')}>.</li>
       <li
         className={clsx(
           'text-xs leading-5',
-          'text-lt-gray',
+          'text-gray-lt',
           'cursor-pointer',
           'hover:underline'
         )}>
         <a href='#'>Press</a>
       </li>
-      <li className={clsx('text-lg mx-1 -mt-1.5', 'text-lt-gray')}>.</li>
+      <li className={clsx('text-lg mx-1 -mt-1.5', 'text-gray-lt')}>.</li>
       <li
         className={clsx(
           'text-xs leading-5',
-          'text-lt-gray',
+          'text-gray-lt',
           'cursor-pointer',
           'hover:underline'
         )}>
         <a href='#'>API</a>
       </li>
-      <li className={clsx('text-lg mx-1 -mt-1.5', 'text-lt-gray')}>.</li>
+      <li className={clsx('text-lg mx-1 -mt-1.5', 'text-gray-lt')}>.</li>
       <li
         className={clsx(
           'text-xs leading-5',
-          'text-lt-gray',
+          'text-gray-lt',
           'cursor-pointer',
           'hover:underline'
         )}>
         <a href='#'>Jobs</a>
       </li>
-      <li className={clsx('text-lg mx-1 -mt-1.5', 'text-lt-gray')}>.</li>
+      <li className={clsx('text-lg mx-1 -mt-1.5', 'text-gray-lt')}>.</li>
       <li
         className={clsx(
           'text-xs leading-5',
-          'text-lt-gray',
+          'text-gray-lt',
           'cursor-pointer',
           'hover:underline'
         )}>
         <a href='#'>Privacy</a>
       </li>
-      <li className={clsx('text-lg mx-1 -mt-1.5', 'text-lt-gray')}>.</li>
+      <li className={clsx('text-lg mx-1 -mt-1.5', 'text-gray-lt')}>.</li>
       <li
         className={clsx(
           'text-xs leading-5',
-          'text-lt-gray',
+          'text-gray-lt',
           'cursor-pointer',
           'hover:underline'
         )}>
         <a href='#'>Terms</a>
       </li>
-      <li className={clsx('text-lg mx-1 -mt-1.5', 'text-lt-gray')}>.</li>
+      <li className={clsx('text-lg mx-1 -mt-1.5', 'text-gray-lt')}>.</li>
       <li
         className={clsx(
           'text-xs leading-5',
-          'text-lt-gray',
+          'text-gray-lt',
           'cursor-pointer',
           'hover:underline'
         )}>
         <a href='#'>Locations</a>
       </li>
-      <li className={clsx('text-lg mx-1 -mt-1.5', 'text-lt-gray')}>.</li>
+      <li className={clsx('text-lg mx-1 -mt-1.5', 'text-gray-lt')}>.</li>
       <li
         className={clsx(
           'text-xs leading-5',
-          'text-lt-gray',
+          'text-gray-lt',
           'cursor-pointer',
           'hover:underline'
         )}>
         <a href='#'>Hashtags</a>
       </li>
-      <li className={clsx('text-lg mx-1 -mt-1.5', 'text-lt-gray')}>.</li>
+      <li className={clsx('text-lg mx-1 -mt-1.5', 'text-gray-lt')}>.</li>
       <li
         className={clsx(
           'text-xs leading-5',
-          'text-lt-gray',
+          'text-gray-lt',
           'cursor-pointer',
           'hover:underline'
         )}>

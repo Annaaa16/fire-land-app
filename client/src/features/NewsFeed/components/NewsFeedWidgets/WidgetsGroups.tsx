@@ -17,7 +17,7 @@ function WidgetsGroups() {
         <span
           className={clsx(
             'text-sm-1 font-bold',
-            'text-lt-gray',
+            'text-gray-lt',
             'transition-all',
             'cursor-pointer',
             'lg:hover:text-primary-v1-hv lg:dark:hover:text-primary-v4-hv'
@@ -42,7 +42,7 @@ function WidgetsGroups() {
               <div
                 className={clsx(
                   'text-xs',
-                  'text-lt-gray',
+                  'text-gray-lt',
                   'cursor-pointer',
                   'lg:hover:underline'
                 )}>

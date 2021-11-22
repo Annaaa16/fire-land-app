@@ -11,7 +11,7 @@ function ContactHeader() {
         <h1 className={clsx('font-bold text-xl mb-3', 'dark:text-white')}>
           Recent
         </h1>
-        <p className={clsx('text-sm', 'text-lt-gray')}>
+        <p className={clsx('text-sm', 'text-gray-lt')}>
           Chat from your friends!
         </p>
         <div
@@ -23,7 +23,7 @@ function ContactHeader() {
           <GridViewIcon
             className={clsx(
               '!text-2xl',
-              'text-lt-gray',
+              'text-gray-lt',
               'group-hover:text-gray-500 dark:group-hover:text-white'
             )}
           />
