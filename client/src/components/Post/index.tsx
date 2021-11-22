@@ -22,19 +22,20 @@ function Post(props: PostType & Pagination) {
     _id,
     content,
     photo,
-    likes,
+    reactions,
     nextPage,
     total,
     commentCount,
     createdAt,
-    user: { username, _id: userId, avatar, followers },
+    user,
   } = props;
+  const { username, _id: userId, avatar, followers } = user;
 
   const [isOpenComments, setIsOpenComments] = useState<boolean>(false);
   const dispatch = useStoreDispatch();
 
   const handleFetchComments = () => {
-    // Clear all previous comments before comment
+    // Clear all previous comments before fetch comments
     if (!isOpenComments) {
       dispatch(commentsActions.clearComments(_id));
     }
@@ -52,7 +53,7 @@ function Post(props: PostType & Pagination) {
     );
   };
 
-  const getMoreComments = () => {
+  const handleGetMoreComments = () => {
     if (isOpenComments && nextPage) {
       dispatch(
         commentsActions.getCommentsRequest({
@@ -84,10 +85,10 @@ function Post(props: PostType & Pagination) {
       <PostContent content={content} photo={photo} />
 
       <div className={clsx('px-2 md:px-4 pt-3.5 pb-2')}>
-        <PostDetail likes={likes} commentCount={commentCount} />
+        <PostDetail reactions={reactions} commentCount={commentCount} />
         <PostActions
           postId={_id}
-          likes={likes}
+          reactions={reactions}
           onFetchComments={handleFetchComments}
         />
         <PostSender postId={_id} onSetIsOpenComments={setIsOpenComments} />
@@ -98,7 +99,7 @@ function Post(props: PostType & Pagination) {
         />
         {nextPage && isOpenComments && (
           <div
-            onClick={getMoreComments}
+            onClick={handleGetMoreComments}
             className={clsx(
               'font-bold text-xs mt-3 mb-2',
               'dark:text-white',
