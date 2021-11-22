@@ -1,4 +1,4 @@
-import { useRef, useLayoutEffect } from 'react';
+import { useRef } from 'react';
 
 // clsx
 import clsx from 'clsx';
@@ -10,6 +10,7 @@ import { nanoid } from 'nanoid';
 import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
 
 import { useMessengerSelector, useUsersSelector } from '@/redux/selectors';
+import useIsomorphicLayoutEffect from '@/hooks/useIsomorphicLayoutEffect ';
 
 import ChatFriend from './ChatFriend';
 import ChatUser from './ChatUser';
@@ -21,7 +22,7 @@ function ChatContent() {
   const scrollRef = useRef<OverlayScrollbarsComponent>(null);
 
   // Auto scroll to bottom
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const scrollNode = scrollRef.current?.osInstance()?.getElements('viewport');
 
     scrollNode.scrollTo({ top: scrollNode.scrollHeight, behavior: 'smooth' });

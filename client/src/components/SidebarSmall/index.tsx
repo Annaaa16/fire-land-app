@@ -1,5 +1,3 @@
-import { ReactNode } from 'react';
-
 // clsx
 import clsx from 'clsx';
 

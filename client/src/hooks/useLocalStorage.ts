@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useLayoutEffect } from 'react';
 
 const useLocalStorage = (
   key: string,
   initialValue?: string,
-  useCustomEffect = useEffect
+  useCustomEffect = useLayoutEffect
 ) => {
   const [storedValue, setStoredValue] = useState<string>('');
 

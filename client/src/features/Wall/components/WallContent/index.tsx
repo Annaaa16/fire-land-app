@@ -8,7 +8,7 @@ import { usePostsSelector } from '@/redux/selectors';
 import { LIMITS } from '@/constants';
 import { postsActions } from '@/redux/slices/postsSlice';
 import { actions } from '@/redux/slices/postsSlice';
-import useMeeting from '@/hooks/useMeeting';
+import useIntersectionObserver from '@/hooks/useIntersectionObserver';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 import Post from '@/components/Post';
@@ -22,13 +22,13 @@ function WallContent() {
   const router = useRouter();
 
   const dispatch = useStoreDispatch();
-  const isMeeting = useMeeting(loaderRef, '500px');
+  const isIntersecting = useIntersectionObserver(loaderRef, '500px');
 
   // Get new posts when scrolled to bottom
   useEffect(() => {
     const { id } = router.query;
 
-    if (isMeeting && nextPage && id) {
+    if (isIntersecting && nextPage && id) {
       dispatch(
         postsActions.getPostsRequest({
           user_id: id as string,
@@ -37,7 +37,7 @@ function WallContent() {
         })
       );
     }
-  }, [total, isMeeting, router.query, nextPage, dispatch]);
+  }, [total, isIntersecting, router.query, nextPage, dispatch]);
 
   return (
     <div className={clsx('w-full lg:w-2/3')}>

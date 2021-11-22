@@ -38,16 +38,16 @@ function GlobalProvider({
   children,
   currentUserResponse,
 }: GlobalProviderProps) {
+  const { conversations } = useConversationsSelector();
+  const { currentUser } = useUsersSelector();
+
+  const [isShowSenderArea, setIsShowSenderArea] = useState<boolean>(false);
+
   const { storedValue: theme, setValue: toggleTheme } = useLocalStorage(
     LOCAL_STORAGE.THEME_KEY,
     LOCAL_STORAGE.LIGHT_THEME_VALUE,
     useIsomorphicLayoutEffect
   );
-
-  const { conversations } = useConversationsSelector();
-  const { currentUser } = useUsersSelector();
-
-  const [isShowSenderArea, setIsShowSenderArea] = useState<boolean>(false);
 
   const dispatch = useStoreDispatch();
   const router = useRouter();
