@@ -6,19 +6,18 @@ import {
   DeletePostResponse,
   UpdatePostResponse,
   GetPostsPayload,
-  UnlikePostPayload,
-  LikePostPayload,
+  ReactPostPayload,
 } from '@/models/posts';
 import { AxiosResponse } from 'axios';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { UpdatePostPayload } from '@/models/posts';
 
-import { postsActions } from '../slices/postsSlice';
 import { DELAYS } from '@/constants';
+import { postsActions } from '../slices/postsSlice';
 import { postsApiClient } from '@/apis/postsApi';
 import { notifySagaError } from '@/helpers/notifyError';
 
-const { createPost, getPosts, updatePost, deletePost, likePost, unlikePost } =
+const { createPost, getPosts, updatePost, deletePost, reactPost } =
   postsApiClient();
 
 function* handleCreatePostRequest(action: PayloadAction<FormData>) {
@@ -85,33 +84,14 @@ function* handleDeletePostRequest(action: PayloadAction<string>) {
   }
 }
 
-function* handleLikePostRequest(action: PayloadAction<LikePostPayload>) {
+function* handleReactPostRequest(action: PayloadAction<ReactPostPayload>) {
   try {
-    const { postId } = action.payload;
+    yield put(postsActions.reactPostSuccess(action.payload));
 
-    yield put(postsActions.likePostSuccess(action.payload));
-
-    yield delay(DELAYS.DOUBLE); // Block spam like button
-
-    yield call(likePost, postId);
+    yield call(reactPost, action.payload);
   } catch (error) {
-    notifySagaError(postsActions.likePostFailure, error);
-    yield put(postsActions.likePostFailure());
-  }
-}
-
-function* handleUnlikePostRequest(action: PayloadAction<UnlikePostPayload>) {
-  try {
-    const { postId } = action.payload;
-
-    yield put(postsActions.unlikePostSuccess(action.payload));
-
-    yield delay(DELAYS.DOUBLE); // Block spam like button
-
-    yield call(unlikePost, postId);
-  } catch (error) {
-    notifySagaError(postsActions.unlikePostFailure, error);
-    yield put(postsActions.unlikePostFailure());
+    notifySagaError(postsActions.reactPostFailure, error);
+    yield put(postsActions.reactPostFailure());
   }
 }
 
@@ -120,8 +100,7 @@ function* postsSaga() {
   yield takeLatest(postsActions.getPostsRequest, handleGetPostsRequest);
   yield takeLatest(postsActions.updatePostRequest, handleUpdatePostRequest);
   yield takeLatest(postsActions.deletePostRequest, handleDeletePostRequest);
-  yield takeLatest(postsActions.likePostRequest, handleLikePostRequest);
-  yield takeLatest(postsActions.unlikePostRequest, handleUnlikePostRequest);
+  yield takeLatest(postsActions.reactPostRequest, handleReactPostRequest);
 }
 
 export default postsSaga;

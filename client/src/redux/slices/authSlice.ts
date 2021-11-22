@@ -13,7 +13,7 @@ import {
   RegisterResponse,
 } from '@/models/auth';
 
-import { addLoading, removeLoading } from '@/helpers/loadings';
+import { addLoading, removeLoading } from '@/helpers/reduxStateLoadings';
 
 const actions = {
   login: 'login',

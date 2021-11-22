@@ -13,8 +13,7 @@ import {
   DeletePostResponse,
   PostsInitState,
   UpdatePostResponse,
-  UnlikePostPayload,
-  LikePostPayload,
+  ReactPostPayload,
   GetPostsPayload,
   UpdatePostPayload,
 } from '@/models/posts';
@@ -22,15 +21,14 @@ import { PayloadAction } from '@reduxjs/toolkit';
 import { CreateCommentResponse, GetCommentsResponse } from '@/models/comments';
 import { HydrateResponse } from '@/models/common';
 
-import { addLoading, removeLoading } from '@/helpers/loadings';
+import { addLoading, removeLoading } from '@/helpers/reduxStateLoadings';
 
 const actions = {
   createPost: 'createPost',
   getPosts: 'getPosts',
   updatePost: 'updatePost',
   deletePost: 'deletePost',
-  likePost: 'likePost',
-  unlikePost: 'unlikePost',
+  reactPost: 'reactPost',
 };
 
 const initialState: PostsInitState = {
@@ -116,40 +114,34 @@ const postsSlice = createSlice({
       removeLoading(state, actions.deletePost);
     },
 
-    likePostRequest: (state, action: PayloadAction<LikePostPayload>) => {
-      addLoading(state, actions.likePost);
+    reactPostRequest: (state, action: PayloadAction<ReactPostPayload>) => {
+      addLoading(state, actions.reactPost);
     },
-    likePostSuccess: (state, action: PayloadAction<LikePostPayload>) => {
-      const { userId, postId } = action.payload;
+    reactPostSuccess: (state, action: PayloadAction<ReactPostPayload>) => {
+      const { userId, isReact, isUpdate, postId, emotion } = action.payload;
 
       state.posts.forEach((post) => {
         if (post._id === postId) {
-          post.likes[post.likes.length] = userId;
+          if (isReact) {
+            if (isUpdate) {
+              post.reactions = post.reactions.map((reaction) =>
+                reaction.userId === userId ? { userId, emotion } : reaction
+              );
+            } else {
+              post.reactions[post.reactions.length] = { userId, emotion };
+            }
+          } else {
+            post.reactions = post.reactions.filter(
+              (reaction) => reaction.userId !== userId
+            );
+          }
         }
       });
 
-      removeLoading(state, actions.likePost);
+      removeLoading(state, actions.reactPost);
     },
-    likePostFailure: (state) => {
-      removeLoading(state, actions.likePost);
-    },
-
-    unlikePostRequest: (state, action: PayloadAction<UnlikePostPayload>) => {
-      addLoading(state, actions.unlikePost);
-    },
-    unlikePostSuccess: (state, action: PayloadAction<UnlikePostPayload>) => {
-      const { userId, postId } = action.payload;
-
-      state.posts.forEach(
-        (post) =>
-          post._id === postId &&
-          post.likes.splice(post.likes.indexOf(userId), 1)
-      );
-
-      removeLoading(state, actions.unlikePost);
-    },
-    unlikePostFailure: (state) => {
-      removeLoading(state, actions.unlikePost);
+    reactPostFailure: (state) => {
+      removeLoading(state, actions.reactPost);
     },
 
     setUpdatePost: (state, action: PayloadAction<string | null>) => {
