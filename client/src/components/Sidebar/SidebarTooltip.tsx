@@ -40,7 +40,7 @@ function SidebarTooltip(props: SidebarTooltipProps) {
         />
         <span
           className={clsx(
-            'ml-3 font-bold',
+            'ml-3 font-semibold',
             isActive ? 'text-white' : 'dark:text-white',
             'transition-all duration-250 ease-out',
             !isActive && 'group-hover:translate-x-1'

@@ -13,12 +13,12 @@ function WidgetsSuggest() {
         className={clsx(
           'flex items-center justify-between pb-3.5 border-b border-lt-line dark:border-dk-line'
         )}>
-        <h3 className={clsx('font-bold', 'dark:text-white')}>
+        <h3 className={clsx('font-semibold', 'dark:text-white')}>
           Suggestions For You
         </h3>
         <span
           className={clsx(
-            'text-sm-1 font-bold',
+            'text-sm-1 font-semibold',
             'text-gray-lt',
             'transition-all',
             'cursor-pointer',
@@ -34,7 +34,7 @@ function WidgetsSuggest() {
             <div className={clsx('ml-4')}>
               <div
                 className={clsx(
-                  'font-bold mb-1',
+                  'font-semibold mb-1',
                   'dark:text-white',
                   'cursor-pointer',
                   'lg:hover:underline'
@@ -54,7 +54,7 @@ function WidgetsSuggest() {
           </div>
           <span
             className={clsx(
-              'text-sm-1 font-bold',
+              'text-sm-1 font-semibold',
               'text-primary-v1 dark:text-primary-v4',
               'transition-all ease-out',
               'cursor-pointer',

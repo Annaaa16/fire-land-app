@@ -45,7 +45,7 @@ function WallCover() {
             <h1
               className={clsx(
                 'text-base mb-1 md:text-lg leading-normal',
-                'font-bold'
+                'font-semibold'
               )}>
               {userProfile.username}
             </h1>

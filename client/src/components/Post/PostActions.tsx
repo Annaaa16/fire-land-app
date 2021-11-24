@@ -86,7 +86,7 @@ function PostActions(props: PostActionsProps) {
           )}
           <div
             className={clsx(
-              'font-bold text-xs md:text-sm capitalize',
+              'font-semibold text-xs md:text-sm capitalize',
               reaction && selectedEmotion?.type === emotions.like.type
                 ? 'text-[#2d86ff]'
                 : selectedEmotion?.type === emotions.love.type
@@ -127,7 +127,7 @@ function PostActions(props: PostActionsProps) {
         />
         <span
           className={clsx(
-            'font-bold text-xs md:text-sm',
+            'font-semibold text-xs md:text-sm',
             'text-gray',
             'transition-all ease-out',
             'dark:group-hover:text-primary-v4'
@@ -152,7 +152,7 @@ function PostActions(props: PostActionsProps) {
         />
         <span
           className={clsx(
-            'font-bold text-xs md:text-sm',
+            'font-semibold text-xs md:text-sm',
             'text-gray',
             'transition-all ease-out',
             'dark:group-hover:text-primary-v4'

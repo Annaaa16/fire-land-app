@@ -63,12 +63,12 @@ function ContactOnline({ friendId }: ContactOnlineProps) {
       )}>
       <User view='sm' />
       <div className={clsx('ml-3 max-w-[60%]')}>
-        <span className={clsx('font-bold', 'dark:text-white')}>
+        <span className={clsx('font-semibold', 'dark:text-white')}>
           {onlineFriend?.username}
         </span>
         <p
           className={clsx(
-            'font-bold text-xs mt-1 truncate',
+            'font-semibold text-xs mt-1 truncate',
             'text-primary-v1 dark:text-primary-v4'
           )}>
           Hi I am Josephin, can you help me to find best chat app?.

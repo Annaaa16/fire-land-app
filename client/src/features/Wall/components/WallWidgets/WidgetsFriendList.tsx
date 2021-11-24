@@ -40,7 +40,7 @@ function WidgetsFriendList() {
         'bg-white dark:bg-dk-cpn'
       )}>
       <div className={clsx('flex items-center justify-between')}>
-        <h2 className={clsx('text-base font-bold', 'dark:text-white')}>
+        <h2 className={clsx('text-base font-semibold', 'dark:text-white')}>
           Friends
         </h2>
         <Link href='#'>

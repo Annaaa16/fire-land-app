@@ -13,7 +13,7 @@ import { useUsersSelector } from '@/redux/selectors';
 import { actions } from '@/redux/slices/usersSlice';
 
 import User from '@/components/User';
-import Loading from '../Loading';
+import Spinner from '../Spinner';
 
 interface PostHeaderBoxProps {
   userId: string;
@@ -60,7 +60,7 @@ function PostHeaderBox(props: PostHeaderBoxProps) {
             <h2
               onClick={() => visitWall(userId)}
               className={clsx(
-                'font-bold text-lg mb-4 ml-0.5',
+                'font-semibold text-lg mb-4 ml-0.5',
                 'cursor-pointer',
                 'hover:underline'
               )}>
@@ -106,14 +106,14 @@ function PostHeaderBox(props: PostHeaderBoxProps) {
                 )}
                 <span
                   className={clsx(
-                    'font-bold text-sm-1',
+                    'font-semibold text-sm-1',
                     !followings.includes(userId) && 'text-white'
                   )}>
                   {followings.includes(userId) ? 'Unfriend' : 'Add Friend'}
                 </span>
               </>
             ) : (
-              <Loading />
+              <Spinner />
             )}
           </button>
 
@@ -125,7 +125,9 @@ function PostHeaderBox(props: PostHeaderBoxProps) {
               'hover:bg-gray-300 dark:hover:bg-dk-tooltip'
             )}>
             <ChatIcon className={clsx('!text-lg')} />
-            <span className={clsx('font-bold ml-1 text-sm-1')}>Message</span>
+            <span className={clsx('font-semibold ml-1 text-sm-1')}>
+              Message
+            </span>
           </button>
 
           <button

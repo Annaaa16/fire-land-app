@@ -53,7 +53,7 @@ function PostHeader(props: PostHeaderProps) {
           <span
             onClick={() => visitWall(userId)}
             className={clsx(
-              'font-bold',
+              'font-semibold',
               'dark:text-white',
               'cursor-pointer',
               'lg:hover:underline'

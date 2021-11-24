@@ -58,7 +58,11 @@ function SenderPhoto(props: SenderPhotoProps) {
               className={clsx('flex-center rounded-full p-1.5', 'bg-gray-200')}>
               <AddPhotoAlternateIcon className={clsx('!text-[28px]')} />
             </div>
-            <h3 className={clsx('font-bold mt-2 mb-0.5', 'dark:text-gray-200')}>
+            <h3
+              className={clsx(
+                'font-semibold mt-2 mb-0.5',
+                'dark:text-gray-200'
+              )}>
               Add Photo/Videos
             </h3>
             <p className={clsx('text-xs', 'dark:text-gray-200')}>

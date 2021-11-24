@@ -52,7 +52,7 @@ function Auth(props: AuthProps) {
         <div className={clsx('flex-center flex-col text-center mb-8 lg:mb-0')}>
           <h3
             className={clsx(
-              'font-bold text-xl lg:text-2xl mb-5',
+              'font-semibold text-xl lg:text-2xl mb-5',
               'text-white'
             )}>
             WELCOME TO
@@ -96,7 +96,7 @@ function Auth(props: AuthProps) {
             )}
             alt='Label'
           />
-          <h3 className={clsx('font-bold text-2xl', 'dark:text-white')}>
+          <h3 className={clsx('font-semibold text-2xl', 'dark:text-white')}>
             {title}
           </h3>
 
@@ -105,7 +105,7 @@ function Auth(props: AuthProps) {
             <span
               onClick={onRedirect}
               className={clsx(
-                'font-bold',
+                'font-semibold',
                 'text-primary-v2 dark:text-primary-v4',
                 'cursor-pointer'
               )}>

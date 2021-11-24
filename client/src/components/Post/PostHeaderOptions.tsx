@@ -59,7 +59,7 @@ function PostHeaderOptions(props: PostHeaderOptionsProps) {
         <PushPinOutlinedIcon className={clsx('dark:text-white')} />
         <span
           className={clsx(
-            'ml-1.5 font-bold text-xs md:text-sm',
+            'ml-1.5 font-semibold text-xs md:text-sm',
             'dark:text-white'
           )}>
           Pin post
@@ -75,7 +75,7 @@ function PostHeaderOptions(props: PostHeaderOptionsProps) {
         <BookmarksOutlinedIcon className={clsx('dark:text-white')} />
         <span
           className={clsx(
-            'ml-1.5 font-bold text-xs md:text-sm',
+            'ml-1.5 font-semibold text-xs md:text-sm',
             'dark:text-white'
           )}>
           Save post
@@ -99,7 +99,7 @@ function PostHeaderOptions(props: PostHeaderOptionsProps) {
             <EditOutlinedIcon className={clsx('dark:text-white')} />
             <span
               className={clsx(
-                'ml-1.5 font-bold text-xs md:text-sm',
+                'ml-1.5 font-semibold text-xs md:text-sm',
                 'dark:text-white'
               )}>
               Edit post
@@ -115,7 +115,7 @@ function PostHeaderOptions(props: PostHeaderOptionsProps) {
             <PeopleOutlinedIcon className={clsx('dark:text-white')} />
             <span
               className={clsx(
-                'ml-1.5 font-bold text-xs md:text-sm',
+                'ml-1.5 font-semibold text-xs md:text-sm',
                 'dark:text-white'
               )}>
               Edit audience
@@ -133,7 +133,7 @@ function PostHeaderOptions(props: PostHeaderOptionsProps) {
         <NotificationsOffOutlinedIcon className={clsx('dark:text-white')} />
         <span
           className={clsx(
-            'ml-1.5 font-bold text-xs md:text-sm',
+            'ml-1.5 font-semibold text-xs md:text-sm',
             'dark:text-white'
           )}>
           Turn off notification for this post
@@ -149,7 +149,7 @@ function PostHeaderOptions(props: PostHeaderOptionsProps) {
         <HideImageOutlinedIcon className={clsx('dark:text-white')} />
         <span
           className={clsx(
-            'ml-1.5 font-bold text-xs md:text-sm',
+            'ml-1.5 font-semibold text-xs md:text-sm',
             'dark:text-white'
           )}>
           Hide post
@@ -166,7 +166,7 @@ function PostHeaderOptions(props: PostHeaderOptionsProps) {
           <EventNoteOutlinedIcon className={clsx('dark:text-white')} />
           <span
             className={clsx(
-              'ml-1.5 font-bold text-xs md:text-sm',
+              'ml-1.5 font-semibold text-xs md:text-sm',
               'dark:text-white'
             )}>
             Edit date
@@ -188,7 +188,7 @@ function PostHeaderOptions(props: PostHeaderOptionsProps) {
         <ArchiveOutlinedIcon className={clsx('dark:text-white')} />
         <span
           className={clsx(
-            'ml-1.5 font-bold text-xs md:text-sm',
+            'ml-1.5 font-semibold text-xs md:text-sm',
             'dark:text-white'
           )}>
           Move to archive
@@ -206,7 +206,7 @@ function PostHeaderOptions(props: PostHeaderOptionsProps) {
           <DeleteOutlineOutlinedIcon className={clsx('dark:text-white')} />
           <span
             className={clsx(
-              'ml-1.5 font-bold text-xs md:text-sm',
+              'ml-1.5 font-semibold text-xs md:text-sm',
               'dark:text-white'
             )}>
             Move to trash

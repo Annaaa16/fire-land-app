@@ -17,7 +17,9 @@ function WidgetsIntro() {
         'px-3 py-4 rounded-lg shadow-md dark:shadow-xl',
         'bg-white dark:bg-dk-cpn'
       )}>
-      <h2 className={clsx('text-base font-bold', 'dark:text-white')}>Intro</h2>
+      <h2 className={clsx('text-base font-semibold', 'dark:text-white')}>
+        Intro
+      </h2>
       <ul className={clsx('mt-4')}>
         <li className={clsx('flex items-center')}>
           <WatchLaterIcon className={clsx('dark:text-gray')} />

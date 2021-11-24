@@ -106,7 +106,7 @@ function Detail(props: DetailProps) {
             )}>
             <h1
               className={clsx(
-                'text-2xl md:text-4xl font-bold leading-tight lg:leading-normal mb-2',
+                'text-2xl md:text-4xl font-semibold leading-tight lg:leading-normal mb-2',
                 'text-white'
               )}>
               {title}

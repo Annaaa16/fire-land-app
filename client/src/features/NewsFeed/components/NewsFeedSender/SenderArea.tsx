@@ -119,7 +119,7 @@ function NewsFeedSenderArea() {
         <div className={clsx('relative')}>
           <h2
             className={clsx(
-              'font-bold text-xl text-center py-5 leading-none border-b border-lt-line dark:border-dk-line',
+              'font-semibold text-xl text-center py-5 leading-none border-b border-lt-line dark:border-dk-line',
               'dark:text-white'
             )}>
             Create Post
@@ -142,7 +142,7 @@ function NewsFeedSenderArea() {
           <div className={clsx('flex items-center mt-2 pb-2 ml-2')}>
             <User view='sm' avatar={currentUser.avatar} />
             <div className={clsx('ml-5')}>
-              <span className={clsx('font-bold', 'dark:text-white')}>
+              <span className={clsx('font-semibold', 'dark:text-white')}>
                 {currentUser.username}
               </span>
               <div
@@ -155,7 +155,7 @@ function NewsFeedSenderArea() {
                 )}>
                 <span
                   className={clsx(
-                    'text-xs mr-1 font-bold',
+                    'text-xs mr-1 font-semibold',
                     'dark:text-gray-500'
                   )}>
                   People
@@ -265,7 +265,7 @@ function NewsFeedSenderArea() {
           <button
             onClick={post ? handleUpdatePost : handleSubmitPost}
             className={clsx(
-              'mt-4 py-3.5 w-full font-bold rounded-lg',
+              'mt-4 py-3.5 w-full font-semibold rounded-lg',
               'text-white bg-primary-v1 dark:bg-primary-v3',
               'transition-all',
               'hover:bg-primary-v1-hv dark:hover:bg-primary-v3-hv'

@@ -19,7 +19,7 @@ function ChatHeader() {
       )}>
       <div className={clsx('flex items-center ml-1')}>
         <User view='sm' />
-        <span className={clsx('ml-3 font-bold', 'dark:text-white')}>
+        <span className={clsx('ml-3 font-semibold', 'dark:text-white')}>
           IG Dev
         </span>
       </div>

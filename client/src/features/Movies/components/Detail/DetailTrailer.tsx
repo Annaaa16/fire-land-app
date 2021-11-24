@@ -18,7 +18,7 @@ function DetailTrailer({ videos }: DetailTrailerProps) {
           )}>
           <h2
             className={clsx(
-              'font-bold text-lg leading-none mr-2',
+              'font-semibold text-lg leading-none mr-2',
               'transition-all duration-300 ease-out'
             )}>
             Trailer

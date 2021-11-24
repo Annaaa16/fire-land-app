@@ -29,7 +29,7 @@ function Custom404() {
         </div>
         <h1
           className={clsx(
-            'font-bold text-lg leading-none mb-4',
+            'font-semibold text-lg leading-none mb-4',
             'dark:text-gray'
           )}>
           This Page Isn't Available

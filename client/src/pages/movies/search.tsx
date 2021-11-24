@@ -45,7 +45,7 @@ function Search() {
       <section className='pt-20'>
         <h1
           className={clsx(
-            'text-center text-3xl mb-4 leading-normal uppercase font-bold',
+            'text-center text-3xl mb-4 leading-normal uppercase font-semibold',
             'text-white'
           )}>
           Movies - {router.query.query}

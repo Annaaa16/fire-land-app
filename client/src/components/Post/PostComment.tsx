@@ -36,7 +36,7 @@ function PostComment({ comment }: PostCommentProps) {
           <h4
             onClick={() => visitWall(user._id)}
             className={clsx(
-              'inline-block font-bold mb-1.5 text-xs lg:text-sm-1 leading-4',
+              'inline-block font-semibold mb-1.5 text-xs lg:text-sm-1 leading-4',
               'dark:text-white',
               'cursor-pointer',
               'hover:underline'
@@ -54,7 +54,7 @@ function PostComment({ comment }: PostCommentProps) {
         <div className={clsx('flex items-center ml-3')}>
           <span
             className={clsx(
-              'font-bold mr-2 text-xs',
+              'font-semibold mr-2 text-xs',
               'dark:text-gray',
               'cursor-pointer',
               'hover:underline'
@@ -63,7 +63,7 @@ function PostComment({ comment }: PostCommentProps) {
           </span>
           <span
             className={clsx(
-              'font-bold mr-2 text-xs',
+              'font-semibold mr-2 text-xs',
               'dark:text-gray',
               'cursor-pointer',
               'hover:underline'

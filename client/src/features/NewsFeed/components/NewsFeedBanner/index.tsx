@@ -21,7 +21,7 @@ function NewsFeedBanner() {
       <div className={clsx('relative', 'text-center md:text-left md:pl-6')}>
         <h1
           className={clsx(
-            'text-2xl lg:text-3xl font-bold leading-none',
+            'text-2xl lg:text-3xl font-semibold leading-none',
             'text-white'
           )}>
           Members Newsfeed
