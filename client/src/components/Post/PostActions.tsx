@@ -30,7 +30,7 @@ function PostActions(props: PostActionsProps) {
   );
 
   const {
-    isShowReactions,
+    isOpenReactions,
     selectedEmotion,
     reactPost,
     userActions,
@@ -72,7 +72,7 @@ function PostActions(props: PostActionsProps) {
             'lg:hover:bg-lt-input lg:dark:hover:bg-dk-tooltip'
           )}>
           {reaction ? (
-            <div className={clsx('w-4.5 h-4.5 mr-1')}>
+            <div className={clsx('w-4.5 h-4.5 mr-1.5')}>
               <img
                 src={selectedEmotion?.icon}
                 alt='Emotion'
@@ -104,7 +104,7 @@ function PostActions(props: PostActionsProps) {
 
         <Reactions
           reactPost={reactPost}
-          isShowReactions={isShowReactions}
+          isOpenReactions={isOpenReactions}
           reaction={reaction}
           ref={reactionsRef}
         />

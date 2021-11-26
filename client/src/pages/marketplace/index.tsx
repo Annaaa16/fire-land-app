@@ -11,7 +11,7 @@ import MarketplaceProductList from '@/features/Marketplace/MarketplaceProductLis
 function Marketplace() {
   return (
     <Meta title='Marketplace'>
-      <Social>
+      <Social className='pb-32'>
         <MarketplaceHero />
         <MarketplaceMenu />
         <MarketplaceProductList title='Hot Sales' more />

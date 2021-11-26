@@ -109,7 +109,7 @@ function HomeHeroSlider() {
                                 : 'opacity-0 invisible',
                               'text-white',
                               'transition-all duration-700 ease-out delay-1000',
-                              'hover:underline'
+                              'lg:hover:underline'
                             )}>
                             {movie.overview}
                           </Paragraph>

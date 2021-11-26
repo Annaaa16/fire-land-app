@@ -34,7 +34,7 @@ function CheckoutDetail() {
             className={clsx(
               'group flex-center rounded-full w-11 h-11',
               'transition-all duration-250 ease-out',
-              'lg:hover:bg-gray-100 lg:dark:hover:bg-dk-input lg:hover:scale-110',
+              'lg:hover:bg-lt-input lg:dark:hover:bg-dk-input lg:hover:scale-110',
               'cursor-pointer'
             )}>
             <ShareOutlinedIcon
@@ -49,7 +49,7 @@ function CheckoutDetail() {
             className={clsx(
               'group flex-center rounded-full w-11 h-11',
               'transition-all duration-250 ease-out',
-              'lg:hover:bg-gray-100 lg:dark:hover:bg-dk-input lg:hover:scale-110',
+              'lg:hover:bg-lt-input lg:dark:hover:bg-dk-input lg:hover:scale-110',
               'cursor-pointer'
             )}>
             <MoreHorizOutlinedIcon
@@ -173,7 +173,7 @@ function CheckoutDetail() {
             className={clsx(
               'group flex-center rounded-full w-11 h-11',
               'transition-all duration-250 ease-out',
-              'lg:hover:bg-gray-100 lg:dark:hover:bg-dk-input lg:hover:scale-110',
+              'lg:hover:bg-lt-input lg:dark:hover:bg-dk-input lg:hover:scale-110',
               'cursor-pointer'
             )}>
             <DoDisturbIcon
@@ -188,7 +188,7 @@ function CheckoutDetail() {
             className={clsx(
               'group flex-center rounded-full w-11 h-11',
               'transition-all duration-250 ease-out',
-              'lg:hover:bg-gray-100 lg:dark:hover:bg-dk-input lg:hover:scale-110',
+              'lg:hover:bg-lt-input lg:dark:hover:bg-dk-input lg:hover:scale-110',
               'cursor-pointer'
             )}>
             <HandymanIcon
@@ -203,7 +203,7 @@ function CheckoutDetail() {
             className={clsx(
               'group flex-center rounded-full w-11 h-11',
               'transition-all duration-250 ease-out',
-              'lg:hover:bg-gray-100 lg:dark:hover:bg-dk-input lg:hover:scale-110',
+              'lg:hover:bg-lt-input lg:dark:hover:bg-dk-input lg:hover:scale-110',
               'cursor-pointer'
             )}>
             <ForumIcon

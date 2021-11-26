@@ -38,7 +38,7 @@ function PostHeader(props: PostHeaderProps) {
             avatar={avatar}
             view='sm'
             rounded
-            onHandleClick={() => visitWall(userId)}
+            onClick={() => visitWall(userId)}
           />
           {currentUser._id !== userId && (
             <PostHeaderBox

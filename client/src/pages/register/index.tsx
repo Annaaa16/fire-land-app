@@ -25,10 +25,12 @@ function Register() {
   };
 
   useEffect(() => {
+    dispatch(authActions.setLoginStatus(false));
+
     if (success) {
       router.push(PATHS.LOGIN);
     }
-  }, [success, router]);
+  }, [success, router, dispatch]);
 
   return (
     <Meta title='Register'>

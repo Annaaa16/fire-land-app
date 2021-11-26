@@ -51,9 +51,9 @@ function PostHeaderBox(props: PostHeaderBoxProps) {
         )}>
         <div className={clsx('flex items-center mb-6')}>
           <User
-            onHandleClick={() => visitWall(userId)}
+            onClick={() => visitWall(userId)}
             avatar={avatar}
-            subClass={clsx('w-14 h-14 mr-2')}
+            className={clsx('w-14 h-14 mr-2')}
             rounded
           />
           <div>
@@ -62,7 +62,7 @@ function PostHeaderBox(props: PostHeaderBoxProps) {
               className={clsx(
                 'font-semibold text-lg mb-4 ml-0.5',
                 'cursor-pointer',
-                'hover:underline'
+                'lg:hover:underline'
               )}>
               {username}
             </h2>
@@ -74,7 +74,7 @@ function PostHeaderBox(props: PostHeaderBoxProps) {
                   className={clsx(
                     'text-sm-1',
                     'cursor-pointer',
-                    'hover:underline'
+                    'lg:hover:underline'
                   )}>
                   {followers?.length} people
                 </strong>

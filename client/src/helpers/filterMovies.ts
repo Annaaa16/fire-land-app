@@ -1,6 +1,6 @@
 // types
 import { TmdbMovie, TmdbTvShow } from '@/models/tmdb';
-import { DetailProps } from '@/pages/movies/[id]';
+import { MoviesDetailProps } from '@/pages/movies/[id]';
 
 export const filterMovies = (movies: TmdbMovie[]) => {
   return movies.map((movie) => {
@@ -50,7 +50,7 @@ export const filterTvShows = (tvShows: TmdbTvShow[]) => {
   });
 };
 
-export const filterMovieDetail = ({ movieDetail }: DetailProps) => {
+export const filterMovieDetail = ({ movieDetail }: MoviesDetailProps) => {
   const { casts, detail, videos } = movieDetail;
 
   const { id, overview, title, backdrop_path, genres } = detail;

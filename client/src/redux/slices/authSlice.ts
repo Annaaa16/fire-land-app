@@ -24,7 +24,6 @@ export const initialState: AuthInitState = {
   loginStatus: {
     message: '',
     success: false,
-    isAuthenticated: false,
   },
   registerStatus: {
     message: '',
@@ -47,7 +46,6 @@ const authSlice = createSlice({
       const { success, message } = action.payload;
 
       if (success) {
-        state.loginStatus.isAuthenticated = true;
         state.loginStatus.success = true;
 
         removeLoading(state, actions.login);
@@ -85,11 +83,19 @@ const authSlice = createSlice({
       state.loginStatus.message = '';
       state.registerStatus.message = '';
     },
+
+    setLoginStatus: (state, action: PayloadAction<boolean>) => {
+      state.loginStatus.success = action.payload;
+    },
+
+    setRegisterStatus: (state, action: PayloadAction<boolean>) => {
+      state.registerStatus.success = action.payload;
+    },
   },
 });
 
-export { actions };
+const authActions = authSlice.actions;
 
-export const authActions = authSlice.actions;
+export { actions, authActions };
 
 export default authSlice.reducer;

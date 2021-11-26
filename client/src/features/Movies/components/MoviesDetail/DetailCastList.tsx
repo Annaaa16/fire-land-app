@@ -48,7 +48,7 @@ function DetailCastList({ casts }: DetailCastListProps) {
                   layout='fill'
                   objectFit='cover'
                   alt='Cast'
-                  subClass={clsx('rounded-xl')}
+                  className={clsx('rounded-xl')}
                   priority={true}
                   height={12}
                 />

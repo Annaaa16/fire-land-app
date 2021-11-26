@@ -1,6 +1,9 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 
+// clsx
+import clsx from 'clsx';
+
 // types
 import { GetServerSideProps } from 'next';
 import { AxiosError } from 'axios';
@@ -10,13 +13,11 @@ import {
   TmdbMovieDetail,
 } from '@/models/tmdb';
 
-// clsx
-import clsx from 'clsx';
-
 import { moviesApi } from '@/apis/moviesApi';
 import { notifyAxiosError } from '@/helpers/notifyError';
 import { useMoviesSelector } from '@/redux/selectors';
 import { filterMovieDetail } from '@/helpers/filterMovies';
+import { moviesActions } from '@/redux/slices/moviesSlice';
 import tmdb, { tmdbCategories } from '@/configs/tmdb';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
@@ -24,12 +25,11 @@ import Image from '@/components/Image';
 import Paragraph from '@/components/Paragraph';
 import MainLayout from '@/features/Movies/layouts/MainLayout';
 import MoviesItemList from '@/features/Movies/components/MoviesItemList';
-import DetailTrailer from '@/features/Movies/components/Detail/DetailTrailer';
-import DetailCastList from '@/features/Movies/components/Detail/DetailCastList';
-import DetailGenreList from '@/features/Movies/components/Detail/DetailGenreList';
-import { moviesActions } from '@/redux/slices/moviesSlice';
+import DetailTrailer from '@/features/Movies/components/MoviesDetail/DetailTrailer';
+import DetailCastList from '@/features/Movies/components/MoviesDetail/DetailCastList';
+import DetailGenreList from '@/features/Movies/components/MoviesDetail/DetailGenreList';
 
-export interface DetailProps {
+export interface MoviesDetailProps {
   movieDetail: {
     casts: TmdbGetMovieCreditsResponse;
     detail: TmdbMovieDetail;
@@ -37,10 +37,11 @@ export interface DetailProps {
   };
 }
 
-function Detail(props: DetailProps) {
-  const { movie, tv } = tmdbCategories;
+function MoviesDetail(props: MoviesDetailProps) {
   const { title, image, casts, overview, genres, videos } =
     filterMovieDetail(props);
+
+  const { movie, tv } = tmdbCategories;
 
   const { movieCategories, tvShowCategories } = useMoviesSelector();
 
@@ -51,7 +52,7 @@ function Detail(props: DetailProps) {
     const { id, category } = router.query;
 
     // Block first load ID is undefined
-    if (!id) return;
+    if (!id || !category) return;
 
     if (category === movie) {
       dispatch(moviesActions.getSimilarMoviesRequest(id! as string));
@@ -94,7 +95,7 @@ function Detail(props: DetailProps) {
               layout='fill'
               alt='Thumbnail'
               objectFit='cover'
-              subClass={clsx('rounded-2xl')}
+              className={clsx('rounded-2xl')}
               priority={true}
               widths={[50, 20, 30, 40, 90, 40, 50, 70]}
             />
@@ -116,7 +117,7 @@ function Detail(props: DetailProps) {
               lengthInit={250}
               bodyClass={clsx('mb-3')}
               paragraphClass={clsx('leading-5 mb-2', 'text-white')}
-              buttonClass={clsx('mb-4', 'text-white', 'hover:underline')}>
+              buttonClass={clsx('mb-4', 'text-white', 'lg:hover:underline')}>
               {overview}
             </Paragraph>
 
@@ -144,7 +145,7 @@ function Detail(props: DetailProps) {
   );
 }
 
-export default Detail;
+export default MoviesDetail;
 
 export const getServerSideProps: GetServerSideProps = async ({
   params,
@@ -160,7 +161,7 @@ export const getServerSideProps: GetServerSideProps = async ({
     getTvShowVideos,
   } = moviesApi();
 
-  let movieDetail = {};
+  let movieDetail = null;
 
   if (query.category === movie) {
     try {
@@ -196,9 +197,15 @@ export const getServerSideProps: GetServerSideProps = async ({
     }
   }
 
-  return {
-    props: {
-      movieDetail,
-    },
-  };
+  if (!movieDetail) {
+    return {
+      notFound: true,
+    };
+  } else {
+    return {
+      props: {
+        movieDetail,
+      },
+    };
+  }
 };

@@ -65,7 +65,7 @@ function WidgetsFriendList() {
             onClick={() => visitWall(friend._id)}
             className={clsx('mt-3')}>
             <User
-              subClass='rounded-lg mx-auto overflow-hidden'
+              className='rounded-lg mx-auto overflow-hidden'
               avatar={friend.avatar}
             />
             <div

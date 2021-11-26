@@ -30,7 +30,7 @@ function NewsFeedSenderInput() {
         <User
           view='sm'
           avatar={currentUser.avatar}
-          subClass={clsx('ml-1 md:ml-0')}
+          className={clsx('ml-1 md:ml-0')}
           rounded
         />
         <input

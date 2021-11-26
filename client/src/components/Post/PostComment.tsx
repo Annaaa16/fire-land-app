@@ -22,10 +22,10 @@ function PostComment({ comment }: PostCommentProps) {
   return (
     <div className={clsx('flex mb-2')}>
       <User
-        onHandleClick={() => visitWall(user._id)}
+        onClick={() => visitWall(user._id)}
         avatar={user?.avatar}
         view='sm'
-        subClass='mr-2'
+        className='mr-2'
       />
       <div className={clsx('flex-grow')}>
         <div

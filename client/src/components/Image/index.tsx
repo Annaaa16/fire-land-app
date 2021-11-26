@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { default as NextImage } from 'next/image';
+import NextImage from 'next/image';
 
 // nanoid
 import { nanoid } from 'nanoid';
@@ -11,12 +11,16 @@ import MovieOutlinedIcon from '@mui/icons-material/MovieOutlined';
 import clsx from 'clsx';
 
 // types
-import { ImageProps } from 'next/image';
+import { ImageProps as NextImageProps } from 'next/image';
 
-function Image(
-  props: ImageProps & { widths?: number[]; height?: number; subClass?: string }
-) {
-  const { src, widths, height, subClass, ...rest } = props;
+interface ImageProps {
+  widths?: number[];
+  height?: number;
+  className?: string;
+}
+
+function Image(props: NextImageProps & ImageProps) {
+  const { src, widths, height, className, ...rest } = props;
 
   const [isError, setIsError] = useState<boolean>(false);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
@@ -35,7 +39,7 @@ function Image(
               isLoaded && !isError
                 ? 'opacity-100 visible'
                 : 'opacity-0 invisible',
-              subClass
+              className
             )}
           />
           {!isLoaded && !isError && (

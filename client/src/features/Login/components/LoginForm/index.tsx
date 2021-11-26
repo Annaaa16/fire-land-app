@@ -95,10 +95,7 @@ function LoginForm() {
       <button
         type='submit'
         className={clsx(
-          'w-full mt-7 font-semibold py-4 rounded-lg text-xs lg:text-sm shadow-primary-v1 dark:shadow-primary-v3',
-          'text-white bg-primary-v1 dark:bg-primary-v3',
-          'transition-all',
-          'hover:bg-primary-v1-hv dark:hover:bg-primary-v3-hv'
+          'btn w-full mt-7 font-semibold py-4 rounded-lg text-xs lg:text-sm shadow-primary-v1 dark:shadow-primary-v3'
         )}>
         Login to your Account!
       </button>

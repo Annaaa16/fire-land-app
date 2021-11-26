@@ -1,8 +1,10 @@
-import { ReactNode } from 'react';
 import Head from 'next/head';
 
 // clsx
 import clsx from 'clsx';
+
+// types
+import { ReactNode } from 'react';
 
 import { COLORS, LOCAL_STORAGE } from '@/constants';
 import { useGlobalContext } from '@/contexts/GlobalContext';

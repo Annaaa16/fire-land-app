@@ -90,7 +90,7 @@ function MarketplaceHero() {
           'bg-white dark:bg-dk-cpn'
         )}>
         <h2 className={clsx('mb-5 text-lg font-bold', 'dark:text-white')}>
-          Our Features
+          Outstanding Features
         </h2>
         <ul>
           <li

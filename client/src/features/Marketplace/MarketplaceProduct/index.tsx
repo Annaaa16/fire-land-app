@@ -84,7 +84,7 @@ function MarketplaceProduct() {
           className={clsx(
             '!text-2xl',
             'text-gray dark:text-gray-400',
-            'hover:!text-gray-400 dark:hover:!text-gray-300',
+            'hover:!text-gray-400 dark:hover:!text-gray-400',
             'cursor-pointer'
           )}
         />
