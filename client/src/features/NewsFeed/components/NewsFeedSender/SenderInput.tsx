@@ -30,7 +30,7 @@ function NewsFeedSenderInput() {
         <User
           view='sm'
           avatar={currentUser.avatar}
-          subClass={clsx('ml-1 md:ml-0')}
+          className={clsx('ml-1 md:ml-0')}
           rounded
         />
         <input
@@ -60,7 +60,9 @@ function NewsFeedSenderInput() {
           <VideoCallIcon
             className={clsx('mr-1.5 !text-2xl', 'text-[#f02849]')}
           />
-          <span className={clsx('font-bold dark:text-white')}>Live Video</span>
+          <span className={clsx('font-semibold dark:text-white')}>
+            Live Video
+          </span>
         </li>
         <li
           className={clsx(
@@ -73,7 +75,9 @@ function NewsFeedSenderInput() {
             className={clsx('mr-1.5 text-xl md:!text-2xl', 'text-[#45bd62]')}
           />
           <span
-            className={clsx('text-xs lg:text-sm font-bold dark:text-white')}>
+            className={clsx(
+              'text-xs lg:text-sm font-semibold dark:text-white'
+            )}>
             Photo
           </span>
         </li>
@@ -88,7 +92,9 @@ function NewsFeedSenderInput() {
             className={clsx('mr-1.5 text-xl md:!text-2xl', 'text-[#f7b928]')}
           />
           <span
-            className={clsx('text-xs lg:text-sm font-bold dark:text-white')}>
+            className={clsx(
+              'text-xs lg:text-sm font-semibold dark:text-white'
+            )}>
             Feeling
           </span>
         </li>

@@ -38,7 +38,7 @@ function PostHeader(props: PostHeaderProps) {
             avatar={avatar}
             view='sm'
             rounded
-            onHandleClick={() => visitWall(userId)}
+            onClick={() => visitWall(userId)}
           />
           {currentUser._id !== userId && (
             <PostHeaderBox
@@ -53,7 +53,7 @@ function PostHeader(props: PostHeaderProps) {
           <span
             onClick={() => visitWall(userId)}
             className={clsx(
-              'font-bold',
+              'font-semibold',
               'dark:text-white',
               'cursor-pointer',
               'lg:hover:underline'

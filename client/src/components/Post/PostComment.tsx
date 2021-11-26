@@ -22,10 +22,10 @@ function PostComment({ comment }: PostCommentProps) {
   return (
     <div className={clsx('flex mb-2')}>
       <User
-        onHandleClick={() => visitWall(user._id)}
+        onClick={() => visitWall(user._id)}
         avatar={user?.avatar}
         view='sm'
-        subClass='mr-2'
+        className='mr-2'
       />
       <div className={clsx('flex-grow')}>
         <div
@@ -36,7 +36,7 @@ function PostComment({ comment }: PostCommentProps) {
           <h4
             onClick={() => visitWall(user._id)}
             className={clsx(
-              'inline-block font-bold mb-1.5 text-xs lg:text-sm-1 leading-4',
+              'inline-block font-semibold mb-1.5 text-xs lg:text-sm-1 leading-4',
               'dark:text-white',
               'cursor-pointer',
               'hover:underline'
@@ -54,7 +54,7 @@ function PostComment({ comment }: PostCommentProps) {
         <div className={clsx('flex items-center ml-3')}>
           <span
             className={clsx(
-              'font-bold mr-2 text-xs',
+              'font-semibold mr-2 text-xs',
               'dark:text-gray',
               'cursor-pointer',
               'hover:underline'
@@ -63,7 +63,7 @@ function PostComment({ comment }: PostCommentProps) {
           </span>
           <span
             className={clsx(
-              'font-bold mr-2 text-xs',
+              'font-semibold mr-2 text-xs',
               'dark:text-gray',
               'cursor-pointer',
               'hover:underline'

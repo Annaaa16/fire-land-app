@@ -5,21 +5,23 @@ import clsx from 'clsx';
 import { ReactNode } from 'react';
 
 import Header from '@/components/Header';
-import SidebarSmall from '@/components/SidebarSmall';
+import Sidebar from '@/components/Sidebar';
 
 interface SocialProps {
   children: ReactNode;
+  className?: string;
 }
 
-function Social({ children }: SocialProps) {
+function Social({ children, className }: SocialProps) {
   return (
     <>
       <Header />
-      <SidebarSmall />
+      <Sidebar />
       <div
         className={clsx(
           'lg:max-w-[1184px] px-4 lg:px-0 mx-auto py-10 mt-14',
-          'bg-lt-body dark:bg-dk-body'
+          'bg-lt-body dark:bg-dk-body',
+          className
         )}>
         {children}
       </div>

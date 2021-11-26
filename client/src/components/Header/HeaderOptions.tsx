@@ -144,7 +144,7 @@ function HeaderOptions() {
             />
             <span
               className={clsx(
-                'ml-1.5 font-bold text-xs md:text-sm',
+                'ml-1.5 font-semibold text-xs md:text-sm',
                 'text-white',
                 'transition-all ease-out',
                 'select-none',
@@ -167,7 +167,7 @@ function HeaderOptions() {
             />
             <span
               className={clsx(
-                'ml-1.5 font-bold text-xs md:text-sm',
+                'ml-1.5 font-semibold text-xs md:text-sm',
                 'text-white',
                 'transition-all ease-out',
                 'select-none',
@@ -200,7 +200,7 @@ function HeaderOptions() {
             )}
             <span
               className={clsx(
-                'ml-1.5 font-bold text-xs md:text-sm',
+                'ml-1.5 font-semibold text-xs md:text-sm',
                 'text-white',
                 'transition-all ease-out',
                 'select-none',
@@ -226,7 +226,7 @@ function HeaderOptions() {
             />
             <span
               className={clsx(
-                'ml-1.5 font-bold text-xs md:text-sm',
+                'ml-1.5 font-semibold text-xs md:text-sm',
                 'text-white',
                 'transition-all ease-out',
                 'select-none',

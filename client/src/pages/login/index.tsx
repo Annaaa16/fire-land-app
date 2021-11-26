@@ -12,12 +12,12 @@ import LoginSocial from '@/features/Login/components/LoginSocial';
 import Auth from '@/layouts/Auth';
 
 function Login() {
+  const {
+    loginStatus: { success },
+  } = useAuthSelector();
+
   const router = useRouter();
   const dispatch = useStoreDispatch();
-
-  const {
-    loginStatus: { isAuthenticated },
-  } = useAuthSelector();
 
   const moveToRegister = () => {
     dispatch(authActions.clearMessage());
@@ -25,10 +25,12 @@ function Login() {
   };
 
   useEffect(() => {
-    if (isAuthenticated) {
+    dispatch(authActions.setRegisterStatus(false));
+
+    if (success) {
       router.push(PATHS.NEWSFEED);
     }
-  }, [isAuthenticated, router]);
+  }, [success, router, dispatch]);
 
   return (
     <Meta title='Login'>

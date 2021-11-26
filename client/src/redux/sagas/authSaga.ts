@@ -17,6 +17,20 @@ import { usersActions } from '../slices/usersSlice';
 
 const { loginUser, registerUser } = authApiClient();
 
+function* handleRegisterRequest(action: PayloadAction<RegisterPayload>) {
+  try {
+    const response: AxiosResponse<RegisterResponse> = yield call(
+      registerUser,
+      action.payload
+    );
+
+    yield put(authActions.registerSuccess(response.data));
+  } catch (error) {
+    notifySagaError(authActions.registerFailed, error);
+    yield put(authActions.registerFailed());
+  }
+}
+
 function* handleLoginRequest(action: PayloadAction<LoginPayload>) {
   try {
     const response: AxiosResponse<LoginResponse> = yield call(
@@ -29,20 +43,6 @@ function* handleLoginRequest(action: PayloadAction<LoginPayload>) {
   } catch (error) {
     notifySagaError(authActions.loginFailed, error);
     yield put(authActions.loginFailed());
-  }
-}
-
-function* handleRegisterRequest(action: PayloadAction<RegisterPayload>) {
-  try {
-    const response: AxiosResponse<RegisterResponse> = yield call(
-      registerUser,
-      action.payload
-    );
-
-    yield put(authActions.registerSuccess(response.data));
-  } catch (error) {
-    notifySagaError(authActions.registerFailed, error);
-    yield put(authActions.registerFailed());
   }
 }
 

@@ -30,7 +30,7 @@ function PostActions(props: PostActionsProps) {
   );
 
   const {
-    isShowReactions,
+    isOpenReactions,
     selectedEmotion,
     reactPost,
     userActions,
@@ -72,7 +72,7 @@ function PostActions(props: PostActionsProps) {
             'lg:hover:bg-lt-input lg:dark:hover:bg-dk-tooltip'
           )}>
           {reaction ? (
-            <div className={clsx('w-4.5 h-4.5 mr-1')}>
+            <div className={clsx('w-4.5 h-4.5 mr-1.5')}>
               <img
                 src={selectedEmotion?.icon}
                 alt='Emotion'
@@ -86,7 +86,7 @@ function PostActions(props: PostActionsProps) {
           )}
           <div
             className={clsx(
-              'font-bold text-xs md:text-sm capitalize',
+              'font-semibold text-xs md:text-sm capitalize',
               reaction && selectedEmotion?.type === emotions.like.type
                 ? 'text-[#2d86ff]'
                 : selectedEmotion?.type === emotions.love.type
@@ -104,7 +104,7 @@ function PostActions(props: PostActionsProps) {
 
         <Reactions
           reactPost={reactPost}
-          isShowReactions={isShowReactions}
+          isOpenReactions={isOpenReactions}
           reaction={reaction}
           ref={reactionsRef}
         />
@@ -127,7 +127,7 @@ function PostActions(props: PostActionsProps) {
         />
         <span
           className={clsx(
-            'font-bold text-xs md:text-sm',
+            'font-semibold text-xs md:text-sm',
             'text-gray',
             'transition-all ease-out',
             'dark:group-hover:text-primary-v4'
@@ -152,7 +152,7 @@ function PostActions(props: PostActionsProps) {
         />
         <span
           className={clsx(
-            'font-bold text-xs md:text-sm',
+            'font-semibold text-xs md:text-sm',
             'text-gray',
             'transition-all ease-out',
             'dark:group-hover:text-primary-v4'

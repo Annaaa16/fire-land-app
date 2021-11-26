@@ -101,10 +101,10 @@ function Post(props: PostType & Pagination) {
           <div
             onClick={handleGetMoreComments}
             className={clsx(
-              'font-bold text-xs mt-3 mb-2',
+              'font-semibold text-xs mt-3 mb-2',
               'dark:text-white',
               'cursor-pointer',
-              'hover:underline'
+              'lg:hover:underline'
             )}>
             View {total! - LIMITS.COMMENTS * (nextPage - 1)} more comments
           </div>

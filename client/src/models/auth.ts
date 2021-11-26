@@ -5,7 +5,6 @@ export interface AuthInitState extends Loadings {
   loginStatus: {
     success: boolean;
     message: string;
-    isAuthenticated: boolean;
   };
   registerStatus: {
     success: boolean;

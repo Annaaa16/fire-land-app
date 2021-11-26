@@ -1,33 +1,11 @@
-// clsx
-import clsx from 'clsx';
+import SidebarSmall from './SidebarSmall';
 
-import sidebarTooltips from '@/utils/sidebarTooltips';
+interface SidebarProps {
+  messenger?: boolean;
+}
 
-import User from '../User';
-import SidebarTooltip from './SidebarTooltip';
-
-function Sidebar() {
-  return (
-    <aside
-      className={clsx(
-        'fixed top-[64px] left-0 z-50',
-        'flex flex-col items-center w-[300px] h-[calc(100vh-64px)] py-6 shadow-2xl',
-        'bg-white dark:bg-dk-cpn'
-      )}>
-      <User />
-
-      <ul className={clsx('mt-12 w-full px-4 text-center')}>
-        {sidebarTooltips.map(({ title, isActive, icon }) => (
-          <SidebarTooltip
-            key={title}
-            isActive={isActive}
-            title={title}
-            icon={icon}
-          />
-        ))}
-      </ul>
-    </aside>
-  );
+function Sidebar({ messenger }: SidebarProps) {
+  return <SidebarSmall messenger={messenger} />;
 }
 
 export default Sidebar;

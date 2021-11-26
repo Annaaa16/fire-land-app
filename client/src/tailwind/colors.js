@@ -19,7 +19,6 @@ const colors = {
   'primary-v4': {
     DEFAULT: '#40d04f',
     hv: '#4ae95b',
-    linear: '#9cec5c',
   },
   gray: {
     DEFAULT: '#65676b',

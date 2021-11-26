@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+
 import useIsomorphicLayoutEffect from './useIsomorphicLayoutEffect ';
 
 const useCompareNode = (comparedClass: string) => {

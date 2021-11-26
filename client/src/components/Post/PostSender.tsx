@@ -58,7 +58,7 @@ function PostSender(props: PostSenderProps) {
         avatar={avatar}
         view='sm'
         rounded
-        onHandleClick={() => visitWall(userId)}
+        onClick={() => visitWall(userId)}
       />
       <div
         className={clsx(

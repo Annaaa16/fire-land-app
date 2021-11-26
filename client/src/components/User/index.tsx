@@ -4,42 +4,42 @@ import clsx from 'clsx';
 // material ui icons
 import CheckIcon from '@mui/icons-material/Check';
 
+import { BACKUPS } from '@/constants';
+
 interface UserProps {
-  view?: 'sm';
+  view?: 'sm' | 'lg';
   avatar?: string;
-  subClass?: string;
-  currentUser?: boolean;
+  className?: string;
+  user?: boolean;
   online?: boolean;
   rounded?: boolean;
-  onHandleClick?: () => void;
+  onClick?: () => void;
 }
 
 function User(props: UserProps) {
   const {
     view,
-    avatar,
-    subClass,
-    currentUser,
+    avatar = BACKUPS.AVATAR,
+    className,
+    user,
     online,
     rounded,
-    onHandleClick,
+    onClick,
   } = props;
-
-  const img = avatar || 'https://avatars.dicebear.com/api/micah/uiSvbW.svg';
 
   return (
     <div
-      onClick={onHandleClick}
+      onClick={onClick}
       className={clsx(
         'relative',
         view === 'sm' && 'w-9 h-9',
         'group flex-shrink-0',
         rounded && 'rounded-full',
         'cursor-pointer',
-        subClass
+        className
       )}>
       <img
-        src={img}
+        src={avatar}
         alt='Avatar'
         className={clsx(
           'relative',
@@ -48,7 +48,7 @@ function User(props: UserProps) {
         )}
       />
 
-      {currentUser && (
+      {user && (
         <div
           className={clsx(
             'absolute left-1/2 -bottom-2.5',

@@ -38,7 +38,7 @@ const emotions: { [key: string]: { type: string; icon: string } } = {
 };
 
 const useReactions = ({ postId, reaction, currentUser }: useReactionsProps) => {
-  const [isShowReactions, setIsShowReactions] = useState<boolean>(false);
+  const [isOpenReactions, setIsOpenReactions] = useState<boolean>(false);
   const [selectedEmotion, setSelectedEmotion] = useState<{
     type: string;
     icon: any;
@@ -70,7 +70,7 @@ const useReactions = ({ postId, reaction, currentUser }: useReactionsProps) => {
     );
 
     setSelectedEmotion(emotions[emotion]);
-    setIsShowReactions(false);
+    setIsOpenReactions(false);
 
     timeoutStartId.current && clearTimeout(timeoutStartId.current);
   };
@@ -78,17 +78,17 @@ const useReactions = ({ postId, reaction, currentUser }: useReactionsProps) => {
   const userActions = {
     onMouseEnter() {
       timeoutStartId.current = setTimeout(() => {
-        setIsShowReactions(true);
+        setIsOpenReactions(true);
       }, 600);
     },
     onMouseLeave() {
-      setIsShowReactions(false);
+      setIsOpenReactions(false);
 
       timeoutStartId.current && clearTimeout(timeoutStartId.current);
     },
     onTouchStart() {
       timeoutStartId.current = setTimeout(() => {
-        !isShowReactions && setIsShowReactions(true);
+        !isOpenReactions && setIsOpenReactions(true);
       }, 400);
     },
   };
@@ -107,7 +107,7 @@ const useReactions = ({ postId, reaction, currentUser }: useReactionsProps) => {
   useEffect(() => {
     const handleCloseReactions = (e: TouchEvent) => {
       if (
-        !isShowReactions ||
+        !isOpenReactions ||
         !reactButtonRef?.current ||
         !reactionsRef?.current
       )
@@ -117,7 +117,7 @@ const useReactions = ({ postId, reaction, currentUser }: useReactionsProps) => {
         !reactButtonRef.current.contains(e.target as Node) ||
         !reactionsRef.current.contains(e.target as Node)
       ) {
-        setIsShowReactions(false);
+        setIsOpenReactions(false);
 
         timeoutStartId.current && clearTimeout(timeoutStartId.current);
       }
@@ -128,10 +128,10 @@ const useReactions = ({ postId, reaction, currentUser }: useReactionsProps) => {
     return () => {
       document.removeEventListener('touchstart', handleCloseReactions);
     };
-  }, [isShowReactions]);
+  }, [isOpenReactions]);
 
   return {
-    isShowReactions,
+    isOpenReactions,
     selectedEmotion,
     reactPost,
     userActions,

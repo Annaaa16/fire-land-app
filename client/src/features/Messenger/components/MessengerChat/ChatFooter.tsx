@@ -75,7 +75,7 @@ function ChatFooter() {
           <Tooltip
             title='Open more actions'
             direction='ttb'
-            subClass={clsx('!left-[calc(100%+14px)]')}
+            className={clsx('!left-[calc(100%+14px)]')}
           />
         </li>
         <li className={clsx('relative', 'group px-1.5', 'cursor-pointer')}>

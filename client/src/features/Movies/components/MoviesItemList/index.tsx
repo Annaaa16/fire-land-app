@@ -53,7 +53,7 @@ function MoviesItemList({ title, items, category }: MoviesItemListProps) {
               )}>
               <h2
                 className={clsx(
-                  'font-bold text-base leading-none mr-0.5 uppercase',
+                  'font-semibold text-base leading-none mr-0.5 uppercase',
                   'transition-all duration-300 ease-out'
                 )}>
                 {title}

@@ -1,7 +1,7 @@
 // clsx
 import clsx from 'clsx';
 
-function Loading() {
+function Spinner() {
   return (
     <svg
       className={clsx('h-5 w-5', 'text-white', 'animate-spin')}
@@ -24,4 +24,4 @@ function Loading() {
   );
 }
 
-export default Loading;
+export default Spinner;

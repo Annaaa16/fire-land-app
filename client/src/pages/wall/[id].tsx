@@ -82,7 +82,7 @@ export const getServerSideProps: GetServerSideProps =
       }
     }
 
-    if (statusCode >= 400) {
+    if (statusCode >= STATUS_CODES.NOT_FOUND) {
       return {
         notFound: true,
       };

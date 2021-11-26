@@ -1,6 +1,8 @@
 // clsx
 import clsx from 'clsx';
 
+import { PREFIXES } from '@/constants';
+
 interface DetailTrailerProps {
   videos: Array<{ id: string; name: string; path: string }>;
 }
@@ -18,14 +20,14 @@ function DetailTrailer({ videos }: DetailTrailerProps) {
           )}>
           <h2
             className={clsx(
-              'font-bold text-lg leading-none mr-2',
+              'font-semibold text-lg leading-none mr-2',
               'transition-all duration-300 ease-out'
             )}>
             Trailer
           </h2>
         </div>
         <iframe
-          src={'https://www.youtube.com/embed/' + videos[0]?.path}
+          src={PREFIXES.YOUTUBE_EMBED + '/' + videos[0]?.path}
           title='Youtube Movie'
           frameBorder='0'
           allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'

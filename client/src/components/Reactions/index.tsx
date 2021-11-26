@@ -17,12 +17,12 @@ interface ReactionsProps {
     isReact: boolean;
     isUpdate: boolean;
   }) => void;
-  isShowReactions: boolean;
+  isOpenReactions: boolean;
   reaction: Reaction | undefined;
 }
 
 function Reactions(
-  { isShowReactions, reaction, reactPost }: ReactionsProps,
+  { isOpenReactions, reaction, reactPost }: ReactionsProps,
   ref: any
 ) {
   const handleReactPost = (key: string) => {
@@ -35,7 +35,7 @@ function Reactions(
 
   return (
     <Transition
-      show={isShowReactions}
+      show={isOpenReactions}
       enter={clsx('z-10', 'duration-200 ease-out', 'pointer-events-none')}
       enterFrom='opacity-0 -translate-y-4 scale-50'
       enterTo={clsx(

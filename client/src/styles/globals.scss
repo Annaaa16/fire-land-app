@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -8,7 +8,7 @@
   html {
     font-family: 'Poppins', sans-serif;
 
-    @apply text-sm leading-base 
+    @apply text-sm 
     text-txt;
   }
 
@@ -17,6 +17,11 @@
   button {
     @apply select-none;
   }
+
+  input,
+  textarea {
+    @apply outline-none;
+  }
 }
 
 @layer utilities {
@@ -24,10 +29,19 @@
     @apply flex items-center justify-center;
   }
 
+  .flex-between {
+    @apply flex items-center justify-between;
+  }
+
   .btn {
-    @apply shadow-primary-v1 dark:shadow-primary-v4
+    @apply shadow-primary-v1 dark:shadow-primary-v4 rounded-lg
     text-white bg-primary-v1 dark:bg-primary-v4 
     transition-all duration-250 ease-out
-    hover:bg-primary-v1-hv dark:hover:bg-primary-v4-hv;
+    hover:bg-primary-v1-hv dark:hover:bg-primary-v4-hv
+    active:scale-95;
+  }
+
+  .img-cover {
+    @apply w-full h-full object-cover;
   }
 }

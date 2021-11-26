@@ -97,7 +97,10 @@ function RegisterForm() {
         <div className={clsx('flex items-center')}>
           <label
             htmlFor='remember'
-            className={clsx('flex items-center font-bold', 'cursor-pointer')}>
+            className={clsx(
+              'flex items-center font-semibold',
+              'cursor-pointer'
+            )}>
             <div className={clsx('relative', 'mr-2.5 w-4 h-4')}>
               <input
                 id='remember'
@@ -125,7 +128,7 @@ function RegisterForm() {
       <button
         type='submit'
         className={clsx(
-          'w-full mt-6 font-bold py-4 rounded-lg text-xs lg:text-sm lg:shadow-primary-v1 lg:dark:shadow-primary-v4',
+          'w-full mt-6 font-semibold py-4 rounded-lg text-xs lg:text-sm lg:shadow-primary-v1 lg:dark:shadow-primary-v4',
           'text-white bg-primary-v1 dark:bg-primary-v4',
           'transition-all',
           'hover:bg-primary-v1-hv dark:hover:bg-primary-v4-hv'

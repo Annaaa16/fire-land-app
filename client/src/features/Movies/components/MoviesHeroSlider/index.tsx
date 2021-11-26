@@ -82,7 +82,7 @@ function HomeHeroSlider() {
                           )}>
                           <h1
                             className={clsx(
-                              'text-2xl md:text-4xl font-bold leading-tight lg:leading-normal mb-0.5',
+                              'text-2xl md:text-4xl font-semibold leading-tight lg:leading-normal mb-0.5',
                               isActive
                                 ? 'translate-y-0 opacity-100'
                                 : '-translate-y-8 opacity-0',
@@ -109,7 +109,7 @@ function HomeHeroSlider() {
                                 : 'opacity-0 invisible',
                               'text-white',
                               'transition-all duration-700 ease-out delay-1000',
-                              'hover:underline'
+                              'lg:hover:underline'
                             )}>
                             {movie.overview}
                           </Paragraph>
@@ -131,7 +131,7 @@ function HomeHeroSlider() {
                               />
                               <span
                                 className={clsx(
-                                  'font-bold text-sm lg:text-base'
+                                  'font-semibold text-sm lg:text-base'
                                 )}>
                                 Play
                               </span>
@@ -149,7 +149,7 @@ function HomeHeroSlider() {
                               />
                               <span
                                 className={clsx(
-                                  'font-bold text-sm lg:text-base'
+                                  'font-semibold text-sm lg:text-base'
                                 )}>
                                 More Info
                               </span>

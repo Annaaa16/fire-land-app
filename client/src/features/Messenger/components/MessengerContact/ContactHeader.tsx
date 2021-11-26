@@ -8,7 +8,7 @@ function ContactHeader() {
   return (
     <div>
       <div className={clsx('relative', 'px-8')}>
-        <h1 className={clsx('font-bold text-xl mb-3', 'dark:text-white')}>
+        <h1 className={clsx('font-semibold text-xl mb-3', 'dark:text-white')}>
           Recent
         </h1>
         <p className={clsx('text-sm', 'text-gray-lt')}>

@@ -30,7 +30,7 @@ function NewsFeedMembers() {
         </span>
         <span
           className={clsx(
-            'ml-1 font-bold text-xs md:text-sm',
+            'ml-1 font-semibold text-xs md:text-sm',
             'dark:text-primary-v4'
           )}>
           08

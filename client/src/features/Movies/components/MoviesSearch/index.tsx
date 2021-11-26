@@ -14,7 +14,7 @@ import { PATHS } from '@/constants';
 import { moviesActions } from '@/redux/slices/moviesSlice';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
-function SearchField() {
+function MoviesSearch() {
   const [searchTerms, setSearchTerms] = useState<string>('');
 
   const router = useRouter();
@@ -56,4 +56,4 @@ function SearchField() {
   );
 }
 
-export default SearchField;
+export default MoviesSearch;

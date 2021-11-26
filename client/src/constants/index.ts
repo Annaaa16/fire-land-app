@@ -60,5 +60,10 @@ export const STATUS_CODES = {
 };
 
 export const PREFIXES = {
+  YOUTUBE_EMBED: 'https://www.youtube.com/embed',
   BASE64_SVG: 'data:image/svg+xml;base64,',
+};
+
+export const BACKUPS = {
+  AVATAR: 'https://avatars.dicebear.com/api/micah/uiSvbW.svg',
 };

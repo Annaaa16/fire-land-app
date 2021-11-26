@@ -37,7 +37,7 @@ function WallCover() {
         )}>
         <User
           avatar={userProfile.avatar}
-          subClass={clsx('w-18 h-18 lg:w-24 lg:h-24 mr-2')}
+          className={clsx('w-18 h-18 lg:w-24 lg:h-24 mr-2')}
           rounded
         />
         <div>
@@ -45,7 +45,7 @@ function WallCover() {
             <h1
               className={clsx(
                 'text-base mb-1 md:text-lg leading-normal',
-                'font-bold'
+                'font-semibold'
               )}>
               {userProfile.username}
             </h1>

@@ -13,10 +13,10 @@ import { tvShowCategoryKeys } from '@/redux/slices/moviesSlice';
 import { tmdbCategories, tmdbTvShowsEndpoints } from '@/configs/tmdb';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
-import SearchField from '@/components/SearchField';
 import MainLayout from '@/features/Movies/layouts/MainLayout';
 import MoviesItemList from '@/features/Movies/components/MoviesItemList';
 import MoviesHeroSlider from '@/features/Movies/components/MoviesHeroSlider';
+import MoviesSearch from '@/features/Movies/components/MoviesSearch';
 
 function Movies() {
   const { movieCategories, tvShowCategories } = useMoviesSelector();
@@ -57,7 +57,7 @@ function Movies() {
   return (
     <MainLayout title='Movies'>
       <MoviesHeroSlider />
-      <SearchField />
+      <MoviesSearch />
       <MoviesItemList
         title='Upcoming Movies'
         items={movieCategories.upcoming.movies}

@@ -38,7 +38,7 @@ function Paragraph(props: ParagraphProps) {
                 setTrimmedText(children);
                 setIsMore(false);
               }}
-              className={clsx('font-bold', buttonClass)}>
+              className={clsx('font-semibold', buttonClass)}>
               Read more...
             </button>
           ) : (
@@ -47,7 +47,7 @@ function Paragraph(props: ParagraphProps) {
                 setTrimmedText(children.slice(0, lengthInit));
                 setIsMore(true);
               }}
-              className={clsx('font-bold', buttonClass)}>
+              className={clsx('font-semibold', buttonClass)}>
               Show less
             </button>
           )}

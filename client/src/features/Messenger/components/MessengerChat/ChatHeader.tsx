@@ -19,7 +19,7 @@ function ChatHeader() {
       )}>
       <div className={clsx('flex items-center ml-1')}>
         <User view='sm' />
-        <span className={clsx('ml-3 font-bold', 'dark:text-white')}>
+        <span className={clsx('ml-3 font-semibold', 'dark:text-white')}>
           IG Dev
         </span>
       </div>
@@ -31,7 +31,7 @@ function ChatHeader() {
               'text-primary-v1 dark:text-primary-v4'
             )}
           />
-          <Tooltip title='Start a voice call' subClass='top-full' />
+          <Tooltip title='Start a voice call' className='top-full' />
         </li>
         <li className={clsx('relative', 'group px-2', 'cursor-pointer')}>
           <VideoCameraBackIcon
@@ -40,7 +40,7 @@ function ChatHeader() {
               'text-primary-v1 dark:text-primary-v4'
             )}
           />
-          <Tooltip title='Start a video call' subClass='top-full' />
+          <Tooltip title='Start a video call' className='top-full' />
         </li>
         <li className={clsx('relative', 'group px-2', 'cursor-pointer')}>
           <InfoIcon
@@ -51,7 +51,7 @@ function ChatHeader() {
           />
           <Tooltip
             title='Conversation information'
-            subClass={clsx('top-full left-[unset] right-0', 'translate-x-0')}
+            className={clsx('top-full left-[unset] right-0', 'translate-x-0')}
           />
         </li>
       </ul>

@@ -27,8 +27,8 @@ function LoginForm() {
 
   const dispatch = useStoreDispatch();
 
-  const handleOnSubmit = (data: LoginPayload) => {
-    dispatch(authActions.loginRequest(data));
+  const handleOnSubmit = (payload: LoginPayload) => {
+    dispatch(authActions.loginRequest(payload));
   };
 
   return (
@@ -54,7 +54,10 @@ function LoginForm() {
         <div className={clsx('flex items-center')}>
           <label
             htmlFor='remember'
-            className={clsx('flex items-center font-bold', 'cursor-pointer')}>
+            className={clsx(
+              'flex items-center font-semibold',
+              'cursor-pointer'
+            )}>
             <div className={clsx('relative', 'mr-2.5 w-4 h-4')}>
               <input
                 id='remember'
@@ -79,7 +82,7 @@ function LoginForm() {
         </div>
         <span
           className={clsx(
-            'text-gray font-bold text-xs lg:text-sm',
+            'text-gray font-semibold text-xs lg:text-sm',
             'text-gray-lt dark:text-gray-dk',
             'transition-all',
             'cursor-pointer',
@@ -92,10 +95,7 @@ function LoginForm() {
       <button
         type='submit'
         className={clsx(
-          'w-full mt-7 font-bold py-4 rounded-lg text-xs lg:text-sm shadow-primary-v1 dark:shadow-primary-v3',
-          'text-white bg-primary-v1 dark:bg-primary-v3',
-          'transition-all',
-          'hover:bg-primary-v1-hv dark:hover:bg-primary-v3-hv'
+          'btn w-full mt-7 font-semibold py-4 rounded-lg text-xs lg:text-sm shadow-primary-v1 dark:shadow-primary-v3'
         )}>
         Login to your Account!
       </button>

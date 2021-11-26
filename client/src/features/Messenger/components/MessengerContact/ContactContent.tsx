@@ -64,7 +64,7 @@ function ContactContent() {
             <ChatBubbleIcon className={clsx('!text-base', 'text-white')} />
             <span
               className={clsx(
-                'font-bold invisible opacity-0 w-0',
+                'font-semibold invisible opacity-0 w-0',
                 'text-white',
                 'ease-out',
                 'group-hover:visible group-hover:opacity-100 group-hover:ml-1 group-hover:duration-300'
@@ -84,7 +84,7 @@ function ContactContent() {
             <PeopleAltIcon className={clsx('!text-lg')} />
             <span
               className={clsx(
-                'font-bold invisible opacity-0 w-0',
+                'font-semibold invisible opacity-0 w-0',
                 'ease-out',
                 'group-hover:visible group-hover:opacity-100 group-hover:ml-1 group-hover:duration-300'
               )}>
@@ -103,7 +103,7 @@ function ContactContent() {
             <GroupsIcon className={clsx('!text-xl')} />
             <span
               className={clsx(
-                'font-bold invisible opacity-0 w-0',
+                'font-semibold invisible opacity-0 w-0',
                 'ease-out',
                 'group-hover:visible group-hover:opacity-100 group-hover:ml-1 group-hover:duration-300'
               )}>
