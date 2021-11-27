@@ -71,6 +71,7 @@ function MoviesDetail(props: MoviesDetailProps) {
             layout='fill'
             objectFit='cover'
             priority={true}
+            styleLoading='cover'
           />
           <div
             className={clsx(
@@ -97,7 +98,8 @@ function MoviesDetail(props: MoviesDetailProps) {
               objectFit='cover'
               className={clsx('rounded-2xl')}
               priority={true}
-              widths={[50, 20, 30, 40, 90, 40, 50, 70]}
+              loadingWidths={[50, 20, 30, 40, 90, 40, 50, 70]}
+              styleLoading='image'
             />
           </div>
 

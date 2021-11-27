@@ -33,6 +33,7 @@ function MoviesItem({ movie, category }: MoviesItemProps) {
         alt='Thumbnail'
         layout='fill'
         className={clsx('rounded-lg')}
+        styleLoading='image'
       />
     </div>
   );

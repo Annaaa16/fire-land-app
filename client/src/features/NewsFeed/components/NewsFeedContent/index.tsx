@@ -11,7 +11,7 @@ import useIntersectionObserver from '@/hooks/useIntersectionObserver';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 import Post from '@/components/Post';
-import PostLoading from '@/components/PostLoading';
+import LoadingPost from '@/components/Loading/LoadingPost';
 import NewsFeedSender from '../NewsFeedSender';
 
 function NewsFeedContent() {
@@ -43,8 +43,8 @@ function NewsFeedContent() {
 
       {loadings.includes(actions.getPosts) && (
         <>
-          <PostLoading />
-          <PostLoading />
+          <LoadingPost />
+          <LoadingPost />
         </>
       )}
     </div>

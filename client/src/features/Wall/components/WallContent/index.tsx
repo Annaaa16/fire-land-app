@@ -13,7 +13,7 @@ import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 import Post from '@/components/Post';
 import NewsFeedSender from '@/features/NewsFeed/components/NewsFeedSender';
-import PostLoading from '@/components/PostLoading';
+import LoadingPost from '@/components/Loading/LoadingPost';
 
 function WallContent() {
   const loaderRef = useRef<HTMLDivElement>(null);
@@ -51,8 +51,8 @@ function WallContent() {
 
       {loadings.includes(actions.getPosts) && (
         <>
-          <PostLoading />
-          <PostLoading />
+          <LoadingPost />
+          <LoadingPost />
         </>
       )}
     </div>

@@ -50,7 +50,8 @@ function DetailCastList({ casts }: DetailCastListProps) {
                   alt='Cast'
                   className={clsx('rounded-xl')}
                   priority={true}
-                  height={12}
+                  loadingHeight={12}
+                  styleLoading='image'
                 />
               </div>
               <div className={clsx('text-center text-xs', 'text-white')}>

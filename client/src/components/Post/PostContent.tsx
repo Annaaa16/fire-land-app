@@ -29,6 +29,7 @@ function PostContent(props: PostContentProps) {
             objectFit='contain'
             alt='Post thumb'
             className={clsx('w-full h-full object-cover')}
+            styleLoading='cover'
           />
         </div>
       )}

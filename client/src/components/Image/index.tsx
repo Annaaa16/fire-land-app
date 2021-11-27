@@ -1,9 +1,6 @@
 import { useState } from 'react';
 import NextImage from 'next/image';
 
-// nanoid
-import { nanoid } from 'nanoid';
-
 // material ui icons
 import MovieOutlinedIcon from '@mui/icons-material/MovieOutlined';
 
@@ -13,14 +10,27 @@ import clsx from 'clsx';
 // types
 import { ImageProps as NextImageProps } from 'next/image';
 
+import LoadingImage from '../Loading/LoadingImage';
+import LoadingCover from '../Loading/LoadingCover';
+
 interface ImageProps {
-  widths?: number[];
-  height?: number;
   className?: string;
+  loadingWidths?: number[];
+  loadingHeight?: number;
+  skeleton?: boolean;
+  styleLoading: 'cover' | 'image';
 }
 
 function Image(props: NextImageProps & ImageProps) {
-  const { src, widths, height, className, ...rest } = props;
+  const {
+    src,
+    styleLoading,
+    loadingWidths,
+    loadingHeight,
+    skeleton,
+    className,
+    ...rest
+  } = props;
 
   const [isError, setIsError] = useState<boolean>(false);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
@@ -43,22 +53,17 @@ function Image(props: NextImageProps & ImageProps) {
             )}
           />
           {!isLoaded && !isError && (
-            <div className={clsx('absolute inset-0', 'h-full w-full')}>
-              <div className='animate-pulse flex space-x-4'>
-                <div className='flex-1 space-y-2 py-1'>
-                  {(widths || [85, 20, 30, 40, 65]).map((width) => (
-                    <div
-                      key={nanoid(6)}
-                      className={clsx('rounded', 'bg-gray-700')}
-                      style={{
-                        width: width + '%',
-                        height: height ? height + 'px' : '16px',
-                      }}
-                    />
-                  ))}
-                </div>
-              </div>
-            </div>
+            <>
+              {styleLoading === 'image' ? (
+                <LoadingImage
+                  loadingWidths={loadingWidths}
+                  loadingHeight={loadingHeight}
+                  skeleton={skeleton}
+                />
+              ) : (
+                <LoadingCover />
+              )}
+            </>
           )}
         </div>
       ) : (

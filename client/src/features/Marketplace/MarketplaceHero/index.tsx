@@ -24,11 +24,11 @@ import {
 
 function MarketplaceHero() {
   const heros = [
-    { img: heroOne, title: "Let's create your own product!" },
-    { img: heroTwo, title: 'Build interesting things' },
-    { img: heroThree, title: 'Be the first to build your own store' },
-    { img: heroFour, title: 'Where to look for quality products?' },
-    { img: heroFive, title: 'Develope a strong community' },
+    { thumbnail: heroOne, title: "Let's create your own product!" },
+    { thumbnail: heroTwo, title: 'Build interesting things' },
+    { thumbnail: heroThree, title: 'Be the first to build your own store' },
+    { thumbnail: heroFour, title: 'Where to look for quality products?' },
+    { thumbnail: heroFive, title: 'Develope a strong community' },
   ];
 
   const swiperConfig = {
@@ -47,15 +47,16 @@ function MarketplaceHero() {
         {...swiperConfig}
         className='h-full lg:w-2/3 rounded-lg overflow-hidden'>
         {heros.map((hero) => (
-          <SwiperSlide key={hero.img} className='h-full'>
+          <SwiperSlide key={hero.thumbnail} className='h-full'>
             <div
               className={clsx('relative', 'h-full rounded-lg overflow-hidden')}>
               <Image
-                src={hero.img}
+                src={hero.thumbnail}
                 layout='fill'
                 alt='Intro'
                 objectFit='cover'
                 priority={true}
+                styleLoading='cover'
               />
               <div className={clsx('absolute top-50 left-6 z-1')}>
                 <h1

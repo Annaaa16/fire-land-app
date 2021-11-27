@@ -17,7 +17,7 @@ function MarketplaceProduct() {
         'px-3 pt-5 rounded-xl shadow-md',
         'bg-white dark:bg-dk-cpn'
       )}>
-      <div className={clsx('flex items-center justify-between mb-3')}>
+      <div className={clsx('flex-between mb-3')}>
         <div className={clsx('flex items-center', 'cursor-pointer')}>
           <User className={clsx('w-6 h-6 mr-1.5')} rounded />
           <span
@@ -45,6 +45,8 @@ function MarketplaceProduct() {
             'lg:hover:scale-[1.05]'
           )}
           objectFit='cover'
+          styleLoading='image'
+          skeleton
         />
 
         <div
@@ -68,7 +70,7 @@ function MarketplaceProduct() {
           </span>
         </div>
       </div>
-      <div className={clsx('flex items-center justify-between mt-5')}>
+      <div className={clsx('flex-between mt-5')}>
         <abbr
           title='Colorful Abstract Painting'
           className={clsx(
@@ -91,7 +93,7 @@ function MarketplaceProduct() {
       </div>
       <div
         className={clsx(
-          'flex items-center justify-between py-3 mt-3 border-t border-lt-line dark:border-dk-line'
+          'flex-between py-3 mt-3 border-t border-lt-line dark:border-dk-line'
         )}>
         <span
           className={clsx(
