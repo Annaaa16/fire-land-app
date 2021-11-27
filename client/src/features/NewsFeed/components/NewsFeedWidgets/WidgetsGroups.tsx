@@ -11,7 +11,7 @@ function WidgetsGroups() {
       )}>
       <div
         className={clsx(
-          'flex items-center justify-between pb-3.5 border-b border-lt-line dark:border-dk-line'
+          'flex-between pb-3.5 border-b border-lt-line dark:border-dk-line'
         )}>
         <h3 className={clsx('font-semibold', 'dark:text-white')}>Groups</h3>
         <span
@@ -26,9 +26,9 @@ function WidgetsGroups() {
         </span>
       </div>
       <ul className={clsx('mt-5 -mb-3')}>
-        <li className={clsx('flex items-center justify-between pb-7')}>
+        <li className={clsx('flex-between pb-7')}>
           <div className={clsx('flex items-center')}>
-            <User view='sm' />
+            <User view='sm' rounded />
             <div className={clsx('ml-4')}>
               <div
                 className={clsx(

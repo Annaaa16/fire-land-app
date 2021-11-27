@@ -81,12 +81,17 @@ function PostActions(props: PostActionsProps) {
             </div>
           ) : (
             <ThumbUpAltOutlinedIcon
-              className={clsx('mr-1.5 !text-lg md:!text-xl', 'text-gray-500')}
+              className={clsx(
+                'mr-1.5 !text-lg md:!text-xl',
+                'text-gray-500',
+                'dark:group-hover:text-primary-v4'
+              )}
             />
           )}
           <div
             className={clsx(
               'font-semibold text-xs md:text-sm capitalize',
+              !reaction && 'dark:group-hover:text-primary-v4',
               reaction && selectedEmotion?.type === emotions.like.type
                 ? 'text-[#2d86ff]'
                 : selectedEmotion?.type === emotions.love.type
@@ -116,7 +121,8 @@ function PostActions(props: PostActionsProps) {
           'group flex-center flex-1 py-2.5 rounded-md',
           'transition-all ease-out',
           'cursor-pointer select-none',
-          'lg:hover:bg-lt-input lg:dark:hover:bg-dk-tooltip'
+          'lg:hover:bg-lt-input lg:dark:hover:bg-dk-tooltip',
+          'dark:group-hover:text-primary-v4'
         )}>
         <ChatBubbleOutlineOutlinedIcon
           className={clsx(

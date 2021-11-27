@@ -23,7 +23,7 @@ function PostDetail(props: PostDetailProps) {
   );
 
   return (
-    <div className={clsx('flex items-center justify-between h-5')}>
+    <div className={clsx('flex-between h-5')}>
       <div className={clsx('flex items-center')}>
         {reactions.length > 0 && (
           <>

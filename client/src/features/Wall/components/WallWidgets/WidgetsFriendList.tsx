@@ -39,7 +39,7 @@ function WidgetsFriendList() {
         'p-4 rounded-lg shadow-md dark:shadow-xl mt-5',
         'bg-white dark:bg-dk-cpn'
       )}>
-      <div className={clsx('flex items-center justify-between')}>
+      <div className={clsx('flex-between')}>
         <h2 className={clsx('text-base font-semibold', 'dark:text-white')}>
           Friends
         </h2>

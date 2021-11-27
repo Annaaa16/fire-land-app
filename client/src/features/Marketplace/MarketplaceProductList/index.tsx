@@ -18,7 +18,7 @@ function MarketplaceProductList(props: MarketplaceProductListProps) {
     <section className={clsx(spacing && 'mt-14')}>
       <div
         className={clsx(
-          'flex items-center justify-between rounded-lg px-6 h-17 shadow-md mb-4',
+          'flex flex-wrap justify-center items-center md:justify-between rounded-lg px-6 py-5 shadow-md mb-4 gap-4',
           'bg-white dark:bg-dk-cpn'
         )}>
         <h2

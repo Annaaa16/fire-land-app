@@ -93,7 +93,7 @@ function RegisterForm() {
         <Avatar src={avatar} alt='Avatar' className={clsx('w-full h-full')} />
       </div>
 
-      <div className={clsx('flex justify-between items-center mt-5')}>
+      <div className={clsx('flex-between mt-5')}>
         <div className={clsx('flex items-center')}>
           <label
             htmlFor='remember'

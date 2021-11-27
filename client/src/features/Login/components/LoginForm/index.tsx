@@ -50,7 +50,7 @@ function LoginForm() {
         />
       </div>
 
-      <div className={clsx('flex justify-between items-center mt-7')}>
+      <div className={clsx('flex-between mt-7')}>
         <div className={clsx('flex items-center')}>
           <label
             htmlFor='remember'

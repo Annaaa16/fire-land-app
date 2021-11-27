@@ -82,7 +82,7 @@ function PostHeaderBox(props: PostHeaderBoxProps) {
             </div>
           </div>
         </div>
-        <div className={clsx('flex items-center h-9 justify-between')}>
+        <div className={clsx('flex-between h-9')}>
           <button
             onClick={() => !isLoading && handleMakeFriend(userId)}
             className={clsx(

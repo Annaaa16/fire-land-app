@@ -5,7 +5,10 @@ const fontSize = require('./src/tailwind/fontSize');
 const container = require('./src/tailwind/container');
 const zIndex = require('./src/tailwind/zIndex');
 const boxShadow = require('./src/tailwind/boxShadow');
+const backgroundImage = require('./src/tailwind/backgroundImage');
 const transitionDuration = require('./src/tailwind/transitionDuration');
+const animation = require('./src/tailwind/animation');
+const keyframes = require('./src/tailwind/keyframes');
 
 module.exports = {
   mode: 'jit',
@@ -23,7 +26,10 @@ module.exports = {
       lineHeight,
       boxShadow,
       colors,
+      backgroundImage,
       transitionDuration,
+      animation,
+      keyframes,
     },
     fontSize,
     spacing,

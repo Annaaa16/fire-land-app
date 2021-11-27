@@ -36,26 +36,26 @@ function SidebarSmall({ messenger }: SidebarSmallProps) {
       <User view='sm' className='mx-auto' rounded />
 
       <ul className={clsx('mt-8 w-full px-4 text-center')}>
-        {sidebarTooltips.map(({ title, isActive, icon: Icon }) => (
+        {sidebarTooltips.map(({ title, active, icon: Icon }) => (
           <li
             key={title}
             className={clsx(
               'relative',
               'group py-3 rounded-xl mb-5',
-              isActive && 'bg-primary-v2 dark:bg-primary-v4',
-              isDark && isActive
+              active && 'bg-primary-v2 dark:bg-primary-v4',
+              isDark && active
                 ? 'shadow-primary-v4'
-                : isActive && 'shadow-primary-v2',
+                : active && 'shadow-primary-v2',
               'cursor-pointer',
               'transition-all duration-200',
-              !isActive &&
+              !active &&
                 'hover:shadow-lg dark:hover:shadow-3xl hover:bg-white dark:hover:bg-dk-tooltip'
             )}>
             <Icon
               className={clsx(
                 '!text-2xl',
-                isActive ? 'text-white' : 'text-gray-lt dark:text-gray-dk',
-                !isActive &&
+                active ? 'text-white' : 'text-gray-lt dark:text-gray-dk',
+                !active &&
                   'group-hover:text-primary-v2 dark:group-hover:text-primary-v4'
               )}
             />

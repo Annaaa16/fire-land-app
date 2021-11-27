@@ -10,7 +10,7 @@ function NewsFeedMembers() {
   return (
     <div
       className={clsx(
-        'flex items-center justify-between mt-7 p-4 shadow-md rounded-xl',
+        'flex-between mt-7 p-4 shadow-md rounded-xl',
         'bg-white dark:bg-dk-cpn'
       )}>
       <div className={clsx('flex items-center')}>

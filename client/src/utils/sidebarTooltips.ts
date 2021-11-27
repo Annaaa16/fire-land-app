@@ -9,14 +9,14 @@ import StoreIcon from '@mui/icons-material/Store';
 import TextsmsIcon from '@mui/icons-material/Textsms';
 
 const sidebarTooltips = [
-  { isActive: true, title: 'Newsfeed', icon: LibraryBooksIcon },
-  { isActive: false, title: 'Message', icon: TextsmsIcon },
-  { isActive: false, title: 'Groups', icon: GroupsIcon },
-  { isActive: false, title: 'Members', icon: SupervisorAccountIcon },
-  { isActive: false, title: 'Videos', icon: VideoLibraryIcon },
-  { isActive: false, title: 'Forums', icon: ForumIcon },
-  { isActive: false, title: 'Todos', icon: EventNoteIcon },
-  { isActive: false, title: 'Marketplace', icon: StoreIcon },
+  { active: true, title: 'Newsfeed', icon: LibraryBooksIcon },
+  { active: false, title: 'Message', icon: TextsmsIcon },
+  { active: false, title: 'Groups', icon: GroupsIcon },
+  { active: false, title: 'Members', icon: SupervisorAccountIcon },
+  { active: false, title: 'Videos', icon: VideoLibraryIcon },
+  { active: false, title: 'Forums', icon: ForumIcon },
+  { active: false, title: 'Todos', icon: EventNoteIcon },
+  { active: false, title: 'Marketplace', icon: StoreIcon },
 ];
 
 export default sidebarTooltips;

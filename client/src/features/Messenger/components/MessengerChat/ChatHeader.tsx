@@ -14,7 +14,7 @@ function ChatHeader() {
     <div
       className={clsx(
         'sticky top-0 z-50',
-        'flex items-center justify-between w-full h-[70px] p-4 border-b border-lt-line dark:border-dk-line',
+        'flex-between w-full h-[70px] p-4 border-b border-lt-line dark:border-dk-line',
         'bg-white dark:bg-dk-cpn'
       )}>
       <div className={clsx('flex items-center ml-1')}>

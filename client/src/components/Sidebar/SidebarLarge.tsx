@@ -18,35 +18,35 @@ function SidebarLarge() {
       <User user rounded className={clsx('w-14 h-14')} />
 
       <ul className={clsx('mt-10 w-full px-4 text-center')}>
-        {sidebarTooltips.map(({ title, isActive, icon: Icon }) => (
+        {sidebarTooltips.map(({ title, active, icon: Icon }) => (
           <li
             key={title}
             className={clsx(
               'group py-3 px-4 rounded-xl mb-5',
-              isDark && isActive
+              isDark && active
                 ? 'shadow-primary-v4'
-                : isActive && 'shadow-primary-v2',
-              isActive && 'bg-primary-v2 dark:bg-primary-v4',
+                : active && 'shadow-primary-v2',
+              active && 'bg-primary-v2 dark:bg-primary-v4',
               'transition-all duration-200',
               'cursor-pointer',
-              !isActive &&
+              !active &&
                 'hover:shadow-lg dark:hover:shadow-3xl hover:bg-white dark:hover:bg-dk-tooltip'
             )}>
             <div className={clsx('flex items-center')}>
               <Icon
                 className={clsx(
                   '!text-2xl',
-                  isActive ? 'text-white' : 'text-gray-lt dark:text-gray-dk',
-                  !isActive &&
+                  active ? 'text-white' : 'text-gray-lt dark:text-gray-dk',
+                  !active &&
                     'group-hover:text-primary-v2 dark:group-hover:text-primary-v4'
                 )}
               />
               <span
                 className={clsx(
                   'ml-3 font-semibold',
-                  isActive ? 'text-white' : 'dark:text-white',
+                  active ? 'text-white' : 'dark:text-white',
                   'transition-all duration-250 ease-out',
-                  !isActive && 'group-hover:translate-x-1'
+                  !active && 'group-hover:translate-x-1'
                 )}>
                 {title}
               </span>

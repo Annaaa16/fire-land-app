@@ -100,7 +100,7 @@ function ChatFooter() {
 
       <div
         className={clsx(
-          'flex items-center flex-1 justify-between mr-1 md:mr-2 pr-3 rounded-full',
+          'flex-between flex-1 mr-1 md:mr-2 pr-3 rounded-full',
           'bg-lt-input dark:bg-dk-input'
         )}>
         <input

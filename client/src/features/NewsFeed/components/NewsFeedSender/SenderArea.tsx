@@ -50,7 +50,7 @@ function NewsFeedSenderArea() {
   };
 
   const handleSubmitPost = () => {
-    if (!content) return;
+    if (!content.trim()) return;
 
     const formData = new FormData();
 
@@ -62,7 +62,7 @@ function NewsFeedSenderArea() {
   };
 
   const handleUpdatePost = () => {
-    if (!content) return;
+    if (!content.trim()) return;
 
     const formData = new FormData();
     const { _id, photo, photoId } = post!;
