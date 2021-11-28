@@ -5,16 +5,18 @@ import { useRouter } from 'next/router';
 import clsx from 'clsx';
 
 // material ui icons
-import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
-import SentimentSatisfiedOutlinedIcon from '@mui/icons-material/SentimentSatisfiedOutlined';
-import SmsOutlinedIcon from '@mui/icons-material/SmsOutlined';
-import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import ForumIcon from '@mui/icons-material/Forum';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import WidgetsIcon from '@mui/icons-material/Widgets';
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import StoreMallDirectoryIcon from '@mui/icons-material/StoreMallDirectory';
+import CircleIcon from '@mui/icons-material/Circle';
 
 // types
 import { AxiosResponse } from 'axios';
@@ -25,12 +27,14 @@ import { useGlobalContext } from '@/contexts/GlobalContext';
 import { authApiClient } from '@/apis/authApi';
 import cookies from '@/helpers/cookies';
 
+import Tooltip from '../Tooltip';
+
 function HeaderOptions() {
+  const { theme, toggleTheme } = useGlobalContext();
+
   const [isSetting, setIsSetting] = useState(false);
 
   const router = useRouter();
-
-  const { theme, toggleTheme } = useGlobalContext();
 
   const handleLogout = async () => {
     const { logoutUser } = authApiClient();
@@ -55,61 +59,94 @@ function HeaderOptions() {
     <div
       className={clsx(
         'fixed md:static left-0 bottom-0 z-50',
-        'flex items-center justify-center w-full md:w-auto',
+        'flex items-center justify-center w-full md:w-auto md:ml-auto',
         'bg-primary-v1 dark:bg-primary-v3 md:bg-transparent'
       )}>
-      <div
-        className={clsx(
-          'flex-center lg:px-4 lg:mx-4 md:border-l md:border-r border-primary-v1-text'
-        )}>
-        <div className={clsx('px-2 lg:px-0 py-4 md:py-0')}>
-          <ShoppingBagOutlinedIcon
+      <div className={clsx('flex-center space-x-1')}>
+        <div className={clsx('relative', 'group px-2 lg:px-0 py-4 md:py-0')}>
+          <PeopleAltIcon
             className={clsx(
               '!text-2xl !w-11',
-              'text-primary-v1-text',
+              'text-primary-v1-txt',
               'cursor-pointer',
-              'hover:text-white'
+              'lg:hover:text-white'
             )}
           />
+
+          <Tooltip
+            title='0 Friend Requests'
+            className='top-full'
+            direction='btt'
+          />
         </div>
-        <div className={clsx('px-2 lg:px-0 py-4 md:py-0')}>
-          <SentimentSatisfiedOutlinedIcon
+        <div className={clsx('relative', 'group px-2 lg:px-0 py-4 md:py-0')}>
+          <ForumIcon
             className={clsx(
               '!text-2xl !w-11',
-              'text-primary-v1-text',
+              'text-primary-v1-txt',
               'cursor-pointer',
-              'hover:text-white'
+              'lg:hover:text-white'
             )}
           />
+
+          <Tooltip title='0 Message' className='top-full' direction='btt' />
         </div>
-        <div className={clsx('px-2 lg:px-0 py-4 md:py-0')}>
-          <SmsOutlinedIcon
-            className={clsx(
-              '!text-2xl !w-11',
-              'text-primary-v1-text',
-              'cursor-pointer',
-              'hover:text-white'
-            )}
-          />
-        </div>
-        <div className={clsx('relative', 'px-2 lg:px-0 py-4 md:py-0')}>
-          <NotificationsNoneOutlinedIcon
+        <div className={clsx('relative', 'group px-2 lg:px-0 py-4 md:py-0')}>
+          <NotificationsIcon
             className={clsx(
               '!text-2xl !w-11',
               'text-white',
               'cursor-pointer',
-              'hover:text-white'
+              'lg:hover:text-white'
             )}
           />
 
           <div
             className={clsx(
-              'absolute -top-px md:-top-5 right-3 lg:right-1.5',
-              'text-4xl',
-              'text-primary-v2'
+              'absolute right-4 lg:right-2 top-3 md:-top-1',
+              'flex-center'
             )}>
-            .
+            <CircleIcon
+              className={clsx('relative', '!text-[8px]', 'text-red-400')}
+            />
+            <div
+              className={clsx(
+                'absolute inset-0',
+                'rounded-full',
+                'bg-red-200',
+                'animate-ping'
+              )}
+            />
           </div>
+
+          <Tooltip
+            title='0 Notifications'
+            className='top-full'
+            direction='btt'
+          />
+        </div>
+      </div>
+      <div
+        className={clsx(
+          'hidden lg:flex-center lg:px-4 lg:mx-4 md:border-l md:border-r space-x-1 border-primary-v1-txt'
+        )}>
+        <div className={clsx('relative', 'group px-2 lg:px-0 py-4 md:py-0')}>
+          <AddBoxIcon
+            className={clsx('!text-2xl !w-11', 'text-white', 'cursor-pointer')}
+          />
+
+          <Tooltip
+            title='Create new post'
+            className='top-full'
+            direction='btt'
+          />
+        </div>
+        <div className={clsx('relative', 'group px-2 lg:px-0 py-4 md:py-0')}>
+          <StoreMallDirectoryIcon
+            className={clsx('!text-2xl !w-11', 'text-white', 'cursor-pointer')}
+          />
+
+          <Tooltip title='Marketplace' className='top-full' direction='btt' />
         </div>
       </div>
 
@@ -118,21 +155,21 @@ function HeaderOptions() {
           'relative',
           'px-2 md:pr-0 md:ml-2 lg:ml-0 lg:px-0 py-4 md:py-0'
         )}>
-        <SettingsOutlinedIcon
+        <WidgetsIcon
           className={clsx('!text-2xl !w-10', 'text-white', 'cursor-pointer')}
           onClick={() => setIsSetting(!isSetting)}
         />
 
         <ul
           className={clsx(
-            'absolute bottom-[90%] md:top-[150%] right-0',
-            'px-4 py-1.5 w-44 rounded-lg lg:shadow-primary-v1 min-h-[max-content]',
+            'absolute bottom-[90%] md:top-[150%] right-1/2 lg:right-0',
+            'px-4 py-1.5 w-44 translate-x-1/2 lg:translate-x-0 rounded-lg lg:shadow-primary-v1 min-h-[max-content]',
             isSetting ? 'block' : 'hidden',
             'bg-primary-v1 dark:bg-primary-v3'
           )}>
           <li
             className={clsx(
-              'group flex items-center pl-1 pr-3 py-3 border-b border-primary-v1-text',
+              'group flex items-center pl-1 pr-3 py-3 border-b border-primary-v1-txt',
               'cursor-pointer',
               'transition-all ease-out'
             )}>
@@ -155,7 +192,7 @@ function HeaderOptions() {
           </li>
           <li
             className={clsx(
-              'group flex items-center pl-1 pr-3 py-3 border-b border-primary-v1-text',
+              'group flex items-center pl-1 pr-3 py-3 border-b border-primary-v1-txt',
               'cursor-pointer',
               'transition-all ease-out'
             )}>
@@ -179,7 +216,7 @@ function HeaderOptions() {
           <li
             onClick={handleToggleTheme}
             className={clsx(
-              'group flex items-center pl-1 pr-3 py-3 border-b border-primary-v1-text',
+              'group flex items-center pl-1 pr-3 py-3 border-b border-primary-v1-txt',
               'cursor-pointer',
               'transition-all ease-out'
             )}>

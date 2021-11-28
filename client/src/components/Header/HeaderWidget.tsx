@@ -6,12 +6,12 @@ import AppsIcon from '@mui/icons-material/Apps';
 
 function HeaderWidget() {
   return (
-    <div className={clsx('w-10 md:mx-4')}>
+    <div className={clsx('w-10 ml-2 md:mx-4 lg:ml-0')}>
       <AppsIcon
         fontSize='large'
         className={clsx(
           '!w-full',
-          'text-white lg:text-primary-v1-text',
+          'text-white lg:text-primary-v1-txt',
           'cursor-pointer',
           'hover:text-white'
         )}

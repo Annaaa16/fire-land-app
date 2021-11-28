@@ -8,18 +8,18 @@ function HeaderSearch() {
   return (
     <div
       className={clsx(
-        'flex items-center flex-1 pl-5 pr-4 ml-2 md:mx-5 rounded-full',
+        'flex items-center flex-grow lg:flex-grow-[0.9] pl-5 pr-4 ml-2 md:mx-5 rounded-full',
         'bg-primary-v1-input dark:bg-primary-v3-input'
       )}>
       <input
         className={clsx(
           'w-full outline-none py-3',
           'bg-transparent text-white text-xs lg:text-sm',
-          'placeholder-primary-v1-text dark:placeholder-primary-v3-text'
+          'placeholder-primary-v1-txt dark:placeholder-primary-v3-text'
         )}
         placeholder='Search here for people'
       />
-      <SearchIcon className={clsx('text-primary-v1-text', 'cursor-pointer')} />
+      <SearchIcon className={clsx('text-primary-v1-txt', 'cursor-pointer')} />
     </div>
   );
 }
