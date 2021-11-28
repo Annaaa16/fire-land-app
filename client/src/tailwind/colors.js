@@ -3,10 +3,10 @@ const colors = {
     DEFAULT: '#3e3f5e',
   },
   'primary-v1': {
-    DEFAULT: '#615dfa',
+    DEFAULT: '#6366f1',
     hv: '#5753e4',
-    input: '#4e4ac8',
-    text: '#8b88ff',
+    input: '#524fd0',
+    txt: '#8b88ff',
   },
   'primary-v2': {
     DEFAULT: '#23d2e2',
@@ -14,7 +14,7 @@ const colors = {
   'primary-v3': {
     DEFAULT: '#7750f8',
     hv: '#9668ff',
-    input: '#5538b5',
+    input: '#6342d0',
   },
   'primary-v4': {
     DEFAULT: '#40d04f',
