@@ -2,16 +2,18 @@
 const Post = require('../models/postModel');
 const User = require('../models/userModel');
 
-const { CLOUDINARY } = require('../constants');
 const cloudinary = require('../configs/cloudinaryConfig');
 
+const { CLOUDINARY } = require('../constants');
+const { uploadPhoto, updatePhoto } = require('../helpers/cloudinaryPhoto');
 const { notifyServerError } = require('../helpers/notifyError');
 
 const postsController = {};
 
 postsController.createPost = async (req, res) => {
   const { content } = req.body;
-  let photo = req.file?.path; // Read photo file path from client
+
+  let photo = req.file?.path; // Read photo path from client
 
   // Content and attachment is empty
   if (!content && !photo) {
@@ -23,27 +25,15 @@ postsController.createPost = async (req, res) => {
   try {
     const user = await User.findById(req.userId).select(['-password']);
 
-    let photoId = '';
-
-    // Upload photo to cloudinary
-    if (photo) {
-      const { secure_url, public_id } = await cloudinary.uploader.upload(
-        photo,
-        {
-          folder: CLOUDINARY.PATH_UPLOAD,
-        }
-      );
-
-      photo = secure_url;
-      photoId = public_id;
-    } else {
-      photo = '';
-    }
+    const { uploadedPhoto, photoId } = await uploadPhoto(
+      photo,
+      CLOUDINARY.POSTS_UPLOAD_PATH
+    );
 
     const post = new Post({
       content,
       user,
-      photo,
+      photo: uploadedPhoto,
       photoId,
     });
 
@@ -109,9 +99,10 @@ postsController.getPosts = async (req, res) => {
 };
 
 postsController.updatePost = async (req, res) => {
-  let { content, photo: photoUrl, photoId } = req.body;
+  const { postId } = req.params;
 
-  let photo = req.file?.path; // Read photo file path from client
+  let { content, photo: oldPhoto, photoId } = req.body;
+  let photo = req.file?.path; // Read photo path from client
 
   // Empty content and photo
   if (!content?.trim() && !photo) {
@@ -121,54 +112,30 @@ postsController.updatePost = async (req, res) => {
   }
 
   try {
-    const updateCondition = { _id: req.params.id, user: req.userId };
+    const updateCondition = { _id: postId, user: req.userId };
 
     const post = await Post.findOne(updateCondition);
 
     if (!post) {
-      return res.status(401).json({
+      return res.status(404).json({
         success: false,
         message: 'Post not found or user is not authorized',
       });
     }
 
-    // Replace photo
-    if (photo && photoId) {
-      const { secure_url, public_id } = await cloudinary.uploader.upload(
-        photo,
-        {
-          public_id: photoId,
-          overwrite: true,
-          invalidate: true,
-        }
-      );
-
-      photo = secure_url;
-      photoId = public_id;
-    }
-    // Add photo to post
-    else if (!photoId && photo) {
-      const { secure_url, public_id } = await cloudinary.uploader.upload(
-        photo,
-        {
-          folder: CLOUDINARY.PATH_UPLOAD,
-        }
-      );
-
-      photo = secure_url;
-      photoId = public_id;
-    } else {
-      photo = '';
-      photoId = '';
-    }
+    const { newPhoto, newPhotoId } = await updatePhoto(
+      photo,
+      photoId,
+      CLOUDINARY.POSTS_UPLOAD_PATH
+    );
 
     const newPost = {
       content,
-      photo: photo || photoUrl, // New photo or old photo
-      photoId,
+      photo: newPhoto || oldPhoto, // New photo or old photo
+      photoId: newPhotoId,
     };
 
-    const updatedPost = await Post.findByIdAndUpdate(req.params.id, newPost, {
+    const updatedPost = await Post.findByIdAndUpdate(postId, newPost, {
       new: true,
     })
       .populate('user')
@@ -185,8 +152,10 @@ postsController.updatePost = async (req, res) => {
 };
 
 postsController.deletePost = async (req, res) => {
+  const { postId } = req.params;
+
   try {
-    const deleteCondition = { _id: req.params.id, user: req.userId };
+    const deleteCondition = { _id: postId, user: req.userId };
 
     const deletedPost = await Post.findOneAndDelete(deleteCondition);
 
@@ -215,9 +184,11 @@ postsController.deletePost = async (req, res) => {
 
 postsController.reactPost = async (req, res) => {
   const { isReact, isUpdate, emotion } = req.body;
+  const { postId } = req.params;
 
-  // React post but not send emotion
-  if (isReact && !emotion) {
+  const isMissEmotion = isReact && !emotion; // React post but not send emotion
+
+  if (isMissEmotion) {
     return res.status(400).json({
       success: false,
       message: 'Emotion is required',
@@ -225,7 +196,7 @@ postsController.reactPost = async (req, res) => {
   }
 
   try {
-    const post = await Post.findById(req.params.id);
+    const post = await Post.findById(postId);
 
     if (!post) {
       return res.status(404).json({
@@ -234,7 +205,7 @@ postsController.reactPost = async (req, res) => {
       });
     }
 
-    const reactCondition = { _id: req.params.id };
+    const reactCondition = { _id: postId };
 
     if (isReact) {
       let reactedPost = null;
