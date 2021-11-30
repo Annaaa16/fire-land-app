@@ -23,32 +23,32 @@ router.post(
 // @access Private
 router.get('/', verifyToken, postsController.getPosts);
 
-// @route PUT /api/posts/:id
+// @route PUT /api/posts/:postId
 // @desc Update post
 // @access Private
 router.put(
-  '/:id',
+  '/:postId',
   verifyToken,
   verifyMongooseId,
   upload.single('file'),
   postsController.updatePost
 );
 
-// @route DELETE /api/posts/:id
+// @route DELETE /api/posts/:userId
 // @desc Delete post
 // @access Private
 router.delete(
-  '/:id',
+  '/:userId',
   verifyToken,
   verifyMongooseId,
   postsController.deletePost
 );
 
-// @route PATCH /api/posts/:id/reactions
+// @route PATCH /api/posts/:userId/reactions
 // @desc React or unreact to a post
 // @access Private
 router.patch(
-  '/:id/reactions',
+  '/:userId/reactions',
   verifyToken,
   verifyMongooseId,
   postsController.reactPost

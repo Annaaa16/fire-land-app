@@ -25,6 +25,7 @@ function Custom404() {
             layout='fill'
             alt='Not Found'
             objectFit='cover'
+            priority={true}
           />
         </div>
         <h1

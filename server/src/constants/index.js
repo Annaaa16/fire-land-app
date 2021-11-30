@@ -18,5 +18,6 @@ exports.CLOUDINARY = {
   NAME: 'drxhgl7xe',
   API_KEY: process.env.CLOUDINARY_API_KEY,
   SECRET: process.env.CLOUDINARY_SECRET,
-  PATH_UPLOAD: 'fire-chat-app/userUpload',
+  POSTS_UPLOAD_PATH: 'fire-chat-app/posts',
+  PRODUCTS_UPLOAD_PATH: 'fire-chat-app/products',
 };
