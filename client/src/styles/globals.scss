@@ -22,6 +22,16 @@
   textarea {
     @apply outline-none;
   }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type='number'] {
+    -moz-appearance: textfield;
+  }
 }
 
 @layer utilities {
@@ -49,5 +59,11 @@
     @apply absolute inset-0
     bg-skeleton
     animate-skeleton;
+  }
+
+  .modal {
+    @apply absolute inset-0
+    w-full h-full
+    bg-gray-900 opacity-80;
   }
 }

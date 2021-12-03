@@ -3,6 +3,22 @@ export interface TmdbCategories {
   tv: 'tv';
 }
 
+export interface TmdbMoviesEndpoints {
+  popular: 'popular';
+  topRated: 'top_rated';
+  upcoming: 'upcoming';
+  nowPlaying: 'now_playing';
+  similar: 'similar';
+}
+
+export interface TmdbTvShowsEndpoints {
+  popular: 'popular';
+  topRated: 'top_rated';
+  onTheAir: 'on_the_air';
+  airingToday: 'airing_today';
+  similar: 'similar';
+}
+
 export interface TmdbParams {
   page: number;
 }

@@ -11,10 +11,10 @@ import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
 import PhotoCameraBackOutlinedIcon from '@mui/icons-material/PhotoCameraBackOutlined';
 import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
 
-import { useGlobalContext } from '@/contexts/GlobalContext';
 import { commentsActions } from '@/redux/slices/commentsSlice';
 import { useUsersSelector } from '@/redux/selectors';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
+import useUsers from '@/hooks/useUsers';
 
 import User from '@/components/User';
 import Tooltip from '@/components/Tooltip';
@@ -33,8 +33,8 @@ function PostSender(props: PostSenderProps) {
 
   const [content, setContent] = useState<string>('');
 
+  const { visitWall } = useUsers();
   const dispatch = useStoreDispatch();
-  const { visitWall } = useGlobalContext();
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

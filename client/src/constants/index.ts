@@ -35,6 +35,7 @@ export const PATHS = {
 export const LIMITS = {
   POSTS: 5,
   COMMENTS: 5,
+  PRODUCTS: 5,
 };
 
 export const BREAKPOINTS = {

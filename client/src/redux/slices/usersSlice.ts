@@ -19,6 +19,12 @@ import { HYDRATE } from 'next-redux-wrapper';
 
 import { addLoading, removeLoading } from '@/helpers/reduxStateLoadings';
 
+export const actions = {
+  followUser: 'followUser',
+  unfollowUser: 'unfollowUser',
+  getFriends: 'getFriends',
+};
+
 const user = {
   _id: '',
   username: '',
@@ -28,13 +34,7 @@ const user = {
   createdAt: '',
 };
 
-const actions = {
-  followUser: 'followUser',
-  unfollowUser: 'unfollowUser',
-  getFriends: 'getFriends',
-};
-
-export const initialState: UsersInitState = {
+const initialState: UsersInitState = {
   currentUser: user,
   userProfile: user,
   friends: [],
@@ -52,17 +52,7 @@ const usersSlice = createSlice({
       const { user, success } = action.payload;
 
       if (success) {
-        return {
-          ...state,
-          currentUser: {
-            _id: user._id,
-            username: user.username,
-            avatar: user.avatar,
-            followings: user.followings,
-            followers: user.followers,
-            createdAt: user.createdAt,
-          },
-        };
+        state.currentUser = user;
       }
     },
 
@@ -124,17 +114,7 @@ const usersSlice = createSlice({
       const { user, success } = action.payload;
 
       if (success) {
-        return {
-          ...state,
-          userProfile: {
-            _id: user._id,
-            username: user.username,
-            avatar: user.avatar,
-            followings: user.followings,
-            followers: user.followers,
-            createdAt: user.createdAt,
-          },
-        };
+        state.userProfile = user;
       }
     },
   },
@@ -144,8 +124,6 @@ const usersSlice = createSlice({
     },
   },
 });
-
-export { actions };
 
 export const usersActions = usersSlice.actions;
 

@@ -1,14 +1,18 @@
 import { API_URLS, TMDB } from '../constants';
 
 // types
-import { TmdbCategories } from '@/models/tmdb';
+import {
+  TmdbCategories,
+  TmdbMoviesEndpoints,
+  TmdbTvShowsEndpoints,
+} from '@/models/tmdb';
 
-const tmdbCategories: TmdbCategories = {
+export const tmdbCategories: TmdbCategories = {
   movie: 'movie',
   tv: 'tv',
 };
 
-const tmdbMoviesEndpoints = {
+export const tmdbMoviesEndpoints: TmdbMoviesEndpoints = {
   popular: 'popular',
   topRated: 'top_rated',
   upcoming: 'upcoming',
@@ -16,7 +20,7 @@ const tmdbMoviesEndpoints = {
   similar: 'similar',
 };
 
-const tmdbTvShowsEndpoints = {
+export const tmdbTvShowsEndpoints: TmdbTvShowsEndpoints = {
   popular: 'popular',
   topRated: 'top_rated',
   onTheAir: 'on_the_air',
@@ -30,7 +34,5 @@ const tmdb = {
   getOriginalImage: (imgPath: string) => `${TMDB.IMAGE}/original/${imgPath}`,
   getW780Image: (imgPath: string) => `${TMDB.IMAGE}/w780/${imgPath}`,
 };
-
-export { tmdbCategories, tmdbMoviesEndpoints, tmdbTvShowsEndpoints };
 
 export default tmdb;

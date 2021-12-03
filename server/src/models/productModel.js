@@ -30,6 +30,14 @@ const ProductSchema = new mongoose.Schema(
       type: String,
       require: true,
     },
+    reactions: {
+      type: Array,
+      default: [],
+    },
+    sold: {
+      type: Array,
+      default: [],
+    },
   },
   { timestamps: true }
 );

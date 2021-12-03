@@ -5,6 +5,7 @@ import { ConversationsInitState } from '@/models/conversations';
 import { MessengerInitState } from '@/models/messenger';
 import { MoviesInitState } from '@/models/movies';
 import { PostsInitState } from '@/models/posts';
+import { ProductsInitState } from '@/models/products';
 import { UsersInitState } from '@/models/users';
 
 type InitState =
@@ -14,7 +15,8 @@ type InitState =
   | MessengerInitState
   | UsersInitState
   | PostsInitState
-  | MoviesInitState;
+  | MoviesInitState
+  | ProductsInitState;
 
 export const addLoading = (state: InitState, loading: string) => {
   state.loadings.push(loading);

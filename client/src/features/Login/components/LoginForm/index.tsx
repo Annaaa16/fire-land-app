@@ -10,11 +10,12 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 // types
 import { LoginPayload } from '@/models/auth';
-import FormInput from '@/components/FormInput';
 
 import { formLoginSchema } from '@/utils/formSchemas';
 import { authActions } from '@/redux/slices/authSlice';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
+
+import FormInput from '@/components/FormInput';
 
 function LoginForm() {
   const {

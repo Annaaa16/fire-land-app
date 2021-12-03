@@ -6,7 +6,12 @@ function Detail() {
   return (
     <Meta title='Category'>
       <Social>
-        <MarketplaceProductList title='Category' filters spacing={false} />
+        <MarketplaceProductList
+          title='Category'
+          filters
+          spacing={false}
+          products={[]}
+        />
       </Social>
     </Meta>
   );

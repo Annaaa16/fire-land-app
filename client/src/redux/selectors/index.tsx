@@ -23,3 +23,6 @@ export const useCommentsSelector = () =>
 
 export const useMoviesSelector = () =>
   useSelector((state: StoreState) => state.movies);
+
+export const useProductsSelector = () =>
+  useSelector((state: StoreState) => state.products);

@@ -1,5 +1,4 @@
 const lineHeight = {
-  base: '14px',
   3: '12px',
   4: '16px',
   5: '20px',

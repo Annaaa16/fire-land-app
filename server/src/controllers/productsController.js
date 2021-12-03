@@ -81,6 +81,7 @@ productsController.createProduct = async (req, res) => {
 };
 
 productsController.getProducts = async (req, res) => {
+  const { category } = req.query;
   const page = parseInt(req.query.page);
   const limit = parseInt(req.query.limit);
 
@@ -92,7 +93,11 @@ productsController.getProducts = async (req, res) => {
   }
 
   try {
-    const total = await Product.count();
+    const total = await Product.count(
+      category && {
+        category: { $eq: category },
+      }
+    );
 
     const startPos = (page - 1) * limit;
     const endPost = page * limit;
@@ -100,13 +105,17 @@ productsController.getProducts = async (req, res) => {
     const prevPage = startPos > 0 ? page - 1 : null;
     const nextPage = endPost < total ? page + 1 : null;
 
-    const products = await Product.find()
+    const products = await Product.find(
+      category && {
+        category: { $eq: category },
+      }
+    )
       .limit(limit)
       .skip(startPos)
       .populate('user')
       .lean();
 
-    res.status(201).json({
+    res.json({
       success: true,
       prevPage,
       nextPage,
@@ -120,8 +129,8 @@ productsController.getProducts = async (req, res) => {
 
 productsController.updateProduct = async (req, res) => {
   const { productId } = req.params;
+  const { name, price, category, desc, photo: oldPhoto, photoId } = req.body;
 
-  let { name, price, category, desc, photo: oldPhoto, photoId } = req.body;
   let photo = req.file?.path; // Read photo path from client
 
   try {
@@ -172,14 +181,8 @@ productsController.updateProduct = async (req, res) => {
 productsController.deleteProduct = async (req, res) => {
   const { productId } = req.params;
 
-  if (!productId) {
-    return res
-      .status(404)
-      .json({ success: false, message: 'Product ID not found' });
-  }
-
   try {
-    const deleteCondition = { _id: productId, userId: req.userId || tmpId };
+    const deleteCondition = { _id: productId, user: req.userId || tmpId };
 
     const deletedProduct = await Product.findOneAndDelete(deleteCondition);
 
@@ -195,8 +198,77 @@ productsController.deleteProduct = async (req, res) => {
     res.json({
       success: true,
       message: 'Product is deleted!',
-      productId: deletedProduct._id,
+      product: deletedProduct,
     });
+  } catch (error) {
+    notifyServerError(res, error);
+  }
+};
+
+productsController.reactProduct = async (req, res) => {
+  const { productId } = req.params;
+  const { isReact } = req.body;
+
+  try {
+    const product = await Product.findById(productId);
+
+    if (!product) {
+      return res.status(404).json({
+        success: false,
+        message: 'Product not found',
+      });
+    }
+
+    const reactCondition = { _id: productId, user: req.userId || tmpId };
+    const isReacted = product.reactions.includes(req.userId || tmpId);
+
+    if (isReact) {
+      if (isReacted) {
+        return res.status(400).json({
+          success: false,
+          message: 'Product already reacted',
+        });
+      }
+
+      const reactedProduct = await Product.findOneAndUpdate(
+        reactCondition,
+        {
+          $push: {
+            reactions: req.userId || tmpId,
+          },
+        },
+        { new: true }
+      );
+
+      res.json({
+        success: true,
+        message: 'React to product successfully',
+        product: reactedProduct,
+      });
+    } else {
+      if (!isReacted) {
+        return res.status(400).json({
+          success: false,
+          message: 'Product already unreacted',
+        });
+      }
+
+      const unreactedProduct = await Product.findOneAndUpdate(
+        reactCondition,
+        {
+          $pull: {
+            reactions: req.userId || tmpId,
+          },
+        },
+        { new: true }
+      );
+
+      res.json({
+        success: true,
+        message: 'Unreact to product successfully',
+        product: unreactedProduct,
+      });
+    }
   } catch (error) {
     notifyServerError(res, error);
   }

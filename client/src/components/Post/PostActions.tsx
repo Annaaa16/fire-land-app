@@ -25,9 +25,10 @@ function PostActions(props: PostActionsProps) {
 
   const { currentUser } = useUsersSelector();
 
-  const reaction = reactions.find(
+  const selectedReaction = reactions.find(
     (reaction) => reaction.userId === currentUser._id
   );
+  const isReacted = Boolean(selectedReaction);
 
   const {
     isOpenReactions,
@@ -35,21 +36,16 @@ function PostActions(props: PostActionsProps) {
     reactPost,
     userActions,
     reactButtonRef,
-    reactionsRef,
   } = useReactions({
     postId,
     currentUser,
-    reaction,
+    reaction: selectedReaction,
   });
 
   const handleReactPost = () => {
-    const isReact = reactions.some(
-      (reaction) => reaction.userId === currentUser._id
-    );
-
     reactPost({
       emotion: emotions.like.type,
-      isReact: !isReact,
+      isReact: !isReacted,
       isUpdate: false,
     });
   };
@@ -62,7 +58,7 @@ function PostActions(props: PostActionsProps) {
       <button
         ref={reactButtonRef}
         {...userActions}
-        className={clsx('relative z-10', 'flex-1')}>
+        className={clsx('relative', 'flex-1')}>
         <div
           onClick={handleReactPost}
           className={clsx(
@@ -71,7 +67,7 @@ function PostActions(props: PostActionsProps) {
             'cursor-pointer select-none',
             'lg:hover:bg-lt-input lg:dark:hover:bg-dk-tooltip'
           )}>
-          {reaction ? (
+          {isReacted ? (
             <div className={clsx('w-4.5 h-4.5 mr-1.5')}>
               <img
                 src={selectedEmotion?.icon}
@@ -84,34 +80,33 @@ function PostActions(props: PostActionsProps) {
               className={clsx(
                 'mr-1.5 !text-lg md:!text-xl',
                 'text-gray-500',
-                'dark:group-hover:text-primary-v4'
+                'lg:dark:group-hover:text-primary-v4'
               )}
             />
           )}
           <div
             className={clsx(
               'font-semibold text-xs md:text-sm capitalize',
-              !reaction && 'dark:group-hover:text-primary-v4',
-              reaction && selectedEmotion?.type === emotions.like.type
+              isReacted && selectedEmotion?.type === emotions.like.type
                 ? 'text-[#2d86ff]'
                 : selectedEmotion?.type === emotions.love.type
                 ? 'text-[#f33e58]'
                 : selectedEmotion?.type === emotions.angry.type
                 ? 'text-[#e36915]'
-                : !reaction
+                : !isReacted
                 ? 'text-gray'
                 : 'text-[#efac25]',
-              'transition-all ease-out'
+              'transition-all ease-out',
+              !isReacted && 'lg:dark:group-hover:text-primary-v4'
             )}>
-            {reaction ? selectedEmotion?.type : 'Like'}
+            {isReacted ? selectedEmotion?.type : 'Like'}
           </div>
         </div>
 
         <Reactions
-          reactPost={reactPost}
-          isOpenReactions={isOpenReactions}
-          reaction={reaction}
-          ref={reactionsRef}
+          onReactPost={reactPost}
+          isOpen={isOpenReactions}
+          isReacted={isReacted}
         />
       </button>
 
@@ -122,13 +117,13 @@ function PostActions(props: PostActionsProps) {
           'transition-all ease-out',
           'cursor-pointer select-none',
           'lg:hover:bg-lt-input lg:dark:hover:bg-dk-tooltip',
-          'dark:group-hover:text-primary-v4'
+          'lg:dark:group-hover:text-primary-v4'
         )}>
         <ChatBubbleOutlineOutlinedIcon
           className={clsx(
             'mr-1.5 !text-lg md:!text-xl',
             'text-gray-500',
-            'dark:group-hover:text-primary-v4'
+            'lg:dark:group-hover:text-primary-v4'
           )}
         />
         <span
@@ -136,7 +131,7 @@ function PostActions(props: PostActionsProps) {
             'font-semibold text-xs md:text-sm',
             'text-gray',
             'transition-all ease-out',
-            'dark:group-hover:text-primary-v4'
+            'lg:dark:group-hover:text-primary-v4'
           )}>
           Comment
         </span>
@@ -153,7 +148,7 @@ function PostActions(props: PostActionsProps) {
           className={clsx(
             'mr-1.5 !text-lg md:!text-xl',
             'text-gray-500',
-            'dark:group-hover:text-primary-v4'
+            'lg:dark:group-hover:text-primary-v4'
           )}
         />
         <span
@@ -161,7 +156,7 @@ function PostActions(props: PostActionsProps) {
             'font-semibold text-xs md:text-sm',
             'text-gray',
             'transition-all ease-out',
-            'dark:group-hover:text-primary-v4'
+            'lg:dark:group-hover:text-primary-v4'
           )}>
           Share
         </span>

@@ -25,8 +25,8 @@ function Search() {
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  const router = useRouter();
   const isIntersecting = useIntersectionObserver(scrollRef, '500px');
+  const router = useRouter();
   const dispatch = useStoreDispatch();
 
   useEffect(() => {
@@ -79,6 +79,7 @@ export const getServerSideProps: GetServerSideProps =
       query: query.query as string,
     });
 
+    console.log('response =>', response?.data);
     response &&
       store.dispatch(moviesActions.searchMoviesSuccess(response.data));
 

@@ -24,8 +24,10 @@ commentsController.createComment = async (req, res) => {
         .json({ success: false, message: 'User not found' });
     }
 
+    const updateCondition = { _id: postId };
+
     const post = await Post.findOneAndUpdate(
-      { _id: postId },
+      updateCondition,
       { $inc: { commentCount: 1 } },
       { new: true }
     );

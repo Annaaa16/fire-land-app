@@ -2,6 +2,7 @@
 import { Loadings, Pagination, PaginationParams, Post } from './common';
 
 export interface PostsInitState extends Loadings {
+  isOpenFormSender: boolean;
   prevPage: number | null;
   nextPage: number | null;
   total: number;

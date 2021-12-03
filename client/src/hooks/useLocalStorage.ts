@@ -1,15 +1,14 @@
-import { useState, useLayoutEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 const useLocalStorage = (
   key: string,
   initialValue?: string,
-  useCustomEffect = useLayoutEffect
+  useCustomEffect = useEffect
 ) => {
   const [storedValue, setStoredValue] = useState<string>('');
 
-  const setValue = (value: string) => {
+  const setLocalValue = (value: string) => {
     setStoredValue(value);
-
     localStorage.setItem(key, JSON.stringify(value));
   };
 
@@ -20,14 +19,14 @@ const useLocalStorage = (
         const item = localStorage.getItem(key);
 
         return item ? JSON.parse(item) : initialValue;
-      } catch (error) {
-        console.log('Get localStorage ' + key + ' error 👉', error);
+      } catch (error: any) {
+        console.log('Get localStorage ' + key + ' error 👉', error.message);
         return initialValue;
       }
     });
   }, [key, initialValue]);
 
-  return { storedValue, setValue };
+  return { storedValue, setLocalValue };
 };
 
 export default useLocalStorage;

@@ -15,7 +15,7 @@ import { PayloadAction } from '@reduxjs/toolkit';
 
 import { addLoading, removeLoading } from '@/helpers/reduxStateLoadings';
 
-const actions = {
+export const actions = {
   createConversation: 'createConversation',
   getConversations: 'getConversations',
   deleteConversation: 'deleteConversation',
@@ -91,8 +91,6 @@ const conversationsSlice = createSlice({
     },
   },
 });
-
-export { actions };
 
 export const conversationsActions = conversationsSlice.actions;
 

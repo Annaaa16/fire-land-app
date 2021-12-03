@@ -13,7 +13,6 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 import HideImageOutlinedIcon from '@mui/icons-material/HideImageOutlined';
 
 import { postsActions } from '@/redux/slices/postsSlice';
-import { useGlobalContext } from '@/contexts/GlobalContext';
 import { useUsersSelector } from '@/redux/selectors';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
@@ -25,14 +24,13 @@ interface PostHeaderOptionsProps {
 function PostHeaderOptions(props: PostHeaderOptionsProps) {
   const { postId, userId } = props;
 
-  const { toggleSenderArea } = useGlobalContext();
   const { currentUser } = useUsersSelector();
 
   const dispatch = useStoreDispatch();
 
   const handleEditPost = () => {
     dispatch(postsActions.setUpdatePost(postId));
-    toggleSenderArea(true);
+    dispatch(postsActions.setIsOpenFormSender(true));
   };
 
   const handleDeletePost = () => {

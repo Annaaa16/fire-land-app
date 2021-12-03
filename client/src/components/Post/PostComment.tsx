@@ -7,7 +7,8 @@ import Timeago from 'react-timeago';
 // types
 import { Comment } from '@/models/common';
 
-import { useGlobalContext } from '@/contexts/GlobalContext';
+import useUsers from '@/hooks/useUsers';
+
 import User from '../User';
 
 interface PostCommentProps {
@@ -17,7 +18,7 @@ interface PostCommentProps {
 function PostComment({ comment }: PostCommentProps) {
   const { content, user, createdAt } = comment;
 
-  const { visitWall } = useGlobalContext();
+  const { visitWall } = useUsers();
 
   return (
     <div className={clsx('flex mb-2')}>

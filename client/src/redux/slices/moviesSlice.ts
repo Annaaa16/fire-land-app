@@ -8,8 +8,6 @@ import {
   MoviesInitState,
   DefaultMovies,
   DefaultTvShows,
-  MovieCategoryKeys,
-  TvShowCategoryKeys,
   GetMoviesPayload,
   GetTvShowsPayload,
 } from '@/models/movies';
@@ -23,7 +21,7 @@ import { HydrateResponse } from '@/models/common';
 import { filterMovies, filterTvShows } from '@/helpers/filterMovies';
 import { addLoading, removeLoading } from '@/helpers/reduxStateLoadings';
 
-const movieCategoryKeys: MovieCategoryKeys = {
+export const movieCategoryKeys = {
   popular: 'popular',
   topRated: 'topRated',
   upcoming: 'upcoming',
@@ -31,7 +29,7 @@ const movieCategoryKeys: MovieCategoryKeys = {
   similar: 'similar',
 };
 
-const tvShowCategoryKeys: TvShowCategoryKeys = {
+export const tvShowCategoryKeys = {
   popular: 'popular',
   topRated: 'topRated',
   onTheAir: 'onTheAir',
@@ -39,7 +37,7 @@ const tvShowCategoryKeys: TvShowCategoryKeys = {
   similar: 'similar',
 };
 
-const actions = {
+export const actions = {
   getMovies: 'getMovies',
   getTvShows: 'getTvShows',
   searchMovies: 'searchMovies',
@@ -182,8 +180,6 @@ const moviesSlice = createSlice({
     },
   },
 });
-
-export { movieCategoryKeys, tvShowCategoryKeys, actions };
 
 export const moviesActions = moviesSlice.actions;
 

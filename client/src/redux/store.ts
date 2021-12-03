@@ -14,6 +14,7 @@ import { createWrapper } from 'next-redux-wrapper';
 import { WrapperStore, SagaStore } from '@/models/store';
 
 import { postsActions } from './slices/postsSlice';
+import { productsActions } from './slices/productsSlice';
 import rootSaga from './sagas/rootSaga';
 import rootReducer from './reducers';
 
@@ -28,6 +29,8 @@ const store = configureStore({
         ignoredActions: [
           postsActions.createPostRequest.type,
           postsActions.updatePostRequest.type,
+          productsActions.createProductRequest.type,
+          productsActions.updateProductRequest.type,
         ], // Allow FormData type
       },
     })

@@ -15,7 +15,7 @@ import {
 
 import { addLoading, removeLoading } from '@/helpers/reduxStateLoadings';
 
-const actions = {
+export const actions = {
   login: 'login',
   register: 'register',
 };
@@ -94,8 +94,6 @@ const authSlice = createSlice({
   },
 });
 
-const authActions = authSlice.actions;
-
-export { actions, authActions };
+export const authActions = authSlice.actions;
 
 export default authSlice.reducer;

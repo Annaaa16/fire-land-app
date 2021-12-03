@@ -30,7 +30,7 @@ import cookies from '@/helpers/cookies';
 import Tooltip from '../Tooltip';
 
 function HeaderOptions() {
-  const { theme, toggleTheme } = useGlobalContext();
+  const { theme, setTheme } = useGlobalContext();
 
   const [isSetting, setIsSetting] = useState(false);
 
@@ -48,7 +48,7 @@ function HeaderOptions() {
   };
 
   const handleToggleTheme = () => {
-    toggleTheme(
+    setTheme(
       theme === LOCAL_STORAGE.LIGHT_THEME_VALUE
         ? LOCAL_STORAGE.DARK_THEME_VALUE
         : LOCAL_STORAGE.LIGHT_THEME_VALUE
@@ -59,7 +59,7 @@ function HeaderOptions() {
     <div
       className={clsx(
         'fixed md:static left-0 bottom-0 z-50',
-        'flex items-center justify-center w-full md:w-auto md:ml-auto',
+        'flex items-center justify-center w-full h-14 md:h-auto md:w-auto md:ml-auto',
         'bg-primary-v1 dark:bg-primary-v3 md:bg-transparent'
       )}>
       <div className={clsx('flex-center space-x-1')}>
