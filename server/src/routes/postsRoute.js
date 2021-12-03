@@ -38,7 +38,7 @@ router.put(
 // @desc Delete post
 // @access Private
 router.delete(
-  '/:userId',
+  '/:postId',
   verifyToken,
   verifyMongooseId,
   postsController.deletePost
@@ -48,7 +48,7 @@ router.delete(
 // @desc React or unreact to a post
 // @access Private
 router.patch(
-  '/:userId/reactions',
+  '/:postId/reactions',
   verifyToken,
   verifyMongooseId,
   postsController.reactPost
