@@ -1,6 +1,8 @@
 const cloudinary = require('../configs/cloudinaryConfig');
 
 exports.uploadPhoto = async (photo, cloudinaryFolderPath) => {
+  if (!photo) return { uploadedPhoto: '', photoId: '' };
+
   const { secure_url, public_id } = await cloudinary.uploader.upload(photo, {
     folder: cloudinaryFolderPath,
   });
