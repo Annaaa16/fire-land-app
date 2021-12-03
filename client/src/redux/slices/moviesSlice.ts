@@ -10,6 +10,8 @@ import {
   DefaultTvShows,
   GetMoviesPayload,
   GetTvShowsPayload,
+  MovieCategoryKeys,
+  TvShowCategoryKeys,
 } from '@/models/movies';
 import {
   TmdbGetMoviesResponse,
@@ -21,7 +23,7 @@ import { HydrateResponse } from '@/models/common';
 import { filterMovies, filterTvShows } from '@/helpers/filterMovies';
 import { addLoading, removeLoading } from '@/helpers/reduxStateLoadings';
 
-export const movieCategoryKeys = {
+export const movieCategoryKeys: MovieCategoryKeys = {
   popular: 'popular',
   topRated: 'topRated',
   upcoming: 'upcoming',
@@ -29,7 +31,7 @@ export const movieCategoryKeys = {
   similar: 'similar',
 };
 
-export const tvShowCategoryKeys = {
+export const tvShowCategoryKeys: TvShowCategoryKeys = {
   popular: 'popular',
   topRated: 'topRated',
   onTheAir: 'onTheAir',
