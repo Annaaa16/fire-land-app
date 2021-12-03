@@ -25,9 +25,14 @@ router.put(
   productsController.updateProduct
 );
 
-// @route GET api/products/:productId
+// @route DELETE api/products/:productId
 // @desc Delete product
 // @access Private
 router.delete('/:productId', productsController.deleteProduct);
+
+// @route POST api/products/:productId/reactions
+// @desc React or unreact to a product
+// @access Private
+router.post('/:productId/reactions', productsController.reactProduct);
 
 module.exports = router;
