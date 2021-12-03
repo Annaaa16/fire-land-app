@@ -1,27 +1,12 @@
 // types
 import { Loadings, Movie, TvShow } from './common';
 import { TmdbParams } from './tmdb';
+import { ValueOf } from './utils';
 
 import {
   movieCategoryKeys,
   tvShowCategoryKeys,
 } from '../redux/slices/moviesSlice';
-
-export interface MovieCategoryKeys {
-  popular: 'popular';
-  topRated: 'topRated';
-  upcoming: 'upcoming';
-  nowPlaying: 'nowPlaying';
-  similar: 'similar';
-}
-
-export interface TvShowCategoryKeys {
-  popular: 'popular';
-  topRated: 'topRated';
-  onTheAir: 'onTheAir';
-  airingToday: 'airingToday';
-  similar: 'similar';
-}
 
 export interface DefaultMovies {
   page: number;
@@ -67,11 +52,11 @@ export interface MoviesInitState extends Loadings {
 export interface GetMoviesPayload {
   query: string;
   params: TmdbParams;
-  moviesType: keyof typeof movieCategoryKeys;
+  moviesType: ValueOf<typeof movieCategoryKeys>;
 }
 
 export interface GetTvShowsPayload {
   query: string;
   params: TmdbParams;
-  tvShowsType: keyof typeof tvShowCategoryKeys;
+  tvShowsType: ValueOf<typeof tvShowCategoryKeys>;
 }

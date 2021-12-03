@@ -3,6 +3,9 @@ import { AuthInitState } from './auth';
 import { PostsInitState } from './posts';
 import { MoviesInitState } from './movies';
 import { UsersInitState } from './users';
+import { ProductsInitState } from './products';
+
+import { productCategories } from '@/redux/slices/productsSlice';
 
 export interface User {
   readonly _id: string;
@@ -65,6 +68,21 @@ export interface TvShow {
   popularity: number;
 }
 
+export interface Product {
+  readonly _id: string;
+  user: User;
+  name: string;
+  price: number;
+  category: keyof typeof productCategories;
+  desc: string;
+  photo: string;
+  photoId: string;
+  reactions: string[];
+  sold: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface PaginationParams {
   page: number;
   limit: number;
@@ -80,6 +98,7 @@ export interface HydrateResponse {
   posts: PostsInitState;
   movies: MoviesInitState;
   users: UsersInitState;
+  products: ProductsInitState;
 }
 
 export interface StatusResponse {
