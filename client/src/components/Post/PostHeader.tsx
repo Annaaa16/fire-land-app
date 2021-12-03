@@ -9,7 +9,7 @@ import GroupIcon from '@mui/icons-material/Group';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 import { useUsersSelector } from '@/redux/selectors';
-import { useGlobalContext } from '@/contexts/GlobalContext';
+import useUsers from '@/hooks/useUsers';
 
 import User from '@/components/User';
 import PostHeaderOptions from './PostHeaderOptions';
@@ -27,7 +27,7 @@ interface PostHeaderProps {
 function PostHeader(props: PostHeaderProps) {
   const { postId, username, avatar, userId, followers, createdAt } = props;
 
-  const { visitWall } = useGlobalContext();
+  const { visitWall } = useUsers();
   const { currentUser } = useUsersSelector();
 
   return (

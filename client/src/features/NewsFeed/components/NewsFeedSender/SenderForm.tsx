@@ -19,38 +19,39 @@ import { useDropzone } from 'react-dropzone';
 // react overlayscrollbars
 import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
 
+// lodash
+import _ from 'lodash';
+
+// types
+import { FormEvent } from 'react';
+
 import { usePostsSelector, useUsersSelector } from '@/redux/selectors';
-import { useGlobalContext } from '@/contexts/GlobalContext';
 import { postsActions } from '@/redux/slices/postsSlice';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 import useDetectKeydown from '@/hooks/useDetectKeydown';
+import usePhotoPicker from '@/hooks/usePhotoPicker';
 
 import User from '@/components/User';
 import Tooltip from '@/components/Tooltip';
-import SenderPhoto from './SenderPhoto';
+import PhotoPicker from '@/components/PhotoPicker';
 
 function NewsFeedSenderArea() {
-  const { isShowSenderArea, toggleSenderArea } = useGlobalContext();
-  const { updatePost: post } = usePostsSelector();
+  const { updatePost } = usePostsSelector();
   const { currentUser } = useUsersSelector();
 
-  const [isAddPhoto, setIsAddPhoto] = useState<boolean>(false);
-  const [file, setFile] = useState<File | Object>({});
-  const [preview, setPreview] = useState<string>('');
-  const [content, setContent] = useState<string>(post?.content || '');
+  const [isOpenPhoto, setIsOpenPhoto] = useState<boolean>(false);
+  const [content, setContent] = useState<string>(updatePost?.content || '');
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const { textareaRows, handleTextareaRows } = useDetectKeydown();
+  const { file, payload } = usePhotoPicker();
   const dispatch = useStoreDispatch();
 
-  const closeSenderArea = () => {
-    toggleSenderArea(false);
-    dispatch(postsActions.setUpdatePost(null));
-  };
+  const handleCreatePost = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-  const handleSubmitPost = () => {
-    if (!content.trim()) return;
+    if (!content.trim() && _.isEmpty(file)) return;
 
     const formData = new FormData();
 
@@ -58,14 +59,16 @@ function NewsFeedSenderArea() {
     formData.append('file', file as Blob);
 
     dispatch(postsActions.createPostRequest(formData));
-    toggleSenderArea(false);
+    dispatch(postsActions.setIsOpenFormSender(false));
   };
 
-  const handleUpdatePost = () => {
-    if (!content.trim()) return;
+  const handleUpdatePost = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
+    if (!content.trim() || !updatePost) return;
+
+    const { _id, photo, photoId } = updatePost;
     const formData = new FormData();
-    const { _id, photo, photoId } = post!;
 
     formData.append('content', content);
     formData.append('photo', photo);
@@ -75,41 +78,23 @@ function NewsFeedSenderArea() {
     dispatch(
       postsActions.updatePostRequest({ postId: _id, updatePayload: formData })
     );
-    toggleSenderArea(false);
+    dispatch(postsActions.setIsOpenFormSender(false));
+  };
+
+  const closeSenderArea = () => {
+    dispatch(postsActions.setIsOpenFormSender(false));
+    dispatch(postsActions.setUpdatePost(null));
   };
 
   // Set cursor focus at last letter
   useEffect(() => {
     textareaRef.current?.focus();
     textareaRef.current?.setSelectionRange(content.length, content.length);
-  }, [isShowSenderArea, content, isAddPhoto]);
-
-  const { getRootProps, getInputProps } = useDropzone({
-    accept: 'image/*',
-    onDrop: ([file]) => {
-      setFile(file);
-      setPreview(URL.createObjectURL(file));
-    },
-  });
-
-  // Make sure to revoke the data uris to avoid memory leaks
-  useEffect(
-    () => () => {
-      URL.revokeObjectURL(preview);
-    },
-    [preview]
-  );
+  }, [content.length]);
 
   return (
     <div className={clsx('fixed inset-0 z-50', 'flex px-4 md:px-0')}>
-      <div
-        onClick={closeSenderArea}
-        className={clsx(
-          'absolute inset-0',
-          'w-full h-full',
-          'bg-gray-900 opacity-80'
-        )}
-      />
+      <div onClick={closeSenderArea} className='modal' />
       <div
         className={clsx(
           'relative',
@@ -138,10 +123,12 @@ function NewsFeedSenderArea() {
           </div>
         </div>
 
-        <div className={clsx('relative', 'p-3')}>
+        <form
+          onSubmit={updatePost ? handleUpdatePost : handleCreatePost}
+          className={clsx('relative', 'p-3')}>
           <div className={clsx('flex items-center mt-2 pb-2 ml-2')}>
             <User view='sm' avatar={currentUser.avatar} />
-            <div className={clsx('ml-5')}>
+            <div className={clsx('ml-3')}>
               <span className={clsx('font-semibold', 'dark:text-white')}>
                 {currentUser.username}
               </span>
@@ -169,36 +156,33 @@ function NewsFeedSenderArea() {
 
           <OverlayScrollbarsComponent
             options={{ scrollbars: { autoHide: 'scroll' } }}
-            className={clsx(isAddPhoto ? 'max-h-72 md:max-h-100' : 'max-h-60')}>
+            className={clsx(
+              isOpenPhoto ? 'max-h-72 md:max-h-100' : 'max-h-60'
+            )}>
             <textarea
               onKeyDown={handleTextareaRows}
               ref={textareaRef}
               value={content}
               onChange={(e) => setContent(e.target.value)}
-              rows={isAddPhoto ? textareaRows : textareaRows + 3}
+              rows={isOpenPhoto ? textareaRows : textareaRows + 3}
               className={clsx(
-                'w-full pt-8 leading-4 outline-none resize-none overflow-y-hidden',
+                'w-full pt-3 leading-4 outline-none resize-none overflow-y-hidden',
                 'dark:bg-dk-cpn dark:text-white'
               )}
-              placeholder={"What's on your mind, IG Dev?"}
+              placeholder={`What's on your mind, ${currentUser.username}?`}
             />
-            {isAddPhoto && (
-              <div className=''>
-                <SenderPhoto
-                  preview={preview}
-                  setPreview={setPreview}
-                  setIsAddPhoto={setIsAddPhoto}
-                  getRootProps={getRootProps}
-                  getInputProps={getInputProps}
-                />
-              </div>
+            {isOpenPhoto && (
+              <PhotoPicker
+                {...payload}
+                onClosePhoto={() => setIsOpenPhoto(false)}
+              />
             )}
           </OverlayScrollbarsComponent>
 
           <div
             className={clsx(
               'absolute right-5',
-              isAddPhoto ? 'top-[82px]' : 'bottom-32'
+              isOpenPhoto ? 'top-[82px]' : 'bottom-32'
             )}>
             <div className={clsx('group', 'cursor-pointer')}>
               <SentimentSatisfiedIcon
@@ -226,7 +210,7 @@ function NewsFeedSenderArea() {
             </span>
             <ul className={clsx('flex items-center')}>
               <li
-                onClick={() => setIsAddPhoto(!isAddPhoto)}
+                onClick={() => setIsOpenPhoto(!isOpenPhoto)}
                 className={clsx('relative', 'group px-2.5', 'cursor-pointer')}>
                 <PhotoLibraryIcon
                   className={clsx('!text-2xl', 'text-[#45bd62]')}
@@ -263,16 +247,11 @@ function NewsFeedSenderArea() {
           </div>
 
           <button
-            onClick={post ? handleUpdatePost : handleSubmitPost}
-            className={clsx(
-              'mt-4 py-3.5 w-full font-semibold rounded-lg',
-              'text-white bg-primary-v1 dark:bg-primary-v3',
-              'transition-all',
-              'hover:bg-primary-v1-hv dark:hover:bg-primary-v3-hv'
-            )}>
-            {post ? 'Update' : 'Post'}
+            className={clsx('btn mt-4 py-3 w-full font-semibold rounded-lg')}
+            type='submit'>
+            {updatePost ? 'Update' : 'Post'}
           </button>
-        </div>
+        </form>
       </div>
     </div>
   );

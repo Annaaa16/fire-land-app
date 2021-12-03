@@ -6,14 +6,14 @@ import Link from 'next/link';
 import clsx from 'clsx';
 
 import { useUsersSelector } from '@/redux/selectors';
-import { useGlobalContext } from '@/contexts/GlobalContext';
 import { usersActions } from '@/redux/slices/usersSlice';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
+import useUsers from '@/hooks/useUsers';
 
 import User from '@/components/User';
 
 function WidgetsFriendList() {
-  const { visitWall } = useGlobalContext();
+  const { visitWall } = useUsers();
   const { friends, userProfile } = useUsersSelector();
   const dispatch = useStoreDispatch();
   const router = useRouter();

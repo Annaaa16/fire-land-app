@@ -14,7 +14,7 @@ import {
 } from '@/models/comments';
 import { addLoading, removeLoading } from '@/helpers/reduxStateLoadings';
 
-const actions = {
+export const actions = {
   createComment: 'createComment',
   getComments: 'getComments',
 };
@@ -73,8 +73,6 @@ const comments = createSlice({
     },
   },
 });
-
-export { actions };
 
 export const commentsActions = comments.actions;
 

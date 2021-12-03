@@ -8,12 +8,14 @@ import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 
-import { useGlobalContext } from '@/contexts/GlobalContext';
-import { useUsersSelector } from '@/redux/selectors';
-import { actions } from '@/redux/slices/usersSlice';
+import { useConversationsSelector, useUsersSelector } from '@/redux/selectors';
+import { conversationsActions } from '@/redux/slices/conversationsSlice';
+import { actions, usersActions } from '@/redux/slices/usersSlice';
+import useUsers from '@/hooks/useUsers';
 
 import User from '@/components/User';
 import Spinner from '../Spinner';
+import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 interface PostHeaderBoxProps {
   userId: string;
@@ -25,15 +27,47 @@ interface PostHeaderBoxProps {
 function PostHeaderBox(props: PostHeaderBoxProps) {
   const { username, avatar, userId, followers } = props;
 
-  const { handleMakeFriend, visitWall } = useGlobalContext();
-  const {
-    currentUser: { followings },
-    loadings,
-  } = useUsersSelector();
+  const { visitWall } = useUsers();
+  const { conversations } = useConversationsSelector();
+  const { currentUser, loadings } = useUsersSelector();
 
+  const dispatch = useStoreDispatch();
+
+  const isFollowing = currentUser.followings.includes(userId);
   const isLoading =
     loadings.includes(actions.followUser) ||
     loadings.includes(actions.unfollowUser);
+
+  const handleMakeFriend = (followedUserId: string) => {
+    const { _id, followings } = currentUser;
+
+    if (!_id || !followedUserId) return;
+
+    const addFriend = () => {
+      dispatch(
+        conversationsActions.createConversationRequest({
+          senderId: _id as string,
+          receiverId: followedUserId,
+        })
+      );
+
+      dispatch(usersActions.followUserRequest(followedUserId));
+    };
+
+    const unfriend = async () => {
+      const conversation = conversations.find(
+        ({ memberIds }) =>
+          memberIds.includes(_id) && memberIds.includes(followedUserId)
+      );
+
+      dispatch(usersActions.unfollowUserRequest(followedUserId));
+      dispatch(
+        conversationsActions.deleteConversationRequest(conversation!._id)
+      );
+    };
+
+    followings.includes(followedUserId) ? unfriend() : addFriend();
+  };
 
   return (
     <div
@@ -46,6 +80,7 @@ function PostHeaderBox(props: PostHeaderBoxProps) {
       )}>
       <div
         className={clsx(
+          'relative',
           'px-3 pb-3 pt-5 shadow-box rounded-xl',
           'dark:text-white bg-white dark:bg-dk-cpn'
         )}>
@@ -87,17 +122,17 @@ function PostHeaderBox(props: PostHeaderBoxProps) {
             onClick={() => !isLoading && handleMakeFriend(userId)}
             className={clsx(
               'flex-center flex-grow h-full rounded-lg px-5',
-              followings.includes(userId)
+              isFollowing
                 ? 'bg-gray-200 dark:bg-gray-700'
                 : 'bg-primary-v1 dark:bg-primary-v4',
               'transition-all ease-out',
-              followings.includes(userId)
+              isFollowing
                 ? 'hover:bg-gray-300 dark:hover:bg-dk-tooltip'
                 : 'hover:bg-primary-v1-hv dark:hover:bg-primary-v4-hv'
             )}>
             {!isLoading ? (
               <>
-                {followings.includes(userId) ? (
+                {isFollowing ? (
                   <PersonRemoveIcon className={clsx('mr-1 !text-lg')} />
                 ) : (
                   <PersonAddIcon
@@ -107,9 +142,9 @@ function PostHeaderBox(props: PostHeaderBoxProps) {
                 <span
                   className={clsx(
                     'font-semibold text-sm-1',
-                    !followings.includes(userId) && 'text-white'
+                    !isFollowing && 'text-white'
                   )}>
-                  {followings.includes(userId) ? 'Unfriend' : 'Add Friend'}
+                  {isFollowing ? 'Unfriend' : 'Add Friend'}
                 </span>
               </>
             ) : (

@@ -15,9 +15,9 @@ export const notifySagaError = (
   action: ActionCreatorWithoutPayload<string>,
   error: any
 ) => {
-  console.log(action.type + ' error from saga 👉', error);
+  console.log(action.type + ' error from saga 👉', error.message);
 };
 
 export const notifyPageError = (page: string, error: any) => {
-  console.log('Error from ' + page + ' page 👉', error);
+  console.log('Error from ' + page + ' page 👉', error.message);
 };

@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 // lodash
@@ -7,12 +7,11 @@ import _ from 'lodash';
 // types
 import { ReactNode } from 'react';
 import { GetUserResponse } from '@/models/users';
-import { GlobalInitContext } from '@/models/global';
+import { GlobalInitContext } from '@/models/app';
 
 import { LOCAL_STORAGE, PATHS } from '@/constants';
 import { conversationsActions } from '@/redux/slices/conversationsSlice';
 import { usersActions } from '@/redux/slices/usersSlice';
-import { useConversationsSelector, useUsersSelector } from '@/redux/selectors';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import cookies from '@/helpers/cookies';
@@ -24,26 +23,17 @@ interface GlobalProviderProps {
 }
 
 const initialState: GlobalInitContext = {
-  isShowSenderArea: false,
-  toggleSenderArea: () => {},
   theme: '',
-  toggleTheme: () => {},
-  visitWall: () => {},
-  handleMakeFriend: () => {},
+  setTheme: () => {},
 };
 
-const GlobalContext = createContext(initialState);
+export const GlobalContext = createContext(initialState);
 
 function GlobalProvider({
   children,
   currentUserResponse,
 }: GlobalProviderProps) {
-  const { conversations } = useConversationsSelector();
-  const { currentUser } = useUsersSelector();
-
-  const [isShowSenderArea, setIsShowSenderArea] = useState<boolean>(false);
-
-  const { storedValue: theme, setValue: toggleTheme } = useLocalStorage(
+  const { storedValue: theme, setLocalValue: setTheme } = useLocalStorage(
     LOCAL_STORAGE.THEME_KEY,
     LOCAL_STORAGE.LIGHT_THEME_VALUE,
     useIsomorphicLayoutEffect
@@ -51,45 +41,6 @@ function GlobalProvider({
 
   const dispatch = useStoreDispatch();
   const router = useRouter();
-
-  const toggleSenderArea = (isOpen: boolean) => {
-    setIsShowSenderArea(isOpen);
-  };
-
-  const visitWall = (userId: string) => {
-    router.push({ pathname: PATHS.WALL + '/[id]', query: { id: userId } });
-  };
-
-  const handleMakeFriend = (followedUserId: string) => {
-    const { _id, followings } = currentUser;
-
-    if (!_id || !followedUserId) return;
-
-    const addFriend = () => {
-      dispatch(
-        conversationsActions.createConversationRequest({
-          senderId: _id as string,
-          receiverId: followedUserId,
-        })
-      );
-
-      dispatch(usersActions.followUserRequest(followedUserId));
-    };
-
-    const unfriend = async () => {
-      const conversation = conversations.find(
-        ({ memberIds }) =>
-          memberIds.includes(_id) && memberIds.includes(followedUserId)
-      );
-
-      dispatch(usersActions.unfollowUserRequest(followedUserId));
-      dispatch(
-        conversationsActions.deleteConversationRequest(conversation!._id)
-      );
-    };
-
-    followings.includes(followedUserId) ? unfriend() : addFriend();
-  };
 
   // Set init user info
   useEffect(() => {
@@ -116,22 +67,13 @@ function GlobalProvider({
     }
   }, [router]);
 
-  const value = {
-    isShowSenderArea,
-    toggleSenderArea,
-    theme,
-    toggleTheme,
-    visitWall,
-    handleMakeFriend,
-  };
+  const value = { theme, setTheme };
 
   return (
     <GlobalContext.Provider value={value}>{children}</GlobalContext.Provider>
   );
 }
 
-const useGlobalContext = () => useContext(GlobalContext);
-
-export { GlobalContext, useGlobalContext };
+export const useGlobalContext = () => useContext(GlobalContext);
 
 export default GlobalProvider;

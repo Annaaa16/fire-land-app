@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 
 // types
 import { Reaction, User } from '@/models/common';
@@ -7,6 +7,7 @@ import { PREFIXES } from '@/constants';
 import { postsActions } from '@/redux/slices/postsSlice';
 import useStoreDispatch from './useStoreDispatch';
 import useIsomorphicLayoutEffect from './useIsomorphicLayoutEffect ';
+import useClickOutside from './useClickOutside';
 
 // images
 import {
@@ -27,7 +28,7 @@ interface useReactionsProps {
 
 const prefix = PREFIXES.BASE64_SVG;
 
-const emotions: { [key: string]: { type: string; icon: string } } = {
+export const emotions: { [key: string]: { type: string; icon: string } } = {
   like: { type: 'like', icon: prefix + like },
   love: { type: 'love', icon: prefix + love },
   haha: { type: 'haha', icon: prefix + haha },
@@ -41,24 +42,25 @@ const useReactions = ({ postId, reaction, currentUser }: useReactionsProps) => {
   const [isOpenReactions, setIsOpenReactions] = useState<boolean>(false);
   const [selectedEmotion, setSelectedEmotion] = useState<{
     type: string;
-    icon: any;
+    icon: string;
   } | null>(null);
 
-  const timeoutStartId = useRef<NodeJS.Timeout>();
+  const timeoutRef = useRef<NodeJS.Timeout>();
   const reactButtonRef = useRef<HTMLButtonElement | null>(null);
-  const reactionsRef = useRef<HTMLDivElement | null>(null);
 
   const dispatch = useStoreDispatch();
 
-  const reactPost = ({
-    emotion,
-    isReact,
-    isUpdate,
-  }: {
+  const clearStartedTimeout = () => {
+    timeoutRef.current && clearTimeout(timeoutRef.current);
+  };
+
+  const reactPost = (payload: {
     emotion: string;
     isReact: boolean;
     isUpdate: boolean;
   }) => {
+    const { emotion, isReact, isUpdate } = payload;
+
     dispatch(
       postsActions.reactPostRequest({
         postId,
@@ -69,27 +71,28 @@ const useReactions = ({ postId, reaction, currentUser }: useReactionsProps) => {
       })
     );
 
+    clearStartedTimeout();
     setSelectedEmotion(emotions[emotion]);
     setIsOpenReactions(false);
-
-    timeoutStartId.current && clearTimeout(timeoutStartId.current);
   };
 
   const userActions = {
     onMouseEnter() {
-      timeoutStartId.current = setTimeout(() => {
+      timeoutRef.current = setTimeout(() => {
         setIsOpenReactions(true);
       }, 600);
     },
     onMouseLeave() {
+      clearStartedTimeout();
       setIsOpenReactions(false);
-
-      timeoutStartId.current && clearTimeout(timeoutStartId.current);
     },
     onTouchStart() {
-      timeoutStartId.current = setTimeout(() => {
+      timeoutRef.current = setTimeout(() => {
         !isOpenReactions && setIsOpenReactions(true);
-      }, 400);
+      }, 600);
+    },
+    onTouchEnd() {
+      clearStartedTimeout();
     },
   };
 
@@ -104,31 +107,12 @@ const useReactions = ({ postId, reaction, currentUser }: useReactionsProps) => {
   }, [reaction]);
 
   // Run on mobile
-  useEffect(() => {
-    const handleCloseReactions = (e: TouchEvent) => {
-      if (
-        !isOpenReactions ||
-        !reactButtonRef?.current ||
-        !reactionsRef?.current
-      )
-        return;
+  useClickOutside(reactButtonRef, () => {
+    if (!isOpenReactions) return;
 
-      if (
-        !reactButtonRef.current.contains(e.target as Node) ||
-        !reactionsRef.current.contains(e.target as Node)
-      ) {
-        setIsOpenReactions(false);
-
-        timeoutStartId.current && clearTimeout(timeoutStartId.current);
-      }
-    };
-
-    document.addEventListener('touchstart', handleCloseReactions);
-
-    return () => {
-      document.removeEventListener('touchstart', handleCloseReactions);
-    };
-  }, [isOpenReactions]);
+    clearStartedTimeout();
+    setIsOpenReactions(false);
+  });
 
   return {
     isOpenReactions,
@@ -136,10 +120,7 @@ const useReactions = ({ postId, reaction, currentUser }: useReactionsProps) => {
     reactPost,
     userActions,
     reactButtonRef,
-    reactionsRef,
   };
 };
-
-export { emotions };
 
 export default useReactions;

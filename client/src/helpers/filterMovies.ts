@@ -20,7 +20,7 @@ export const filterMovies = (movies: TmdbMovie[]) => {
       overview,
       title,
       voteCount: vote_count,
-      releaseDate: release_date,
+      releaseDate: release_date || '',
       popularity,
     };
   });

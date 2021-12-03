@@ -10,7 +10,7 @@ import {
 import { PayloadAction } from '@reduxjs/toolkit';
 import { addLoading, removeLoading } from '@/helpers/reduxStateLoadings';
 
-const actions = {
+export const actions = {
   createMessage: 'createMessage',
   getMessages: 'getMessages',
 };
@@ -67,8 +67,6 @@ const messengerSlice = createSlice({
     },
   },
 });
-
-export { actions };
 
 export const messengerActions = messengerSlice.actions;
 

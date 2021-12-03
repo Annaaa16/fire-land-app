@@ -23,7 +23,7 @@ import { HydrateResponse } from '@/models/common';
 
 import { addLoading, removeLoading } from '@/helpers/reduxStateLoadings';
 
-const actions = {
+export const actions = {
   createPost: 'createPost',
   getPosts: 'getPosts',
   updatePost: 'updatePost',
@@ -38,6 +38,7 @@ const initialState: PostsInitState = {
   posts: [],
   updatePost: null,
   loadings: [],
+  isOpenFormSender: false,
 };
 
 const postsSlice = createSlice({
@@ -144,6 +145,10 @@ const postsSlice = createSlice({
       removeLoading(state, actions.reactPost);
     },
 
+    setIsOpenFormSender: (state, action: PayloadAction<boolean>) => {
+      state.isOpenFormSender = action.payload;
+    },
+
     setUpdatePost: (state, action: PayloadAction<string | null>) => {
       const postId = action.payload;
 
@@ -202,8 +207,6 @@ const postsSlice = createSlice({
     },
   },
 });
-
-export { actions };
 
 export const postsActions = postsSlice.actions;
 

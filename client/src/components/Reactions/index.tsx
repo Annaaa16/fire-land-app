@@ -1,49 +1,40 @@
-import { forwardRef } from 'react';
-
 // clsx
 import clsx from 'clsx';
 
 // headless ui
 import { Transition } from '@headlessui/react';
 
-// types
-import { Reaction } from '@/models/common';
-
 import { emotions } from '@/hooks/useReactions';
 
 interface ReactionsProps {
-  reactPost: (payload: {
+  onReactPost: (payload: {
     emotion: string;
     isReact: boolean;
     isUpdate: boolean;
   }) => void;
-  isOpenReactions: boolean;
-  reaction: Reaction | undefined;
+  isOpen: boolean;
+  isReacted: boolean | undefined;
 }
 
-function Reactions(
-  { isOpenReactions, reaction, reactPost }: ReactionsProps,
-  ref: any
-) {
+function Reactions({ isOpen, isReacted, onReactPost }: ReactionsProps) {
   const handleReactPost = (key: string) => {
-    reactPost({
+    onReactPost({
       emotion: key,
       isReact: true,
-      isUpdate: Boolean(reaction),
+      isUpdate: Boolean(isReacted),
     });
   };
 
   return (
     <Transition
-      show={isOpenReactions}
-      enter={clsx('z-10', 'duration-200 ease-out', 'pointer-events-none')}
+      show={isOpen}
+      enter={clsx('duration-200 ease-out', 'pointer-events-none')}
       enterFrom='opacity-0 -translate-y-4 scale-50'
       enterTo={clsx(
         'opacity-100 -translate-y-10 scale-100',
         'pointer-events-auto'
       )}>
       <div
-        ref={ref}
         className={clsx(
           'absolute bottom-full left-0 lg:left-1/2 z-10',
           'inline-flex items-center space-x-1.5 lg:-translate-x-1/2 py-1 px-1 rounded-full border border-lt-line dark:border-dk-line',
@@ -71,4 +62,4 @@ function Reactions(
   );
 }
 
-export default forwardRef(Reactions);
+export default Reactions;

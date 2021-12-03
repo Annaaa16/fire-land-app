@@ -36,20 +36,18 @@ function PostDetailReactions({ reactions }: PostDetailReactionsProps) {
         storage.push({ type, count });
       });
 
-      return storage.sort((a, b) => b.count - a.count).slice(0, 3);
+      return storage.sort((a, b) => a.count - b.count).slice(0, 3);
     });
   }, [reactions]);
 
   return (
-    <div className={clsx('flex items-center mr-2')}>
+    <div className={clsx('flex flex-row-reverse items-center mr-2')}>
       {highestEmotions.map((emotion, idx) => (
         <div
           key={emotion.type}
           className={clsx(
-            'relative',
-            idx === 0 ? 'z-3' : idx === 1 ? 'z-2' : 'z-1',
             'group w-4.5 md:w-5 rounded-full border border-white dark:border-dk-cpn',
-            idx > 0 && '-ml-0.5',
+            idx < 2 && '-ml-0.5',
             'bg-white dark:bg-dk-cpn',
             'cursor-pointer'
           )}>
