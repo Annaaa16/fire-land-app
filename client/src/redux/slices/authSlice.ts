@@ -1,10 +1,11 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 // lodash
 import _ from 'lodash';
 
 // types
 import { GetUserResponse } from '@/models/users';
+import { PayloadAction } from '@reduxjs/toolkit';
 import {
   AuthInitState,
   LoginPayload,

@@ -4,7 +4,6 @@ import { createSlice } from '@reduxjs/toolkit';
 import _ from 'lodash';
 
 // types
-import { PayloadAction } from '@reduxjs/toolkit';
 import {
   CommentsInitState,
   CreateCommentPayload,
@@ -12,6 +11,7 @@ import {
   GetCommentsPayload,
   GetCommentsResponse,
 } from '@/models/comments';
+import { PayloadAction } from '@reduxjs/toolkit';
 import { addLoading, removeLoading } from '@/helpers/reduxStateLoadings';
 
 export const actions = {
@@ -66,8 +66,8 @@ const comments = createSlice({
       removeLoading(state, actions.getComments);
     },
 
-    clearComments: (state, action: PayloadAction<string>) => {
-      const postId = action.payload;
+    clearComments: (state, action: PayloadAction<{ postId: string }>) => {
+      const { postId } = action.payload;
 
       _.remove(state.comments, (n) => n.postId === postId);
     },

@@ -1,5 +1,11 @@
 const mongoose = require('mongoose');
 
+const SoldSchema = new mongoose.Schema({
+  _id: false,
+  userId: String,
+  count: Number,
+});
+
 const ProductSchema = new mongoose.Schema(
   {
     user: {
@@ -19,9 +25,7 @@ const ProductSchema = new mongoose.Schema(
       type: String,
       require: true,
     },
-    desc: {
-      type: String,
-    },
+    desc: String,
     photo: {
       type: String,
       require: true,
@@ -30,13 +34,11 @@ const ProductSchema = new mongoose.Schema(
       type: String,
       require: true,
     },
-    reactions: {
-      type: Array,
-      default: [],
-    },
-    sold: {
-      type: Array,
-      default: [],
+    reactions: [String],
+    sold: [SoldSchema],
+    reviewCount: {
+      type: Number,
+      default: 0,
     },
   },
   { timestamps: true }

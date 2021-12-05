@@ -9,6 +9,8 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 // types
 import { Product } from '@/models/common';
 
+import { LIMITS } from '@/constants';
+import { reviewsActions } from '@/redux/slices/reviewsSlice';
 import { useUsersSelector } from '@/redux/selectors';
 import { productsActions } from '@/redux/slices/productsSlice';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
@@ -18,22 +20,46 @@ import Image from '@/components/Image';
 import ProductOptions from './ProductOptions';
 
 function MarketplaceProduct(props: Product) {
-  const { _id, user, photo, name, reactions, price, sold, category } = props;
-  const { currentUser } = useUsersSelector();
+  const {
+    _id: productId,
+    user,
+    photo,
+    name,
+    reactions,
+    price,
+    sold,
+    category,
+  } = props;
 
+  const { currentUser } = useUsersSelector();
   const dispatch = useStoreDispatch();
 
   const isReacted = reactions.includes(currentUser._id);
+  const soldCount = sold.reduce((acc, cur) => acc + cur.count, 0);
 
   const handleReactProduct = () => {
     dispatch(
       productsActions.reactProductRequest({
         currentUserId: currentUser._id,
         isReact: !isReacted,
-        productId: _id,
+        productId,
         category,
       })
     );
+  };
+
+  const handleOpenCheckout = () => {
+    dispatch(
+      reviewsActions.getReviewsRequest({
+        productId,
+        params: {
+          page: 1,
+          limit: LIMITS.REVIEWS,
+        },
+      })
+    );
+    dispatch(productsActions.setCheckoutProduct(props));
+    dispatch(productsActions.setIsOpenCheckout(true));
   };
 
   return (
@@ -88,11 +114,13 @@ function MarketplaceProduct(props: Product) {
           objectFit='cover'
           styleLoading='image'
           skeleton
+          onClick={handleOpenCheckout}
         />
       </div>
 
       <div className={clsx('flex-between mt-3')}>
         <abbr
+          onClick={handleOpenCheckout}
           title={name}
           className={clsx(
             'truncate font-semibold text-base leading-tight mr-2 !no-underline',
@@ -143,7 +171,7 @@ function MarketplaceProduct(props: Product) {
             'cursor-pointer select-none',
             'lg:hover:underline'
           )}>
-          {sold} sold
+          {soldCount} sold
         </span>
         <span
           className={clsx(

@@ -17,7 +17,7 @@ export const commentsApiClient = () => {
     createComment: async (payload: CreateCommentPayload) => {
       try {
         const response = await axiosInstance.post<CreateCommentResponse>(
-          '/comments',
+          '/comments/create',
           payload
         );
 
@@ -28,12 +28,11 @@ export const commentsApiClient = () => {
     },
 
     getComments: async (payload: GetCommentsPayload) => {
-      const { userId, postId, params } = payload;
+      const { postId, params } = payload;
 
       try {
         const response = await axiosInstance.post<GetCommentsResponse>(
           '/comments/' + postId,
-          { userId },
           { params }
         );
 

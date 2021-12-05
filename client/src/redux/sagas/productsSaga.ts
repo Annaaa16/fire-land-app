@@ -2,6 +2,8 @@ import { call, put, takeLatest } from '@redux-saga/core/effects';
 
 // types
 import {
+  BuyProductPayload,
+  BuyProductResponse,
   CreateProductResponse,
   DeleteProductPayload,
   DeleteProductResponse,
@@ -16,8 +18,13 @@ import { productsApiClient } from '@/apis/productsApi';
 import { productsActions } from '../slices/productsSlice';
 import { notifySagaError } from '@/helpers/notifyError';
 
-const { createProduct, updateProduct, deleteProduct, reactProduct } =
-  productsApiClient();
+const {
+  createProduct,
+  updateProduct,
+  deleteProduct,
+  reactProduct,
+  buyProduct,
+} = productsApiClient();
 
 function* handleCreateProductRequest(action: PayloadAction<FormData>) {
   try {
@@ -78,6 +85,20 @@ function* handleReactProductRequest(
   }
 }
 
+function* handleBuyProductRequest(action: PayloadAction<BuyProductPayload>) {
+  try {
+    const response: AxiosResponse<BuyProductResponse> = yield call(
+      buyProduct,
+      action.payload
+    );
+
+    yield put(productsActions.buyProductSuccess(response.data));
+  } catch (error) {
+    notifySagaError(productsActions.buyProductFailure, error);
+    yield put(productsActions.buyProductFailure());
+  }
+}
+
 function* productsSaga() {
   yield takeLatest(
     productsActions.createProductRequest,
@@ -95,6 +116,7 @@ function* productsSaga() {
     productsActions.deleteProductRequest,
     handleDeleteProductRequest
   );
+  yield takeLatest(productsActions.buyProductRequest, handleBuyProductRequest);
 }
 
 export default productsSaga;

@@ -1,6 +1,6 @@
 const express = require('express');
 
-const verifyToken = require('../middlewares/authMiddleware');
+const verifyTokens = require('../middlewares/authMiddleware');
 const authController = require('../controllers/authController');
 
 const router = express.Router();
@@ -23,7 +23,7 @@ router.get('/logout', authController.logout);
 // @route GET api/auth/refresh-token
 // @desc Generate new access token
 // @access Private
-router.get('/refresh-token', verifyToken, authController.refreshToken);
+router.get('/refresh-token', verifyTokens, authController.refreshToken);
 
 // @route GET api/auth/verify-token
 // @desc Validate access token

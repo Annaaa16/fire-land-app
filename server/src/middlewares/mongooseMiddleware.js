@@ -15,9 +15,9 @@ const verifyMongooseId = (req, res, next) => {
       success: false,
       message: 'Invalid mongoose ID from ' + originalUrl,
     });
-  } else {
-    next();
   }
+
+  next();
 };
 
 module.exports = verifyMongooseId;

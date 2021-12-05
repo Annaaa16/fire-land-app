@@ -68,6 +68,11 @@ export interface TvShow {
   popularity: number;
 }
 
+interface Sold {
+  userId: string;
+  count: number;
+}
+
 export interface Product {
   readonly _id: string;
   user: User;
@@ -78,9 +83,18 @@ export interface Product {
   photo: string;
   photoId: string;
   reactions: string[];
-  sold: number;
+  sold: Sold[];
   createdAt: string;
   updatedAt: string;
+}
+
+export interface Review {
+  readonly _id: string;
+  productId: string;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+  user: User;
 }
 
 export interface PaginationParams {

@@ -10,17 +10,18 @@ const useIntersectionObserver = (
   const [isIntersecting, setIsIntersecting] = useState(false);
 
   useEffect(() => {
-    const options = {
-      rootMargin,
-    };
+    if (!ref.current) return;
 
-    const observer = new IntersectionObserver(([entry]) => {
-      setIsIntersecting(entry.isIntersecting);
-    }, options);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsIntersecting(entry.isIntersecting);
+      },
+      {
+        rootMargin,
+      }
+    );
 
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
+    observer.observe(ref.current);
 
     return () => observer.disconnect();
   }, [ref, rootMargin]);

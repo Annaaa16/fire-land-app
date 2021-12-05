@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const { TOKENS, COOKIES } = require('../constants');
 const { setTokens } = require('../helpers/tokens');
 
-const verifyToken = (req, res, next) => {
+const verifyTokens = (req, res, next) => {
   const { access_token, refresh_token } = req.cookies;
 
   if (!access_token || !refresh_token) {
@@ -47,4 +47,4 @@ const verifyToken = (req, res, next) => {
   });
 };
 
-module.exports = verifyToken;
+module.exports = verifyTokens;

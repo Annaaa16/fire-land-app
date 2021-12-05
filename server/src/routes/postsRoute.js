@@ -1,10 +1,11 @@
 const express = require('express');
 
-const verifyToken = require('../middlewares/authMiddleware');
+const verifyTokens = require('../middlewares/authMiddleware');
 const verifyMongooseId = require('../middlewares/mongooseMiddleware');
 const upload = require('../middlewares/uploadMiddleware');
 
 const postsController = require('../controllers/postsController');
+const verifyQueries = require('../middlewares/queriesMiddleware');
 
 const router = express.Router();
 
@@ -13,7 +14,7 @@ const router = express.Router();
 // @access Private
 router.post(
   '/create',
-  verifyToken,
+  verifyTokens,
   upload.single('file'),
   postsController.createPost
 );
@@ -21,14 +22,14 @@ router.post(
 // @route GET /api/posts?page=...&limit=...
 // @desc Get all posts or limit posts
 // @access Private
-router.get('/', verifyToken, postsController.getPosts);
+router.get('/', verifyTokens, verifyQueries, postsController.getPosts);
 
 // @route PUT /api/posts/:postId
 // @desc Update post
 // @access Private
 router.put(
   '/:postId',
-  verifyToken,
+  verifyTokens,
   verifyMongooseId,
   upload.single('file'),
   postsController.updatePost
@@ -39,7 +40,7 @@ router.put(
 // @access Private
 router.delete(
   '/:postId',
-  verifyToken,
+  verifyTokens,
   verifyMongooseId,
   postsController.deletePost
 );
@@ -49,7 +50,7 @@ router.delete(
 // @access Private
 router.patch(
   '/:postId/reactions',
-  verifyToken,
+  verifyTokens,
   verifyMongooseId,
   postsController.reactPost
 );

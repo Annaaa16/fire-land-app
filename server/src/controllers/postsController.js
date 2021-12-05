@@ -12,8 +12,7 @@ const postsController = {};
 
 postsController.createPost = async (req, res) => {
   const { content } = req.body;
-
-  let photo = req.file?.path; // Read photo path from client
+  const photo = req.file?.path; // Read photo path from client
 
   // Content and attachment is empty
   if (!content && !photo) {
@@ -54,13 +53,6 @@ postsController.getPosts = async (req, res) => {
   const page = parseInt(req.query.page);
   const limit = parseInt(req.query.limit);
 
-  // Not specify page or limit then return all posts
-  if (!page || !limit) {
-    return res
-      .status(400)
-      .json({ success: false, message: 'Page and limit params is required' });
-  }
-
   const total = await Post.count(
     user_id && {
       user: { $eq: user_id },
@@ -100,9 +92,9 @@ postsController.getPosts = async (req, res) => {
 
 postsController.updatePost = async (req, res) => {
   const { postId } = req.params;
+  const photo = req.file?.path; // Read photo path from client
 
   let { content, photo: oldPhoto, photoId } = req.body;
-  let photo = req.file?.path; // Read photo path from client
 
   // Empty content and photo
   if (!content?.trim() && !photo) {
