@@ -12,12 +12,9 @@ const { notifyServerError } = require('../helpers/notifyError');
 
 const productsController = {};
 
-const tmpId = '6190974698d3a336ff0e23bf';
-
 productsController.createProduct = async (req, res) => {
   const { name, price, category, desc = '' } = req.body;
-
-  let photo = req.file?.path; // Read photo path from client
+  const photo = req.file?.path; // Read photo path from client
 
   if (!name) {
     return res
@@ -51,7 +48,7 @@ productsController.createProduct = async (req, res) => {
   }
 
   try {
-    const user = await User.findById(req.userId || tmpId).select(['-password']);
+    const user = await User.findById(req.userId).select(['-password']);
 
     const { uploadedPhoto, photoId } = await uploadPhoto(
       photo,
@@ -59,7 +56,7 @@ productsController.createProduct = async (req, res) => {
     );
 
     const product = new Product({
-      user: user || tmpId,
+      user,
       name,
       price: parsedPrice,
       category,
@@ -84,13 +81,6 @@ productsController.getProducts = async (req, res) => {
   const { category } = req.query;
   const page = parseInt(req.query.page);
   const limit = parseInt(req.query.limit);
-
-  // Not specify page or limit then return all posts
-  if (!page || !limit) {
-    return res
-      .status(400)
-      .json({ success: false, message: 'Page and limit params is required' });
-  }
 
   try {
     const total = await Product.count(
@@ -130,11 +120,10 @@ productsController.getProducts = async (req, res) => {
 productsController.updateProduct = async (req, res) => {
   const { productId } = req.params;
   const { name, price, category, desc, photo: oldPhoto, photoId } = req.body;
-
-  let photo = req.file?.path; // Read photo path from client
+  const photo = req.file?.path; // Read photo path from client
 
   try {
-    const updateCondition = { _id: productId, user: req.userId || tmpId };
+    const updateCondition = { _id: productId, user: req.userId };
 
     const product = await Product.findOne(updateCondition);
 
@@ -182,7 +171,7 @@ productsController.deleteProduct = async (req, res) => {
   const { productId } = req.params;
 
   try {
-    const deleteCondition = { _id: productId, user: req.userId || tmpId };
+    const deleteCondition = { _id: productId, user: req.userId };
 
     const deletedProduct = await Product.findOneAndDelete(deleteCondition);
 
@@ -219,8 +208,8 @@ productsController.reactProduct = async (req, res) => {
       });
     }
 
-    const reactCondition = { _id: productId, user: req.userId || tmpId };
-    const isReacted = product.reactions.includes(req.userId || tmpId);
+    const reactCondition = { _id: productId, user: req.userId };
+    const isReacted = product.reactions.includes(req.userId);
 
     if (isReact) {
       if (isReacted) {
@@ -234,7 +223,7 @@ productsController.reactProduct = async (req, res) => {
         reactCondition,
         {
           $push: {
-            reactions: req.userId || tmpId,
+            reactions: req.userId,
           },
         },
         { new: true }
@@ -257,7 +246,7 @@ productsController.reactProduct = async (req, res) => {
         reactCondition,
         {
           $pull: {
-            reactions: req.userId || tmpId,
+            reactions: req.userId,
           },
         },
         { new: true }
@@ -269,6 +258,67 @@ productsController.reactProduct = async (req, res) => {
         product: unreactedProduct,
       });
     }
+  } catch (error) {
+    notifyServerError(res, error);
+  }
+};
+
+productsController.buyProduct = async (req, res) => {
+  const { productId } = req.params;
+
+  try {
+    const buyCondition = { _id: productId, user: req.userId };
+
+    const product = await Product.findOne(buyCondition);
+
+    if (!product) {
+      return res.status(401).json({
+        success: false,
+        message: 'Product not found or user is not authorized',
+      });
+    }
+
+    let boughtUser = product.sold.find((user) => user.userId === req.userId);
+
+    let boughtProduct = null;
+
+    if (boughtUser) {
+      boughtUser = {
+        userId: req.userId,
+        count: boughtUser.count + 1,
+      };
+
+      const updatedProducts = product.sold.map((user) =>
+        user.userId === boughtUser.userId ? boughtUser : user
+      );
+
+      boughtProduct = await Product.findOneAndUpdate(
+        buyCondition,
+        {
+          $set: { sold: updatedProducts },
+        },
+        { new: true }
+      ).populate('user');
+    } else {
+      const newUser = {
+        userId: req.userId,
+        count: 1,
+      };
+
+      boughtProduct = await Product.findOneAndUpdate(
+        buyCondition,
+        {
+          $push: { sold: newUser },
+        },
+        { new: true }
+      ).populate('user');
+    }
+
+    res.json({
+      success: true,
+      message: 'Product successfully purchased!',
+      product: boughtProduct,
+    });
   } catch (error) {
     notifyServerError(res, error);
   }
