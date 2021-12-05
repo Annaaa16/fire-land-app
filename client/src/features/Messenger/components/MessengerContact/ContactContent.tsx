@@ -17,9 +17,9 @@ import ContactConversationList from './ContactConversationList';
 import ContactOnlineList from './ContactOnlineList';
 
 enum Contacts {
-  CONVERSATIONS,
-  ONLINE,
-  GROUPS,
+  CONVERSATIONS = 'conversations',
+  ONLINE = 'online',
+  GROUPS = 'groups',
 }
 
 function ContactContent() {

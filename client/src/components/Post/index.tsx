@@ -37,14 +37,13 @@ function Post(props: PostType & Pagination) {
   const handleFetchComments = () => {
     // Clear all previous comments before fetch comments
     if (!isOpenComments) {
-      dispatch(commentsActions.clearComments(_id));
+      dispatch(commentsActions.clearComments({ postId: _id }));
     }
 
     setIsOpenComments(!isOpenComments);
     dispatch(
       commentsActions.getCommentsRequest({
         postId: _id,
-        userId,
         params: {
           limit: LIMITS.COMMENTS,
           page: 1,
@@ -58,7 +57,6 @@ function Post(props: PostType & Pagination) {
       dispatch(
         commentsActions.getCommentsRequest({
           postId: _id,
-          userId,
           params: {
             limit: LIMITS.COMMENTS,
             page: nextPage,

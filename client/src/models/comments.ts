@@ -1,5 +1,5 @@
 // types
-import { Comment, Loadings, Pagination } from './common';
+import { Comment, Loadings, Pagination, PaginationParams } from './common';
 
 export interface CommentsInitState extends Loadings {
   comments: Comment[];
@@ -13,11 +13,7 @@ export interface CreateCommentPayload {
 
 export interface GetCommentsPayload {
   postId: string;
-  userId: string;
-  params: {
-    page: number;
-    limit: number;
-  };
+  params: PaginationParams;
 }
 
 // === Responses ===

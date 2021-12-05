@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
 // clsx
 import clsx from 'clsx';
@@ -34,6 +34,7 @@ import usePhotoPicker from '@/hooks/usePhotoPicker';
 import User from '@/components/User';
 import Tooltip from '@/components/Tooltip';
 import PhotoPicker from '@/components/PhotoPicker';
+import useAutoFocus from '@/hooks/useAutoFocus';
 
 function NewsFeedSenderArea() {
   const { updatePost } = usePostsSelector();
@@ -86,11 +87,7 @@ function NewsFeedSenderArea() {
     dispatch(postsActions.setUpdatePost(null));
   };
 
-  // Set cursor focus at last letter
-  useEffect(() => {
-    textareaRef.current?.focus();
-    textareaRef.current?.setSelectionRange(content.length, content.length);
-  }, [content.length]);
+  useAutoFocus(textareaRef);
 
   return (
     <div className={clsx('fixed inset-0 z-50', 'flex px-4 md:px-0')}>

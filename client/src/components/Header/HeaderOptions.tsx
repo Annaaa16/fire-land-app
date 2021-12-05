@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useRouter } from 'next/router';
 
 // clsx
@@ -26,13 +26,16 @@ import { LOCAL_STORAGE, PATHS } from '@/constants';
 import { useGlobalContext } from '@/contexts/GlobalContext';
 import { authApiClient } from '@/apis/authApi';
 import cookies from '@/helpers/cookies';
+import useClickOutside from '@/hooks/useClickOutside';
 
 import Tooltip from '../Tooltip';
 
 function HeaderOptions() {
   const { theme, setTheme } = useGlobalContext();
 
-  const [isSetting, setIsSetting] = useState(false);
+  const [isOpenSetting, setIsOpenSetting] = useState(false);
+
+  const optionsRef = useRef<HTMLDivElement>(null);
 
   const router = useRouter();
 
@@ -54,6 +57,8 @@ function HeaderOptions() {
         : LOCAL_STORAGE.LIGHT_THEME_VALUE
     );
   };
+
+  useClickOutside(optionsRef, () => setIsOpenSetting(false));
 
   return (
     <div
@@ -151,20 +156,21 @@ function HeaderOptions() {
       </div>
 
       <div
+        ref={optionsRef}
         className={clsx(
           'relative',
           'px-2 md:pr-0 md:ml-2 lg:ml-0 lg:px-0 py-4 md:py-0'
         )}>
         <WidgetsIcon
           className={clsx('!text-2xl !w-10', 'text-white', 'cursor-pointer')}
-          onClick={() => setIsSetting(!isSetting)}
+          onClick={() => setIsOpenSetting(!isOpenSetting)}
         />
 
         <ul
           className={clsx(
             'absolute bottom-[90%] md:top-[150%] right-1/2 lg:right-0',
             'px-4 py-1.5 w-44 translate-x-1/2 lg:translate-x-0 rounded-lg lg:shadow-primary-v1 min-h-[max-content]',
-            isSetting ? 'block' : 'hidden',
+            isOpenSetting ? 'block' : 'hidden',
             'bg-primary-v1 dark:bg-primary-v3'
           )}>
           <li
