@@ -5,6 +5,7 @@ const conversationsRoute = require('./conversationsRoute');
 const messagesRoute = require('./messagesRoute');
 const commentsRoute = require('./commentsRoute');
 const productsRoute = require('./productsRoute');
+const reviewsRoute = require('./reviewsRoute');
 
 const connectToRoutes = (app) => {
   app.use('/api/auth', authRoute);
@@ -14,6 +15,7 @@ const connectToRoutes = (app) => {
   app.use('/api/messages', messagesRoute);
   app.use('/api/comments', commentsRoute);
   app.use('/api/products', productsRoute);
+  app.use('/api/reviews', reviewsRoute);
 };
 
 module.exports = connectToRoutes;

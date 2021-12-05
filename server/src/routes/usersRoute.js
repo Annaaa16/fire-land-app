@@ -1,6 +1,6 @@
 const express = require('express');
 
-const verifyToken = require('../middlewares/authMiddleware');
+const verifyTokens = require('../middlewares/authMiddleware');
 const verifyMongooseId = require('../middlewares/mongooseMiddleware');
 const usersController = require('../controllers/usersController');
 
@@ -9,19 +9,19 @@ const router = express.Router();
 // @route GET api/users/current
 // @desc Get current user
 // @access Private
-router.get('/current', verifyToken, usersController.getCurrentUser);
+router.get('/current', verifyTokens, usersController.getCurrentUser);
 
 // @route GET api/users/:userId
 // @desc Get user by id
 // @access Private
-router.get('/:userId', verifyToken, verifyMongooseId, usersController.getUser);
+router.get('/:userId', verifyTokens, verifyMongooseId, usersController.getUser);
 
 // @route PATCH api/users/:userId/follow
 // @desc Follow an user
 // @access Private
 router.patch(
   '/:userId/follow',
-  verifyToken,
+  verifyTokens,
   verifyMongooseId,
   usersController.followUser
 );
@@ -31,7 +31,7 @@ router.patch(
 // @access Private
 router.patch(
   '/:userId/unfollow',
-  verifyToken,
+  verifyTokens,
   verifyMongooseId,
   usersController.unfollowUser
 );
@@ -41,7 +41,7 @@ router.patch(
 // @access Private
 router.get(
   '/:userId/friends',
-  verifyToken,
+  verifyTokens,
   verifyMongooseId,
   usersController.getFriends
 );

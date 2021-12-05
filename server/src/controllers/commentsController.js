@@ -24,10 +24,10 @@ commentsController.createComment = async (req, res) => {
         .json({ success: false, message: 'User not found' });
     }
 
-    const updateCondition = { _id: postId };
+    const updatePostCondition = { _id: postId };
 
     const post = await Post.findOneAndUpdate(
-      updateCondition,
+      updatePostCondition,
       { $inc: { commentCount: 1 } },
       { new: true }
     );
@@ -56,20 +56,11 @@ commentsController.createComment = async (req, res) => {
 };
 
 commentsController.getComments = async (req, res) => {
-  const { userId } = req.body;
   const { postId } = req.params;
   const page = parseInt(req.query.page);
   const limit = parseInt(req.query.limit);
 
   try {
-    const user = await User.findById(userId).select(['-password']);
-
-    if (!user) {
-      return res
-        .status(404)
-        .json({ success: false, message: 'User not found' });
-    }
-
     const post = await Post.findById(postId);
 
     if (!post) {
