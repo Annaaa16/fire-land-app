@@ -8,6 +8,7 @@ import conversationsReducer from '../slices/conversationsSlice';
 import commentsReducer from '../slices/commentsSlice';
 import moviesReducer from '../slices/moviesSlice';
 import productsReducer from '../slices/productsSlice';
+import reviewsReducer from '../slices/reviewsSlice';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   comments: commentsReducer,
   movies: moviesReducer,
   products: productsReducer,
+  reviews: reviewsReducer,
 });
 
 export default rootReducer;

@@ -5,6 +5,8 @@ import { HYDRATE } from 'next-redux-wrapper';
 
 // types
 import {
+  BuyProductPayload,
+  BuyProductResponse,
   CreateProductResponse,
   DeleteProductPayload,
   DeleteProductResponse,
@@ -24,7 +26,8 @@ export const actions = {
   getProducts: 'getProducts',
   updateProduct: 'updateProduct',
   deleteProduct: 'deletePost',
-  reactProduct: 'reactPost',
+  reactProduct: 'reactProduct',
+  buyProduct: 'buyProduct',
 };
 
 export const productCategories = {
@@ -41,6 +44,7 @@ export const productCategories = {
 
 const initialState: ProductsInitState = {
   updateProduct: null,
+  checkoutProduct: null,
   recent: [],
   categories: {
     food: [],
@@ -160,6 +164,26 @@ const productsSlice = createSlice({
       removeLoading(state, actions.deleteProduct);
     },
 
+    buyProductRequest: (state, action: PayloadAction<BuyProductPayload>) => {
+      addLoading(state, actions.buyProduct);
+    },
+    buyProductSuccess: (state, action: PayloadAction<BuyProductResponse>) => {
+      const { success, product: boughtProduct } = action.payload;
+
+      if (success) {
+        state.categories[boughtProduct.category] = state.categories[
+          boughtProduct.category
+        ].map((product) =>
+          product._id === boughtProduct._id ? boughtProduct : product
+        );
+      }
+
+      removeLoading(state, actions.buyProduct);
+    },
+    buyProductFailure: (state) => {
+      removeLoading(state, actions.buyProduct);
+    },
+
     reactProductRequest: (
       state,
       action: PayloadAction<ReactProductPayload>
@@ -172,11 +196,13 @@ const productsSlice = createSlice({
     ) => {
       const { isReact, currentUserId, productId, category } = action.payload;
 
-      state.categories[category].forEach((product, idx) => {
+      state.categories[category].forEach((product) => {
         if (product._id === productId) {
           if (isReact) {
             product.reactions.push(currentUserId);
           } else {
+            const idx = product.reactions.indexOf(currentUserId);
+
             product.reactions.splice(idx, 1);
           }
         }
@@ -199,6 +225,10 @@ const productsSlice = createSlice({
 
     setUpdateProduct: (state, action: PayloadAction<Product | null>) => {
       state.updateProduct = action.payload;
+    },
+
+    setCheckoutProduct: (state, action: PayloadAction<Product | null>) => {
+      state.checkoutProduct = action.payload;
     },
 
     setIsOpenCreateForm: (state, action: PayloadAction<boolean>) => {

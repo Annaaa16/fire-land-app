@@ -1,5 +1,7 @@
 // types
 import {
+  BuyProductPayload,
+  BuyProductResponse,
   CreateProductResponse,
   DeleteProductPayload,
   DeleteProductResponse,
@@ -89,6 +91,18 @@ export const productsApiClient = () => {
         return response;
       } catch (error) {
         return notifyAxiosError('React product', error as AxiosError);
+      }
+    },
+
+    buyProduct: async ({ productId }: BuyProductPayload) => {
+      try {
+        const response = await axiosInstance.post<BuyProductResponse>(
+          `/products/${productId}/buy`
+        );
+
+        return response;
+      } catch (error) {
+        return notifyAxiosError('Buy product', error as AxiosError);
       }
     },
   };

@@ -8,6 +8,7 @@ import usersSaga from './usersSaga';
 import commentsSaga from './commentsSaga';
 import moviesSaga from './moviesSaga';
 import productsSaga from './productsSaga';
+import reviewsSaga from './reviewsSaga';
 
 function* watcherSaga() {
   yield all([
@@ -19,6 +20,7 @@ function* watcherSaga() {
     commentsSaga(),
     moviesSaga(),
     productsSaga(),
+    reviewsSaga(),
   ]);
 }
 

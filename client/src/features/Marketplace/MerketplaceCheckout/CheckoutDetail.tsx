@@ -14,19 +14,70 @@ import ForumIcon from '@mui/icons-material/Forum';
 import HandymanIcon from '@mui/icons-material/Handyman';
 import StoreIcon from '@mui/icons-material/Store';
 import DoDisturbIcon from '@mui/icons-material/DoDisturb';
+import ChatIcon from '@mui/icons-material/Chat';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+
+// types
+import { Product } from '@/models/common';
+
+// enums
+import { ViewOptions } from '.';
+
+import { useUsersSelector } from '@/redux/selectors';
+import { productsActions } from '@/redux/slices/productsSlice';
+import useStoreDispatch from '@/hooks/useStoreDispatch';
+import useUsers from '@/hooks/useUsers';
 
 import User from '@/components/User';
 
-function CheckoutDetail() {
+interface CheckoutDetailProps extends Product {
+  onSelectOption: (option: ViewOptions) => void;
+}
+
+function CheckoutDetail(props: CheckoutDetailProps) {
+  const {
+    _id: productId,
+    name,
+    user,
+    desc,
+    category,
+    reactions,
+    price,
+    onSelectOption,
+  } = props;
+
+  const { currentUser } = useUsersSelector();
+
+  const { visitWall } = useUsers();
+  const dispatch = useStoreDispatch();
+
+  const isReacted = reactions.includes(currentUser._id);
+
+  const handleBuyProduct = () => {
+    dispatch(productsActions.buyProductRequest({ productId: productId }));
+    dispatch(productsActions.setIsOpenCheckout(false));
+  };
+
+  const handleReactProduct = () => {
+    dispatch(
+      productsActions.reactProductRequest({
+        currentUserId: currentUser._id,
+        isReact: !isReacted,
+        productId,
+        category,
+      })
+    );
+  };
+
   return (
-    <div className='px-3 pb-6 pt-3 md:px-5 md:py-5'>
+    <div className='flex flex-col px-3 pb-6 pt-3 md:px-5 md:py-5 h-full overflow-y-auto'>
       <div className={clsx('flex-between mb-4')}>
         <h2
           className={clsx(
             'font-bold text-xl md:text-2xl truncate',
             'dark:text-white'
           )}>
-          Colorful Abstract Painting
+          {name}
         </h2>
 
         <div className={clsx('flex items-center gap-1')}>
@@ -65,49 +116,49 @@ function CheckoutDetail() {
 
       <div className={clsx('flex items-center mb-4')}>
         <div
+          onClick={handleReactProduct}
           className={clsx(
             'group flex items-center py-0.5 mr-5 rounded-full',
             'cursor-pointer'
           )}>
-          <FavoriteBorderIcon
-            className={clsx(
-              'mr-1',
-              'text-red-400',
-              '!transition-all',
-              'lg:group-hover:scale-110'
-            )}
-          />
-          <span className={clsx('font-semibold', 'dark:text-white')}>1.1k</span>
+          {isReacted ? (
+            <FavoriteIcon className={clsx('mr-1', 'text-red-400')} />
+          ) : (
+            <FavoriteBorderIcon
+              className={clsx(
+                'mr-1',
+                'text-red-400',
+                '!transition-all',
+                'lg:group-hover:scale-110'
+              )}
+            />
+          )}
+          <span
+            className={clsx('font-semibold', 'dark:text-white', 'select-none')}>
+            {reactions.length}
+          </span>
         </div>
         <span className={clsx('dark:text-gray-300')}>15 customers review</span>
       </div>
 
-      <div className={clsx('flex')}>
-        <User rounded className={clsx('w-10 h-10 mr-3')} />
-        <div
-          className={clsx(
-            'flex items-center text-sm-1 border-l-4 border-gray-400'
-          )}>
-          <span className={clsx('pl-2 mr-2', 'text-gray-400')}>
-            "Best choice for you"
-          </span>
-          <span className={clsx('font-semibold')}>
-            -{' '}
-            <span
-              className={clsx(
-                'dark:text-gray-200',
-                'cursor-pointer',
-                'lg:hover:underline'
-              )}>
-              @igdev
-            </span>
-          </span>
-        </div>
+      <div className={clsx('flex items-center')}>
+        <ChatIcon
+          className={clsx('mr-2', 'text-gray-500 dark:text-gray-200')}
+        />
+        <span className={clsx('mr-4 pb-0.5', 'dark:text-gray-200')}>
+          {desc}
+        </span>
+        <User
+          onClick={() => visitWall(user._id)}
+          rounded
+          className={clsx('ml-auto mr-0.5 w-10 h-10')}
+          avatar={user.avatar}
+        />
       </div>
 
       <div
         className={clsx(
-          'mt-6 pt-5 border-t border-lt-line dark:border-dk-line'
+          'mt-3 pt-5 border-t border-lt-line dark:border-dk-line'
         )}>
         <div className={clsx('flex items-center mb-3')}>
           <LocalOfferOutlinedIcon className={clsx('mr-2', 'text-gray-500')} />
@@ -118,7 +169,7 @@ function CheckoutDetail() {
               'lg:hover:underline',
               'dark:text-gray-200'
             )}>
-            @toys
+            @{category}
           </span>
         </div>
 
@@ -156,13 +207,13 @@ function CheckoutDetail() {
             <span className={clsx('line-through mr-1.5 opacity-70')}>
               $1000
             </span>
-            <span>- $20000</span>
+            <span>- ${price}</span>
           </span>
         </div>
       </div>
 
-      <div className={clsx('relative', 'flex items-center gap-4 mt-8')}>
-        <button className={clsx('btn px-5 py-2.5')}>
+      <div className={clsx('relative', 'flex items-center gap-4 mt-auto')}>
+        <button onClick={handleBuyProduct} className={clsx('btn px-5 py-2.5')}>
           <ShoppingCartOutlinedIcon className={clsx('!text-lg mr-1')} />
           <span className={clsx('text-sm-1')}>Buy now</span>
         </button>
@@ -170,6 +221,7 @@ function CheckoutDetail() {
         <div
           className={clsx('absolute right-0 bottom-0', 'flex flex-col gap-2')}>
           <div
+            onClick={() => dispatch(productsActions.setIsOpenCheckout(false))}
             className={clsx(
               'group flex-center rounded-full w-11 h-11',
               'transition-all duration-250 ease-out',
@@ -200,6 +252,7 @@ function CheckoutDetail() {
             />
           </div>
           <div
+            onClick={() => onSelectOption(ViewOptions.REVIEWS)}
             className={clsx(
               'group flex-center rounded-full w-11 h-11',
               'transition-all duration-250 ease-out',

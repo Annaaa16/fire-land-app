@@ -5,6 +5,7 @@ import { productCategories } from '@/redux/slices/productsSlice';
 
 export interface ProductsInitState extends Loadings {
   updateProduct: Product | null;
+  checkoutProduct: Product | null;
   categories: {
     [key in keyof typeof productCategories]: Product[];
   };
@@ -36,6 +37,10 @@ export interface ReactProductPayload {
   category: keyof typeof productCategories;
 }
 
+export interface BuyProductPayload {
+  productId: string;
+}
+
 // === Responses ===
 export interface CreateProductResponse {
   message: string;
@@ -62,6 +67,12 @@ export interface DeleteProductResponse {
 }
 
 export interface ReactProductResponse {
+  message: string;
+  success: boolean;
+  product: Product;
+}
+
+export interface BuyProductResponse {
   message: string;
   success: boolean;
   product: Product;
