@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 
 // types
-import { MutableRefObject } from 'react';
+import { RefObject } from 'react';
 
 const useIntersectionObserver = (
-  ref: MutableRefObject<HTMLElement | null>,
+  ref: RefObject<HTMLElement | null>,
   rootMargin = '0px'
 ) => {
   const [isIntersecting, setIsIntersecting] = useState(false);

@@ -38,13 +38,13 @@ conversationsController.createConversation = async (req, res) => {
 };
 
 conversationsController.getConversations = async (req, res) => {
-  const { userId } = req.body;
+  const { userId } = req.params;
 
   try {
     const user = await User.findById(userId);
 
     if (!user) {
-      res
+      return res
         .status(404)
         .json({ success: false, message: 'User not found to get messages' });
     }

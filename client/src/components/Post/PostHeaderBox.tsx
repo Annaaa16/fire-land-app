@@ -33,40 +33,41 @@ function PostHeaderBox(props: PostHeaderBoxProps) {
 
   const dispatch = useStoreDispatch();
 
-  const isFollowing = currentUser.followings.includes(userId);
+  const { _id: currentUserId, followings } = currentUser;
+  const isFollowing = followings.includes(userId);
   const isLoading =
     loadings.includes(actions.followUser) ||
     loadings.includes(actions.unfollowUser);
 
-  const handleMakeFriend = (followedUserId: string) => {
-    const { _id, followings } = currentUser;
-
-    if (!_id || !followedUserId) return;
+  const handleMakeFriend = () => {
+    if (!currentUserId || !userId) return;
 
     const addFriend = () => {
       dispatch(
         conversationsActions.createConversationRequest({
-          senderId: _id as string,
-          receiverId: followedUserId,
+          senderId: currentUserId,
+          receiverId: userId,
         })
       );
 
-      dispatch(usersActions.followUserRequest(followedUserId));
+      dispatch(usersActions.followUserRequest(userId));
     };
 
     const unfriend = async () => {
       const conversation = conversations.find(
         ({ memberIds }) =>
-          memberIds.includes(_id) && memberIds.includes(followedUserId)
+          memberIds.includes(currentUserId) && memberIds.includes(userId)
       );
 
-      dispatch(usersActions.unfollowUserRequest(followedUserId));
+      dispatch(usersActions.unfollowUserRequest(userId));
       dispatch(
-        conversationsActions.deleteConversationRequest(conversation!._id)
+        conversationsActions.deleteConversationRequest({
+          conversationId: conversation!._id,
+        })
       );
     };
 
-    followings.includes(followedUserId) ? unfriend() : addFriend();
+    isFollowing ? unfriend() : addFriend();
   };
 
   return (
@@ -119,7 +120,7 @@ function PostHeaderBox(props: PostHeaderBoxProps) {
         </div>
         <div className={clsx('flex-between h-9')}>
           <button
-            onClick={() => !isLoading && handleMakeFriend(userId)}
+            onClick={() => !isLoading && handleMakeFriend()}
             className={clsx(
               'flex-center flex-grow h-full rounded-lg px-5',
               isFollowing

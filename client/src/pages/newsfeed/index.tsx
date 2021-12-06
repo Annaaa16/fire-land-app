@@ -46,8 +46,10 @@ export const getServerSideProps: GetServerSideProps =
 
     if (isFully && !isRefreshTokenExpired) {
       const response = (await getPosts({
-        page: 1,
-        limit: LIMITS.POSTS,
+        params: {
+          page: 1,
+          limit: LIMITS.POSTS,
+        },
       })) as AxiosResponse<GetPostsResponse>;
 
       response && store.dispatch(postsActions.getPostsSuccess(response.data));

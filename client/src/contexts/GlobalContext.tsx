@@ -1,9 +1,6 @@
 import { createContext, useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
-// lodash
-import _ from 'lodash';
-
 // types
 import { ReactNode } from 'react';
 import { GetUserResponse } from '@/models/users';
@@ -47,9 +44,9 @@ function GlobalProvider({
     if (currentUserResponse?.success) {
       dispatch(usersActions.setCurrentUser(currentUserResponse));
       dispatch(
-        conversationsActions.getConversationsRequest(
-          currentUserResponse.user._id
-        )
+        conversationsActions.getConversationsRequest({
+          userId: currentUserResponse.user._id,
+        })
       );
     }
   }, [currentUserResponse, dispatch]);

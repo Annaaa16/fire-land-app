@@ -1,6 +1,7 @@
 // types
 import {
   CreatePostsResponse,
+  DeletePostPayload,
   DeletePostResponse,
   GetPostsPayload,
   GetPostsResponse,
@@ -33,11 +34,22 @@ export const postsApiClient = () => {
       }
     },
 
-    getPosts: async (params: GetPostsPayload) => {
+    getPosts: async ({ userId, params }: GetPostsPayload) => {
       try {
-        const response = await axiosInstance.get<GetPostsResponse>('/posts', {
-          params,
-        });
+        let response;
+
+        if (userId) {
+          response = await axiosInstance.get<GetPostsResponse>(
+            '/posts/' + userId,
+            {
+              params,
+            }
+          );
+        } else {
+          response = await axiosInstance.get<GetPostsResponse>('/posts', {
+            params,
+          });
+        }
 
         return response;
       } catch (error) {
@@ -45,9 +57,7 @@ export const postsApiClient = () => {
       }
     },
 
-    updatePost: async (payload: UpdatePostPayload) => {
-      const { postId, updatePayload } = payload;
-
+    updatePost: async ({ postId, updatePayload }: UpdatePostPayload) => {
       try {
         const response = await axiosInstance.put<UpdatePostResponse>(
           '/posts/' + postId,
@@ -60,7 +70,7 @@ export const postsApiClient = () => {
       }
     },
 
-    deletePost: async (postId: string) => {
+    deletePost: async ({ postId }: DeletePostPayload) => {
       try {
         const response = await axiosInstance.delete<DeletePostResponse>(
           '/posts/' + postId
@@ -72,9 +82,7 @@ export const postsApiClient = () => {
       }
     },
 
-    reactPost: async (payload: ReactPostPayload) => {
-      const { postId, userId, ...others } = payload;
-
+    reactPost: async ({ postId, userId, ...others }: ReactPostPayload) => {
       try {
         const response = await axiosInstance.patch<ReactPostResponse>(
           `/posts/${postId}/reactions`,
@@ -95,11 +103,22 @@ export const postsApiServer = (
   const axiosInstance = axiosServer(ctx);
 
   return {
-    getPosts: async (params: GetPostsPayload) => {
+    getPosts: async ({ userId, params }: GetPostsPayload) => {
       try {
-        const response = await axiosInstance.get<GetPostsResponse>('/posts', {
-          params,
-        });
+        let response;
+
+        if (userId) {
+          response = await axiosInstance.get<GetPostsResponse>(
+            '/posts/' + userId,
+            {
+              params,
+            }
+          );
+        } else {
+          response = await axiosInstance.get<GetPostsResponse>('/posts', {
+            params,
+          });
+        }
 
         return response;
       } catch (error) {

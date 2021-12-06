@@ -16,6 +16,7 @@ import {
   ReactPostPayload,
   GetPostsPayload,
   UpdatePostPayload,
+  DeletePostPayload,
 } from '@/models/posts';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { CreateCommentResponse, GetCommentsResponse } from '@/models/comments';
@@ -99,7 +100,7 @@ const postsSlice = createSlice({
       removeLoading(state, actions.updatePost);
     },
 
-    deletePostRequest: (state, action: PayloadAction<string>) => {
+    deletePostRequest: (state, action: PayloadAction<DeletePostPayload>) => {
       addLoading(state, actions.deletePost);
     },
     deletePostSuccess: (state, action: PayloadAction<DeletePostResponse>) => {

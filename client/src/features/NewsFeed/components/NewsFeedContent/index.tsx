@@ -27,7 +27,9 @@ function NewsFeedContent() {
   useEffect(() => {
     if (isIntersecting && nextPage && !loadings.includes(actions.getPosts)) {
       dispatch(
-        postsActions.getPostsRequest({ page: nextPage, limit: LIMITS.POSTS })
+        postsActions.getPostsRequest({
+          params: { page: nextPage, limit: LIMITS.POSTS },
+        })
       );
     }
   }, [total, isIntersecting, nextPage, loadings, dispatch]);

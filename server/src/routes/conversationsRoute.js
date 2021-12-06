@@ -15,10 +15,10 @@ router.post(
   conversationsController.createConversation
 );
 
-// @route POST api/conversations
+// @route POST api/conversations/:userId
 // @desc Get user conversations
 // @access Private
-router.post('/', verifyTokens, conversationsController.getConversations);
+router.post('/:userId', verifyTokens, conversationsController.getConversations);
 
 // @route DELETE api/conversations/:conversationId
 // @desc Delete conversation

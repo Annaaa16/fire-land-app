@@ -34,7 +34,7 @@ function PostHeaderOptions(props: PostHeaderOptionsProps) {
   };
 
   const handleDeletePost = () => {
-    dispatch(postsActions.deletePostRequest(postId));
+    dispatch(postsActions.deletePostRequest({ postId }));
   };
 
   return (

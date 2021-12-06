@@ -4,7 +4,9 @@ import { call, delay, put, takeLatest } from '@redux-saga/core/effects';
 import {
   CreateConversationPayload,
   CreateConversationResponse,
+  DeleteConversationPayload,
   DeleteConversationResponse,
+  GetConversationsPayload,
   GetConversationsResponse,
 } from '@/models/conversations';
 import { PayloadAction } from '@reduxjs/toolkit';
@@ -24,11 +26,9 @@ function* handleCreateConversationRequest(
   try {
     yield delay(DELAYS.DEFAULT); // Block spam add friend button
 
-    const memberIds = action.payload;
-
     const response: AxiosResponse<CreateConversationResponse> = yield call(
       createConversation,
-      memberIds
+      action.payload
     );
 
     yield put(conversationsActions.createConversationSuccess(response.data));
@@ -38,13 +38,13 @@ function* handleCreateConversationRequest(
   }
 }
 
-function* handleGetConversationsRequest(action: PayloadAction<string>) {
+function* handleGetConversationsRequest(
+  action: PayloadAction<GetConversationsPayload>
+) {
   try {
-    const deleteConversation = action.payload;
-
     const response: AxiosResponse<GetConversationsResponse> = yield call(
       getConversations,
-      deleteConversation
+      action.payload
     );
 
     yield put(conversationsActions.getConversationsSuccess(response.data));
@@ -54,13 +54,13 @@ function* handleGetConversationsRequest(action: PayloadAction<string>) {
   }
 }
 
-function* handleDeleteConversationRequest(action: PayloadAction<string>) {
+function* handleDeleteConversationRequest(
+  action: PayloadAction<DeleteConversationPayload>
+) {
   try {
-    const conversationId = action.payload;
-
     const response: AxiosResponse<DeleteConversationResponse> = yield call(
       deleteConversation,
-      conversationId
+      action.payload
     );
 
     yield put(conversationsActions.deleteConversationSuccess(response.data));

@@ -34,7 +34,11 @@ function ContactContent() {
   // Get conversations of current user
   useEffect(() => {
     currentUser._id &&
-      dispatch(conversationsActions.getConversationsRequest(currentUser._id));
+      dispatch(
+        conversationsActions.getConversationsRequest({
+          userId: currentUser._id,
+        })
+      );
   }, [currentUser, dispatch]);
 
   return (

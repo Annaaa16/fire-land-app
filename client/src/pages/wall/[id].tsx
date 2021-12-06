@@ -63,9 +63,8 @@ export const getServerSideProps: GetServerSideProps =
 
         if (userResponse?.data.success) {
           const postsResponse = (await getPosts({
-            user_id: id as string,
-            page: 1,
-            limit: LIMITS.POSTS,
+            userId: id as string,
+            params: { page: 1, limit: LIMITS.POSTS },
           })) as AxiosResponse<GetPostsResponse>;
 
           store.dispatch(usersActions.setUserProfile(userResponse.data));

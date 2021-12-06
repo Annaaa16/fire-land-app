@@ -31,9 +31,8 @@ function WallContent() {
     if (isIntersecting && nextPage && id) {
       dispatch(
         postsActions.getPostsRequest({
-          user_id: id as string,
-          page: nextPage,
-          limit: LIMITS.POSTS,
+          userId: id as string,
+          params: { page: nextPage, limit: LIMITS.POSTS },
         })
       );
     }

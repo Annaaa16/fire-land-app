@@ -7,6 +7,7 @@ import {
   UpdatePostResponse,
   GetPostsPayload,
   ReactPostPayload,
+  DeletePostPayload,
 } from '@/models/posts';
 import { AxiosResponse } from 'axios';
 import { PayloadAction } from '@reduxjs/toolkit';
@@ -66,15 +67,13 @@ function* handleUpdatePostRequest(action: PayloadAction<UpdatePostPayload>) {
   }
 }
 
-function* handleDeletePostRequest(action: PayloadAction<string>) {
+function* handleDeletePostRequest(action: PayloadAction<DeletePostPayload>) {
   try {
-    const postId = action.payload;
-
     yield delay(DELAYS.DEFAULT); // Block spam delete button
 
     const response: AxiosResponse<DeletePostResponse> = yield call(
       deletePost,
-      postId
+      action.payload
     );
 
     yield put(postsActions.deletePostSuccess(response.data));

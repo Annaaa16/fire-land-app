@@ -19,6 +19,11 @@ router.post(
   postsController.createPost
 );
 
+// @route GET /api/posts/:userId?page=...&limit=...
+// @desc Get all posts or limit posts
+// @access Private
+router.get('/:userId', verifyTokens, verifyQueries, postsController.getPosts);
+
 // @route GET /api/posts?page=...&limit=...
 // @desc Get all posts or limit posts
 // @access Private

@@ -3,7 +3,9 @@ import { AxiosError } from 'axios';
 import {
   CreateConversationPayload,
   CreateConversationResponse,
+  DeleteConversationPayload,
   DeleteConversationResponse,
+  GetConversationsPayload,
   GetConversationsResponse,
 } from '@/models/conversations';
 
@@ -14,11 +16,11 @@ export const conversationsApiClient = () => {
   const axiosInstance = axiosClient();
 
   return {
-    createConversation: async (memberIds: CreateConversationPayload) => {
+    createConversation: async (payload: CreateConversationPayload) => {
       try {
         const response = await axiosInstance.post<CreateConversationResponse>(
           '/conversations/create',
-          memberIds
+          payload
         );
 
         return response;
@@ -27,11 +29,10 @@ export const conversationsApiClient = () => {
       }
     },
 
-    getConversations: async (userId: string) => {
+    getConversations: async ({ userId }: GetConversationsPayload) => {
       try {
         const response = await axiosInstance.post<GetConversationsResponse>(
-          '/conversations',
-          { userId }
+          '/conversations/' + userId
         );
 
         return response;
@@ -40,7 +41,9 @@ export const conversationsApiClient = () => {
       }
     },
 
-    deleteConversation: async (conversationId: string) => {
+    deleteConversation: async ({
+      conversationId,
+    }: DeleteConversationPayload) => {
       try {
         const response = await axiosInstance.delete<DeleteConversationResponse>(
           '/conversations/' + conversationId

@@ -49,13 +49,13 @@ postsController.createPost = async (req, res) => {
 };
 
 postsController.getPosts = async (req, res) => {
-  const { user_id } = req.query;
+  const { userId } = req.params;
   const page = parseInt(req.query.page);
   const limit = parseInt(req.query.limit);
 
   const total = await Post.count(
-    user_id && {
-      user: { $eq: user_id },
+    userId && {
+      user: { $eq: userId },
     }
   );
 
@@ -68,8 +68,8 @@ postsController.getPosts = async (req, res) => {
   // Pagination
   try {
     const posts = await Post.find(
-      user_id && {
-        user: { $eq: user_id },
+      userId && {
+        user: { $eq: userId },
       }
     )
       .sort({ createdAt: 'desc' })
@@ -92,9 +92,8 @@ postsController.getPosts = async (req, res) => {
 
 postsController.updatePost = async (req, res) => {
   const { postId } = req.params;
+  const { content, photo: oldPhoto, photoId } = req.body;
   const photo = req.file?.path; // Read photo path from client
-
-  let { content, photo: oldPhoto, photoId } = req.body;
 
   // Empty content and photo
   if (!content?.trim() && !photo) {
@@ -123,7 +122,7 @@ postsController.updatePost = async (req, res) => {
 
     const newPost = {
       content,
-      photo: newPhoto || oldPhoto, // New photo or old photo
+      photo: newPhoto || oldPhoto,
       photoId: newPhotoId,
     };
 

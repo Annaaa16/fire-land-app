@@ -65,7 +65,7 @@ usersController.followUser = async (req, res) => {
       const followedUser = await User.findById(userId);
 
       if (!followedUser) {
-        res
+        return res
           .status(403)
           .json({ success: false, message: 'Followed user not found' });
       }
@@ -80,7 +80,7 @@ usersController.followUser = async (req, res) => {
           userId,
         });
       } else {
-        return res.status(403).json({
+        res.status(403).json({
           success: false,
           message: 'You already follow this user',
         });
@@ -89,7 +89,7 @@ usersController.followUser = async (req, res) => {
       notifyServerError(res, error);
     }
   } else {
-    return res
+    res
       .status(403)
       .json({ success: false, message: "You can't follow yourself!" });
   }
@@ -105,12 +105,14 @@ usersController.unfollowUser = async (req, res) => {
       const unfollowedUser = await User.findById(userId);
 
       if (!unfollowedUser) {
-        res
+        return res
           .status(403)
           .json({ success: false, message: 'Unfollow user not found' });
       }
 
-      if (currentUser.followings.includes(userId)) {
+      const isFollowing = currentUser.followings.includes(userId);
+
+      if (isFollowing) {
         await currentUser.updateOne({ $pull: { followings: userId } });
         await unfollowedUser.updateOne({ $pull: { followers: req.userId } });
 
@@ -120,7 +122,7 @@ usersController.unfollowUser = async (req, res) => {
           userId,
         });
       } else {
-        return res.status(403).json({
+        res.status(403).json({
           success: false,
           message: 'You already unfollow this user',
         });
@@ -129,7 +131,7 @@ usersController.unfollowUser = async (req, res) => {
       notifyServerError(res, error);
     }
   } else {
-    return res
+    res
       .status(403)
       .json({ success: false, message: "You can't unfollow yourself!" });
   }

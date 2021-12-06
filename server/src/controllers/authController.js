@@ -13,7 +13,6 @@ const authController = {};
 authController.register = async (req, res) => {
   const { username, password, avatar } = req.body;
 
-  // Empty username or password
   if (!username || !password) {
     return res
       .status(400)
@@ -72,7 +71,7 @@ authController.login = async (req, res) => {
 
     // Incorrect password or not match
     if (!isPasswordCorrect) {
-      res
+      return res
         .status(400)
         .json({ success: false, message: 'Incorrect username or password' });
     }

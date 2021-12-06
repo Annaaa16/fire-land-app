@@ -8,7 +8,9 @@ import {
   ConversationsInitState,
   CreateConversationPayload,
   CreateConversationResponse,
+  DeleteConversationPayload,
   DeleteConversationResponse,
+  GetConversationsPayload,
   GetConversationsResponse,
 } from '@/models/conversations';
 import { PayloadAction } from '@reduxjs/toolkit';
@@ -52,7 +54,10 @@ const conversationsSlice = createSlice({
       removeLoading(state, actions.createConversation);
     },
 
-    getConversationsRequest: (state, action: PayloadAction<string>) => {
+    getConversationsRequest: (
+      state,
+      action: PayloadAction<GetConversationsPayload>
+    ) => {
       addLoading(state, actions.getConversations);
     },
     getConversationsSuccess: (
@@ -71,7 +76,10 @@ const conversationsSlice = createSlice({
       removeLoading(state, actions.getConversations);
     },
 
-    deleteConversationRequest: (state, action: PayloadAction<string>) => {
+    deleteConversationRequest: (
+      state,
+      action: PayloadAction<DeleteConversationPayload>
+    ) => {
       addLoading(state, actions.deleteConversation);
     },
     deleteConversationSuccess: (

@@ -15,8 +15,13 @@ export interface UpdatePostPayload {
   updatePayload: FormData;
 }
 
-export interface GetPostsPayload extends PaginationParams {
-  user_id?: string;
+export interface GetPostsPayload {
+  userId?: string;
+  params: PaginationParams;
+}
+
+export interface DeletePostPayload {
+  postId: string;
 }
 
 export interface ReactPostPayload {

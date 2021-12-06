@@ -11,9 +11,17 @@ export interface ConversationsInitState extends Loadings {
   conversations: Conversation[];
 }
 
+export interface GetConversationsPayload {
+  userId: string;
+}
+
 export interface CreateConversationPayload {
   senderId: string;
   receiverId: string;
+}
+
+export interface DeleteConversationPayload {
+  conversationId: string;
 }
 
 // === Responses ===
