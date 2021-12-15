@@ -6,10 +6,21 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import VideoCameraBackIcon from '@mui/icons-material/VideoCameraBack';
 import InfoIcon from '@mui/icons-material/Info';
 
+import { useConversationsSelector, useUsersSelector } from '@/redux/selectors';
+
 import User from '@/components/User';
 import Tooltip from '@/components/Tooltip';
 
 function ChatHeader() {
+  const { currentConversation } = useConversationsSelector();
+  const { currentUser } = useUsersSelector();
+
+  if (!currentConversation) return null;
+
+  const friend = currentConversation.creators.filter(
+    (user) => user._id !== currentUser._id
+  )[0];
+
   return (
     <div
       className={clsx(
@@ -18,9 +29,9 @@ function ChatHeader() {
         'bg-white dark:bg-dk-cpn'
       )}>
       <div className={clsx('flex items-center ml-1')}>
-        <User view='sm' />
+        <User view='sm' avatar={friend.avatar} rounded />
         <span className={clsx('ml-3 font-semibold', 'dark:text-white')}>
-          IG Dev
+          {friend.username}
         </span>
       </div>
       <ul className={clsx('flex items-center')}>
@@ -31,7 +42,11 @@ function ChatHeader() {
               'text-primary-v1 dark:text-primary-v4'
             )}
           />
-          <Tooltip title='Start a voice call' className='top-full' />
+          <Tooltip
+            title='Start a voice call'
+            direction='btt'
+            className='top-full'
+          />
         </li>
         <li className={clsx('relative', 'group px-2', 'cursor-pointer')}>
           <VideoCameraBackIcon
@@ -40,7 +55,11 @@ function ChatHeader() {
               'text-primary-v1 dark:text-primary-v4'
             )}
           />
-          <Tooltip title='Start a video call' className='top-full' />
+          <Tooltip
+            title='Start a video call'
+            direction='btt'
+            className='top-full'
+          />
         </li>
         <li className={clsx('relative', 'group px-2', 'cursor-pointer')}>
           <InfoIcon
@@ -51,6 +70,7 @@ function ChatHeader() {
           />
           <Tooltip
             title='Conversation information'
+            direction='btt'
             className={clsx('top-full left-[unset] right-0', 'translate-x-0')}
           />
         </li>

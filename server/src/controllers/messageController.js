@@ -6,12 +6,14 @@ const { notifyServerError } = require('../helpers/notifyError');
 const messagesController = {};
 
 messagesController.createMessage = async (req, res) => {
+  const { senderId, conversationId, text } = req.body;
+
   try {
-    const message = new Message(req.body);
+    const message = new Message({ user: senderId, conversationId, text });
 
     await message.save();
 
-    res.json({ success: true, message });
+    res.json({ success: true, message: 'Create message successfully' });
   } catch (error) {
     notifyServerError(res, error);
   }
@@ -21,7 +23,9 @@ messagesController.getMessages = async (req, res) => {
   const { conversationId } = req.params;
 
   try {
-    const messages = await Message.find({ conversationId });
+    const messages = await Message.find({ conversationId })
+      .populate('user', ['-password'])
+      .lean();
 
     res.json({
       success: true,
