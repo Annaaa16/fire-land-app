@@ -21,24 +21,24 @@ interface MoviesItemListProps {
   category: keyof typeof tmdbCategories;
 }
 
-function MoviesItemList({ title, items, category }: MoviesItemListProps) {
-  const swiperConfig = {
-    breakpoints: {
-      [BREAKPOINTS.PHONE]: {
-        slidesPerView: 1.4,
-        spaceBetween: 8,
-      },
-      [BREAKPOINTS.TABLET]: {
-        slidesPerView: 3.4,
-        spaceBetween: 8,
-      },
-      [BREAKPOINTS.DESKTOP]: {
-        slidesPerView: 5.8,
-        spaceBetween: 8,
-      },
+const swiperConfig = {
+  breakpoints: {
+    [BREAKPOINTS.PHONE]: {
+      slidesPerView: 1.4,
+      spaceBetween: 8,
     },
-  };
+    [BREAKPOINTS.TABLET]: {
+      slidesPerView: 3.4,
+      spaceBetween: 8,
+    },
+    [BREAKPOINTS.DESKTOP]: {
+      slidesPerView: 5.8,
+      spaceBetween: 8,
+    },
+  },
+};
 
+function MoviesItemList({ title, items, category }: MoviesItemListProps) {
   return (
     <>
       {items.length > 0 && (

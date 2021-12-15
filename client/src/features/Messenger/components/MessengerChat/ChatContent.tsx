@@ -16,7 +16,7 @@ import ChatFriend from './ChatFriend';
 import ChatUser from './ChatUser';
 
 function ChatContent() {
-  const { messageContent } = useMessengerSelector();
+  const { messages } = useMessengerSelector();
   const { currentUser } = useUsersSelector();
 
   const scrollRef = useRef<OverlayScrollbarsComponent>(null);
@@ -25,17 +25,16 @@ function ChatContent() {
   useIsomorphicLayoutEffect(() => {
     const scrollNode = scrollRef.current?.osInstance()?.getElements('viewport');
 
-    scrollNode.scrollTo({ top: scrollNode.scrollHeight, behavior: 'smooth' });
-  }, [messageContent]);
+    scrollNode?.scrollTo({ top: scrollNode.scrollHeight, behavior: 'smooth' });
+  }, [messages]);
 
   return (
     <OverlayScrollbarsComponent
       ref={scrollRef}
-      options={{ scrollbars: { autoHide: 'scroll' } }}
       className={clsx('flex-1 pl-2 pr-4')}>
       {/* <User view='sm' /> */}
-      {messageContent?.map(({ senderId, text }) =>
-        senderId !== currentUser._id ? (
+      {messages?.map(({ user, text }) =>
+        user._id !== currentUser._id ? (
           <ChatFriend key={nanoid(6)} message={text} />
         ) : (
           <ChatUser key={nanoid(6)} message={text} />

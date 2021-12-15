@@ -1,9 +1,9 @@
 const time = {
-  getMonth: (time: string) => {
+  getMonth(time: string) {
     return new Date(time).toLocaleString('default', { month: 'long' });
   },
 
-  getYear: (time: string) => {
+  getYear(time: string) {
     return new Date(time).getFullYear();
   },
 };

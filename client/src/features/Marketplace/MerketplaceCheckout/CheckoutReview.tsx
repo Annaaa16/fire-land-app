@@ -21,6 +21,7 @@ function CheckoutReview({ user, content, createdAt }: Review) {
         view='sm'
         className='mr-2'
         rounded
+        avatar={user.avatar}
       />
       <div className={clsx('flex-grow')}>
         <div

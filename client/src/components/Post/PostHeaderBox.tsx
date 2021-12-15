@@ -8,8 +8,7 @@ import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 
-import { useConversationsSelector, useUsersSelector } from '@/redux/selectors';
-import { conversationsActions } from '@/redux/slices/conversationsSlice';
+import { useUsersSelector } from '@/redux/selectors';
 import { actions, usersActions } from '@/redux/slices/usersSlice';
 import useUsers from '@/hooks/useUsers';
 
@@ -28,46 +27,27 @@ function PostHeaderBox(props: PostHeaderBoxProps) {
   const { username, avatar, userId, followers } = props;
 
   const { visitWall } = useUsers();
-  const { conversations } = useConversationsSelector();
   const { currentUser, loadings } = useUsersSelector();
 
   const dispatch = useStoreDispatch();
 
-  const { _id: currentUserId, followings } = currentUser;
-  const isFollowing = followings.includes(userId);
+  const { friends } = currentUser;
+  const isFriend = friends.includes(userId);
   const isLoading =
-    loadings.includes(actions.followUser) ||
-    loadings.includes(actions.unfollowUser);
+    loadings.includes(actions.addFriendUser) ||
+    loadings.includes(actions.unfriendUser);
 
   const handleMakeFriend = () => {
-    if (!currentUserId || !userId) return;
+    if (!userId) return;
 
     const addFriend = () => {
-      dispatch(
-        conversationsActions.createConversationRequest({
-          senderId: currentUserId,
-          receiverId: userId,
-        })
-      );
-
-      dispatch(usersActions.followUserRequest(userId));
+      dispatch(usersActions.addFriendUserRequest({ userId }));
+    };
+    const unfriend = () => {
+      dispatch(usersActions.unfriendUserRequest({ userId }));
     };
 
-    const unfriend = async () => {
-      const conversation = conversations.find(
-        ({ memberIds }) =>
-          memberIds.includes(currentUserId) && memberIds.includes(userId)
-      );
-
-      dispatch(usersActions.unfollowUserRequest(userId));
-      dispatch(
-        conversationsActions.deleteConversationRequest({
-          conversationId: conversation!._id,
-        })
-      );
-    };
-
-    isFollowing ? unfriend() : addFriend();
+    isFriend ? unfriend() : addFriend();
   };
 
   return (
@@ -104,14 +84,10 @@ function PostHeaderBox(props: PostHeaderBoxProps) {
             </h2>
             <div className={clsx('flex items-center')}>
               <RssFeedIcon />
-              <div className={clsx('ml-1')}>
-                <span className={clsx('text-sm-1')}>Followed by </span>
+              <div className={clsx('ml-1 text-sm-1')}>
+                <span>Followed by </span>
                 <strong
-                  className={clsx(
-                    'text-sm-1',
-                    'cursor-pointer',
-                    'lg:hover:underline'
-                  )}>
+                  className={clsx('cursor-pointer', 'lg:hover:underline')}>
                   {followers?.length} people
                 </strong>
               </div>
@@ -123,17 +99,17 @@ function PostHeaderBox(props: PostHeaderBoxProps) {
             onClick={() => !isLoading && handleMakeFriend()}
             className={clsx(
               'flex-center flex-grow h-full rounded-lg px-5',
-              isFollowing
+              isFriend
                 ? 'bg-gray-200 dark:bg-gray-700'
                 : 'bg-primary-v1 dark:bg-primary-v4',
               'transition-all ease-out',
-              isFollowing
+              isFriend
                 ? 'hover:bg-gray-300 dark:hover:bg-dk-tooltip'
                 : 'hover:bg-primary-v1-hv dark:hover:bg-primary-v4-hv'
             )}>
             {!isLoading ? (
               <>
-                {isFollowing ? (
+                {isFriend ? (
                   <PersonRemoveIcon className={clsx('mr-1 !text-lg')} />
                 ) : (
                   <PersonAddIcon
@@ -143,9 +119,9 @@ function PostHeaderBox(props: PostHeaderBoxProps) {
                 <span
                   className={clsx(
                     'font-semibold text-sm-1',
-                    !isFollowing && 'text-white'
+                    !isFriend && 'text-white'
                   )}>
-                  {isFollowing ? 'Unfriend' : 'Add Friend'}
+                  {isFriend ? 'Unfriend' : 'Add Friend'}
                 </span>
               </>
             ) : (

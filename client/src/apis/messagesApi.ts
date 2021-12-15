@@ -3,7 +3,8 @@ import { AxiosError } from 'axios';
 import {
   CreateMessageResponse,
   GetMessagesResponse,
-  MessagePayload,
+  CreateMessagePayload,
+  GetMessagesPayload,
 } from '@/models/messenger';
 
 import { axiosClient } from './axiosClient';
@@ -13,7 +14,7 @@ export const messagesApiClient = () => {
   const axiosInstance = axiosClient();
 
   return {
-    createMessage: async (messageData: MessagePayload) => {
+    createMessage: async (messageData: CreateMessagePayload) => {
       try {
         const response = await axiosInstance.post<CreateMessageResponse>(
           '/messages',
@@ -26,7 +27,7 @@ export const messagesApiClient = () => {
       }
     },
 
-    getMessages: async (conversationId: string) => {
+    getMessages: async ({ conversationId }: GetMessagesPayload) => {
       try {
         const response = await axiosInstance.get<GetMessagesResponse>(
           '/messages/' + conversationId

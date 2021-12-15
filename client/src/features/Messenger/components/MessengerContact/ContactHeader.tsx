@@ -6,20 +6,12 @@ import GridViewIcon from '@mui/icons-material/GridView';
 
 function ContactHeader() {
   return (
-    <div>
-      <div className={clsx('relative', 'px-8')}>
+    <div className={clsx('px-8')}>
+      <div className={clsx('flex-between')}>
         <h1 className={clsx('font-semibold text-xl mb-3', 'dark:text-white')}>
           Recent
         </h1>
-        <p className={clsx('text-sm', 'text-gray-lt')}>
-          Chat from your friends!
-        </p>
-        <div
-          className={clsx(
-            'absolute right-8 top-1/2',
-            'group -translate-y-1/2',
-            'cursor-pointer'
-          )}>
+        <div className={clsx('group', 'cursor-pointer')}>
           <GridViewIcon
             className={clsx(
               '!text-2xl',
@@ -29,6 +21,7 @@ function ContactHeader() {
           />
         </div>
       </div>
+      <p className={clsx('text-sm', 'text-gray-lt')}>Chat from your friends!</p>
     </div>
   );
 }

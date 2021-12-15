@@ -124,7 +124,7 @@ function NewsFeedSenderArea() {
           onSubmit={updatePost ? handleUpdatePost : handleCreatePost}
           className={clsx('relative', 'p-3')}>
           <div className={clsx('flex items-center mt-2 pb-2 ml-2')}>
-            <User view='sm' avatar={currentUser.avatar} />
+            <User view='sm' avatar={currentUser.avatar} rounded />
             <div className={clsx('ml-3')}>
               <span className={clsx('font-semibold', 'dark:text-white')}>
                 {currentUser.username}

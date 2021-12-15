@@ -23,7 +23,7 @@ import { Product } from '@/models/common';
 // enums
 import { ViewOptions } from '.';
 
-import { useUsersSelector } from '@/redux/selectors';
+import { useReviewsSelector, useUsersSelector } from '@/redux/selectors';
 import { productsActions } from '@/redux/slices/productsSlice';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 import useUsers from '@/hooks/useUsers';
@@ -47,6 +47,7 @@ function CheckoutDetail(props: CheckoutDetailProps) {
   } = props;
 
   const { currentUser } = useUsersSelector();
+  const { total } = useReviewsSelector();
 
   const { visitWall } = useUsers();
   const dispatch = useStoreDispatch();
@@ -54,7 +55,7 @@ function CheckoutDetail(props: CheckoutDetailProps) {
   const isReacted = reactions.includes(currentUser._id);
 
   const handleBuyProduct = () => {
-    dispatch(productsActions.buyProductRequest({ productId: productId }));
+    dispatch(productsActions.buyProductRequest({ productId }));
     dispatch(productsActions.setIsOpenCheckout(false));
   };
 
@@ -138,7 +139,9 @@ function CheckoutDetail(props: CheckoutDetailProps) {
             {reactions.length}
           </span>
         </div>
-        <span className={clsx('dark:text-gray-300')}>15 customers review</span>
+        <span className={clsx('dark:text-gray-300')}>
+          {total} customers review
+        </span>
       </div>
 
       <div className={clsx('flex items-center')}>

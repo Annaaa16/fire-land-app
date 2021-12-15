@@ -4,8 +4,9 @@ import { createSlice } from '@reduxjs/toolkit';
 import {
   GetMessagesResponse,
   Message,
-  MessagePayload,
+  CreateMessagePayload,
   MessengerInitState,
+  GetMessagesPayload,
 } from '@/models/messenger';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { addLoading, removeLoading } from '@/helpers/reduxStateLoadings';
@@ -16,7 +17,7 @@ export const actions = {
 };
 
 const initialState: MessengerInitState = {
-  messageContent: [],
+  messages: [],
   conversationId: '',
   receiverId: '',
   loadings: [],
@@ -26,7 +27,10 @@ const messengerSlice = createSlice({
   name: 'messenger',
   initialState,
   reducers: {
-    createMessageRequest: (state, action: PayloadAction<MessagePayload>) => {
+    createMessageRequest: (
+      state,
+      action: PayloadAction<CreateMessagePayload>
+    ) => {
       addLoading(state, actions.createMessage);
     },
     createMessageSuccess: (state) => {
@@ -36,14 +40,14 @@ const messengerSlice = createSlice({
       removeLoading(state, actions.createMessage);
     },
 
-    getMessagesRequest: (state, action: PayloadAction<string>) => {
+    getMessagesRequest: (state, action: PayloadAction<GetMessagesPayload>) => {
       addLoading(state, actions.getMessages);
     },
     getMessagesSuccess: (state, action: PayloadAction<GetMessagesResponse>) => {
       const { success, messages } = action.payload;
 
       if (success) {
-        state.messageContent = messages;
+        state.messages = messages;
 
         removeLoading(state, actions.getMessages);
       }
@@ -55,7 +59,7 @@ const messengerSlice = createSlice({
     addMessage: (state, action: PayloadAction<Message>) => {
       const message = action.payload;
 
-      state.messageContent.push(message);
+      state.messages.push(message);
     },
 
     setConversationId: (state, action: PayloadAction<string>) => {

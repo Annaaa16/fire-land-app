@@ -25,25 +25,25 @@ import {
   heroFive,
 } from '@/utils/cloudinaryImages';
 
+const heros = [
+  { thumbnail: heroOne, title: "Let's create your own product!" },
+  { thumbnail: heroTwo, title: 'Build interesting things' },
+  { thumbnail: heroThree, title: 'Be the first to build your own store' },
+  { thumbnail: heroFour, title: 'Where to look for quality products?' },
+  { thumbnail: heroFive, title: 'Develope a strong community' },
+];
+
+const swiperConfig = {
+  slidesPerView: 1,
+  loop: true,
+  spaceBetween: 20,
+  autoplay: {
+    delay: 5000,
+    disableOnInteraction: false,
+  },
+};
+
 function MarketplaceHero() {
-  const heros = [
-    { thumbnail: heroOne, title: "Let's create your own product!" },
-    { thumbnail: heroTwo, title: 'Build interesting things' },
-    { thumbnail: heroThree, title: 'Be the first to build your own store' },
-    { thumbnail: heroFour, title: 'Where to look for quality products?' },
-    { thumbnail: heroFive, title: 'Develope a strong community' },
-  ];
-
-  const swiperConfig = {
-    slidesPerView: 1,
-    loop: true,
-    spaceBetween: 20,
-    autoplay: {
-      delay: 5000,
-      disableOnInteraction: false,
-    },
-  };
-
   const dispatch = useStoreDispatch();
 
   return (
