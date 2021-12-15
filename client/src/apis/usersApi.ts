@@ -1,12 +1,18 @@
 // types
 import { GetServerSidePropsContext, NextPageContext } from 'next';
 import { AxiosError } from 'axios';
-import { PaginationParams } from '@/models/common';
 import {
+  AddFriendUserPayload,
+  AddFriendUserResponse,
+  FollowUserPayload,
   FollowUserResponse,
+  GetFriendsPayload,
   GetUserFriendsResponse,
   GetUserResponse,
+  UnfollowUserPayload,
   UnfollowUserResponse,
+  UnfriendUserPayload,
+  UnfriendUserResponse,
 } from '@/models/users';
 
 import { axiosClient } from './axiosClient';
@@ -41,7 +47,31 @@ export const usersApiClient = () => {
       }
     },
 
-    followUser: async (userId: string) => {
+    addFriendUser: async ({ userId }: AddFriendUserPayload) => {
+      try {
+        const response = await axiosInstance.patch<AddFriendUserResponse>(
+          `/users/${userId}/friend`
+        );
+
+        return response;
+      } catch (error) {
+        return notifyAxiosError('Add friend user', error as AxiosError);
+      }
+    },
+
+    unfriendUser: async ({ userId }: UnfriendUserPayload) => {
+      try {
+        const response = await axiosInstance.patch<UnfriendUserResponse>(
+          `/users/${userId}/unfriend`
+        );
+
+        return response;
+      } catch (error) {
+        return notifyAxiosError('Unfriend user', error as AxiosError);
+      }
+    },
+
+    followUser: async ({ userId }: FollowUserPayload) => {
       try {
         const response = await axiosInstance.patch<FollowUserResponse>(
           `/users/${userId}/follow`
@@ -53,7 +83,7 @@ export const usersApiClient = () => {
       }
     },
 
-    unfollowUser: async (userId: string) => {
+    unfollowUser: async ({ userId }: UnfollowUserPayload) => {
       try {
         const response = await axiosInstance.patch<UnfollowUserResponse>(
           `/users/${userId}/unfollow`
@@ -65,7 +95,7 @@ export const usersApiClient = () => {
       }
     },
 
-    getFriends: async (userId: string, params: PaginationParams) => {
+    getFriends: async ({ userId, params }: GetFriendsPayload) => {
       try {
         const response = await axiosInstance.get<GetUserFriendsResponse>(
           `/users/${userId}/friends`,

@@ -1,28 +1,33 @@
 // types
-import { Loadings } from './common';
+import { Loadings, User } from './common';
 
-export interface MessagePayload {
+export interface CreateMessagePayload {
   conversationId: string;
   senderId: string;
   text: string;
+}
+
+export interface GetMessagesPayload {
+  conversationId: string;
 }
 
 export interface Message {
   readonly _id?: string;
   conversationId?: string;
-  senderId: string;
+  user: User;
   text: string;
-  updatedAt: string;
+  createdAt: string;
+  updatedAt?: string;
 }
 
 export interface MessengerInitState extends Loadings {
-  messageContent: Message[];
+  messages: Message[];
   conversationId: string;
   receiverId: string;
 }
 
-export interface OnlineUser {
-  userId: string;
+export interface OnlineUser extends User {
+  conversationId: string;
   socketId: string;
 }
 

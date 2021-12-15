@@ -3,12 +3,7 @@ import { useEffect } from 'react';
 // clsx
 import clsx from 'clsx';
 
-// types
-import { Message } from '@/models/messenger';
-
-import { useMessengerSelector, useUsersSelector } from '@/redux/selectors';
-import { messengerActions } from '@/redux/slices/messengerSlice';
-import useStoreDispatch from '@/hooks/useStoreDispatch';
+import { useConversationsSelector } from '@/redux/selectors';
 import useSocket from '@/hooks/useSocket';
 
 import ChatHeader from './ChatHeader';
@@ -16,31 +11,16 @@ import ChatFooter from './ChatFooter';
 import ChatContent from './ChatContent';
 
 function MessagesChat() {
-  const { conversationId } = useMessengerSelector();
-  const { currentUser } = useUsersSelector();
+  const { currentConversation } = useConversationsSelector();
 
-  const { socket } = useSocket();
-  const dispatch = useStoreDispatch();
+  const { socketConversations } = useSocket();
 
-  // Get message from sender
+  // Auto get message from sender
   useEffect(() => {
-    socket.on('getMessage', (data: Message) => {
-      dispatch(
-        messengerActions.addMessage({
-          senderId: data.senderId,
-          text: data.text,
-          updatedAt: new Date().toISOString(),
-        })
-      );
-    });
-  }, [dispatch, socket]);
+    socketConversations.receiveMessage();
+  }, [socketConversations]);
 
-  // Send id to socket
-  useEffect(() => {
-    socket.emit('addUser', currentUser._id);
-  }, [currentUser, socket]);
-
-  return conversationId ? (
+  return currentConversation ? (
     <div
       className={clsx(
         'flex flex-col flex-grow flex-shrink-0 overflow-x-hidden',

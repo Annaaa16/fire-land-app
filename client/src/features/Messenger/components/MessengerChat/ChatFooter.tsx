@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 // clsx
 import clsx from 'clsx';
@@ -19,47 +19,41 @@ import useSocket from '@/hooks/useSocket';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 import Tooltip from '@/components/Tooltip';
+import useAutoFocus from '@/hooks/useAutoFocus';
 
 function ChatFooter() {
-  const [inputValue, setInputValue] = useState<string>('');
-
   const { currentUser } = useUsersSelector();
-  const { conversationId, receiverId } = useMessengerSelector();
+  const { conversationId } = useMessengerSelector();
 
-  const { socket } = useSocket();
+  const [message, setMessage] = useState<string>('');
+
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const { socketConversations } = useSocket();
   const dispatch = useStoreDispatch();
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSendMessage = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!inputValue.trim()) return;
+    if (!message.trim()) return;
 
-    // Send message to friend
-    socket.emit('sendMessage', {
-      senderId: currentUser._id,
-      receiverId,
-      text: inputValue,
-    });
-
-    const message = {
-      senderId: currentUser._id,
-      text: inputValue,
-      conversationId,
-    };
+    socketConversations.sendMessage(message);
 
     dispatch(
-      messengerActions.addMessage({
-        ...message,
-        updatedAt: new Date().toISOString(),
+      messengerActions.createMessageRequest({
+        senderId: currentUser._id,
+        text: message,
+        conversationId,
       })
     );
-    dispatch(messengerActions.createMessageRequest(message));
-    setInputValue('');
+    setMessage('');
   };
+
+  useAutoFocus(inputRef, conversationId);
 
   return (
     <form
-      onSubmit={handleSubmit}
+      onSubmit={handleSendMessage}
       className={clsx(
         'flex items-center h-[59px] md:h-[68px] px-1 md:px-3 mt-auto py-2.5 md:py-4 border-t border-lt-line dark:border-dk-line',
         'bg-white dark:bg-dk-cpn'
@@ -104,8 +98,9 @@ function ChatFooter() {
           'bg-lt-input dark:bg-dk-input'
         )}>
         <input
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
+          value={message}
+          ref={inputRef}
+          onChange={(e) => setMessage(e.target.value)}
           placeholder='Aa'
           className={clsx(
             'w-full px-5 py-3 md:py-3 text-xs md:text-sm outline-none rounded-full',

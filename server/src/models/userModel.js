@@ -1,5 +1,12 @@
 const mongoose = require('mongoose');
 
+const UserField = {
+  type: [mongoose.Schema.Types.ObjectId],
+  ref: 'User',
+  default: [],
+  required: true,
+};
+
 const UserSchema = new mongoose.Schema(
   {
     username: {
@@ -10,18 +17,12 @@ const UserSchema = new mongoose.Schema(
     password: {
       type: String,
       require: true,
+      select: false,
     },
-    avatar: {
-      type: String,
-    },
-    followings: {
-      type: Array,
-      default: [],
-    },
-    followers: {
-      type: Array,
-      default: [],
-    },
+    avatar: String,
+    friends: UserField,
+    followings: UserField,
+    followers: UserField,
   },
   { timestamps: true }
 );

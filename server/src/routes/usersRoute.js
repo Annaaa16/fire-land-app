@@ -16,6 +16,26 @@ router.get('/current', verifyTokens, usersController.getCurrentUser);
 // @access Private
 router.get('/:userId', verifyTokens, verifyMongooseId, usersController.getUser);
 
+// @route PATCH api/users/:userId/friend
+// @desc Add friend
+// @access Private
+router.patch(
+  '/:userId/friend',
+  verifyTokens,
+  verifyMongooseId,
+  usersController.addFriendUser
+);
+
+// @route PATCH api/users/:userId/unfriend
+// @desc Unfriend
+// @access Private
+router.patch(
+  '/:userId/unfriend',
+  verifyTokens,
+  verifyMongooseId,
+  usersController.unfriendUser
+);
+
 // @route PATCH api/users/:userId/follow
 // @desc Follow an user
 // @access Private

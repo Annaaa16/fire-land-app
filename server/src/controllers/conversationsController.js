@@ -11,7 +11,7 @@ conversationsController.createConversation = async (req, res) => {
 
   try {
     const conversationExisting = await Conversation.findOne({
-      memberIds: { $in: [senderId, receiverId] },
+      members: { $in: [senderId, receiverId] },
     });
 
     if (conversationExisting) {
@@ -22,7 +22,7 @@ conversationsController.createConversation = async (req, res) => {
     }
 
     const conversation = new Conversation({
-      memberIds: [senderId, receiverId],
+      members: [senderId, receiverId],
     });
 
     await conversation.save();
@@ -50,8 +50,10 @@ conversationsController.getConversations = async (req, res) => {
     }
 
     const conversations = await Conversation.find({
-      memberIds: { $in: [userId] },
-    });
+      creators: { $in: [userId] },
+    })
+      .populate('creators')
+      .populate('members');
 
     res.json({
       success: true,
