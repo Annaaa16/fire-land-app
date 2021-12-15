@@ -8,37 +8,45 @@ import SearchIcon from '@mui/icons-material/Search';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import GroupsIcon from '@mui/icons-material/Groups';
+import DoorFrontIcon from '@mui/icons-material/DoorFront';
 
 import { conversationsActions } from '@/redux/slices/conversationsSlice';
 import { useUsersSelector } from '@/redux/selectors';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
-import ContactConversationList from './ContactConversationList';
-import ContactOnlineList from './ContactOnlineList';
+import Tooltip from '@/components/Tooltip';
+import ContactCardList from './ContactCardList';
 
-enum Contacts {
+export enum Statuses {
   CONVERSATIONS = 'conversations',
   ONLINE = 'online',
   GROUPS = 'groups',
+  ROOMS = 'rooms',
 }
 
 function ContactContent() {
-  const { CONVERSATIONS, ONLINE, GROUPS } = Contacts;
+  const { CONVERSATIONS, ONLINE, GROUPS, ROOMS } = Statuses;
 
   const { currentUser } = useUsersSelector();
 
-  const [contact, setContact] = useState<Contacts>(CONVERSATIONS);
+  const [status, setStatus] = useState<Statuses>(CONVERSATIONS);
 
   const dispatch = useStoreDispatch();
 
+  const handleSelectStatus = (status: Statuses) => {
+    dispatch(conversationsActions.setCurrentConversation(null));
+    setStatus(status);
+  };
+
   // Get conversations of current user
   useEffect(() => {
-    currentUser._id &&
-      dispatch(
-        conversationsActions.getConversationsRequest({
-          userId: currentUser._id,
-        })
-      );
+    if (!currentUser._id) return;
+
+    dispatch(
+      conversationsActions.getConversationsRequest({
+        userId: currentUser._id,
+      })
+    );
   }, [currentUser, dispatch]);
 
   return (
@@ -56,70 +64,103 @@ function ContactContent() {
           <SearchIcon className={clsx('text-gray-lt', 'cursor-pointer')} />
         </div>
 
-        <div className={clsx('flex items-center justify-center mt-6')}>
+        <div
+          className={clsx('flex items-center justify-center mt-6 space-x-3')}>
           <button
-            onClick={() => setContact(CONVERSATIONS)}
+            onClick={() => handleSelectStatus(CONVERSATIONS)}
             className={clsx(
+              'relative',
               'group flex-center min-w-[40px] min-h-[40px] rounded-full',
-              'bg-primary-v1 dark:bg-primary-v4',
+              status === CONVERSATIONS
+                ? 'bg-primary-v1 dark:bg-primary-v4'
+                : 'bg-gray-200 dark:bg-dk-tooltip',
               'transition-all duration-300 ease-out',
-              'hover:pl-5 hover:pr-18 hover:duration-[350ms]'
+              status === CONVERSATIONS
+                ? 'dark:hover:bg-primary-v4-hv'
+                : 'hover:bg-gray-300 dark:hover:bg-gray-700'
             )}>
-            <ChatBubbleIcon className={clsx('!text-base', 'text-white')} />
-            <span
+            <ChatBubbleIcon
               className={clsx(
-                'font-semibold invisible opacity-0 w-0',
-                'text-white',
-                'ease-out',
-                'group-hover:visible group-hover:opacity-100 group-hover:ml-1 group-hover:duration-300'
-              )}>
-              Friends
-            </span>
+                '!text-base',
+                status === CONVERSATIONS && 'text-white',
+                '!transition-none'
+              )}
+            />
+            <Tooltip title='Friends' direction='btt' />
           </button>
 
           <button
-            onClick={() => setContact(ONLINE)}
+            onClick={() => handleSelectStatus(ONLINE)}
             className={clsx(
-              'group flex-center min-w-[40px] min-h-[40px] rounded-full mx-4',
-              'bg-gray-200 dark:bg-dk-tooltip dark:text-white',
+              'relative',
+              'group flex-center min-w-[40px] min-h-[40px] rounded-full',
+              status === ONLINE
+                ? 'bg-primary-v1 dark:bg-primary-v4'
+                : 'bg-gray-200 dark:bg-dk-tooltip',
               'transition-all duration-300 ease-out',
-              'hover:pl-5 hover:pr-16 hover:bg-gray-300 hover:duration-[350ms]'
+              status === ONLINE
+                ? 'dark:hover:bg-primary-v4-hv'
+                : 'hover:bg-gray-300 dark:hover:bg-gray-700'
             )}>
-            <PeopleAltIcon className={clsx('!text-lg')} />
-            <span
+            <PeopleAltIcon
               className={clsx(
-                'font-semibold invisible opacity-0 w-0',
-                'ease-out',
-                'group-hover:visible group-hover:opacity-100 group-hover:ml-1 group-hover:duration-300'
-              )}>
-              Online
-            </span>
+                '!text-lg',
+                status === ONLINE && 'text-white',
+                '!transition-none'
+              )}
+            />
+            <Tooltip title='Online' direction='btt' />
           </button>
 
           <button
-            onClick={() => setContact(GROUPS)}
+            onClick={() => handleSelectStatus(GROUPS)}
             className={clsx(
+              'relative',
               'group flex-center min-w-[40px] min-h-[40px] rounded-full',
-              'bg-gray-200 dark:bg-dk-tooltip dark:text-white',
+              status === GROUPS
+                ? 'bg-primary-v1 dark:bg-primary-v4'
+                : 'bg-gray-200 dark:bg-dk-tooltip',
               'transition-all duration-300 ease-out',
-              'hover:pl-5 hover:pr-17 hover:bg-gray-300 hover:duration-[350ms]'
+              status === GROUPS
+                ? 'dark:hover:bg-primary-v4-hv'
+                : 'hover:bg-gray-300 dark:hover:bg-gray-700'
             )}>
-            <GroupsIcon className={clsx('!text-xl')} />
-            <span
+            <GroupsIcon
               className={clsx(
-                'font-semibold invisible opacity-0 w-0',
-                'ease-out',
-                'group-hover:visible group-hover:opacity-100 group-hover:ml-1 group-hover:duration-300'
-              )}>
-              Groups
-            </span>
+                '!text-xl',
+                status === GROUPS && 'text-white',
+                '!transition-none'
+              )}
+            />
+            <Tooltip title='Groups' direction='btt' />
+          </button>
+
+          <button
+            onClick={() => handleSelectStatus(ROOMS)}
+            className={clsx(
+              'relative',
+              'group flex-center min-w-[40px] min-h-[40px] rounded-full',
+              status === ROOMS
+                ? 'bg-primary-v1 dark:bg-primary-v4'
+                : 'bg-gray-200 dark:bg-dk-tooltip',
+              'transition-all duration-300 ease-out',
+              status === ROOMS
+                ? 'dark:hover:bg-primary-v4-hv'
+                : 'hover:bg-gray-300 dark:hover:bg-gray-700'
+            )}>
+            <DoorFrontIcon
+              className={clsx(
+                '!text-xl',
+                status === ROOMS && 'text-white',
+                '!transition-none'
+              )}
+            />
+            <Tooltip title='Rooms' direction='btt' />
           </button>
         </div>
       </div>
 
-      {contact === CONVERSATIONS && <ContactConversationList />}
-      {contact === ONLINE && <ContactOnlineList />}
-      {/* <ContactOnlineList /> */}
+      <ContactCardList status={status} />
     </>
   );
 }

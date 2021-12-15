@@ -8,12 +8,12 @@ interface DetailGenreListProps {
   genres: Array<{ id: string; name: string }>;
 }
 
-function DetailGenreList({ genres }: DetailGenreListProps) {
-  const swiperConfig = {
-    slidesPerView: 'auto' as 'auto',
-    spaceBetween: 8,
-  };
+const swiperConfig = {
+  slidesPerView: 'auto' as 'auto',
+  spaceBetween: 8,
+};
 
+function DetailGenreList({ genres }: DetailGenreListProps) {
   return (
     <Swiper {...swiperConfig} className='mb-2'>
       {genres.map((genre) => (

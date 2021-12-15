@@ -18,7 +18,7 @@ const avatarList = [
   'personas',
 ];
 
-const randomAvatar = () => {
+const getAvatar = () => {
   const idx = Math.floor(Math.random() * avatarList.length);
   const avatar = avatarList[idx];
   const seed = nanoid(6);
@@ -28,4 +28,4 @@ const randomAvatar = () => {
   return avatarUrl;
 };
 
-export default randomAvatar;
+export default getAvatar;

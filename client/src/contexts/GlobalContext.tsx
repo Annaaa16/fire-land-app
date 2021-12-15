@@ -7,12 +7,12 @@ import { GetUserResponse } from '@/models/users';
 import { GlobalInitContext } from '@/models/app';
 
 import { LOCAL_STORAGE, PATHS } from '@/constants';
-import { conversationsActions } from '@/redux/slices/conversationsSlice';
 import { usersActions } from '@/redux/slices/usersSlice';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import cookies from '@/helpers/cookies';
 import useIsomorphicLayoutEffect from '@/hooks/useIsomorphicLayoutEffect ';
+import useSocket from '@/hooks/useSocket';
 
 interface GlobalProviderProps {
   children: ReactNode;
@@ -36,6 +36,7 @@ function GlobalProvider({
     useIsomorphicLayoutEffect
   );
 
+  const { socketUsers } = useSocket();
   const dispatch = useStoreDispatch();
   const router = useRouter();
 
@@ -43,13 +44,16 @@ function GlobalProvider({
   useEffect(() => {
     if (currentUserResponse?.success) {
       dispatch(usersActions.setCurrentUser(currentUserResponse));
-      dispatch(
-        conversationsActions.getConversationsRequest({
-          userId: currentUserResponse.user._id,
-        })
-      );
     }
   }, [currentUserResponse, dispatch]);
+
+  // Add user to socket
+  useEffect(() => {
+    if (currentUserResponse?.success) {
+      socketUsers.addOnlineUser(currentUserResponse.user);
+      socketUsers.receiveOnlineUsers();
+    }
+  }, [currentUserResponse, socketUsers]);
 
   // Set previous path for handle redirect when logged in
   useEffect(() => {

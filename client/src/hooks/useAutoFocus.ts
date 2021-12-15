@@ -4,7 +4,8 @@ import { useEffect } from 'react';
 import { RefObject } from 'react';
 
 const useAutoFocus = (
-  ref: RefObject<HTMLInputElement | HTMLTextAreaElement | null>
+  ref: RefObject<HTMLInputElement | HTMLTextAreaElement | null>,
+  deps?: any
 ) => {
   useEffect(() => {
     const element = ref.current;
@@ -13,7 +14,7 @@ const useAutoFocus = (
 
     element.focus();
     element.setSelectionRange(element.value.length, element.value.length);
-  }, [ref]);
+  }, [ref, deps]);
 };
 
 export default useAutoFocus;

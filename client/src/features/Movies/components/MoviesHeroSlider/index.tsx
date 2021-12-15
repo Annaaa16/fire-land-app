@@ -17,21 +17,21 @@ import tmdb, { tmdbCategories } from '@/configs/tmdb';
 
 import Paragraph from '@/components/Paragraph';
 
+const swiperConfig = {
+  slidesPerView: 1,
+  loop: true,
+  autoplay: {
+    delay: 5000,
+    disableOnInteraction: false,
+  },
+};
+
 function HomeHeroSlider() {
   const {
     movieCategories: { popular },
   } = useMoviesSelector();
 
   const router = useRouter();
-
-  const swiperConfig = {
-    slidesPerView: 1,
-    loop: true,
-    autoplay: {
-      delay: 5000,
-      disableOnInteraction: false,
-    },
-  };
 
   const moveToDetail = (id: string) => {
     router.push(`${PATHS.MOVIES}/${id}?category=${tmdbCategories.movie}`);
@@ -120,11 +120,9 @@ function HomeHeroSlider() {
                             <button
                               onClick={() => moveToDetail(movie.id)}
                               className={clsx(
-                                'flex-center px-4 lg:px-6 py-2 lg:py-2.5 mr-4 shadow-primary-v4 rounded-lg',
-                                'text-white bg-primary-v4',
-                                'transition-all duration-300 ease-out',
-                                'select-none',
-                                'lg:hover:bg-primary-v4-hv'
+                                'btn px-4 lg:px-6 py-2 lg:py-2.5 mr-4 !shadow-primary-v4 rounded-lg',
+                                '!bg-primary-v4',
+                                'lg:hover:!bg-primary-v4-hv'
                               )}>
                               <PlayArrowIcon
                                 className={clsx('!text-xl lg:!text-2xl mr-px')}

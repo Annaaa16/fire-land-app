@@ -3,7 +3,11 @@ import { call, put, takeLatest } from '@redux-saga/core/effects';
 // types
 import { PayloadAction } from '@reduxjs/toolkit';
 import { AxiosResponse } from 'axios';
-import { GetMessagesResponse, MessagePayload } from '@/models/messenger';
+import {
+  GetMessagesResponse,
+  CreateMessagePayload,
+  GetMessagesPayload,
+} from '@/models/messenger';
 
 import { messengerActions } from '../slices/messengerSlice';
 import { messagesApiClient } from '@/apis/messagesApi';
@@ -11,7 +15,9 @@ import { notifySagaError } from '@/helpers/notifyError';
 
 const { createMessage, getMessages } = messagesApiClient();
 
-function* handleCreateMessageRequest(action: PayloadAction<MessagePayload>) {
+function* handleCreateMessageRequest(
+  action: PayloadAction<CreateMessagePayload>
+) {
   try {
     yield call(createMessage, action.payload);
 
@@ -22,13 +28,11 @@ function* handleCreateMessageRequest(action: PayloadAction<MessagePayload>) {
   }
 }
 
-function* handleGetMessagesRequest(action: PayloadAction<string>) {
-  const conversationId = action.payload;
-
+function* handleGetMessagesRequest(action: PayloadAction<GetMessagesPayload>) {
   try {
     const response: AxiosResponse<GetMessagesResponse> = yield call(
       getMessages,
-      conversationId
+      action.payload
     );
 
     yield put(messengerActions.getMessagesSuccess(response.data));

@@ -16,26 +16,26 @@ interface DetailCastListProps {
   casts: Cast[];
 }
 
-function DetailCastList({ casts }: DetailCastListProps) {
-  const swiperConfig = {
-    slidesPerView: 5.4,
-    spaceBetween: 8,
-    breakpoints: {
-      [BREAKPOINTS.PHONE]: {
-        slidesPerView: 3.3,
-        spaceBetween: 8,
-      },
-      [BREAKPOINTS.TABLET]: {
-        slidesPerView: 6.4,
-        spaceBetween: 8,
-      },
-      [BREAKPOINTS.DESKTOP]: {
-        slidesPerView: 5.8,
-        spaceBetween: 8,
-      },
+const swiperConfig = {
+  slidesPerView: 5.4,
+  spaceBetween: 8,
+  breakpoints: {
+    [BREAKPOINTS.PHONE]: {
+      slidesPerView: 3.3,
+      spaceBetween: 8,
     },
-  };
+    [BREAKPOINTS.TABLET]: {
+      slidesPerView: 6.4,
+      spaceBetween: 8,
+    },
+    [BREAKPOINTS.DESKTOP]: {
+      slidesPerView: 5.8,
+      spaceBetween: 8,
+    },
+  },
+};
 
+function DetailCastList({ casts }: DetailCastListProps) {
   return (
     <Swiper {...swiperConfig}>
       {casts?.map(

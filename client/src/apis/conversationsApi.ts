@@ -31,7 +31,7 @@ export const conversationsApiClient = () => {
 
     getConversations: async ({ userId }: GetConversationsPayload) => {
       try {
-        const response = await axiosInstance.post<GetConversationsResponse>(
+        const response = await axiosInstance.get<GetConversationsResponse>(
           '/conversations/' + userId
         );
 

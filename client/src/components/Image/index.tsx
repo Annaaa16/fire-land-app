@@ -51,6 +51,7 @@ function Image(props: NextImageProps & ImageProps) {
                 : 'opacity-0 invisible',
               className
             )}
+            draggable={false}
           />
           {!isLoaded && !isError && (
             <>

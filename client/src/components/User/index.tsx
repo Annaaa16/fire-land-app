@@ -41,11 +41,8 @@ function User(props: UserProps) {
       <img
         src={avatar}
         alt='Avatar'
-        className={clsx(
-          'relative',
-          'w-full h-full object-cover',
-          rounded && 'rounded-full'
-        )}
+        className={clsx('relative', 'img-cover', rounded && 'rounded-full')}
+        draggable={false}
       />
 
       {user && (
@@ -61,9 +58,9 @@ function User(props: UserProps) {
       {online && (
         <span
           className={clsx(
-            'absolute -left-px top-0.5 z-[1]',
-            'w-2.5 h-2.5 border-2 border-white rounded-full',
-            'bg-[#45bd62]'
+            'absolute -right-px bottom-px z-[1]',
+            'w-2.5 h-2.5 border-2 border-white dark:border-gray-700 rounded-full',
+            'bg-[#45bd62] dark:bg-primary-v4-hv'
           )}
         />
       )}

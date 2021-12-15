@@ -2,18 +2,13 @@
 import { AuthInitState } from './auth';
 import { PostsInitState } from './posts';
 import { MoviesInitState } from './movies';
-import { UsersInitState } from './users';
+import { UserResponse, UsersInitState } from './users';
 import { ProductsInitState } from './products';
 
 import { productCategories } from '@/redux/slices/productsSlice';
 
-export interface User {
-  readonly _id: string;
-  username: string;
-  avatar: string;
-  followings: string[];
-  followers: string[];
-  createdAt: string;
+export interface User extends UserResponse {
+  isOnline?: boolean;
 }
 
 export interface Comment {

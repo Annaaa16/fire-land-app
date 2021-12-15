@@ -5,7 +5,7 @@ import useIsomorphicLayoutEffect from './useIsomorphicLayoutEffect ';
 const useCompareNode = (comparedClass: string) => {
   const [isNodeEqual, setIsNodeEqual] = useState<boolean>(false);
 
-  const elRef = useRef<Element>(null);
+  const elRef = useRef<HTMLDivElement>(null);
 
   // Compare class of previous node with current node
   useIsomorphicLayoutEffect(() => {

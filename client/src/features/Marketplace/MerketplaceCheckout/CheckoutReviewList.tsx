@@ -64,7 +64,7 @@ function CheckoutReviewList({
       })
     );
     setContent('');
-    scrollNode.scrollTo({ top: 0, behavior: 'smooth' });
+    scrollNode?.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const isIntersecting = useIntersectionObserver(loaderRef, '0px');
@@ -115,6 +115,7 @@ function CheckoutReviewList({
           onClick={() => visitWall(currentUser._id)}
           className={clsx('w-8 h-8 mr-2')}
           rounded
+          avatar={currentUser.avatar}
         />
         <input
           ref={inputRef}

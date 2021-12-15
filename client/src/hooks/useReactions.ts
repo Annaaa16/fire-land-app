@@ -106,7 +106,7 @@ const useReactions = ({ postId, reaction, currentUser }: useReactionsProps) => {
     }
   }, [reaction]);
 
-  // Run on mobile
+  // Handle for mobile
   useClickOutside(reactButtonRef, () => {
     if (!isOpenReactions) return;
 

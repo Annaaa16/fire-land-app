@@ -5,6 +5,7 @@ import _ from 'lodash';
 
 // types
 import {
+  Conversation,
   ConversationsInitState,
   CreateConversationPayload,
   CreateConversationResponse,
@@ -25,7 +26,9 @@ export const actions = {
 
 const initialState: ConversationsInitState = {
   conversations: [],
+  currentConversation: null,
   loadings: [],
+  statusConversations: [],
 };
 
 const conversationsSlice = createSlice({
@@ -96,6 +99,13 @@ const conversationsSlice = createSlice({
     },
     deleteConversationFailed: (state) => {
       removeLoading(state, actions.deleteConversation);
+    },
+
+    setCurrentConversation: (
+      state,
+      action: PayloadAction<Conversation | null>
+    ) => {
+      state.currentConversation = action.payload;
     },
   },
 });

@@ -1,11 +1,16 @@
 const mongoose = require('mongoose');
 
+const UserField = {
+  type: [mongoose.Schema.Types.ObjectId],
+  ref: 'User',
+  default: [],
+  required: true,
+};
+
 const ConversationSchema = new mongoose.Schema(
   {
-    memberIds: {
-      type: Array,
-      default: [],
-    },
+    creators: UserField,
+    members: UserField,
   },
   { timestamps: true }
 );

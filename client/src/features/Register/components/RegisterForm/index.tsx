@@ -19,7 +19,7 @@ import { RegisterPayload } from '@/models/auth';
 import { formRegisterSchema } from '@/utils/formSchemas';
 import { authActions } from '@/redux/slices/authSlice';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
-import randomAvatar from '@/helpers/randomAvatar';
+import getAvatar from '@/helpers/getAvatar';
 
 import FormInput from '@/components/FormInput';
 
@@ -37,7 +37,7 @@ function RegisterForm() {
   });
 
   const handleRandomAvatar = () => {
-    const avatar = randomAvatar();
+    const avatar = getAvatar();
 
     setAvatar(avatar);
   };
@@ -54,7 +54,7 @@ function RegisterForm() {
 
   // Random avatar when init app
   useEffect(() => {
-    const avatar = randomAvatar();
+    const avatar = getAvatar();
 
     setAvatar(avatar);
   }, []);

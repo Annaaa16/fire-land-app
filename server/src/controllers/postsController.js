@@ -22,7 +22,7 @@ postsController.createPost = async (req, res) => {
   }
 
   try {
-    const user = await User.findById(req.userId).select(['-password']);
+    const user = await User.findById(req.userId);
 
     const { uploadedPhoto, photoId } = await uploadPhoto(
       photo,

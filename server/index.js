@@ -33,9 +33,9 @@ connectToRoutes(app);
 app.use(morgan('dev'));
 
 // Connect to db
-const connectToDb = async () => {
+const connectToDb = () => {
   try {
-    await mongoose.connect(MONGO_URI, {
+    mongoose.connect(MONGO_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });

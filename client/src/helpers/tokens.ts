@@ -12,7 +12,7 @@ import { RefreshTokenResponse } from '@/models/auth';
 import { COOKIES } from '@/constants';
 
 const tokens = {
-  checkTokenValid: (ctx: NextPageContext | GetServerSidePropsContext) => {
+  checkTokenValid(ctx: NextPageContext | GetServerSidePropsContext) {
     const { access_token, refresh_token } = parseCookies(ctx);
     const isFully = access_token && refresh_token;
 
@@ -38,10 +38,10 @@ const tokens = {
     }
   },
 
-  setAccessToken: (
+  setAccessToken(
     ctx: NextPageContext,
     refreshTokenResponse: RefreshTokenResponse
-  ) => {
+  ) {
     if (ctx && refreshTokenResponse) {
       const { accessToken, cookieOptions } = refreshTokenResponse;
 
@@ -49,9 +49,7 @@ const tokens = {
     }
   },
 
-  covertTokenObjectToString: (
-    ctx: GetServerSidePropsContext | NextPageContext
-  ) => {
+  covertTokenObjectToString(ctx: GetServerSidePropsContext | NextPageContext) {
     const { access_token, refresh_token } = parseCookies(ctx);
 
     return [

@@ -58,7 +58,7 @@ authController.login = async (req, res) => {
   }
 
   try {
-    const user = await User.findOne({ username }).lean();
+    const user = await User.findOne({ username }).select('+password').lean();
 
     // User does not exist or incorrect username
     if (!user) {
@@ -78,6 +78,8 @@ authController.login = async (req, res) => {
 
     setTokens.accessToken(res, user._id);
     setTokens.refreshToken(res, user._id);
+
+    delete user.password;
 
     res.json({
       success: true,
