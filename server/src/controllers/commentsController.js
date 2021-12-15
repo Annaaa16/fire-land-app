@@ -16,7 +16,7 @@ commentsController.createComment = async (req, res) => {
   }
 
   try {
-    const user = await User.findById(userId).select(['-password']);
+    const user = await User.findById(userId);
 
     if (!user) {
       return res

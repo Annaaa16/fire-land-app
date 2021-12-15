@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const { TOKENS, COOKIES } = require('../constants');
 const cookieOptions = require('../configs/cookieOptionsConfig');
 
-const setTokens = {
+exports.setTokens = {
   accessToken: (res, userId) => {
     const accessToken = jwt.sign({ userId }, TOKENS.ACCESS_TOKEN_SECRET, {
       expiresIn: TOKENS.ACCESS_TOKEN_EXP,
@@ -20,12 +20,10 @@ const setTokens = {
   },
 };
 
-const getTokens = {
+exports.getTokens = {
   accessToken: (userId) => {
     return jwt.sign({ userId }, TOKENS.ACCESS_TOKEN_SECRET, {
       expiresIn: TOKENS.ACCESS_TOKEN_EXP,
     });
   },
 };
-
-module.exports = { setTokens, getTokens };

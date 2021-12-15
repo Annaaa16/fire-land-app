@@ -4,9 +4,12 @@ const MessageSchema = new mongoose.Schema(
   {
     conversationId: {
       type: String,
+      required: true,
     },
-    senderId: {
-      type: String,
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
     },
     text: {
       type: String,
