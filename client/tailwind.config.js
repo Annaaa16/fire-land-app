@@ -1,15 +1,3 @@
-const colors = require('./src/tailwind/colors');
-const lineHeight = require('./src/tailwind/lineHeight');
-const spacing = require('./src/tailwind/spacing');
-const fontSize = require('./src/tailwind/fontSize');
-const container = require('./src/tailwind/container');
-const zIndex = require('./src/tailwind/zIndex');
-const boxShadow = require('./src/tailwind/boxShadow');
-const backgroundImage = require('./src/tailwind/backgroundImage');
-const transitionDuration = require('./src/tailwind/transitionDuration');
-const animation = require('./src/tailwind/animation');
-const keyframes = require('./src/tailwind/keyframes');
-
 module.exports = {
   mode: 'jit',
   purge: [
@@ -21,18 +9,18 @@ module.exports = {
   darkMode: 'class',
   theme: {
     extend: {
-      zIndex,
-      container,
-      lineHeight,
-      boxShadow,
-      colors,
-      backgroundImage,
-      transitionDuration,
-      animation,
-      keyframes,
+      zIndex: require('./src/tailwind/zIndex'),
+      container: require('./src/tailwind/container'),
+      lineHeight: require('./src/tailwind/lineHeight'),
+      boxShadow: require('./src/tailwind/boxShadow'),
+      colors: require('./src/tailwind/colors'),
+      backgroundImage: require('./src/tailwind/backgroundImage'),
+      transitionDuration: require('./src/tailwind/transitionDuration'),
+      animation: require('./src/tailwind/animation'),
+      keyframes: require('./src/tailwind/keyframes'),
     },
-    fontSize,
-    spacing,
+    fontSize: require('./src/tailwind/fontSize'),
+    spacing: require('./src/tailwind/spacing'),
   },
   variants: {
     extend: {},
