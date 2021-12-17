@@ -13,12 +13,6 @@ import FlagIcon from '@mui/icons-material/Flag';
 import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
 import CloseIcon from '@mui/icons-material/Close';
 
-// react dropzone
-import { useDropzone } from 'react-dropzone';
-
-// react overlayscrollbars
-import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
-
 // lodash
 import _ from 'lodash';
 
@@ -30,11 +24,12 @@ import { postsActions } from '@/redux/slices/postsSlice';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 import useDetectKeydown from '@/hooks/useDetectKeydown';
 import usePhotoPicker from '@/hooks/usePhotoPicker';
+import useAutoFocus from '@/hooks/useAutoFocus';
 
+import { Scrollbar } from '@/components/Scrollbar';
 import User from '@/components/User';
 import Tooltip from '@/components/Tooltip';
 import PhotoPicker from '@/components/PhotoPicker';
-import useAutoFocus from '@/hooks/useAutoFocus';
 
 function NewsFeedSenderArea() {
   const { updatePost } = usePostsSelector();
@@ -95,7 +90,7 @@ function NewsFeedSenderArea() {
       <div
         className={clsx(
           'relative',
-          'm-auto w-[500px] rounded-xl shadow-lg',
+          'm-auto w-[500px] rounded-xl shadow-lg overflow-hidden',
           'bg-white dark:bg-dk-cpn'
         )}>
         <div className={clsx('relative')}>
@@ -151,30 +146,29 @@ function NewsFeedSenderArea() {
             </div>
           </div>
 
-          <OverlayScrollbarsComponent
-            options={{ scrollbars: { autoHide: 'scroll' } }}
-            className={clsx(
-              isOpenPhoto ? 'max-h-72 md:max-h-100' : 'max-h-60'
-            )}>
-            <textarea
-              onKeyDown={handleTextareaRows}
-              ref={textareaRef}
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              rows={isOpenPhoto ? textareaRows : textareaRows + 3}
-              className={clsx(
-                'w-full pt-3 leading-4 outline-none resize-none overflow-y-hidden',
-                'dark:bg-dk-cpn dark:text-white'
-              )}
-              placeholder={`What's on your mind, ${currentUser.username}?`}
-            />
-            {isOpenPhoto && (
-              <PhotoPicker
-                {...payload}
-                onClosePhoto={() => setIsOpenPhoto(false)}
+          <Scrollbar
+            className={clsx(isOpenPhoto ? 'max-h-56 md:max-h-90' : 'max-h-60')}>
+            <div>
+              <textarea
+                onKeyDown={handleTextareaRows}
+                ref={textareaRef}
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+                rows={isOpenPhoto ? textareaRows : textareaRows + 3}
+                className={clsx(
+                  'w-full pt-3 leading-4 outline-none resize-none overflow-y-hidden',
+                  'dark:bg-dk-cpn dark:text-white'
+                )}
+                placeholder={`What's on your mind, ${currentUser.username}?`}
               />
-            )}
-          </OverlayScrollbarsComponent>
+              {isOpenPhoto && (
+                <PhotoPicker
+                  {...payload}
+                  onClosePhoto={() => setIsOpenPhoto(false)}
+                />
+              )}
+            </div>
+          </Scrollbar>
 
           <div
             className={clsx(

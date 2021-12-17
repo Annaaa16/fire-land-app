@@ -1,0 +1,13 @@
+.scrollbar {
+  &-track {
+    background: transparent !important;
+
+    transition-duration: 0.2s !important;
+  }
+
+  &-thumb {
+    width: 6.5px !important;
+
+    background: rgba(0, 0, 0, 0.4) !important;
+  }
+}

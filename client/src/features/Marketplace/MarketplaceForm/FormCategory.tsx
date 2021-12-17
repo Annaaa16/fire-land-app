@@ -5,12 +5,11 @@ import clsx from 'clsx';
 
 // material ui icons
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import useClickOutside from '@/hooks/useClickOutside';
-
-// overlayscrollbars
-import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
 
 import { productCategories } from '@/redux/slices/productsSlice';
+import useClickOutside from '@/hooks/useClickOutside';
+
+import { Scrollbar } from '@/components/Scrollbar';
 
 interface FormCategoryProps {
   onSelectCategory: (category: string) => void;
@@ -72,18 +71,16 @@ function FormCategory({
       </div>
 
       {isOpenCategory && (
-        <OverlayScrollbarsComponent
+        <Scrollbar
+          alwaysShowTracks={true}
           className={clsx(
             '!absolute top-[calc(100%+10px)] left-0 right-0 z-10',
-            'shadow-lg rounded-lg border h-60 w-full',
+            'shadow-lg rounded-lg border !h-60 w-full',
             isOpenCategory
               ? 'border-primary-v1 dark:border-primary-v3'
               : 'border-lt-line dark:border-dk-line',
             'bg-white dark:bg-dk-cpn dark:text-white'
-          )}
-          options={{
-            scrollbars: { clickScrolling: true },
-          }}>
+          )}>
           <ul className='py-2'>
             {Object.values(productCategories).map((category) => (
               <li
@@ -97,7 +94,7 @@ function FormCategory({
               </li>
             ))}
           </ul>
-        </OverlayScrollbarsComponent>
+        </Scrollbar>
       )}
     </div>
   );

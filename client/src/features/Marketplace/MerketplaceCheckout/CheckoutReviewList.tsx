@@ -7,9 +7,6 @@ import clsx from 'clsx';
 import SendIcon from '@mui/icons-material/Send';
 import LogoutIcon from '@mui/icons-material/Logout';
 
-// overlayscrollbars
-import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
-
 // types
 import { FormEvent } from 'react';
 import { Product } from '@/models/common';
@@ -20,14 +17,15 @@ import { ViewOptions } from '.';
 import { LIMITS } from '@/constants';
 import { actions, reviewsActions } from '@/redux/slices/reviewsSlice';
 import { useReviewsSelector, useUsersSelector } from '@/redux/selectors';
+import useIntersectionObserver from '@/hooks/useIntersectionObserver';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 import useAutoFocus from '@/hooks/useAutoFocus';
 import useUsers from '@/hooks/useUsers';
 
+import { Scrollbar } from '@/components/Scrollbar';
 import User from '@/components/User';
 import Tooltip from '@/components/Tooltip';
 import CheckoutReview from './CheckoutReview';
-import useIntersectionObserver from '@/hooks/useIntersectionObserver';
 
 interface CheckoutReviewListProps extends Product {
   onSelectOption: (option: ViewOptions) => void;
@@ -43,7 +41,6 @@ function CheckoutReviewList({
   const [content, setContent] = useState<string>('');
 
   const inputRef = useRef<HTMLInputElement>(null);
-  const scrollRef = useRef<OverlayScrollbarsComponent>(null);
   const loaderRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -55,8 +52,6 @@ function CheckoutReviewList({
   const handleCreateReview = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const scrollNode = scrollRef.current?.osInstance()?.getElements('viewport');
-
     dispatch(
       reviewsActions.createReviewRequest({
         content,
@@ -64,7 +59,6 @@ function CheckoutReviewList({
       })
     );
     setContent('');
-    scrollNode?.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const isIntersecting = useIntersectionObserver(loaderRef, '0px');
@@ -91,19 +85,14 @@ function CheckoutReviewList({
         'relative',
         'flex flex-col justify-between h-full pl-2 pr-0.5'
       )}>
-      <OverlayScrollbarsComponent
-        ref={scrollRef}
-        options={{
-          scrollbars: { autoHide: 'scroll', clickScrolling: true },
-        }}
-        className={clsx('relative', 'flex-grow md:h-100 pr-3')}>
-        <div ref={containerRef} className='flex flex-col gap-y-2 pt-2'>
+      <Scrollbar className={clsx('flex-grow md:h-100')}>
+        <div ref={containerRef} className='flex flex-col gap-y-2 pt-2 pr-3'>
           {reviews.map((review) => (
             <CheckoutReview key={review._id} {...review} />
           ))}
           <div ref={loaderRef} className='h-px' />
         </div>
-      </OverlayScrollbarsComponent>
+      </Scrollbar>
 
       <form
         onSubmit={handleCreateReview}
