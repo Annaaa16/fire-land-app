@@ -13,7 +13,7 @@ import { ImageProps as NextImageProps } from 'next/image';
 import LoadingImage from '../Loading/LoadingImage';
 import LoadingCover from '../Loading/LoadingCover';
 
-interface ImageProps {
+interface ImageProps extends NextImageProps {
   className?: string;
   loadingWidths?: number[];
   loadingHeight?: number;
@@ -21,7 +21,7 @@ interface ImageProps {
   styleLoading: 'cover' | 'image';
 }
 
-function Image(props: NextImageProps & ImageProps) {
+function Image(props: ImageProps) {
   const {
     src,
     styleLoading,
@@ -29,7 +29,7 @@ function Image(props: NextImageProps & ImageProps) {
     loadingHeight,
     skeleton,
     className,
-    ...rest
+    ...restProps
   } = props;
 
   const [isError, setIsError] = useState<boolean>(false);
@@ -41,7 +41,7 @@ function Image(props: NextImageProps & ImageProps) {
         <div className={clsx('relative', 'w-full h-full')}>
           <NextImage
             src={src}
-            {...rest}
+            {...restProps}
             onError={() => setIsError(true)}
             onLoad={() => setIsLoaded(false)}
             onLoadingComplete={() => setIsLoaded(true)}

@@ -16,7 +16,6 @@ import { ThemeProvider } from '@mui/material';
 import { AppContext, AppInitialProps } from 'next/app';
 import { SagaStore } from '@/models/store';
 import { GetUserResponse } from '@/models/users';
-
 import serverAuthenticate from '@/helpers/serverAuthenticate';
 import store, { wrapper } from '@/redux/store';
 import theme from '@/configs/mui';
@@ -25,7 +24,6 @@ import GlobalProvider from '../contexts/GlobalContext';
 
 // styles
 import '../styles/globals.scss';
-import 'overlayscrollbars/css/OverlayScrollbars.css';
 import 'swiper/css';
 
 const progressBar = new ProgressBar({

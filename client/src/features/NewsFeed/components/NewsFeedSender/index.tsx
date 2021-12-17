@@ -100,6 +100,7 @@ function NewsFeedSender() {
           </li>
         </ul>
       </div>
+
       {isOpenFormSender && <SenderForm />}
     </>
   );

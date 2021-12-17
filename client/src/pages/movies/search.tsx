@@ -23,9 +23,9 @@ function Search() {
     searchedMovies: { page, movies, totalPages, totalMovies },
   } = useMoviesSelector();
 
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const observerRef = useRef<HTMLDivElement>(null);
 
-  const isIntersecting = useIntersectionObserver(scrollRef, '500px');
+  const isIntersecting = useIntersectionObserver(observerRef, '500px');
   const router = useRouter();
   const dispatch = useStoreDispatch();
 
@@ -62,7 +62,7 @@ function Search() {
           )}
         </div>
       </section>
-      <div ref={scrollRef} />
+      <div ref={observerRef} />
     </MainLayout>
   );
 }
@@ -79,7 +79,6 @@ export const getServerSideProps: GetServerSideProps =
       query: query.query as string,
     });
 
-    console.log('response =>', response?.data);
     response &&
       store.dispatch(moviesActions.searchMoviesSuccess(response.data));
 
