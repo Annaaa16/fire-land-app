@@ -12,8 +12,6 @@ import { LIMITS } from '@/constants';
 import { wrapper } from '@/redux/store';
 import { postsApiServer } from '@/apis/postsApi';
 import { postsActions } from '@/redux/slices/postsSlice';
-import tokens from '@/helpers/tokens';
-
 import Meta from '@/layouts/Meta';
 import Social from '@/layouts/Social';
 import NewsFeedBanner from '@/features/NewsFeed/components/NewsFeedBanner';
@@ -42,18 +40,15 @@ export default NewsFeed;
 export const getServerSideProps: GetServerSideProps =
   wrapper.getServerSideProps((store) => async (ctx) => {
     const { getPosts } = postsApiServer(ctx);
-    const { isRefreshTokenExpired, isFully } = tokens.checkTokenValid(ctx)!;
 
-    if (isFully && !isRefreshTokenExpired) {
-      const response = (await getPosts({
-        params: {
-          page: 1,
-          limit: LIMITS.POSTS,
-        },
-      })) as AxiosResponse<GetPostsResponse>;
+    const response = (await getPosts({
+      params: {
+        page: 1,
+        limit: LIMITS.POSTS,
+      },
+    })) as AxiosResponse<GetPostsResponse>;
 
-      response && store.dispatch(postsActions.getPostsSuccess(response.data));
-    }
+    response && store.dispatch(postsActions.getPostsSuccess(response.data));
 
     return {
       props: {},

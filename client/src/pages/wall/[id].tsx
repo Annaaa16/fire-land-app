@@ -15,7 +15,6 @@ import { postsApiServer } from '@/apis/postsApi';
 import { usersActions } from '@/redux/slices/usersSlice';
 import { usersApiServer } from '@/apis/usersApi';
 import { notifyPageError } from '@/helpers/notifyError';
-import tokens from '@/helpers/tokens';
 
 import Meta from '@/layouts/Meta';
 import Social from '@/layouts/Social';
@@ -48,37 +47,34 @@ export const getServerSideProps: GetServerSideProps =
     const { id } = ctx.query;
     const { getPosts } = postsApiServer(ctx);
     const { getUser } = usersApiServer(ctx);
-    const { isRefreshTokenExpired, isFully } = tokens.checkTokenValid(ctx)!;
 
     let user: User | null = null;
     let statusCode: number = STATUS_CODES.DEFAULT;
 
-    if (isFully && !isRefreshTokenExpired) {
-      store.dispatch(postsActions.clearPosts());
+    store.dispatch(postsActions.clearPosts());
 
-      try {
-        const userResponse = (await getUser(
-          id as string
-        )) as AxiosResponse<GetUserResponse>;
+    try {
+      const userResponse = (await getUser(
+        id as string
+      )) as AxiosResponse<GetUserResponse>;
 
-        if (userResponse?.data.success) {
-          const postsResponse = (await getPosts({
-            userId: id as string,
-            params: { page: 1, limit: LIMITS.POSTS },
-          })) as AxiosResponse<GetPostsResponse>;
+      if (userResponse?.data.success) {
+        const postsResponse = (await getPosts({
+          userId: id as string,
+          params: { page: 1, limit: LIMITS.POSTS },
+        })) as AxiosResponse<GetPostsResponse>;
 
-          store.dispatch(usersActions.setUserProfile(userResponse.data));
-          postsResponse &&
-            store.dispatch(postsActions.getPostsSuccess(postsResponse.data));
+        store.dispatch(usersActions.setUserProfile(userResponse.data));
+        postsResponse &&
+          store.dispatch(postsActions.getPostsSuccess(postsResponse.data));
 
-          user = userResponse.data.user;
-        }
-
-        statusCode = userResponse.status;
-      } catch (error) {
-        statusCode = STATUS_CODES.SERVER_ERROR;
-        notifyPageError('Wall', error);
+        user = userResponse.data.user;
       }
+
+      statusCode = userResponse.status;
+    } catch (error) {
+      statusCode = STATUS_CODES.SERVER_ERROR;
+      notifyPageError('Wall', error);
     }
 
     if (statusCode >= STATUS_CODES.NOT_FOUND) {

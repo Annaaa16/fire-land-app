@@ -1,8 +1,5 @@
 // nookies
-import { setCookie, parseCookies, destroyCookie } from 'nookies';
-
-// types
-import { NextPageContext } from 'next';
+import { setCookie, destroyCookie } from 'nookies';
 
 import { COOKIES, PATHS } from '@/constants';
 import cookieOptions from '@/configs/cookies';
@@ -16,18 +13,6 @@ const cookies = {
       path || PATHS.NEWSFEED,
       cookieOptions
     );
-  },
-
-  getPrevPath(ctx: NextPageContext) {
-    const cookies = parseCookies(ctx);
-
-    return cookies.prev_path || PATHS.NEWSFEED;
-  },
-
-  deleteAll(ctx: NextPageContext | null) {
-    destroyCookie(ctx, COOKIES.ACCESS_TOKEN_KEY);
-    destroyCookie(ctx, COOKIES.REFRESH_TOKEN_KEY);
-    destroyCookie(ctx, COOKIES.PREV_PATH_KEY);
   },
 };
 
