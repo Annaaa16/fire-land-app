@@ -111,27 +111,36 @@ authController.refreshToken = (req, res) => {
 };
 
 authController.verifyTokens = (req, res) => {
-  const cookies = req.cookies;
+  const { access_token, refresh_token } = req.cookies;
 
   let success = true;
 
-  if (!cookies?.access_token || !cookies?.refresh_token) {
+  if (!access_token || !refresh_token) {
     return res.status(401).json({ success: false, message: 'Token not found' });
   }
 
-  jwt.verify(cookies.access_token, TOKENS.ACCESS_TOKEN_SECRET, (error) => {
-    if (error && !error.expiredAt) {
+  jwt.verify(access_token, TOKENS.ACCESS_TOKEN_SECRET, (error) => {
+    // Token is modified by user
+    if (error) {
       success = false;
     }
   });
 
-  jwt.verify(cookies.refresh_token, TOKENS.REFRESH_TOKEN_SECRET, (error) => {
-    if (error && !error.expiredAt) {
+  jwt.verify(refresh_token, TOKENS.REFRESH_TOKEN_SECRET, (error) => {
+    // Token has expired
+    if (error) {
       success = false;
     }
   });
 
-  res.json({ success, message: 'Valid tokens' });
+  if (success) {
+    return res.json({
+      success: true,
+      message: 'Valid tokens',
+    });
+  }
+
+  res.status(401).json({ success: false, message: 'Invalid token' });
 };
 
 module.exports = authController;
