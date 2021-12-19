@@ -17,15 +17,7 @@ interface UserProps {
 }
 
 function User(props: UserProps) {
-  const {
-    view,
-    avatar = BACKUPS.AVATAR,
-    className,
-    user,
-    online,
-    rounded,
-    onClick,
-  } = props;
+  const { view, avatar, className, user, online, rounded, onClick } = props;
 
   return (
     <div
@@ -39,7 +31,7 @@ function User(props: UserProps) {
         className
       )}>
       <img
-        src={avatar}
+        src={avatar || BACKUPS.AVATAR}
         alt='Avatar'
         className={clsx('relative', 'img-cover', rounded && 'rounded-full')}
         draggable={false}

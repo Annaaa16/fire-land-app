@@ -9,13 +9,13 @@ import Sidebar from '@/components/Sidebar';
 function Messenger() {
   return (
     <Meta title='Messenger'>
-      <main className={clsx('flex h-screen')}>
+      <div className={clsx('flex h-screen')}>
         <div className={clsx('hidden lg:block')}>
           <Sidebar messenger />
         </div>
         <MessengerContact />
         <MessengerChat />
-      </main>
+      </div>
     </Meta>
   );
 }

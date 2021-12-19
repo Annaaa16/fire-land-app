@@ -16,7 +16,7 @@ import { ThemeProvider } from '@mui/material';
 import { AppContext, AppInitialProps } from 'next/app';
 import { SagaStore } from '@/models/store';
 import { GetUserResponse } from '@/models/users';
-import serverAuthenticate from '@/helpers/serverAuthenticate';
+import fetchUserFromServer from '@/helpers/fetchUserFromServer';
 import store, { wrapper } from '@/redux/store';
 import theme from '@/configs/mui';
 
@@ -40,7 +40,7 @@ class WrappedApp extends App<
 > {
   static getInitialProps = async ({ Component, ctx }: AppContext) => {
     // Init check
-    const currentUserResponse = await serverAuthenticate(ctx);
+    const currentUserResponse = await fetchUserFromServer(ctx);
 
     // Wait for all page actions to dispatch
     if (ctx.req) {
