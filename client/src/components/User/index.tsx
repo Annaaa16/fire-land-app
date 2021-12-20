@@ -50,7 +50,7 @@ function User(props: UserProps) {
       {online && (
         <span
           className={clsx(
-            'absolute -right-px bottom-px z-[1]',
+            'absolute -right-1 -bottom-px z-[1]',
             'w-2.5 h-2.5 border-2 border-white dark:border-gray-700 rounded-full',
             'bg-[#45bd62] dark:bg-primary-v4-hv'
           )}

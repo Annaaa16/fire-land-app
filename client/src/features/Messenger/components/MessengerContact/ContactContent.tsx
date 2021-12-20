@@ -82,6 +82,7 @@ function ContactContent() {
             <ChatBubbleIcon
               className={clsx(
                 '!text-base',
+                'dark:text-white',
                 status === CONVERSATIONS && 'text-white',
                 '!transition-none'
               )}
@@ -105,6 +106,7 @@ function ContactContent() {
             <PeopleAltIcon
               className={clsx(
                 '!text-lg',
+                'dark:text-white',
                 status === ONLINE && 'text-white',
                 '!transition-none'
               )}
@@ -128,6 +130,7 @@ function ContactContent() {
             <GroupsIcon
               className={clsx(
                 '!text-xl',
+                'dark:text-white',
                 status === GROUPS && 'text-white',
                 '!transition-none'
               )}
@@ -151,6 +154,7 @@ function ContactContent() {
             <DoorFrontIcon
               className={clsx(
                 '!text-xl',
+                'dark:text-white',
                 status === ROOMS && 'text-white',
                 '!transition-none'
               )}
