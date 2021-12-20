@@ -1,9 +1,12 @@
-const { Server } = require('socket.io');
-const express = require('express');
-const http = require('http');
+import { Server } from 'socket.io';
+import express from 'express';
+import http from 'http';
 
-const registerConversationsHandler = require('./handlers/conversationsHandler');
-const registerUsersHandler = require('./handlers/usersHandler');
+// types
+import type { Socket } from 'socket.io';
+
+import registerConversationsHandler from './handlers/conversationsHandler';
+import registerUsersHandler from './handlers/usersHandler';
 
 const app = express();
 
@@ -24,7 +27,7 @@ const LISTENS = {
   CONNECTION: 'connection',
 };
 
-io.on(LISTENS.CONNECTION, (socket) => {
+io.on(LISTENS.CONNECTION, (socket: Socket) => {
   registerConversationsHandler(io, socket);
   registerUsersHandler(io, socket);
 });

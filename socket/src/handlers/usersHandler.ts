@@ -1,16 +1,30 @@
-const LISTENS = {
+// types
+import {
+  SocketEmits,
+  SocketListens,
+  UserEmits,
+  UserListens,
+} from 'src/types/socket';
+import { User } from 'src/types/users';
+
+const LISTENS: UserListens = {
   ADD_ONLINE_USER: 'addOnlineUser',
-  CONNECTION: 'connection',
   DISCONNECT: 'disconnect',
 };
 
-const EMITS = {
+const EMITS: UserEmits = {
   RECEIVE_ONLINE_USERS: 'receiveOnlineUsers',
 };
 
-let onlineUsers = [];
+let onlineUsers: User[] = [];
 
-const addOnlineUser = ({ user: currentUser, socketId }) => {
+const addOnlineUser = ({
+  user: currentUser,
+  socketId,
+}: {
+  user: User;
+  socketId: string;
+}) => {
   const isOnline = onlineUsers.some(
     (user) => user._id === currentUser._id || user.socketId === socketId
   );
@@ -20,12 +34,12 @@ const addOnlineUser = ({ user: currentUser, socketId }) => {
   onlineUsers.push({ ...currentUser, socketId });
 };
 
-const removeOfflineUser = (socketId) => {
+const removeOfflineUser = (socketId: string) => {
   onlineUsers = onlineUsers.filter((user) => user.socketId !== socketId);
 };
 
-const registerUsersHandler = (io, socket) => {
-  socket.on(LISTENS.ADD_ONLINE_USER, (user) => {
+const registerUsersHandler = (io: SocketEmits, socket: SocketListens) => {
+  socket.on(LISTENS.ADD_ONLINE_USER, (user: User) => {
     addOnlineUser({ user, socketId: socket.id });
 
     io.emit(EMITS.RECEIVE_ONLINE_USERS, onlineUsers);
@@ -38,4 +52,4 @@ const registerUsersHandler = (io, socket) => {
   });
 };
 
-module.exports = registerUsersHandler;
+export default registerUsersHandler;
