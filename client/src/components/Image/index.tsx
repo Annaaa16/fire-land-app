@@ -14,7 +14,6 @@ import LoadingImage from '../Loading/LoadingImage';
 import LoadingCover from '../Loading/LoadingCover';
 
 interface ImageProps extends NextImageProps {
-  className?: string;
   loadingWidths?: number[];
   loadingHeight?: number;
   skeleton?: boolean;

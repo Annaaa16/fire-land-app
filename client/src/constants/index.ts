@@ -32,6 +32,7 @@ export const PATHS = {
   MOVIES: '/movies',
   MOVIES_SEARCH: '/movies/search',
   WALL: '/wall',
+  MESSENGER: '/messenger',
 };
 
 export const LIMITS = {

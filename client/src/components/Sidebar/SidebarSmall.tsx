@@ -1,11 +1,16 @@
+import { useRouter } from 'next/router';
+
 // clsx
 import clsx from 'clsx';
 
+import { LOCAL_STORAGE, PATHS } from '@/constants';
+import { useGlobalContext } from '@/contexts/GlobalContext';
 import sidebarTooltips from '@/utils/sidebarTooltips';
 
 import User from '../User';
 import Tooltip from '../Tooltip';
 
+// svgs
 import icon from '@/assets/svgs/icon.svg';
 
 interface SidebarSmallProps {
@@ -13,7 +18,9 @@ interface SidebarSmallProps {
 }
 
 function SidebarSmall({ messenger }: SidebarSmallProps) {
-  const isDark = true;
+  const { theme } = useGlobalContext();
+
+  const router = useRouter();
 
   return (
     <aside
@@ -26,11 +33,12 @@ function SidebarSmall({ messenger }: SidebarSmallProps) {
       )}>
       {messenger && (
         <div
+          onClick={() => router.push(PATHS.NEWSFEED)}
           className={clsx(
             'w-12 pb-5 mx-auto mb-6 border-b border-lt-line dark:border-dk-line',
             'cursor-pointer'
           )}>
-          <img src={icon.src} alt='Logo' className={clsx('w-full')} />
+          <img src={icon.src} alt='Logo' className={clsx('img-full')} />
         </div>
       )}
       <User view='sm' className='mx-auto' rounded />
@@ -43,7 +51,7 @@ function SidebarSmall({ messenger }: SidebarSmallProps) {
               'relative',
               'group py-3 rounded-xl mb-5',
               active && 'bg-primary-v2 dark:bg-primary-v4',
-              isDark && active
+              theme === LOCAL_STORAGE.DARK_THEME_VALUE && active
                 ? 'shadow-primary-v4'
                 : active && 'shadow-primary-v2',
               'cursor-pointer',
