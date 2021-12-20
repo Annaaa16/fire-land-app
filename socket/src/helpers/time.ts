@@ -2,6 +2,7 @@ const time = {
   createCreatedAt() {
     return new Date().toISOString();
   },
+  nano() {},
 };
 
-module.exports = time;
+export default time;

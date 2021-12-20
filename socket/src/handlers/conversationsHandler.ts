@@ -1,20 +1,36 @@
-const time = require('../helpers/time');
+// types
+import {
+  ConversationsEmits,
+  ConversationsListens,
+  SocketEmits,
+  SocketListens,
+} from 'src/types/socket';
+import { User } from 'src/types/users';
 
-const LISTENS = {
+import time from '../helpers/time';
+
+const LISTENS: ConversationsListens = {
   SEND_MESSAGE: 'sendMessage',
   JOIN_CONVERSATION: 'joinConversation',
   LEAVE_CONVERSATION: 'leaveConversation',
   DISCONNECT: 'disconnect',
 };
 
-const EMITS = {
+const EMITS: ConversationsEmits = {
   RECEIVE_MESSAGE: 'receiveMessage',
-  RECEIVE_ONLINE_USERS: 'receiveOnlineUsers',
 };
 
-let users = [];
+let users: User[] = [];
 
-const joinConversation = ({ user: currentUser, conversationId, socketId }) => {
+const joinConversation = ({
+  user: currentUser,
+  conversationId,
+  socketId,
+}: {
+  user: User;
+  conversationId: string;
+  socketId: string;
+}) => {
   if (!currentUser?._id || !conversationId) return;
 
   const isJoined = users.some(
@@ -26,22 +42,25 @@ const joinConversation = ({ user: currentUser, conversationId, socketId }) => {
   users.push({ ...currentUser, conversationId, socketId });
 };
 
-const leaveConversation = (socketId) => {
+const leaveConversation = (socketId: string) => {
   users = users.filter((user) => user.socketId !== socketId);
 };
 
-const getCurrentUser = (socketId) => {
+const getCurrentUser = (socketId: string) => {
   return users.find((user) => user.socketId === socketId);
 };
 
-const registerConversationsHandler = (io, socket) => {
+const registerConversationsHandler = (
+  io: SocketEmits,
+  socket: SocketListens
+) => {
   socket.on(LISTENS.JOIN_CONVERSATION, ({ user, conversationId }) => {
     joinConversation({ user, conversationId, socketId: socket.id });
 
     socket.join(conversationId);
   });
 
-  socket.on(LISTENS.SEND_MESSAGE, (text) => {
+  socket.on(LISTENS.SEND_MESSAGE, (text: string) => {
     const sender = getCurrentUser(socket.id);
 
     if (sender) {
@@ -62,4 +81,4 @@ const registerConversationsHandler = (io, socket) => {
   });
 };
 
-module.exports = registerConversationsHandler;
+export default registerConversationsHandler;
