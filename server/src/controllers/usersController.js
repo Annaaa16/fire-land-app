@@ -253,7 +253,7 @@ usersController.getFriends = async (req, res) => {
     const nextPage = endPos < total ? page + 1 : null;
 
     const friends = await User.find({
-      followers: { $in: [userId] },
+      friends: { $in: [userId] },
     })
       .skip(startPos)
       .limit(limit);

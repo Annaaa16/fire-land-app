@@ -1,3 +1,5 @@
+import { useRouter } from 'next/router';
+
 // clsx
 import clsx from 'clsx';
 
@@ -6,7 +8,14 @@ import GroupIcon from '@mui/icons-material/Group';
 import ChatIcon from '@mui/icons-material/Chat';
 import Tooltip from '@/components/Tooltip';
 
+import { PATHS } from '@/constants';
+import { useUsersSelector } from '@/redux/selectors';
+
 function NewsFeedMembers() {
+  const { onlineUsers } = useUsersSelector();
+
+  const router = useRouter();
+
   return (
     <div
       className={clsx(
@@ -26,18 +35,21 @@ function NewsFeedMembers() {
             'text-xs md:text-sm',
             'text-gray-dk dark:text-dk-text'
           )}>
-          Total members:
+          Online members:
         </span>
         <span
           className={clsx(
             'ml-1 font-semibold text-xs md:text-sm',
             'dark:text-primary-v4'
           )}>
-          08
+          {onlineUsers.length < 10
+            ? '0' + onlineUsers.length
+            : onlineUsers.length}
         </span>
       </div>
 
       <div
+        onClick={() => router.push(PATHS.MESSENGER)}
         className={clsx(
           'relative',
           'flex-center group w-9 h-9 md:w-11 md:h-11 mr-2 rounded-full',
