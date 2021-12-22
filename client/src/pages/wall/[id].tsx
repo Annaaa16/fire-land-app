@@ -15,6 +15,7 @@ import { postsApiServer } from '@/apis/postsApi';
 import { usersActions } from '@/redux/slices/usersSlice';
 import { usersApiServer } from '@/apis/usersApi';
 import { notifyPageError } from '@/helpers/notifyError';
+import { redirectToNotFound } from '@/helpers/server';
 
 import Meta from '@/layouts/Meta';
 import Social from '@/layouts/Social';
@@ -49,7 +50,7 @@ export const getServerSideProps: GetServerSideProps =
     const { getUser } = usersApiServer(ctx);
 
     let user: User | null = null;
-    let statusCode: number = STATUS_CODES.DEFAULT;
+    let statusCode = STATUS_CODES.DEFAULT;
 
     store.dispatch(postsActions.clearPosts());
 
@@ -77,15 +78,13 @@ export const getServerSideProps: GetServerSideProps =
       notifyPageError('Wall', error);
     }
 
-    if (statusCode >= STATUS_CODES.NOT_FOUND) {
-      return {
-        notFound: true,
-      };
-    } else {
-      return {
-        props: {
-          user,
-        },
-      };
+    if (statusCode >= STATUS_CODES.BAD_REQUEST) {
+      return redirectToNotFound();
     }
+
+    return {
+      props: {
+        user,
+      },
+    };
   });

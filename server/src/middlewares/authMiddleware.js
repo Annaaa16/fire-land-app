@@ -9,7 +9,7 @@ const verifyTokens = (req, res, next) => {
   if (!access_token || !refresh_token) {
     return res
       .status(401)
-      .json({ success: false, message: 'Tokens not found' });
+      .json({ success: false, message: 'Token is missing' });
   }
 
   jwt.verify(access_token, TOKENS.ACCESS_TOKEN_SECRET, (error, decoded) => {

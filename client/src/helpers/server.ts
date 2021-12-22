@@ -7,7 +7,7 @@ import { PATHS } from '@/constants';
 import { usersApiServer } from '@/apis/usersApi';
 import tokens from './tokens';
 
-const fetchUserFromServer = async (ctx: NextPageContext) => {
+export const fetchUserFromServer = async (ctx: NextPageContext) => {
   const path = ctx.pathname;
 
   const { isMissing } = tokens.checkTokenMissing(ctx);
@@ -22,4 +22,9 @@ const fetchUserFromServer = async (ctx: NextPageContext) => {
   }
 };
 
-export default fetchUserFromServer;
+export const redirectToNotFound = () => ({
+  redirect: {
+    destination: PATHS.NOT_FOUND,
+    permanent: false,
+  },
+});

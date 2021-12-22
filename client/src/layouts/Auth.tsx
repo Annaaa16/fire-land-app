@@ -7,8 +7,6 @@ import { ReactNode } from 'react';
 import { LOCAL_STORAGE } from '@/constants';
 import { useGlobalContext } from '@/contexts/GlobalContext';
 
-import Meta from '@/layouts/Meta';
-
 // images
 import {
   ltBackground,

@@ -7,6 +7,7 @@ import { parseCookies } from 'nookies';
 // types
 import { JwtPayload } from 'jwt-decode';
 import { GetServerSidePropsContext, NextPageContext } from 'next';
+
 import { COOKIES } from '@/constants';
 
 const tokens = {
@@ -17,15 +18,16 @@ const tokens = {
   },
 
   checkTokenExpired(token: string) {
-    const tokenDecoded: JwtPayload = jwt_decode(token);
-
     try {
+      const tokenDecoded: JwtPayload = jwt_decode(token);
+
       return {
         isExpired: Boolean(
           tokenDecoded.exp && new Date().getTime() >= tokenDecoded.exp * 1000
         ),
       };
-    } catch (error) {
+    } catch (error: any) {
+      console.log('Decode token error 👉', error?.message);
       return {
         isExpired: true,
       };

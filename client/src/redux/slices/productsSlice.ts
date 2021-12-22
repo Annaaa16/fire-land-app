@@ -10,7 +10,9 @@ import {
   CreateProductResponse,
   DeleteProductPayload,
   DeleteProductResponse,
+  GetProductsParams,
   GetProductsResponse,
+  ProductCategories,
   ProductsInitState,
   ReactProductPayload,
   UpdateProductPayload,
@@ -30,7 +32,7 @@ export const actions = {
   buyProduct: 'buyProduct',
 };
 
-export const productCategories = {
+export const productCategories: ProductCategories = {
   food: 'food',
   drinks: 'drinks',
   games: 'games',
@@ -60,6 +62,9 @@ const initialState: ProductsInitState = {
   loadings: [],
   isOpenCreateForm: false,
   isOpenCheckout: false,
+  prevPage: null,
+  nextPage: null,
+  total: 0,
 };
 
 const productsSlice = createSlice({
@@ -86,16 +91,19 @@ const productsSlice = createSlice({
       removeLoading(state, actions.createProduct);
     },
 
-    getProductsRequest: (state, action: PayloadAction<FormData>) => {
+    getProductsRequest: (state, action: PayloadAction<GetProductsParams>) => {
       addLoading(state, actions.getProducts);
     },
     getProductsSuccess: (state, action: PayloadAction<GetProductsResponse>) => {
-      const { success, products } = action.payload;
+      const { success, products, prevPage, nextPage, total } = action.payload;
 
       if (success) {
         products.forEach((product) => {
           state.categories[product.category].push(product);
         });
+        state.prevPage = prevPage!;
+        state.nextPage = nextPage!;
+        state.total = total!;
 
         removeLoading(state, actions.getProducts);
       }

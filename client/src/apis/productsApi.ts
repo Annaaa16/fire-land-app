@@ -5,6 +5,7 @@ import {
   CreateProductResponse,
   DeleteProductPayload,
   DeleteProductResponse,
+  GetProductsParams,
   GetProductsResponse,
   ReactProductPayload,
   ReactProductResponse,
@@ -52,7 +53,7 @@ export const productsApiClient = () => {
       }
     },
 
-    getProducts: async (params: PaginationParams) => {
+    getProducts: async (params: GetProductsParams) => {
       try {
         const response = await axiosInstance.get<GetProductsResponse>(
           '/products',
@@ -114,7 +115,7 @@ export const productsApiServer = (
   const axiosInstance = axiosServer(ctx);
 
   return {
-    getProducts: async (params: PaginationParams & { category?: string }) => {
+    getProducts: async (params: GetProductsParams) => {
       try {
         const response = await axiosInstance.get<GetProductsResponse>(
           '/products',

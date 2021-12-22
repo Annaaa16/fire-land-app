@@ -1,12 +1,17 @@
 // clsx
 import clsx from 'clsx';
 
-import sidebarTooltips from '@/utils/sidebarTooltips';
+import { LOCAL_STORAGE } from '@/constants';
+import { useGlobalContext } from '@/contexts/GlobalContext';
 
 import User from '../User';
 
-function SidebarLarge() {
-  const isDark = true;
+interface SidebarLargeProps {
+  menu: Array<{ title: string; active: boolean; icon: any }>;
+}
+
+function SidebarLarge({ menu }: SidebarLargeProps) {
+  const { theme } = useGlobalContext();
 
   return (
     <aside
@@ -18,12 +23,12 @@ function SidebarLarge() {
       <User user rounded className={clsx('w-14 h-14')} />
 
       <ul className={clsx('mt-10 w-full px-4 text-center')}>
-        {sidebarTooltips.map(({ title, active, icon: Icon }) => (
+        {menu.map(({ title, active, icon: Icon }) => (
           <li
             key={title}
             className={clsx(
               'group py-3 px-4 rounded-xl mb-5',
-              isDark && active
+              theme === LOCAL_STORAGE.DARK_THEME_VALUE && active
                 ? 'shadow-primary-v4'
                 : active && 'shadow-primary-v2',
               active && 'bg-primary-v2 dark:bg-primary-v4',

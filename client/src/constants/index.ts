@@ -31,14 +31,17 @@ export const PATHS = {
   NEWSFEED: '/newsfeed',
   MOVIES: '/movies',
   MOVIES_SEARCH: '/movies/search',
+  MARKETPLACE: '/marketplace',
+  MARKETPLACE_PRODUCTS: '/marketplace/products',
   WALL: '/wall',
   MESSENGER: '/messenger',
+  NOT_FOUND: '/notfound',
 };
 
 export const LIMITS = {
   POSTS: 5,
   COMMENTS: 5,
-  PRODUCTS: 5,
+  PRODUCTS: 15,
   REVIEWS: 5,
 };
 
@@ -60,6 +63,7 @@ export const DELAYS = {
 
 export const STATUS_CODES = {
   DEFAULT: 0,
+  BAD_REQUEST: 400,
   NOT_FOUND: 404,
   SERVER_ERROR: 500,
 };

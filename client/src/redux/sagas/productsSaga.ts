@@ -7,6 +7,8 @@ import {
   CreateProductResponse,
   DeleteProductPayload,
   DeleteProductResponse,
+  GetProductsParams,
+  GetProductsResponse,
   ReactProductPayload,
   UpdateProductPayload,
   UpdateProductResponse,
@@ -20,6 +22,7 @@ import { notifySagaError } from '@/helpers/notifyError';
 
 const {
   createProduct,
+  getProducts,
   updateProduct,
   deleteProduct,
   reactProduct,
@@ -37,6 +40,20 @@ function* handleCreateProductRequest(action: PayloadAction<FormData>) {
   } catch (error) {
     notifySagaError(productsActions.createProductFailure, error);
     yield put(productsActions.createProductFailure());
+  }
+}
+
+function* handleGetProductsRequest(action: PayloadAction<GetProductsParams>) {
+  try {
+    const response: AxiosResponse<GetProductsResponse> = yield call(
+      getProducts,
+      action.payload
+    );
+
+    yield put(productsActions.getProductsSuccess(response.data));
+  } catch (error) {
+    notifySagaError(productsActions.getProductsFailure, error);
+    yield put(productsActions.getProductsFailure());
   }
 }
 
@@ -103,6 +120,10 @@ function* productsSaga() {
   yield takeLatest(
     productsActions.createProductRequest,
     handleCreateProductRequest
+  );
+  yield takeLatest(
+    productsActions.getProductsRequest,
+    handleGetProductsRequest
   );
   yield takeLatest(
     productsActions.updateProductRequest,

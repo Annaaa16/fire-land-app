@@ -19,21 +19,25 @@ import MarketplaceProductList from '@/features/Marketplace/MarketplaceProductLis
 import MarketplaceForm from '@/features/Marketplace/MarketplaceForm';
 
 function Marketplace() {
-  const { isOpenCheckout, isOpenCreateForm, categories, recent } =
-    useProductsSelector();
+  const { isOpenCheckout, isOpenCreateForm } = useProductsSelector();
 
   return (
     <Meta title='Marketplace'>
       <Social className='pb-32'>
         <MarketplaceHero />
         <MarketplaceMenu />
-        <MarketplaceProductList title='Recent' more products={recent} />
+        <MarketplaceProductList title='Recent' category='free' />
+        <MarketplaceProductList title='Free' category='free' />
+        <MarketplaceProductList title='Food' category='food' />
+        <MarketplaceProductList title='Drinks' category='drinks' />
         <MarketplaceProductList
-          title='Hot Sales'
-          more
-          products={categories.free}
+          title='Entertainments'
+          category='entertainments'
         />
-        <MarketplaceProductList title='Free' more products={categories.food} />
+        <MarketplaceProductList title='Games' category='games' />
+        <MarketplaceProductList title='Sports' category='sports' />
+        <MarketplaceProductList title='Vehicles' category='vehicles' />
+        <MarketplaceProductList title='Comics' category='comics' />
         {isOpenCheckout && <MarketplaceCheckout />}
         {isOpenCreateForm && <MarketplaceForm />}
       </Social>
@@ -47,26 +51,30 @@ export const getServerSideProps: GetServerSideProps =
   wrapper.getServerSideProps((store) => async (ctx) => {
     const { getProducts } = productsApiServer(ctx);
 
-    const requests = Object.values(productCategories).map((category) => {
-      return getProducts({
-        page: 1,
-        limit: 4,
-        category,
+    try {
+      const requests = Object.values(productCategories).map((category) => {
+        return getProducts({
+          page: 1,
+          limit: 5,
+          category,
+        });
       });
-    });
 
-    const promises = await Promise.all(requests);
+      const promises = await Promise.all(requests);
 
-    store.dispatch(productsActions.clearProducts());
+      store.dispatch(productsActions.clearProducts());
 
-    promises.forEach((promise) => {
-      promise &&
-        store.dispatch(
-          productsActions.getProductsSuccess(
-            promise?.data as GetProductsResponse
-          )
-        );
-    });
+      promises.forEach((promise) => {
+        promise &&
+          store.dispatch(
+            productsActions.getProductsSuccess(
+              promise?.data as GetProductsResponse
+            )
+          );
+      });
+    } catch (error: any) {
+      console.log('Get products error at server 👉', error?.message);
+    }
 
     return {
       props: {},
