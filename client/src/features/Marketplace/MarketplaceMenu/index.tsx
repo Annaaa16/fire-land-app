@@ -14,20 +14,18 @@ import MenuBookOutlinedIcon from '@mui/icons-material/MenuBookOutlined';
 // swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import MenuItem from './MenuItem';
+const menu = [
+  { icon: DinnerDiningOutlinedIcon, title: 'Food' },
+  { icon: SportsBarOutlinedIcon, title: 'Drinks' },
+  { icon: VideogameAssetOutlinedIcon, title: 'Games' },
+  { icon: SmartToyOutlinedIcon, title: 'Toys' },
+  { icon: SportsSoccerOutlinedIcon, title: 'Sports' },
+  { icon: PhonelinkOutlinedIcon, title: 'Entertainments' },
+  { icon: TwoWheelerOutlinedIcon, title: 'Vehicles' },
+  { icon: MenuBookOutlinedIcon, title: 'Comics' },
+];
 
 function MarketplaceMenu() {
-  const menu = [
-    { icon: DinnerDiningOutlinedIcon, title: 'Food' },
-    { icon: SportsBarOutlinedIcon, title: 'Drinks' },
-    { icon: VideogameAssetOutlinedIcon, title: 'Games' },
-    { icon: SmartToyOutlinedIcon, title: 'Toys' },
-    { icon: SportsSoccerOutlinedIcon, title: 'Sports' },
-    { icon: PhonelinkOutlinedIcon, title: 'Entertainments' },
-    { icon: TwoWheelerOutlinedIcon, title: 'Vehicles' },
-    { icon: MenuBookOutlinedIcon, title: 'Comics' },
-  ];
-
   return (
     <Swiper
       spaceBetween={35}
@@ -36,14 +34,29 @@ function MarketplaceMenu() {
         'mt-10 !px-6 h-17 rounded-xl shadow-md',
         'bg-white dark:text-gray-300 dark:bg-dk-cpn'
       )}>
-      {menu.map((item) => (
+      {menu.map(({ icon: Icon, title }) => (
         <SwiperSlide
-          key={item.title}
+          key={title}
           className={clsx(
             'group flex items-center max-w-max',
             'cursor-pointer'
           )}>
-          <MenuItem title={item.title} icon={item.icon} />
+          <div className={clsx('group flex items-center', 'cursor-pointer')}>
+            <Icon
+              className={clsx(
+                'mr-1.5 !text-2xl',
+                'lg:group-hover:text-primary-v1-hv lg:dark:group-hover:text-primary-v4-hv'
+              )}
+            />
+            <span
+              className={clsx(
+                'text-sm-1 font-semibold',
+                'transition-all duration-250 ease-out',
+                'lg:group-hover:text-primary-v1-hv lg:dark:group-hover:text-primary-v4-hv'
+              )}>
+              {title}
+            </span>
+          </div>
         </SwiperSlide>
       ))}
     </Swiper>

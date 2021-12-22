@@ -16,7 +16,7 @@ import { ThemeProvider } from '@mui/material';
 import { AppContext, AppInitialProps } from 'next/app';
 import { SagaStore } from '@/models/store';
 import { GetUserResponse } from '@/models/users';
-import fetchUserFromServer from '@/helpers/fetchUserFromServer';
+import { fetchUserFromServer } from '@/helpers/server';
 import store, { wrapper } from '@/redux/store';
 import theme from '@/configs/mui';
 

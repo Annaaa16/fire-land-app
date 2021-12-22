@@ -5,7 +5,6 @@ import clsx from 'clsx';
 
 import { LOCAL_STORAGE, PATHS } from '@/constants';
 import { useGlobalContext } from '@/contexts/GlobalContext';
-import sidebarTooltips from '@/utils/sidebarTooltips';
 
 import User from '../User';
 import Tooltip from '../Tooltip';
@@ -14,10 +13,11 @@ import Tooltip from '../Tooltip';
 import icon from '@/assets/svgs/icon.svg';
 
 interface SidebarSmallProps {
+  menu: Array<{ title: string; active: boolean; icon: any }>;
   messenger?: boolean;
 }
 
-function SidebarSmall({ messenger }: SidebarSmallProps) {
+function SidebarSmall({ menu, messenger }: SidebarSmallProps) {
   const { theme } = useGlobalContext();
 
   const router = useRouter();
@@ -44,7 +44,7 @@ function SidebarSmall({ messenger }: SidebarSmallProps) {
       <User view='sm' className='mx-auto' rounded />
 
       <ul className={clsx('mt-8 w-full px-4 text-center')}>
-        {sidebarTooltips.map(({ title, active, icon: Icon }) => (
+        {menu.map(({ title, active, icon: Icon }) => (
           <li
             key={title}
             className={clsx(

@@ -3,9 +3,7 @@ import { AuthInitState } from './auth';
 import { PostsInitState } from './posts';
 import { MoviesInitState } from './movies';
 import { UserResponse, UsersInitState } from './users';
-import { ProductsInitState } from './products';
-
-import { productCategories } from '@/redux/slices/productsSlice';
+import { ProductCategories, ProductsInitState } from './products';
 
 export interface User extends UserResponse {
   isOnline?: boolean;
@@ -73,7 +71,7 @@ export interface Product {
   user: User;
   name: string;
   price: number;
-  category: keyof typeof productCategories;
+  category: keyof ProductCategories;
   desc: string;
   photo: string;
   photoId: string;

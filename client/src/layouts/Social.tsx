@@ -19,7 +19,7 @@ function Social({ children, className }: SocialProps) {
       <Sidebar />
       <div
         className={clsx(
-          'lg:max-w-[1184px] px-4 lg:px-0 mx-auto py-10 mt-14',
+          'lg:max-w-[1184px] px-4 lg:px-0 mx-auto py-10 mt-14 pb-50',
           'bg-lt-body dark:bg-dk-body',
           className
         )}>
