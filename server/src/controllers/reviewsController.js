@@ -3,6 +3,7 @@ const User = require('../models/userModel');
 const Review = require('../models/reviewModel');
 
 const { notifyServerError } = require('../helpers/notifyError');
+const paginate = require('../helpers/paginate');
 
 const reviewsController = {};
 
@@ -41,20 +42,14 @@ reviewsController.createReview = async (req, res) => {
 
 reviewsController.getReviews = async (req, res) => {
   const { productId } = req.params;
-  const page = parseInt(req.query.page);
-  const limit = parseInt(req.query.limit);
 
   try {
     const total = await Review.count({ productId });
 
-    const startPos = (page - 1) * limit;
-    const endPos = page * limit;
-
-    const prevPage = startPos > 0 ? page - 1 : null;
-    const nextPage = endPos < total ? page + 1 : null;
+    const { skip, limit, nextPage, prevPage } = paginate(req, total);
 
     const reviews = await Review.find({ productId })
-      .skip(startPos)
+      .skip(skip)
       .limit(limit)
       .sort({ createdAt: 'desc' })
       .populate('user')

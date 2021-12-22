@@ -7,6 +7,7 @@ const cloudinary = require('../configs/cloudinaryConfig');
 const { CLOUDINARY } = require('../constants');
 const { uploadPhoto, updatePhoto } = require('../helpers/cloudinaryPhoto');
 const { notifyServerError } = require('../helpers/notifyError');
+const paginate = require('../helpers/paginate');
 
 const postsController = {};
 
@@ -50,32 +51,30 @@ postsController.createPost = async (req, res) => {
 
 postsController.getPosts = async (req, res) => {
   const { userId } = req.params;
-  const page = parseInt(req.query.page);
-  const limit = parseInt(req.query.limit);
-
-  const total = await Post.count(
-    userId && {
-      user: { $eq: userId },
-    }
-  );
-
-  const startPos = (page - 1) * limit;
-  const endPos = page * limit;
-
-  const prevPage = startPos > 0 ? page - 1 : null;
-  const nextPage = endPos < total ? page + 1 : null;
 
   // Pagination
   try {
+    const total = await Post.count(
+      userId
+        ? {
+            user: userId,
+          }
+        : {}
+    );
+
+    const { skip, limit, nextPage, prevPage } = paginate(req, total);
+
     const posts = await Post.find(
-      userId && {
-        user: { $eq: userId },
-      }
+      userId
+        ? {
+            user: userId,
+          }
+        : {}
     )
-      .sort({ createdAt: 'desc' })
-      .skip(startPos)
+      .skip(skip)
       .limit(limit)
       .populate('user')
+      .sort({ createdAt: 'desc' })
       .lean();
 
     res.json({

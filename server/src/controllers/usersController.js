@@ -4,6 +4,7 @@ const Conversation = require('../models/conversationModel');
 const Message = require('../models/messageModel');
 
 const { notifyServerError } = require('../helpers/notifyError');
+const paginate = require('../helpers/paginate');
 
 const usersController = {};
 
@@ -224,8 +225,6 @@ usersController.unfollowUser = async (req, res) => {
 
 usersController.getFriends = async (req, res) => {
   const { userId } = req.params;
-  const page = parseInt(req.query.page);
-  const limit = parseInt(req.query.limit);
 
   if (!userId) {
     return res
@@ -246,16 +245,12 @@ usersController.getFriends = async (req, res) => {
       followers: { $in: [userId] },
     });
 
-    const startPos = (page - 1) * limit;
-    const endPos = page * limit;
-
-    const prevPage = startPos > 0 ? page - 1 : null;
-    const nextPage = endPos < total ? page + 1 : null;
+    const { skip, limit, nextPage, prevPage } = paginate(req, total);
 
     const friends = await User.find({
       friends: { $in: [userId] },
     })
-      .skip(startPos)
+      .skip(skip)
       .limit(limit);
 
     res.json({

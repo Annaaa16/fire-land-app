@@ -1,8 +1,10 @@
+// models
 const User = require('../models/userModel');
 const Post = require('../models/postModel');
 const Comment = require('../models/commentModel');
 
 const { notifyServerError } = require('../helpers/notifyError');
+const paginate = require('../helpers/paginate');
 
 const commentsController = {};
 
@@ -57,8 +59,6 @@ commentsController.createComment = async (req, res) => {
 
 commentsController.getComments = async (req, res) => {
   const { postId } = req.params;
-  const page = parseInt(req.query.page);
-  const limit = parseInt(req.query.limit);
 
   try {
     const post = await Post.findById(postId);
@@ -71,16 +71,12 @@ commentsController.getComments = async (req, res) => {
 
     const total = await Comment.count({ postId });
 
-    const startPos = (page - 1) * limit;
-    const endPos = page * limit;
-
-    const prevPage = startPos > 0 ? page - 1 : null;
-    const nextPage = endPos < total ? page + 1 : null;
+    const { skip, limit, nextPage, prevPage } = paginate(req, total);
 
     const comments = await Comment.find({ postId })
-      .populate('user')
-      .skip(startPos)
+      .skip(skip)
       .limit(limit)
+      .populate('user')
       .lean();
 
     res.json({
