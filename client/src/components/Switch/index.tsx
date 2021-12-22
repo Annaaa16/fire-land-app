@@ -5,43 +5,44 @@ import clsx from 'clsx';
 import { ReactNode } from 'react';
 
 interface SwitchProps {
-  id: string;
   children: ReactNode;
   className?: string;
+  checked?: boolean;
+  onClick?: () => void;
 }
 
-function Switch({ id, children, className }: SwitchProps) {
+function Switch(props: SwitchProps) {
+  const { children, checked, className, onClick } = props;
+
   return (
-    <label
-      htmlFor={id}
+    <div
+      onClick={onClick}
       className={clsx(
         'flex items-center',
         'cursor-pointer select-none',
         className
       )}>
       <div className={clsx('relative', 'flex-grow w-11 h-6 mr-2')}>
-        <input id={id} type='checkbox' className='peer hidden' />
         <div
           className={clsx(
             'absolute inset-0',
             'rounded-full',
-            'bg-gray-400',
-            'transition-all ease-out',
-            'peer-checked:bg-primary-v1 dark:peer-checked:bg-primary-v4'
+            checked ? 'bg-primary-v1 dark:bg-primary-v4' : 'bg-gray-400',
+            'transition-all ease-out'
           )}
         />
         <div
           className={clsx(
             'absolute left-[4px] top-1/2 z-1',
             'h-[17px] w-[17px] rounded-full -translate-y-1/2',
+            checked ? 'translate-x-[19px]' : 'translate-x-0',
             'bg-white',
-            'transition-all ease-in-out',
-            'peer-checked:translate-x-[19px]'
+            'transition-all ease-in-out'
           )}
         />
       </div>
       {children}
-    </label>
+    </div>
   );
 }
 

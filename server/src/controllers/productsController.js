@@ -9,6 +9,7 @@ const {
 } = require('../helpers/cloudinaryPhoto');
 const { CLOUDINARY } = require('../constants');
 const { notifyServerError } = require('../helpers/notifyError');
+const paginate = require('../helpers/paginate');
 
 const productsController = {};
 
@@ -78,31 +79,57 @@ productsController.createProduct = async (req, res) => {
 };
 
 productsController.getProducts = async (req, res) => {
-  const { category } = req.query;
-  const page = parseInt(req.query.page);
-  const limit = parseInt(req.query.limit);
+  const { category, sort, order } = req.query;
+
+  const categoryList = [
+    'food',
+    'drinks',
+    'games',
+    'toys',
+    'sports',
+    'entertainments',
+    'vehicles',
+    'comics',
+    'free',
+  ];
+  const sortList = ['price', 'reactions', 'members', 'sold', 'comments'];
+  const orderList = ['asc', 'desc'];
+
+  const isFilterButInvalid = (list, item) => {
+    return !list.includes(item) && typeof item === 'string';
+  };
+
+  if (isFilterButInvalid(categoryList, category)) {
+    return res.status(400).json({
+      success: false,
+      message: 'Invalid category',
+    });
+  }
+
+  if (isFilterButInvalid(sortList, sort)) {
+    return res.status(400).json({
+      success: false,
+      message: 'Invalid sort',
+    });
+  }
+
+  if (isFilterButInvalid(orderList, order)) {
+    return res.status(400).json({
+      success: false,
+      message: 'Invalid order',
+    });
+  }
 
   try {
-    const total = await Product.count(
-      category && {
-        category: { $eq: category },
-      }
-    );
+    const total = await Product.count({ $eq: category });
 
-    const startPos = (page - 1) * limit;
-    const endPost = page * limit;
+    const { skip, limit, nextPage, prevPage } = paginate(req, total);
 
-    const prevPage = startPos > 0 ? page - 1 : null;
-    const nextPage = endPost < total ? page + 1 : null;
-
-    const products = await Product.find(
-      category && {
-        category: { $eq: category },
-      }
-    )
+    const products = await Product.find({ category: { $eq: category } })
       .limit(limit)
-      .skip(startPos)
+      .skip(skip)
       .populate('user')
+      .sort({ [sort]: order })
       .lean();
 
     res.json({

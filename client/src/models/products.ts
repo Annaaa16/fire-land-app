@@ -1,17 +1,30 @@
 // types
-import { Loadings, Pagination, Product } from './common';
+import { Loadings, Pagination, PaginationParams, Product } from './common';
 
-import { productCategories } from '@/redux/slices/productsSlice';
+export interface ProductCategories {
+  food: 'food';
+  drinks: 'drinks';
+  games: 'games';
+  toys: 'toys';
+  sports: 'sports';
+  entertainments: 'entertainments';
+  vehicles: 'vehicles';
+  comics: 'comics';
+  free: 'free';
+}
 
 export interface ProductsInitState extends Loadings {
   updateProduct: Product | null;
   checkoutProduct: Product | null;
   categories: {
-    [key in keyof typeof productCategories]: Product[];
+    [key in keyof ProductCategories]: Product[];
   };
   recent: Product[];
   isOpenCreateForm: boolean;
   isOpenCheckout: boolean;
+  prevPage: number | null;
+  nextPage: number | null;
+  total: number;
 }
 
 export interface CreateProductPayload {
@@ -19,6 +32,12 @@ export interface CreateProductPayload {
   price: number;
   desc: string;
   category: string;
+}
+
+export interface GetProductsParams extends PaginationParams {
+  category?: keyof ProductCategories;
+  order?: 'asc' | 'desc';
+  sort?: 'price' | 'reactions' | 'members' | 'sold' | 'comments';
 }
 
 export interface UpdateProductPayload {
@@ -34,7 +53,7 @@ export interface ReactProductPayload {
   isReact: boolean;
   currentUserId: string;
   productId: string;
-  category: keyof typeof productCategories;
+  category: keyof ProductCategories;
 }
 
 export interface BuyProductPayload {

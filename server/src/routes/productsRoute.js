@@ -18,7 +18,7 @@ router.post(
   productsController.createProduct
 );
 
-// @route GET api/products?page=...&limit=...
+// @route GET api/products?category=...&order=...&sort=...&page=...&limit=...
 // @desc Get products
 // @access Private
 router.get('/', verifyTokens, verifyQueries, productsController.getProducts);

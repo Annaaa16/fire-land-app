@@ -1,8 +1,13 @@
+import { useRouter } from 'next/router';
+
 // clsx
 import clsx from 'clsx';
 
 // types
-import { Product } from '@/models/common';
+import { ProductCategories } from '@/models/products';
+
+import { PATHS } from '@/constants';
+import { useProductsSelector } from '@/redux/selectors';
 
 import MarketplaceFilters from '../MarketplaceFilters';
 import MarketplaceProduct from '../MarketplaceProduct';
@@ -12,13 +17,35 @@ interface MarketplaceProductListProps {
   more?: boolean;
   filters?: boolean;
   spacing?: boolean;
-  products: Product[];
+  showcase?: boolean;
+  category: keyof ProductCategories;
 }
 
 function MarketplaceProductList(props: MarketplaceProductListProps) {
-  const { title, more, filters, spacing = true, products } = props;
+  const { categories } = useProductsSelector();
 
-  if (products.length === 0) return null;
+  const {
+    title,
+    more = true,
+    filters,
+    spacing = true,
+    category,
+    showcase = true,
+  } = props;
+
+  const router = useRouter();
+
+  const products = categories[category];
+  const displayedProducts = showcase ? products.slice(0, 4) : products;
+
+  if (displayedProducts?.length === 0) return null;
+
+  const handleSeeMore = () => {
+    router.push({
+      pathname: PATHS.MARKETPLACE_PRODUCTS,
+      query: { category },
+    });
+  };
 
   return (
     <section className={clsx(spacing && 'mt-14')}>
@@ -36,6 +63,7 @@ function MarketplaceProductList(props: MarketplaceProductListProps) {
         </h2>
         {more && products.length > 4 && (
           <span
+            onClick={handleSeeMore}
             className={clsx(
               'font-semibold underline',
               'dark:text-white',
@@ -44,10 +72,10 @@ function MarketplaceProductList(props: MarketplaceProductListProps) {
             See more
           </span>
         )}
-        {filters && <MarketplaceFilters />}
+        {filters && <MarketplaceFilters category={category} />}
       </div>
       <div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-x-3 gap-y-5'>
-        {products.slice(0, 4).map((product) => (
+        {displayedProducts.map((product) => (
           <MarketplaceProduct key={product._id} {...product} />
         ))}
       </div>
