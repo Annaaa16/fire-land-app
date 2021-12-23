@@ -24,7 +24,7 @@ import { Product } from '@/models/common';
 import { ViewOptions } from '.';
 
 import { useReviewsSelector, useUsersSelector } from '@/redux/selectors';
-import { productsActions } from '@/redux/slices/productsSlice';
+import { productActions } from '@/redux/slices/productsSlice';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 import useUsers from '@/hooks/useUsers';
 
@@ -55,13 +55,13 @@ function CheckoutDetail(props: CheckoutDetailProps) {
   const isReacted = reactions.includes(currentUser._id);
 
   const handleBuyProduct = () => {
-    dispatch(productsActions.buyProductRequest({ productId }));
-    dispatch(productsActions.setIsOpenCheckout(false));
+    dispatch(productActions.buyProductRequest({ productId }));
+    dispatch(productActions.setIsOpenCheckout(false));
   };
 
   const handleReactProduct = () => {
     dispatch(
-      productsActions.reactProductRequest({
+      productActions.reactProductRequest({
         currentUserId: currentUser._id,
         isReact: !isReacted,
         productId,
@@ -224,7 +224,7 @@ function CheckoutDetail(props: CheckoutDetailProps) {
         <div
           className={clsx('absolute right-0 bottom-0', 'flex flex-col gap-2')}>
           <div
-            onClick={() => dispatch(productsActions.setIsOpenCheckout(false))}
+            onClick={() => dispatch(productActions.setIsOpenCheckout(false))}
             className={clsx(
               'group flex-center rounded-full w-11 h-11',
               'transition-all duration-250 ease-out',

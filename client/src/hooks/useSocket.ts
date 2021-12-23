@@ -9,7 +9,7 @@ import { User } from '@/models/common';
 import { EMITS, LISTENS } from '@/constants';
 import { default as socketConfig } from '@/configs/socket';
 import { messengerActions } from '@/redux/slices/messengerSlice';
-import { usersActions } from '@/redux/slices/usersSlice';
+import { userActions } from '@/redux/slices/usersSlice';
 import useStoreDispatch from './useStoreDispatch';
 
 const useSocket = () => {
@@ -49,7 +49,7 @@ const useSocket = () => {
 
       receiveOnlineUsers() {
         socket.on(LISTENS.RECEIVE_ONLINE_USERS, (response: OnlineUser[]) => {
-          dispatch(usersActions.setOnlineUsers(response));
+          dispatch(userActions.setOnlineUsers(response));
         });
       },
     }),

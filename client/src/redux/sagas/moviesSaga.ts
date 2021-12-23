@@ -12,7 +12,7 @@ import { GetMoviesPayload, GetTvShowsPayload } from '@/models/movies';
 
 import {
   movieCategoryKeys,
-  moviesActions,
+  movieActions,
   tvShowCategoryKeys,
 } from '../slices/moviesSlice';
 import { moviesApi } from '@/apis/moviesApi';
@@ -37,11 +37,11 @@ function* handleGetMoviesRequest(action: PayloadAction<GetMoviesPayload>) {
     );
 
     yield put(
-      moviesActions.getMoviesSuccess({ moviesType, movies: response.data })
+      movieActions.getMoviesSuccess({ moviesType, movies: response.data })
     );
   } catch (error) {
-    notifySagaError(moviesActions.getMoviesFailed, error);
-    yield put(moviesActions.getMoviesFailed());
+    notifySagaError(movieActions.getMoviesFailed, error);
+    yield put(movieActions.getMoviesFailed());
   }
 }
 
@@ -55,14 +55,14 @@ function* handleGetSimilarMoviesRequest(action: PayloadAction<string>) {
     );
 
     yield put(
-      moviesActions.getMoviesSuccess({
+      movieActions.getMoviesSuccess({
         moviesType: movieCategoryKeys.similar,
         movies: response.data,
       })
     );
   } catch (error) {
-    notifySagaError(moviesActions.getMoviesFailed, error);
-    yield put(moviesActions.getMoviesFailed());
+    notifySagaError(movieActions.getMoviesFailed, error);
+    yield put(movieActions.getMoviesFailed());
   }
 }
 
@@ -73,10 +73,10 @@ function* handleSearchMoviesRequest(action: PayloadAction<TmdbSearchPayload>) {
       action.payload
     );
 
-    yield put(moviesActions.searchMoviesSuccess(response.data));
+    yield put(movieActions.searchMoviesSuccess(response.data));
   } catch (error) {
-    notifySagaError(moviesActions.searchMoviesFailed, error);
-    yield put(moviesActions.searchMoviesFailed());
+    notifySagaError(movieActions.searchMoviesFailed, error);
+    yield put(movieActions.searchMoviesFailed());
   }
 }
 
@@ -91,11 +91,11 @@ function* handleGetTvShowsRequest(action: PayloadAction<GetTvShowsPayload>) {
     );
 
     yield put(
-      moviesActions.getTvShowsSuccess({ tvShowsType, tvShows: response.data })
+      movieActions.getTvShowsSuccess({ tvShowsType, tvShows: response.data })
     );
   } catch (error) {
-    notifySagaError(moviesActions.getTvShowsFailed, error);
-    yield put(moviesActions.getTvShowsFailed());
+    notifySagaError(movieActions.getTvShowsFailed, error);
+    yield put(movieActions.getTvShowsFailed());
   }
 }
 
@@ -109,30 +109,27 @@ function* handleGetSimilarTvShowsRequest(action: PayloadAction<string>) {
     );
 
     yield put(
-      moviesActions.getTvShowsSuccess({
+      movieActions.getTvShowsSuccess({
         tvShowsType: tvShowCategoryKeys.similar,
         tvShows: response.data,
       })
     );
   } catch (error) {
-    notifySagaError(moviesActions.getTvShowsFailed, error);
-    yield put(moviesActions.getTvShowsFailed());
+    notifySagaError(movieActions.getTvShowsFailed, error);
+    yield put(movieActions.getTvShowsFailed());
   }
 }
 
 function* moviesSaga() {
-  yield takeLatest(moviesActions.getMoviesRequest, handleGetMoviesRequest);
+  yield takeLatest(movieActions.getMoviesRequest, handleGetMoviesRequest);
   yield takeLatest(
-    moviesActions.getSimilarMoviesRequest,
+    movieActions.getSimilarMoviesRequest,
     handleGetSimilarMoviesRequest
   );
+  yield takeLatest(movieActions.searchMoviesRequest, handleSearchMoviesRequest);
+  yield takeEvery(movieActions.getTvShowsRequest, handleGetTvShowsRequest);
   yield takeLatest(
-    moviesActions.searchMoviesRequest,
-    handleSearchMoviesRequest
-  );
-  yield takeEvery(moviesActions.getTvShowsRequest, handleGetTvShowsRequest);
-  yield takeLatest(
-    moviesActions.getSimilarTvShowsRequest,
+    movieActions.getSimilarTvShowsRequest,
     handleGetSimilarTvShowsRequest
   );
 }

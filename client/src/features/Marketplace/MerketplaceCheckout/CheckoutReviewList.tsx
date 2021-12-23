@@ -15,7 +15,7 @@ import { Product } from '@/models/common';
 import { ViewOptions } from '.';
 
 import { LIMITS } from '@/constants';
-import { actions, reviewsActions } from '@/redux/slices/reviewsSlice';
+import { actions, reviewActions } from '@/redux/slices/reviewsSlice';
 import { useReviewsSelector, useUsersSelector } from '@/redux/selectors';
 import useIntersectionObserver from '@/hooks/useIntersectionObserver';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
@@ -53,7 +53,7 @@ function CheckoutReviewList({
     e.preventDefault();
 
     dispatch(
-      reviewsActions.createReviewRequest({
+      reviewActions.createReviewRequest({
         content,
         productId,
       })
@@ -68,7 +68,7 @@ function CheckoutReviewList({
 
     if (isIntersecting && nextPage && !isLoading) {
       dispatch(
-        reviewsActions.getReviewsRequest({
+        reviewActions.getReviewsRequest({
           productId,
           params: {
             page: nextPage,

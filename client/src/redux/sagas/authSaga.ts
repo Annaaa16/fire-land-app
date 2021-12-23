@@ -13,7 +13,7 @@ import {
 import { authActions } from '../slices/authSlice';
 import { authApiClient } from '@/apis/authApi';
 import { notifySagaError } from '@/helpers/notifyError';
-import { usersActions } from '../slices/usersSlice';
+import { userActions } from '../slices/usersSlice';
 
 const { loginUser, registerUser } = authApiClient();
 
@@ -39,7 +39,7 @@ function* handleLoginRequest(action: PayloadAction<LoginPayload>) {
     );
 
     yield put(authActions.loginSuccess(response.data));
-    yield put(usersActions.setCurrentUser(response.data));
+    yield put(userActions.setCurrentUser(response.data));
   } catch (error) {
     notifySagaError(authActions.loginFailed, error);
     yield put(authActions.loginFailed());

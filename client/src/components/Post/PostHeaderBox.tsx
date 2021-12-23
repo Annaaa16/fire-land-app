@@ -9,7 +9,7 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 
 import { useUsersSelector } from '@/redux/selectors';
-import { actions, usersActions } from '@/redux/slices/usersSlice';
+import { actions, userActions } from '@/redux/slices/usersSlice';
 import useUsers from '@/hooks/useUsers';
 
 import User from '@/components/User';
@@ -41,10 +41,10 @@ function PostHeaderBox(props: PostHeaderBoxProps) {
     if (!userId) return;
 
     const addFriend = () => {
-      dispatch(usersActions.addFriendUserRequest({ userId }));
+      dispatch(userActions.addFriendUserRequest({ userId }));
     };
     const unfriend = () => {
-      dispatch(usersActions.unfriendUserRequest({ userId }));
+      dispatch(userActions.unfriendUserRequest({ userId }));
     };
 
     isFriend ? unfriend() : addFriend();

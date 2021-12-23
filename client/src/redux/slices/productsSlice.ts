@@ -254,6 +254,6 @@ const productsSlice = createSlice({
   },
 });
 
-export const productsActions = productsSlice.actions;
+export const productActions = productsSlice.actions;
 
 export default productsSlice.reducer;

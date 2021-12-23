@@ -10,7 +10,7 @@ import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import GroupsIcon from '@mui/icons-material/Groups';
 import DoorFrontIcon from '@mui/icons-material/DoorFront';
 
-import { conversationsActions } from '@/redux/slices/conversationsSlice';
+import { conversationActions } from '@/redux/slices/conversationsSlice';
 import { useUsersSelector } from '@/redux/selectors';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
@@ -34,7 +34,7 @@ function ContactContent() {
   const dispatch = useStoreDispatch();
 
   const handleSelectStatus = (status: Statuses) => {
-    dispatch(conversationsActions.setCurrentConversation(null));
+    dispatch(conversationActions.setCurrentConversation(null));
     setStatus(status);
   };
 
@@ -43,7 +43,7 @@ function ContactContent() {
     if (!currentUser._id) return;
 
     dispatch(
-      conversationsActions.getConversationsRequest({
+      conversationActions.getConversationsRequest({
         userId: currentUser._id,
       })
     );

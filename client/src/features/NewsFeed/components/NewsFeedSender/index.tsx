@@ -7,7 +7,7 @@ import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary';
 import SentimentVerySatisfiedIcon from '@mui/icons-material/SentimentVerySatisfied';
 
 import { usePostsSelector, useUsersSelector } from '@/redux/selectors';
-import { postsActions } from '@/redux/slices/postsSlice';
+import { postActions } from '@/redux/slices/postsSlice';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 import User from '@/components/User';
@@ -34,7 +34,7 @@ function NewsFeedSender() {
             rounded
           />
           <input
-            onClick={() => dispatch(postsActions.setIsOpenFormSender(true))}
+            onClick={() => dispatch(postActions.setIsOpenFormSender(true))}
             placeholder={`What's on your mind, IG Dev`}
             className={clsx(
               'flex-1 h-full ml-3 md:ml-4 rounded-full text-xs md:text-sm outline-none px-4 py-3',

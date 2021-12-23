@@ -183,6 +183,6 @@ const moviesSlice = createSlice({
   },
 });
 
-export const moviesActions = moviesSlice.actions;
+export const movieActions = moviesSlice.actions;
 
 export default moviesSlice.reducer;

@@ -14,7 +14,7 @@ import { LIMITS, STATUS_CODES } from '@/constants';
 import { productsApiServer } from '@/apis/productsApi';
 import { wrapper } from '@/redux/store';
 import { useProductsSelector } from '@/redux/selectors';
-import { productsActions, actions } from '@/redux/slices/productsSlice';
+import { productActions, actions } from '@/redux/slices/productsSlice';
 import { redirectToNotFound } from '@/helpers/server';
 import { notifyPageError } from '@/helpers/notifyError';
 import useIntersectionObserver from '@/hooks/useIntersectionObserver';
@@ -43,7 +43,7 @@ function Detail() {
 
     if (isIntersecting && nextPage && !isLoading) {
       dispatch(
-        productsActions.getProductsRequest({
+        productActions.getProductsRequest({
           page: nextPage,
           limit: LIMITS.PRODUCTS,
           category,
@@ -85,7 +85,7 @@ export const getServerSideProps: GetServerSideProps =
 
     let statusCode = STATUS_CODES.DEFAULT;
 
-    store.dispatch(productsActions.clearProducts());
+    store.dispatch(productActions.clearProducts());
 
     try {
       const response = (await getProducts({
@@ -97,7 +97,7 @@ export const getServerSideProps: GetServerSideProps =
       })) as AxiosResponse<GetProductsResponse>;
 
       response &&
-        store.dispatch(productsActions.getProductsSuccess(response.data));
+        store.dispatch(productActions.getProductsSuccess(response.data));
 
       statusCode = response.status;
     } catch (error) {

@@ -74,6 +74,6 @@ const comments = createSlice({
   },
 });
 
-export const commentsActions = comments.actions;
+export const commentActions = comments.actions;
 
 export default comments.reducer;

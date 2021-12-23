@@ -82,6 +82,6 @@ const reviewsSlice = createSlice({
   },
 });
 
-export const reviewsActions = reviewsSlice.actions;
+export const reviewActions = reviewsSlice.actions;
 
 export default reviewsSlice.reducer;

@@ -17,7 +17,7 @@ import { moviesApi } from '@/apis/moviesApi';
 import { notifyAxiosError } from '@/helpers/notifyError';
 import { useMoviesSelector } from '@/redux/selectors';
 import { filterMovieDetail } from '@/helpers/filterMovies';
-import { moviesActions } from '@/redux/slices/moviesSlice';
+import { movieActions } from '@/redux/slices/moviesSlice';
 import tmdb, { tmdbCategories } from '@/configs/tmdb';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
@@ -55,9 +55,9 @@ function MoviesDetail(props: MoviesDetailProps) {
     if (!id || !category) return;
 
     if (category === movie) {
-      dispatch(moviesActions.getSimilarMoviesRequest(id! as string));
+      dispatch(movieActions.getSimilarMoviesRequest(id! as string));
     } else if (category === tv) {
-      dispatch(moviesActions.getSimilarTvShowsRequest(id! as string));
+      dispatch(movieActions.getSimilarTvShowsRequest(id! as string));
     }
   }, [router.query, movie, tv, dispatch]);
 

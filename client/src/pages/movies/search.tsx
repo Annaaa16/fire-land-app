@@ -7,7 +7,7 @@ import { GetServerSideProps } from 'next';
 // clsx
 import clsx from 'clsx';
 
-import { moviesActions } from '@/redux/slices/moviesSlice';
+import { movieActions } from '@/redux/slices/moviesSlice';
 import { wrapper } from '@/redux/store';
 import { moviesApi } from '@/apis/moviesApi';
 import { useMoviesSelector } from '@/redux/selectors';
@@ -32,7 +32,7 @@ function Search() {
   useEffect(() => {
     if (isIntersecting && movies.length < totalMovies && page < totalPages) {
       dispatch(
-        moviesActions.searchMoviesRequest({
+        movieActions.searchMoviesRequest({
           page: page + 1,
           query: tmdbCategories.movie,
         })
@@ -73,14 +73,13 @@ export const getServerSideProps: GetServerSideProps =
   wrapper.getServerSideProps((store) => async ({ query }) => {
     const { searchMovies } = moviesApi();
 
-    store.dispatch(moviesActions.clearSearchedMovies());
+    store.dispatch(movieActions.clearSearchedMovies());
 
     const response = await searchMovies({
       query: query.query as string,
     });
 
-    response &&
-      store.dispatch(moviesActions.searchMoviesSuccess(response.data));
+    response && store.dispatch(movieActions.searchMoviesSuccess(response.data));
 
     return {
       props: {},

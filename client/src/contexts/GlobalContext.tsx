@@ -7,7 +7,7 @@ import { GetUserResponse } from '@/models/users';
 import { GlobalInitContext } from '@/models/app';
 
 import { LOCAL_STORAGE, PATHS } from '@/constants';
-import { usersActions } from '@/redux/slices/usersSlice';
+import { userActions } from '@/redux/slices/usersSlice';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import cookies from '@/helpers/cookies';
@@ -43,7 +43,7 @@ function GlobalProvider({
   // Set init user info
   useEffect(() => {
     if (currentUserResponse?.success) {
-      dispatch(usersActions.setCurrentUser(currentUserResponse));
+      dispatch(userActions.setCurrentUser(currentUserResponse));
     }
   }, [currentUserResponse, dispatch]);
 

@@ -4,7 +4,7 @@ import { GetProductsResponse } from '@/models/products';
 
 import {
   productCategories,
-  productsActions,
+  productActions,
 } from '@/redux/slices/productsSlice';
 import { useProductsSelector } from '@/redux/selectors';
 import { productsApiServer } from '@/apis/productsApi';
@@ -62,12 +62,12 @@ export const getServerSideProps: GetServerSideProps =
 
       const promises = await Promise.all(requests);
 
-      store.dispatch(productsActions.clearProducts());
+      store.dispatch(productActions.clearProducts());
 
       promises.forEach((promise) => {
         promise &&
           store.dispatch(
-            productsActions.getProductsSuccess(
+            productActions.getProductsSuccess(
               promise?.data as GetProductsResponse
             )
           );

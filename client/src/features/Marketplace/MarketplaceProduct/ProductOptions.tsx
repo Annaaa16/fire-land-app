@@ -10,7 +10,7 @@ import GroupAddIcon from '@mui/icons-material/GroupAdd';
 // types
 import { Product, User } from '@/models/common';
 
-import { productsActions } from '@/redux/slices/productsSlice';
+import { productActions } from '@/redux/slices/productsSlice';
 import { useUsersSelector } from '@/redux/selectors';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
@@ -27,8 +27,8 @@ function ProductOptions({ product, user }: ProductOptionsProps) {
   const isOwnProduct = currentUser._id === user._id;
 
   const handleSelectEditProduct = () => {
-    dispatch(productsActions.setIsOpenCreateForm(true));
-    dispatch(productsActions.setUpdateProduct(product));
+    dispatch(productActions.setIsOpenCreateForm(true));
+    dispatch(productActions.setUpdateProduct(product));
   };
 
   return (
@@ -101,7 +101,7 @@ function ProductOptions({ product, user }: ProductOptionsProps) {
         <li
           onClick={() =>
             dispatch(
-              productsActions.deleteProductRequest({ productId: product._id })
+              productActions.deleteProductRequest({ productId: product._id })
             )
           }
           className={clsx(

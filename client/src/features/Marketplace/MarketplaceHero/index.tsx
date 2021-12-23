@@ -11,7 +11,7 @@ import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 // swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import { productsActions } from '@/redux/slices/productsSlice';
+import { productActions } from '@/redux/slices/productsSlice';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 import Image from '@/components/Image';
@@ -73,7 +73,7 @@ function MarketplaceHero() {
                 </h1>
                 <button
                   onClick={() =>
-                    dispatch(productsActions.setIsOpenCreateForm(true))
+                    dispatch(productActions.setIsOpenCreateForm(true))
                   }
                   className={clsx(
                     'btn px-6 md:px-8 py-1.5 md:py-2 text-sm-1 md:text-sm'

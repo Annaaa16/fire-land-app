@@ -6,7 +6,7 @@ import Link from 'next/link';
 import clsx from 'clsx';
 
 import { useUsersSelector } from '@/redux/selectors';
-import { usersActions } from '@/redux/slices/usersSlice';
+import { userActions } from '@/redux/slices/usersSlice';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 import useUsers from '@/hooks/useUsers';
 
@@ -25,7 +25,7 @@ function WidgetsFriendList() {
     // Block first load ID is undefined
     if (id) {
       dispatch(
-        usersActions.getFriendsRequest({
+        userActions.getFriendsRequest({
           userId: id as string,
           params: { page: 1, limit: 10 },
         })

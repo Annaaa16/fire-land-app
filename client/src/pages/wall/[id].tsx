@@ -9,10 +9,10 @@ import { GetUserResponse } from '@/models/users';
 import { User } from '@/models/common';
 
 import { LIMITS, STATUS_CODES } from '@/constants';
-import { postsActions } from '@/redux/slices/postsSlice';
+import { postActions } from '@/redux/slices/postsSlice';
 import { wrapper } from '@/redux/store';
 import { postsApiServer } from '@/apis/postsApi';
-import { usersActions } from '@/redux/slices/usersSlice';
+import { userActions } from '@/redux/slices/usersSlice';
 import { usersApiServer } from '@/apis/usersApi';
 import { notifyPageError } from '@/helpers/notifyError';
 import { redirectToNotFound } from '@/helpers/server';
@@ -52,7 +52,7 @@ export const getServerSideProps: GetServerSideProps =
     let user: User | null = null;
     let statusCode = STATUS_CODES.DEFAULT;
 
-    store.dispatch(postsActions.clearPosts());
+    store.dispatch(postActions.clearPosts());
 
     try {
       const userResponse = (await getUser(
@@ -65,9 +65,9 @@ export const getServerSideProps: GetServerSideProps =
           params: { page: 1, limit: LIMITS.POSTS },
         })) as AxiosResponse<GetPostsResponse>;
 
-        store.dispatch(usersActions.setUserProfile(userResponse.data));
+        store.dispatch(userActions.setUserProfile(userResponse.data));
         postsResponse &&
-          store.dispatch(postsActions.getPostsSuccess(postsResponse.data));
+          store.dispatch(postActions.getPostsSuccess(postsResponse.data));
 
         user = userResponse.data.user;
       }

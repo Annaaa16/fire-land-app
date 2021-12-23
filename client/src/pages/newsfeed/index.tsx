@@ -11,7 +11,7 @@ import { GetPostsResponse } from '@/models/posts';
 import { LIMITS } from '@/constants';
 import { wrapper } from '@/redux/store';
 import { postsApiServer } from '@/apis/postsApi';
-import { postsActions } from '@/redux/slices/postsSlice';
+import { postActions } from '@/redux/slices/postsSlice';
 import Meta from '@/layouts/Meta';
 import Social from '@/layouts/Social';
 import NewsFeedBanner from '@/features/NewsFeed/components/NewsFeedBanner';
@@ -48,7 +48,7 @@ export const getServerSideProps: GetServerSideProps =
       },
     })) as AxiosResponse<GetPostsResponse>;
 
-    response && store.dispatch(postsActions.getPostsSuccess(response.data));
+    response && store.dispatch(postActions.getPostsSuccess(response.data));
 
     return {
       props: {},

@@ -7,7 +7,7 @@ import clsx from 'clsx';
 import { Pagination, Post as PostType } from '@/models/common';
 
 import { LIMITS } from '@/constants';
-import { commentsActions } from '@/redux/slices/commentsSlice';
+import { commentActions } from '@/redux/slices/commentsSlice';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 import PostHeader from './PostHeader';
@@ -37,12 +37,12 @@ function Post(props: PostType & Pagination) {
   const handleFetchComments = () => {
     // Clear all previous comments before fetch comments
     if (!isOpenComments) {
-      dispatch(commentsActions.clearComments({ postId: _id }));
+      dispatch(commentActions.clearComments({ postId: _id }));
     }
 
     setIsOpenComments(!isOpenComments);
     dispatch(
-      commentsActions.getCommentsRequest({
+      commentActions.getCommentsRequest({
         postId: _id,
         params: {
           limit: LIMITS.COMMENTS,
@@ -55,7 +55,7 @@ function Post(props: PostType & Pagination) {
   const handleGetMoreComments = () => {
     if (isOpenComments && nextPage) {
       dispatch(
-        commentsActions.getCommentsRequest({
+        commentActions.getCommentsRequest({
           postId: _id,
           params: {
             limit: LIMITS.COMMENTS,

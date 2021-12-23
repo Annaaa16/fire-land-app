@@ -13,7 +13,7 @@ import { PayloadAction } from '@reduxjs/toolkit';
 import { AxiosResponse } from 'axios';
 
 import { DELAYS } from '@/constants';
-import { conversationsActions } from '../slices/conversationsSlice';
+import { conversationActions } from '../slices/conversationsSlice';
 import { conversationsApiClient } from '@/apis/conversationsApi';
 import { notifySagaError } from '@/helpers/notifyError';
 
@@ -31,10 +31,10 @@ function* handleCreateConversationRequest(
       action.payload
     );
 
-    yield put(conversationsActions.createConversationSuccess(response.data));
+    yield put(conversationActions.createConversationSuccess(response.data));
   } catch (error) {
-    notifySagaError(conversationsActions.createConversationFailed, error);
-    yield put(conversationsActions.createConversationFailed());
+    notifySagaError(conversationActions.createConversationFailed, error);
+    yield put(conversationActions.createConversationFailed());
   }
 }
 
@@ -47,10 +47,10 @@ function* handleGetConversationsRequest(
       action.payload
     );
 
-    yield put(conversationsActions.getConversationsSuccess(response.data));
+    yield put(conversationActions.getConversationsSuccess(response.data));
   } catch (error) {
-    notifySagaError(conversationsActions.getConversationsFailed, error);
-    yield put(conversationsActions.getConversationsFailed());
+    notifySagaError(conversationActions.getConversationsFailed, error);
+    yield put(conversationActions.getConversationsFailed());
   }
 }
 
@@ -63,24 +63,24 @@ function* handleDeleteConversationRequest(
       action.payload
     );
 
-    yield put(conversationsActions.deleteConversationSuccess(response.data));
+    yield put(conversationActions.deleteConversationSuccess(response.data));
   } catch (error) {
-    notifySagaError(conversationsActions.deleteConversationFailed, error);
-    yield put(conversationsActions.deleteConversationFailed());
+    notifySagaError(conversationActions.deleteConversationFailed, error);
+    yield put(conversationActions.deleteConversationFailed());
   }
 }
 
 function* conversationSaga() {
   yield takeLatest(
-    conversationsActions.createConversationRequest,
+    conversationActions.createConversationRequest,
     handleCreateConversationRequest
   );
   yield takeLatest(
-    conversationsActions.getConversationsRequest,
+    conversationActions.getConversationsRequest,
     handleGetConversationsRequest
   );
   yield takeLatest(
-    conversationsActions.deleteConversationRequest,
+    conversationActions.deleteConversationRequest,
     handleDeleteConversationRequest
   );
 }

@@ -9,7 +9,7 @@ import { useForm } from 'react-hook-form';
 // material ui icons
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 
-import { productsActions } from '@/redux/slices/productsSlice';
+import { productActions } from '@/redux/slices/productsSlice';
 import { useProductsSelector } from '@/redux/selectors';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 import usePhotoPicker from '@/hooks/usePhotoPicker';
@@ -57,9 +57,9 @@ function MarketplaceForm() {
     formData.append('category', selectedCategory);
     formData.append('file', file as Blob);
 
-    dispatch(productsActions.createProductRequest(formData));
-    dispatch(productsActions.setIsOpenCreateForm(false));
-    dispatch(productsActions.setUpdateProduct(null));
+    dispatch(productActions.createProductRequest(formData));
+    dispatch(productActions.setIsOpenCreateForm(false));
+    dispatch(productActions.setUpdateProduct(null));
   };
 
   const handleUpdateProduct = (data: {
@@ -81,18 +81,18 @@ function MarketplaceForm() {
     formData.append('file', file as Blob);
 
     dispatch(
-      productsActions.updateProductRequest({
+      productActions.updateProductRequest({
         productId: updateProduct._id,
         updatePayload: formData,
       })
     );
-    dispatch(productsActions.setIsOpenCreateForm(false));
-    dispatch(productsActions.setUpdateProduct(null));
+    dispatch(productActions.setIsOpenCreateForm(false));
+    dispatch(productActions.setUpdateProduct(null));
   };
 
   const handleCloseModal = () => {
-    dispatch(productsActions.setIsOpenCreateForm(false));
-    dispatch(productsActions.setUpdateProduct(null));
+    dispatch(productActions.setIsOpenCreateForm(false));
+    dispatch(productActions.setUpdateProduct(null));
   };
 
   // Auto focus to description field

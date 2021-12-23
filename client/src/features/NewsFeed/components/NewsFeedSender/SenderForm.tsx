@@ -20,7 +20,7 @@ import _ from 'lodash';
 import { FormEvent } from 'react';
 
 import { usePostsSelector, useUsersSelector } from '@/redux/selectors';
-import { postsActions } from '@/redux/slices/postsSlice';
+import { postActions } from '@/redux/slices/postsSlice';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 import useDetectKeydown from '@/hooks/useDetectKeydown';
 import usePhotoPicker from '@/hooks/usePhotoPicker';
@@ -54,8 +54,8 @@ function NewsFeedSenderArea() {
     formData.append('content', content);
     formData.append('file', file as Blob);
 
-    dispatch(postsActions.createPostRequest(formData));
-    dispatch(postsActions.setIsOpenFormSender(false));
+    dispatch(postActions.createPostRequest(formData));
+    dispatch(postActions.setIsOpenFormSender(false));
   };
 
   const handleUpdatePost = (e: FormEvent<HTMLFormElement>) => {
@@ -72,14 +72,14 @@ function NewsFeedSenderArea() {
     formData.append('file', file as Blob);
 
     dispatch(
-      postsActions.updatePostRequest({ postId: _id, updatePayload: formData })
+      postActions.updatePostRequest({ postId: _id, updatePayload: formData })
     );
-    dispatch(postsActions.setIsOpenFormSender(false));
+    dispatch(postActions.setIsOpenFormSender(false));
   };
 
   const closeSenderArea = () => {
-    dispatch(postsActions.setIsOpenFormSender(false));
-    dispatch(postsActions.setUpdatePost(null));
+    dispatch(postActions.setIsOpenFormSender(false));
+    dispatch(postActions.setUpdatePost(null));
   };
 
   useAutoFocus(textareaRef);

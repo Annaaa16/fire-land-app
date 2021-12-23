@@ -14,7 +14,7 @@ import { PayloadAction } from '@reduxjs/toolkit';
 import { UpdatePostPayload } from '@/models/posts';
 
 import { DELAYS } from '@/constants';
-import { postsActions } from '../slices/postsSlice';
+import { postActions } from '../slices/postsSlice';
 import { postsApiClient } from '@/apis/postsApi';
 import { notifySagaError } from '@/helpers/notifyError';
 
@@ -30,10 +30,10 @@ function* handleCreatePostRequest(action: PayloadAction<FormData>) {
       action.payload
     );
 
-    yield put(postsActions.createPostSuccess(response.data));
+    yield put(postActions.createPostSuccess(response.data));
   } catch (error) {
-    notifySagaError(postsActions.createPostFailed, error);
-    yield put(postsActions.createPostFailed());
+    notifySagaError(postActions.createPostFailed, error);
+    yield put(postActions.createPostFailed());
   }
 }
 
@@ -44,10 +44,10 @@ function* handleGetPostsRequest(action: PayloadAction<GetPostsPayload>) {
       action.payload
     );
 
-    yield put(postsActions.getPostsSuccess(response.data));
+    yield put(postActions.getPostsSuccess(response.data));
   } catch (error) {
-    notifySagaError(postsActions.getPostsFailed, error);
-    yield put(postsActions.getPostsFailed());
+    notifySagaError(postActions.getPostsFailed, error);
+    yield put(postActions.getPostsFailed());
   }
 }
 
@@ -60,10 +60,10 @@ function* handleUpdatePostRequest(action: PayloadAction<UpdatePostPayload>) {
       action.payload
     );
 
-    yield put(postsActions.updatePostSuccess(response.data));
+    yield put(postActions.updatePostSuccess(response.data));
   } catch (error) {
-    notifySagaError(postsActions.updatePostFailed, error);
-    yield put(postsActions.updatePostFailed());
+    notifySagaError(postActions.updatePostFailed, error);
+    yield put(postActions.updatePostFailed());
   }
 }
 
@@ -76,30 +76,30 @@ function* handleDeletePostRequest(action: PayloadAction<DeletePostPayload>) {
       action.payload
     );
 
-    yield put(postsActions.deletePostSuccess(response.data));
+    yield put(postActions.deletePostSuccess(response.data));
   } catch (error) {
-    notifySagaError(postsActions.deletePostFailed, error);
-    yield put(postsActions.deletePostFailed());
+    notifySagaError(postActions.deletePostFailed, error);
+    yield put(postActions.deletePostFailed());
   }
 }
 
 function* handleReactPostRequest(action: PayloadAction<ReactPostPayload>) {
   try {
-    yield put(postsActions.reactPostSuccess(action.payload));
+    yield put(postActions.reactPostSuccess(action.payload));
 
     yield call(reactPost, action.payload);
   } catch (error) {
-    notifySagaError(postsActions.reactPostFailure, error);
-    yield put(postsActions.reactPostFailure());
+    notifySagaError(postActions.reactPostFailure, error);
+    yield put(postActions.reactPostFailure());
   }
 }
 
 function* postsSaga() {
-  yield takeLatest(postsActions.createPostRequest, handleCreatePostRequest);
-  yield takeLatest(postsActions.getPostsRequest, handleGetPostsRequest);
-  yield takeLatest(postsActions.updatePostRequest, handleUpdatePostRequest);
-  yield takeLatest(postsActions.deletePostRequest, handleDeletePostRequest);
-  yield takeLatest(postsActions.reactPostRequest, handleReactPostRequest);
+  yield takeLatest(postActions.createPostRequest, handleCreatePostRequest);
+  yield takeLatest(postActions.getPostsRequest, handleGetPostsRequest);
+  yield takeLatest(postActions.updatePostRequest, handleUpdatePostRequest);
+  yield takeLatest(postActions.deletePostRequest, handleDeletePostRequest);
+  yield takeLatest(postActions.reactPostRequest, handleReactPostRequest);
 }
 
 export default postsSaga;

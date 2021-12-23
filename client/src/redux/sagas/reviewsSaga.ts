@@ -7,7 +7,7 @@ import {
   GetReviewsResponse,
 } from '@/models/reviews';
 
-import { reviewsActions } from '../slices/reviewsSlice';
+import { reviewActions } from '../slices/reviewsSlice';
 import { AxiosResponse } from 'axios';
 import { call, put, takeLatest } from '@redux-saga/core/effects';
 import { reviewsApiClient } from '@/apis/reviewsApi';
@@ -24,10 +24,10 @@ function* handleCreateReviewRequest(
       action.payload
     );
 
-    yield put(reviewsActions.createReviewSuccess(response.data));
+    yield put(reviewActions.createReviewSuccess(response.data));
   } catch (error) {
-    notifySagaError(reviewsActions.createReviewFailed, error);
-    yield put(reviewsActions.createReviewFailed());
+    notifySagaError(reviewActions.createReviewFailed, error);
+    yield put(reviewActions.createReviewFailed());
   }
 }
 
@@ -38,19 +38,19 @@ function* handleGetReviewsRequest(action: PayloadAction<GetReviewsPayload>) {
       action.payload
     );
 
-    yield put(reviewsActions.getReviewsSuccess(response.data));
+    yield put(reviewActions.getReviewsSuccess(response.data));
   } catch (error) {
-    notifySagaError(reviewsActions.getReviewsFailed, error);
-    yield put(reviewsActions.getReviewsFailed());
+    notifySagaError(reviewActions.getReviewsFailed, error);
+    yield put(reviewActions.getReviewsFailed());
   }
 }
 
 function* reviewsSaga() {
   yield takeLatest(
-    reviewsActions.createReviewRequest,
+    reviewActions.createReviewRequest,
     handleCreateReviewRequest
   );
-  yield takeLatest(reviewsActions.getReviewsRequest, handleGetReviewsRequest);
+  yield takeLatest(reviewActions.getReviewsRequest, handleGetReviewsRequest);
 }
 
 export default reviewsSaga;

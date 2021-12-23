@@ -4,7 +4,7 @@ import { useState, useRef } from 'react';
 import { Reaction, User } from '@/models/common';
 
 import { PREFIXES } from '@/constants';
-import { postsActions } from '@/redux/slices/postsSlice';
+import { postActions } from '@/redux/slices/postsSlice';
 import useStoreDispatch from './useStoreDispatch';
 import useIsomorphicLayoutEffect from './useIsomorphicLayoutEffect ';
 import useClickOutside from './useClickOutside';
@@ -62,7 +62,7 @@ const useReactions = ({ postId, reaction, currentUser }: useReactionsProps) => {
     const { emotion, isReact, isUpdate } = payload;
 
     dispatch(
-      postsActions.reactPostRequest({
+      postActions.reactPostRequest({
         postId,
         userId: currentUser._id,
         isReact,

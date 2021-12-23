@@ -17,7 +17,7 @@ import { PayloadAction } from '@reduxjs/toolkit';
 import { AxiosResponse } from 'axios';
 
 import { productsApiClient } from '@/apis/productsApi';
-import { productsActions } from '../slices/productsSlice';
+import { productActions } from '../slices/productsSlice';
 import { notifySagaError } from '@/helpers/notifyError';
 
 const {
@@ -36,10 +36,10 @@ function* handleCreateProductRequest(action: PayloadAction<FormData>) {
       action.payload
     );
 
-    yield put(productsActions.createProductSuccess(response.data));
+    yield put(productActions.createProductSuccess(response.data));
   } catch (error) {
-    notifySagaError(productsActions.createProductFailure, error);
-    yield put(productsActions.createProductFailure());
+    notifySagaError(productActions.createProductFailure, error);
+    yield put(productActions.createProductFailure());
   }
 }
 
@@ -50,10 +50,10 @@ function* handleGetProductsRequest(action: PayloadAction<GetProductsParams>) {
       action.payload
     );
 
-    yield put(productsActions.getProductsSuccess(response.data));
+    yield put(productActions.getProductsSuccess(response.data));
   } catch (error) {
-    notifySagaError(productsActions.getProductsFailure, error);
-    yield put(productsActions.getProductsFailure());
+    notifySagaError(productActions.getProductsFailure, error);
+    yield put(productActions.getProductsFailure());
   }
 }
 
@@ -66,10 +66,10 @@ function* handleUpdateProductRequest(
       action.payload
     );
 
-    yield put(productsActions.updateProductSuccess(response.data));
+    yield put(productActions.updateProductSuccess(response.data));
   } catch (error) {
-    notifySagaError(productsActions.updateProductFailure, error);
-    yield put(productsActions.updateProductFailure());
+    notifySagaError(productActions.updateProductFailure, error);
+    yield put(productActions.updateProductFailure());
   }
 }
 
@@ -82,10 +82,10 @@ function* handleDeleteProductRequest(
       action.payload
     );
 
-    yield put(productsActions.deleteProductSuccess(response.data));
+    yield put(productActions.deleteProductSuccess(response.data));
   } catch (error) {
-    notifySagaError(productsActions.deleteProductFailure, error);
-    yield put(productsActions.deleteProductFailure());
+    notifySagaError(productActions.deleteProductFailure, error);
+    yield put(productActions.deleteProductFailure());
   }
 }
 
@@ -93,12 +93,12 @@ function* handleReactProductRequest(
   action: PayloadAction<ReactProductPayload>
 ) {
   try {
-    yield put(productsActions.reactProductSuccess(action.payload));
+    yield put(productActions.reactProductSuccess(action.payload));
 
     yield call(reactProduct, action.payload);
   } catch (error) {
-    notifySagaError(productsActions.reactProductFailure, error);
-    yield put(productsActions.reactProductFailure());
+    notifySagaError(productActions.reactProductFailure, error);
+    yield put(productActions.reactProductFailure());
   }
 }
 
@@ -109,35 +109,32 @@ function* handleBuyProductRequest(action: PayloadAction<BuyProductPayload>) {
       action.payload
     );
 
-    yield put(productsActions.buyProductSuccess(response.data));
+    yield put(productActions.buyProductSuccess(response.data));
   } catch (error) {
-    notifySagaError(productsActions.buyProductFailure, error);
-    yield put(productsActions.buyProductFailure());
+    notifySagaError(productActions.buyProductFailure, error);
+    yield put(productActions.buyProductFailure());
   }
 }
 
 function* productsSaga() {
   yield takeLatest(
-    productsActions.createProductRequest,
+    productActions.createProductRequest,
     handleCreateProductRequest
   );
+  yield takeLatest(productActions.getProductsRequest, handleGetProductsRequest);
   yield takeLatest(
-    productsActions.getProductsRequest,
-    handleGetProductsRequest
-  );
-  yield takeLatest(
-    productsActions.updateProductRequest,
+    productActions.updateProductRequest,
     handleUpdateProductRequest
   );
   yield takeLatest(
-    productsActions.reactProductRequest,
+    productActions.reactProductRequest,
     handleReactProductRequest
   );
   yield takeLatest(
-    productsActions.deleteProductRequest,
+    productActions.deleteProductRequest,
     handleDeleteProductRequest
   );
-  yield takeLatest(productsActions.buyProductRequest, handleBuyProductRequest);
+  yield takeLatest(productActions.buyProductRequest, handleBuyProductRequest);
 }
 
 export default productsSaga;

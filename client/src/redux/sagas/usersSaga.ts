@@ -17,7 +17,7 @@ import { PayloadAction } from '@reduxjs/toolkit';
 import { AxiosResponse } from 'axios';
 
 import { DELAYS } from '@/constants';
-import { usersActions } from '../slices/usersSlice';
+import { userActions } from '../slices/usersSlice';
 import { usersApiClient } from '@/apis/usersApi';
 import { notifySagaError } from '@/helpers/notifyError';
 
@@ -35,10 +35,10 @@ function* handleAddFriendUserRequest(
       action.payload
     );
 
-    yield put(usersActions.addFriendUserSuccess(response.data));
+    yield put(userActions.addFriendUserSuccess(response.data));
   } catch (error) {
-    notifySagaError(usersActions.addFriendUserFailed, error);
-    yield put(usersActions.addFriendUserFailed());
+    notifySagaError(userActions.addFriendUserFailed, error);
+    yield put(userActions.addFriendUserFailed());
   }
 }
 
@@ -53,10 +53,10 @@ function* handleUnfriendUserRequest(
       action.payload
     );
 
-    yield put(usersActions.unfriendUserSuccess(response.data));
+    yield put(userActions.unfriendUserSuccess(response.data));
   } catch (error) {
-    notifySagaError(usersActions.unfriendUserFailed, error);
-    yield put(usersActions.unfriendUserFailed());
+    notifySagaError(userActions.unfriendUserFailed, error);
+    yield put(userActions.unfriendUserFailed());
   }
 }
 
@@ -71,10 +71,10 @@ function* handleFollowUserRequest(action: PayloadAction<FollowUserPayload>) {
       userId
     );
 
-    yield put(usersActions.followUserSuccess(response.data));
+    yield put(userActions.followUserSuccess(response.data));
   } catch (error) {
-    notifySagaError(usersActions.followUserFailed, error);
-    yield put(usersActions.followUserFailed());
+    notifySagaError(userActions.followUserFailed, error);
+    yield put(userActions.followUserFailed());
   }
 }
 
@@ -89,10 +89,10 @@ function* handleUnfollowUserRequest(
       action.payload
     );
 
-    yield put(usersActions.unfollowUserSuccess(response.data));
+    yield put(userActions.unfollowUserSuccess(response.data));
   } catch (error) {
-    notifySagaError(usersActions.unfollowUserFailed, error);
-    yield put(usersActions.unfollowUserFailed());
+    notifySagaError(userActions.unfollowUserFailed, error);
+    yield put(userActions.unfollowUserFailed());
   }
 }
 
@@ -103,22 +103,22 @@ function* handleGetFriendsRequest(action: PayloadAction<GetFriendsPayload>) {
       action.payload
     );
 
-    yield put(usersActions.getFriendsSuccess(response.data));
+    yield put(userActions.getFriendsSuccess(response.data));
   } catch (error) {
-    notifySagaError(usersActions.getFriendsFailed, error);
-    yield put(usersActions.getFriendsFailed());
+    notifySagaError(userActions.getFriendsFailed, error);
+    yield put(userActions.getFriendsFailed());
   }
 }
 
 function* usersSaga() {
   yield takeLatest(
-    usersActions.addFriendUserRequest,
+    userActions.addFriendUserRequest,
     handleAddFriendUserRequest
   );
-  yield takeLatest(usersActions.unfriendUserRequest, handleUnfriendUserRequest);
-  yield takeLatest(usersActions.followUserRequest, handleFollowUserRequest);
-  yield takeLatest(usersActions.unfollowUserRequest, handleUnfollowUserRequest);
-  yield takeLatest(usersActions.getFriendsRequest, handleGetFriendsRequest);
+  yield takeLatest(userActions.unfriendUserRequest, handleUnfriendUserRequest);
+  yield takeLatest(userActions.followUserRequest, handleFollowUserRequest);
+  yield takeLatest(userActions.unfollowUserRequest, handleUnfollowUserRequest);
+  yield takeLatest(userActions.getFriendsRequest, handleGetFriendsRequest);
 }
 
 export default usersSaga;

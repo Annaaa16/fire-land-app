@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { GetServerSideProps } from 'next';
 import { TmdbGetMoviesResponse } from '@/models/tmdb';
 
-import { movieCategoryKeys, moviesActions } from '@/redux/slices/moviesSlice';
+import { movieCategoryKeys, movieActions } from '@/redux/slices/moviesSlice';
 import { moviesApi } from '@/apis/moviesApi';
 import { wrapper } from '@/redux/store';
 import { tmdbMoviesEndpoints } from '@/configs/tmdb';
@@ -25,7 +25,7 @@ function Movies() {
 
   useEffect(() => {
     dispatch(
-      moviesActions.getTvShowsRequest({
+      movieActions.getTvShowsRequest({
         query: tmdbTvShowsEndpoints.popular,
         params: {
           page: 1,
@@ -34,7 +34,7 @@ function Movies() {
       })
     );
     dispatch(
-      moviesActions.getTvShowsRequest({
+      movieActions.getTvShowsRequest({
         query: tmdbTvShowsEndpoints.airingToday,
         params: {
           page: 1,
@@ -43,7 +43,7 @@ function Movies() {
       })
     );
     dispatch(
-      moviesActions.getTvShowsRequest({
+      movieActions.getTvShowsRequest({
         query: tmdbTvShowsEndpoints.onTheAir,
         params: {
           page: 1,
@@ -51,7 +51,7 @@ function Movies() {
         tvShowsType: tvShowCategoryKeys.onTheAir,
       })
     );
-    dispatch(moviesActions.clearSearchedMovies());
+    dispatch(movieActions.clearSearchedMovies());
   }, [dispatch]);
 
   return (
@@ -135,7 +135,7 @@ export const getServerSideProps: GetServerSideProps =
       };
 
       store.dispatch(
-        moviesActions.getMoviesSuccess({
+        movieActions.getMoviesSuccess({
           moviesType: getMovieType() as keyof typeof movieCategoryKeys,
           movies: promise?.data as TmdbGetMoviesResponse,
         })

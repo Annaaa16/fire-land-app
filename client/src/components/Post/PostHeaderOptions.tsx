@@ -12,7 +12,7 @@ import ArchiveOutlinedIcon from '@mui/icons-material/ArchiveOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import HideImageOutlinedIcon from '@mui/icons-material/HideImageOutlined';
 
-import { postsActions } from '@/redux/slices/postsSlice';
+import { postActions } from '@/redux/slices/postsSlice';
 import { useUsersSelector } from '@/redux/selectors';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
@@ -29,12 +29,12 @@ function PostHeaderOptions(props: PostHeaderOptionsProps) {
   const dispatch = useStoreDispatch();
 
   const handleEditPost = () => {
-    dispatch(postsActions.setUpdatePost(postId));
-    dispatch(postsActions.setIsOpenFormSender(true));
+    dispatch(postActions.setUpdatePost(postId));
+    dispatch(postActions.setIsOpenFormSender(true));
   };
 
   const handleDeletePost = () => {
-    dispatch(postsActions.deletePostRequest({ postId }));
+    dispatch(postActions.deletePostRequest({ postId }));
   };
 
   return (

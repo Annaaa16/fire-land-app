@@ -188,6 +188,6 @@ const usersSlice = createSlice({
   },
 });
 
-export const usersActions = usersSlice.actions;
+export const userActions = usersSlice.actions;
 
 export default usersSlice.reducer;

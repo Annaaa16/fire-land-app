@@ -6,7 +6,7 @@ import { Conversation } from '@/models/conversations';
 
 import { messengerActions } from '@/redux/slices/messengerSlice';
 import { useConversationsSelector, useUsersSelector } from '@/redux/selectors';
-import { conversationsActions } from '@/redux/slices/conversationsSlice';
+import { conversationActions } from '@/redux/slices/conversationsSlice';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 import useSocket from '@/hooks/useSocket';
 
@@ -29,7 +29,7 @@ function ContactCard({ conversation }: ContactCardProps) {
   )[0];
 
   const handleGetMessages = () => {
-    dispatch(conversationsActions.setCurrentConversation(conversation));
+    dispatch(conversationActions.setCurrentConversation(conversation));
     dispatch(messengerActions.setConversationId(conversation._id));
     dispatch(
       messengerActions.getMessagesRequest({ conversationId: conversation._id })

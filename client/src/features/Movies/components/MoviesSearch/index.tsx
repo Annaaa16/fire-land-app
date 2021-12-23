@@ -11,7 +11,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { FormEvent } from 'react';
 
 import { PATHS } from '@/constants';
-import { moviesActions } from '@/redux/slices/moviesSlice';
+import { movieActions } from '@/redux/slices/moviesSlice';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 function MoviesSearch() {
@@ -25,7 +25,7 @@ function MoviesSearch() {
 
     if (!searchTerms.trim()) return;
 
-    dispatch(moviesActions.clearSearchedMovies());
+    dispatch(movieActions.clearSearchedMovies());
     router.push(`${PATHS.MOVIES_SEARCH}?query=${searchTerms}`);
   };
 

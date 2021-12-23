@@ -6,7 +6,7 @@ import clsx from 'clsx';
 
 import { usePostsSelector } from '@/redux/selectors';
 import { LIMITS } from '@/constants';
-import { postsActions } from '@/redux/slices/postsSlice';
+import { postActions } from '@/redux/slices/postsSlice';
 import { actions } from '@/redux/slices/postsSlice';
 import useIntersectionObserver from '@/hooks/useIntersectionObserver';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
@@ -30,7 +30,7 @@ function WallContent() {
 
     if (isIntersecting && nextPage && id) {
       dispatch(
-        postsActions.getPostsRequest({
+        postActions.getPostsRequest({
           userId: id as string,
           params: { page: nextPage, limit: LIMITS.POSTS },
         })

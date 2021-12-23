@@ -110,6 +110,6 @@ const conversationsSlice = createSlice({
   },
 });
 
-export const conversationsActions = conversationsSlice.actions;
+export const conversationActions = conversationsSlice.actions;
 
 export default conversationsSlice.reducer;

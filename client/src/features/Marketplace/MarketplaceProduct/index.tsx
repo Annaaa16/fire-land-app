@@ -10,9 +10,9 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import { Product } from '@/models/common';
 
 import { LIMITS } from '@/constants';
-import { reviewsActions } from '@/redux/slices/reviewsSlice';
+import { reviewActions } from '@/redux/slices/reviewsSlice';
 import { useUsersSelector } from '@/redux/selectors';
-import { productsActions } from '@/redux/slices/productsSlice';
+import { productActions } from '@/redux/slices/productsSlice';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 import User from '@/components/User';
@@ -39,7 +39,7 @@ function MarketplaceProduct(props: Product) {
 
   const handleReactProduct = () => {
     dispatch(
-      productsActions.reactProductRequest({
+      productActions.reactProductRequest({
         currentUserId: currentUser._id,
         isReact: !isReacted,
         productId,
@@ -50,7 +50,7 @@ function MarketplaceProduct(props: Product) {
 
   const handleOpenCheckout = () => {
     dispatch(
-      reviewsActions.getReviewsRequest({
+      reviewActions.getReviewsRequest({
         productId,
         params: {
           page: 1,
@@ -58,8 +58,8 @@ function MarketplaceProduct(props: Product) {
         },
       })
     );
-    dispatch(productsActions.setCheckoutProduct(props));
-    dispatch(productsActions.setIsOpenCheckout(true));
+    dispatch(productActions.setCheckoutProduct(props));
+    dispatch(productActions.setIsOpenCheckout(true));
   };
 
   return (

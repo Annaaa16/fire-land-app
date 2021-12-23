@@ -5,7 +5,7 @@ import clsx from 'clsx';
 
 import { LIMITS } from '@/constants';
 import { usePostsSelector } from '@/redux/selectors';
-import { postsActions } from '@/redux/slices/postsSlice';
+import { postActions } from '@/redux/slices/postsSlice';
 import { actions } from '@/redux/slices/postsSlice';
 import useIntersectionObserver from '@/hooks/useIntersectionObserver';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
@@ -27,7 +27,7 @@ function NewsFeedContent() {
   useEffect(() => {
     if (isIntersecting && nextPage && !loadings.includes(actions.getPosts)) {
       dispatch(
-        postsActions.getPostsRequest({
+        postActions.getPostsRequest({
           params: { page: nextPage, limit: LIMITS.POSTS },
         })
       );

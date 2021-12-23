@@ -3,8 +3,8 @@ import { useState } from 'react';
 // clsx
 import clsx from 'clsx';
 
-import { productsActions } from '@/redux/slices/productsSlice';
-import { reviewsActions } from '@/redux/slices/reviewsSlice';
+import { productActions } from '@/redux/slices/productsSlice';
+import { reviewActions } from '@/redux/slices/reviewsSlice';
 import { useProductsSelector } from '@/redux/selectors';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
@@ -33,8 +33,8 @@ function MarketplaceCheckout() {
   )!;
 
   const handleCloseModal = () => {
-    dispatch(productsActions.setIsOpenCheckout(false));
-    dispatch(reviewsActions.clearReviews());
+    dispatch(productActions.setIsOpenCheckout(false));
+    dispatch(reviewActions.clearReviews());
   };
 
   const handleSelectOption = (value: ViewOptions) => {

@@ -11,9 +11,9 @@ import {
 } from '@/models/comments';
 
 import { DELAYS } from '@/constants';
-import { commentsActions } from '../slices/commentsSlice';
+import { commentActions } from '../slices/commentsSlice';
 import { commentsApiClient } from '@/apis/commentsApi';
-import { postsActions } from '../slices/postsSlice';
+import { postActions } from '../slices/postsSlice';
 import { notifySagaError } from '@/helpers/notifyError';
 
 const { createComment, getComments } = commentsApiClient();
@@ -29,11 +29,11 @@ function* handleCreateCommentRequest(
       action.payload
     );
 
-    yield put(commentsActions.createCommentSuccess(response.data));
-    yield put(postsActions.increaseCommentCount(response.data));
+    yield put(commentActions.createCommentSuccess(response.data));
+    yield put(postActions.increaseCommentCount(response.data));
   } catch (error) {
-    notifySagaError(commentsActions.createCommentFailed, error);
-    yield put(commentsActions.createCommentFailed());
+    notifySagaError(commentActions.createCommentFailed, error);
+    yield put(commentActions.createCommentFailed());
   }
 }
 
@@ -46,23 +46,20 @@ function* handleGetCommentsRequest(action: PayloadAction<GetCommentsPayload>) {
       action.payload
     );
 
-    yield put(commentsActions.getCommentsSuccess(response.data));
-    yield put(postsActions.setPagination(response.data));
+    yield put(commentActions.getCommentsSuccess(response.data));
+    yield put(postActions.setPagination(response.data));
   } catch (error) {
-    notifySagaError(commentsActions.getCommentsFailed, error);
-    yield put(commentsActions.getCommentsFailed());
+    notifySagaError(commentActions.getCommentsFailed, error);
+    yield put(commentActions.getCommentsFailed());
   }
 }
 
 function* commentsSaga() {
   yield takeLatest(
-    commentsActions.createCommentRequest,
+    commentActions.createCommentRequest,
     handleCreateCommentRequest
   );
-  yield takeLatest(
-    commentsActions.getCommentsRequest,
-    handleGetCommentsRequest
-  );
+  yield takeLatest(commentActions.getCommentsRequest, handleGetCommentsRequest);
 }
 
 export default commentsSaga;
