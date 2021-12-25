@@ -1,6 +1,21 @@
+// clsx
 import clsx from 'clsx';
 
 function LoadingPost() {
+  function Skeleton({ className }: { className: string }) {
+    return (
+      <div
+        className={clsx(
+          'relative',
+          'h-4 w-1/4 rounded overflow-hidden dark:opacity-25',
+          'bg-[#dddbdd]',
+          className
+        )}>
+        <span className='skeleton' />
+      </div>
+    );
+  }
+
   return (
     <div className={clsx('w-full h-80 mt-7 rounded-lg p-4 shadow-md')}>
       <div className={clsx('flex items-center mb-5')}>
@@ -27,17 +42,3 @@ function LoadingPost() {
 }
 
 export default LoadingPost;
-
-function Skeleton({ className }: { className: string }) {
-  return (
-    <div
-      className={clsx(
-        'relative',
-        'h-4 w-1/4 rounded overflow-hidden dark:opacity-25',
-        'bg-[#dddbdd]',
-        className
-      )}>
-      <span className='skeleton' />
-    </div>
-  );
-}

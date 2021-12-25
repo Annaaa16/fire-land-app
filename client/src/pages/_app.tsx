@@ -20,6 +20,7 @@ import { fetchUserFromServer } from '@/helpers/server';
 import store, { wrapper } from '@/redux/store';
 import theme from '@/configs/mui';
 
+import MoviesProvider from '@/contexts/MoviesContext';
 import GlobalProvider from '../contexts/GlobalContext';
 
 // styles
@@ -39,7 +40,6 @@ class WrappedApp extends App<
   AppInitialProps & { currentUserResponse: GetUserResponse }
 > {
   static getInitialProps = async ({ Component, ctx }: AppContext) => {
-    // Init check
     const currentUserResponse = await fetchUserFromServer(ctx);
 
     // Wait for all page actions to dispatch
@@ -68,7 +68,9 @@ class WrappedApp extends App<
       <Provider store={store}>
         <GlobalProvider currentUserResponse={currentUserResponse}>
           <ThemeProvider theme={theme}>
-            <Component {...pageProps} />
+            <MoviesProvider>
+              <Component {...pageProps} />
+            </MoviesProvider>
           </ThemeProvider>
         </GlobalProvider>
       </Provider>

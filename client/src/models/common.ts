@@ -48,7 +48,9 @@ export interface Movie {
   overview: string;
   releaseDate: string;
   voteCount: number;
+  voteAverage: number;
   popularity: number;
+  originalLanguage: string;
 }
 
 export interface TvShow {
@@ -58,7 +60,9 @@ export interface TvShow {
   overview: string;
   releaseDate: string;
   voteCount: number;
+  voteAverage: number;
   popularity: number;
+  originalLanguage: string;
 }
 
 interface Sold {

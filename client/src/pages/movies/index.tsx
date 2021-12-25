@@ -11,6 +11,7 @@ import { tmdbMoviesEndpoints } from '@/configs/tmdb';
 import { useMoviesSelector } from '@/redux/selectors';
 import { tvShowCategoryKeys } from '@/redux/slices/moviesSlice';
 import { tmdbCategories, tmdbTvShowsEndpoints } from '@/configs/tmdb';
+import { notifyPageError } from '@/helpers/notifyError';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 import MainLayout from '@/features/Movies/layouts/MainLayout';
@@ -100,47 +101,51 @@ export const getServerSideProps: GetServerSideProps =
 
     const { popular, upcoming, topRated, nowPlaying } = tmdbMoviesEndpoints;
 
-    const promises = await Promise.all([
-      getMovies(popular, {
-        page: 1,
-      }),
-      getMovies(upcoming, {
-        page: 1,
-      }),
-      getMovies(topRated, {
-        page: 1,
-      }),
-      getMovies(nowPlaying, {
-        page: 1,
-      }),
-    ]);
+    try {
+      const promises = await Promise.all([
+        getMovies(popular, {
+          page: 1,
+        }),
+        getMovies(upcoming, {
+          page: 1,
+        }),
+        getMovies(topRated, {
+          page: 1,
+        }),
+        getMovies(nowPlaying, {
+          page: 1,
+        }),
+      ]);
 
-    promises.forEach((promise) => {
-      const getMovieType = () => {
-        const path = promise?.config.url;
-        const endpoint = path?.split('/')[2]; // '/movie/popular' => ['', 'movie', 'popular']
+      promises.forEach((promise) => {
+        const getMovieType = () => {
+          const path = promise?.config.url;
+          const endpoint = path?.split('/')[2]; // '/movie/popular' => ['', 'movie', 'popular']
 
-        switch (endpoint) {
-          case popular:
-            return movieCategoryKeys.popular;
-          case upcoming:
-            return movieCategoryKeys.upcoming;
-          case topRated:
-            return movieCategoryKeys.topRated;
-          case nowPlaying:
-            return movieCategoryKeys.nowPlaying;
-          default:
-            return '';
-        }
-      };
+          switch (endpoint) {
+            case popular:
+              return movieCategoryKeys.popular;
+            case upcoming:
+              return movieCategoryKeys.upcoming;
+            case topRated:
+              return movieCategoryKeys.topRated;
+            case nowPlaying:
+              return movieCategoryKeys.nowPlaying;
+            default:
+              return '';
+          }
+        };
 
-      store.dispatch(
-        movieActions.getMoviesSuccess({
-          moviesType: getMovieType() as keyof typeof movieCategoryKeys,
-          movies: promise?.data as TmdbGetMoviesResponse,
-        })
-      );
-    });
+        store.dispatch(
+          movieActions.getMoviesSuccess({
+            moviesType: getMovieType() as keyof typeof movieCategoryKeys,
+            movies: promise?.data as TmdbGetMoviesResponse,
+          })
+        );
+      });
+    } catch (error) {
+      notifyPageError('Movies', error);
+    }
 
     return {
       props: {},

@@ -51,6 +51,7 @@ function Search() {
           Movies - {router.query.query}
         </h1>
         <div
+          data-movies-container
           className={clsx(
             'container grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-1.5'
           )}>

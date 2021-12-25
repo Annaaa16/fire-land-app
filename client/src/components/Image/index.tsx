@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { forwardRef, useState } from 'react';
 import NextImage from 'next/image';
 
 // material ui icons
@@ -20,7 +20,7 @@ interface ImageProps extends NextImageProps {
   styleLoading: 'cover' | 'image';
 }
 
-function Image(props: ImageProps) {
+function Image(props: ImageProps, ref: any) {
   const {
     src,
     styleLoading,
@@ -37,7 +37,13 @@ function Image(props: ImageProps) {
   return (
     <>
       {!isError ? (
-        <div className={clsx('relative', 'w-full h-full')}>
+        <div
+          ref={ref}
+          className={clsx(
+            'relative',
+            'w-full h-full overflow-hidden',
+            className
+          )}>
           <NextImage
             src={src}
             {...restProps}
@@ -47,8 +53,7 @@ function Image(props: ImageProps) {
             className={clsx(
               isLoaded && !isError
                 ? 'opacity-100 visible'
-                : 'opacity-0 invisible',
-              className
+                : 'opacity-0 invisible'
             )}
             draggable={false}
           />
@@ -75,4 +80,4 @@ function Image(props: ImageProps) {
   );
 }
 
-export default Image;
+export default forwardRef(Image);

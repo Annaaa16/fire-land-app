@@ -6,6 +6,7 @@ import { COLORS } from '@/constants';
 import Meta from '@/layouts/Meta';
 import MoviesFooter from '../components/MoviesFooter';
 import MoviesHeader from '../components/MoviesHeader';
+import MoviesPreview from '../components/MoviesPreview';
 
 interface MoviesProps {
   title: string;
@@ -17,6 +18,7 @@ function MainLayout({ title, children }: MoviesProps) {
     <Meta title={title} backgroundColor={COLORS.DARK_BODY}>
       <MoviesHeader />
       {children}
+      <MoviesPreview />
       <MoviesFooter />
     </Meta>
   );

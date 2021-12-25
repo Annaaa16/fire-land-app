@@ -74,5 +74,5 @@ export const PREFIXES = {
 };
 
 export const BACKUPS = {
-  AVATAR: 'https://avatars.dicebear.com/api/micah/uiSvbW.svg',
+  AVATAR: API_URLS.AVATAR + '/micah/uiSvbW.svg',
 };

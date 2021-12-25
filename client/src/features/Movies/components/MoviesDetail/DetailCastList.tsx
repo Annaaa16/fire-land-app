@@ -42,18 +42,19 @@ function DetailCastList({ casts }: DetailCastListProps) {
         (cast) =>
           cast.image && (
             <SwiperSlide key={cast.id}>
-              <div className={clsx('relative', 'mb-2 h-32', 'cursor-pointer')}>
-                <Image
-                  src={tmdb.getW780Image(cast.image)}
-                  layout='fill'
-                  objectFit='cover'
-                  alt='Cast'
-                  className={clsx('rounded-xl')}
-                  priority={true}
-                  loadingHeight={12}
-                  styleLoading='image'
-                />
-              </div>
+              <Image
+                src={tmdb.getW780Image(cast.image)}
+                layout='fill'
+                objectFit='cover'
+                alt='Cast'
+                className={clsx(
+                  'mb-2 h-32 rounded-xl overflow-hidden',
+                  'cursor-pointer'
+                )}
+                priority={true}
+                loadingHeight={12}
+                styleLoading='image'
+              />
               <div className={clsx('text-center text-xs', 'text-white')}>
                 {cast.name}
               </div>

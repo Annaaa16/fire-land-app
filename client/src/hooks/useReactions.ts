@@ -45,13 +45,13 @@ const useReactions = ({ postId, reaction, currentUser }: useReactionsProps) => {
     icon: string;
   } | null>(null);
 
-  const timeoutRef = useRef<NodeJS.Timeout>();
+  const timerRef = useRef<NodeJS.Timeout>();
   const reactButtonRef = useRef<HTMLButtonElement | null>(null);
 
   const dispatch = useStoreDispatch();
 
-  const clearStartedTimeout = () => {
-    timeoutRef.current && clearTimeout(timeoutRef.current);
+  const clearTimer = () => {
+    timerRef.current && clearTimeout(timerRef.current);
   };
 
   const reactPost = (payload: {
@@ -71,28 +71,28 @@ const useReactions = ({ postId, reaction, currentUser }: useReactionsProps) => {
       })
     );
 
-    clearStartedTimeout();
+    clearTimer();
     setSelectedEmotion(emotions[emotion]);
     setIsOpenReactions(false);
   };
 
   const userActions = {
     onMouseEnter() {
-      timeoutRef.current = setTimeout(() => {
+      timerRef.current = setTimeout(() => {
         setIsOpenReactions(true);
       }, 600);
     },
     onMouseLeave() {
-      clearStartedTimeout();
+      clearTimer();
       setIsOpenReactions(false);
     },
     onTouchStart() {
-      timeoutRef.current = setTimeout(() => {
+      timerRef.current = setTimeout(() => {
         !isOpenReactions && setIsOpenReactions(true);
       }, 600);
     },
     onTouchEnd() {
-      clearStartedTimeout();
+      clearTimer();
     },
   };
 
@@ -110,7 +110,7 @@ const useReactions = ({ postId, reaction, currentUser }: useReactionsProps) => {
   useClickOutside(reactButtonRef, () => {
     if (!isOpenReactions) return;
 
-    clearStartedTimeout();
+    clearTimer();
     setIsOpenReactions(false);
   });
 
