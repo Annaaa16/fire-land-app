@@ -112,7 +112,7 @@ export interface TmdbMovieDetail {
   original_language: string;
   original_title: string;
   overview: string;
-  popularity: 0.5;
+  popularity: number;
   poster_path: null;
   production_companies: TmdbProductionCompany[];
   production_countries: TmdbProductionCountry[];

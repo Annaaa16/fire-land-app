@@ -86,22 +86,19 @@ function MoviesDetail(props: MoviesDetailProps) {
             'relative',
             'container flex justify-center h-full mb-20 -mt-50'
           )}>
-          <div
+          <Image
+            src={tmdb.getOriginalImage(image)}
+            layout='fill'
+            alt='Thumbnail'
+            objectFit='cover'
             className={clsx(
               'relative',
-              'hidden lg:block w-72 h-100 flex-shrink-0'
-            )}>
-            <Image
-              src={tmdb.getOriginalImage(image)}
-              layout='fill'
-              alt='Thumbnail'
-              objectFit='cover'
-              className={clsx('rounded-2xl')}
-              priority={true}
-              loadingWidths={[50, 20, 30, 40, 90, 40, 50, 70]}
-              styleLoading='image'
-            />
-          </div>
+              'hidden lg:block w-72 h-100 flex-shrink-0 rounded-2xl overflow-hidden'
+            )}
+            priority={true}
+            loadingWidths={[50, 20, 30, 40, 90, 40, 50, 70]}
+            styleLoading='image'
+          />
 
           <div
             className={clsx(

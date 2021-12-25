@@ -33,6 +33,7 @@ const tmdb = {
   apiKey: TMDB.API_KEY,
   getOriginalImage: (imgPath: string) => `${TMDB.IMAGE}/original/${imgPath}`,
   getW780Image: (imgPath: string) => `${TMDB.IMAGE}/w780/${imgPath}`,
+  getW500Image: (imgPath: string) => `${TMDB.IMAGE}/w500/${imgPath}`,
 };
 
 export default tmdb;
