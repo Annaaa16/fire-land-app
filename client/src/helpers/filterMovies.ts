@@ -1,8 +1,9 @@
 // types
+import { Movie, TvShow } from '@/models/common';
 import { TmdbMovie, TmdbTvShow } from '@/models/tmdb';
 import { MoviesDetailProps } from '@/pages/movies/[id]';
 
-export const filterMovies = (movies: TmdbMovie[]) => {
+export const filterMovies = (movies: TmdbMovie[]): Movie[] => {
   return movies.map((movie) => {
     const {
       id,
@@ -12,6 +13,8 @@ export const filterMovies = (movies: TmdbMovie[]) => {
       vote_count,
       release_date,
       popularity,
+      original_language,
+      vote_average,
     } = movie;
 
     return {
@@ -22,11 +25,13 @@ export const filterMovies = (movies: TmdbMovie[]) => {
       voteCount: vote_count,
       releaseDate: release_date || '',
       popularity,
+      originalLanguage: original_language,
+      voteAverage: vote_average,
     };
   });
 };
 
-export const filterTvShows = (tvShows: TmdbTvShow[]) => {
+export const filterTvShows = (tvShows: TmdbTvShow[]): TvShow[] => {
   return tvShows.map((show) => {
     const {
       id,
@@ -36,6 +41,8 @@ export const filterTvShows = (tvShows: TmdbTvShow[]) => {
       vote_count,
       first_air_date,
       popularity,
+      original_language,
+      vote_average,
     } = show;
 
     return {
@@ -44,8 +51,10 @@ export const filterTvShows = (tvShows: TmdbTvShow[]) => {
       overview,
       title: name,
       voteCount: vote_count,
-      releaseDate: first_air_date,
+      releaseDate: first_air_date || '',
       popularity,
+      originalLanguage: original_language,
+      voteAverage: vote_average,
     };
   });
 };
