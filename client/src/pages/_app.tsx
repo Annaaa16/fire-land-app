@@ -37,10 +37,10 @@ Router.events.on('routeChangeComplete', progressBar.finish);
 Router.events.on('routeChangeError', progressBar.finish);
 
 class WrappedApp extends App<
-  AppInitialProps & { currentUserResponse: GetUserResponse }
+  AppInitialProps & { getUserResponse: GetUserResponse }
 > {
   static getInitialProps = async ({ Component, ctx }: AppContext) => {
-    const currentUserResponse = await fetchUserFromServer(ctx);
+    const getUserResponse = await fetchUserFromServer(ctx);
 
     // Wait for all page actions to dispatch
     if (ctx.req) {
@@ -56,17 +56,17 @@ class WrappedApp extends App<
     };
 
     // Return props
-    return { pageProps, currentUserResponse };
+    return { pageProps, getUserResponse };
   };
 
   render() {
-    const { Component, pageProps, currentUserResponse } = this.props;
+    const { Component, pageProps, getUserResponse } = this.props;
 
     SwiperCore.use([Autoplay]);
 
     return (
       <Provider store={store}>
-        <GlobalProvider currentUserResponse={currentUserResponse}>
+        <GlobalProvider getUserResponse={getUserResponse}>
           <ThemeProvider theme={theme}>
             <MoviesProvider>
               <Component {...pageProps} />

@@ -76,3 +76,7 @@ export const PREFIXES = {
 export const BACKUPS = {
   AVATAR: API_URLS.AVATAR + '/micah/uiSvbW.svg',
 };
+
+export const NOTIFICATIONS = {
+  MAINTAIN: 'This feature is currently closed',
+};

@@ -3,8 +3,7 @@ import { useRouter } from 'next/router';
 // clsx
 import clsx from 'clsx';
 
-import { LOCAL_STORAGE, PATHS } from '@/constants';
-import { useGlobalContext } from '@/contexts/GlobalContext';
+import { PATHS } from '@/constants';
 
 import User from '../User';
 import Tooltip from '../Tooltip';
@@ -12,14 +11,19 @@ import Tooltip from '../Tooltip';
 // svgs
 import icon from '@/assets/svgs/icon.svg';
 
-interface SidebarSmallProps {
-  menu: Array<{ title: string; active: boolean; icon: any }>;
+export interface SidebarSmallProps {
+  menu: Array<{
+    title: string;
+    active: boolean;
+    icon: any;
+    maintain: boolean;
+    path: string;
+  }>;
   messenger?: boolean;
+  handleNavigate: (maintain: boolean, path: string) => void;
 }
 
-function SidebarSmall({ menu, messenger }: SidebarSmallProps) {
-  const { theme } = useGlobalContext();
-
+function SidebarSmall({ menu, messenger, handleNavigate }: SidebarSmallProps) {
   const router = useRouter();
 
   return (
@@ -43,26 +47,27 @@ function SidebarSmall({ menu, messenger }: SidebarSmallProps) {
       )}
       <User view='sm' className='mx-auto' rounded />
 
-      <ul className={clsx('mt-8 w-full px-4 text-center')}>
-        {menu.map(({ title, active, icon: Icon }) => (
+      <ul
+        className={clsx(
+          'flex flex-col items-center space-y-4 mt-8 w-full text-center'
+        )}>
+        {menu.map(({ title, active, icon: Icon, maintain, path }, idx) => (
           <li
-            key={title}
+            onClick={() => handleNavigate(maintain, path)}
+            key={title + idx}
             className={clsx(
               'relative',
-              'group py-3 rounded-xl mb-5',
-              active && 'bg-primary-v2 dark:bg-primary-v4',
-              theme === LOCAL_STORAGE.DARK_THEME_VALUE && active
-                ? 'shadow-primary-v4'
-                : active && 'shadow-primary-v2',
-              'cursor-pointer',
-              'transition-all duration-200',
-              !active &&
-                'hover:shadow-lg dark:hover:shadow-3xl hover:bg-white dark:hover:bg-dk-tooltip'
+              'group flex-center w-13 h-13 rounded-xl',
+              active && ['shadow-lg', 'dark:bg-dk-tooltip'],
+              'cursor-pointer'
             )}>
             <Icon
               className={clsx(
                 '!text-2xl',
-                active ? 'text-white' : 'text-gray-lt dark:text-gray-dk',
+                active
+                  ? 'text-primary-v2 dark:text-primary-v4'
+                  : 'text-gray-lt dark:text-gray-dk',
+                'group-hover:scale-105',
                 !active &&
                   'group-hover:text-primary-v2 dark:group-hover:text-primary-v4'
               )}

@@ -1,5 +1,3 @@
-import { nanoid } from '@reduxjs/toolkit';
-
 // clsx
 import clsx from 'clsx';
 
@@ -17,9 +15,9 @@ function LoadingImage({
   return (
     <div
       className={clsx('flex-1 w-full h-full space-y-2 py-1', 'animate-pulse')}>
-      {(loadingWidths ?? [85, 20, 30, 40, 65]).map((width) => (
+      {(loadingWidths ?? [85, 20, 30, 40, 65]).map((width, idx) => (
         <div
-          key={nanoid(6)}
+          key={'loading-image' + idx}
           className={clsx(
             'relative',
             'rounded overflow-hidden dark:opacity-25',

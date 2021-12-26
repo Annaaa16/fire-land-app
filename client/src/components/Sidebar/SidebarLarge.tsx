@@ -1,18 +1,14 @@
 // clsx
 import clsx from 'clsx';
 
-import { LOCAL_STORAGE } from '@/constants';
-import { useGlobalContext } from '@/contexts/GlobalContext';
+// types
+import { SidebarSmallProps } from './SidebarSmall';
 
 import User from '../User';
 
-interface SidebarLargeProps {
-  menu: Array<{ title: string; active: boolean; icon: any }>;
-}
+interface SidebarLargeProps extends SidebarSmallProps {}
 
-function SidebarLarge({ menu }: SidebarLargeProps) {
-  const { theme } = useGlobalContext();
-
+function SidebarLarge({ menu, handleNavigate }: SidebarLargeProps) {
   return (
     <aside
       className={clsx(
@@ -23,25 +19,23 @@ function SidebarLarge({ menu }: SidebarLargeProps) {
       <User user rounded className={clsx('w-14 h-14')} />
 
       <ul className={clsx('mt-10 w-full px-4 text-center')}>
-        {menu.map(({ title, active, icon: Icon }) => (
+        {menu.map(({ title, active, icon: Icon, maintain, path }, idx) => (
           <li
-            key={title}
+            onClick={() => handleNavigate(maintain, path)}
+            key={title + idx}
             className={clsx(
               'group py-3 px-4 rounded-xl mb-5',
-              theme === LOCAL_STORAGE.DARK_THEME_VALUE && active
-                ? 'shadow-primary-v4'
-                : active && 'shadow-primary-v2',
-              active && 'bg-primary-v2 dark:bg-primary-v4',
+              active && ['shadow-lg', 'dark:bg-dk-tooltip'],
               'transition-all duration-200',
-              'cursor-pointer',
-              !active &&
-                'hover:shadow-lg dark:hover:shadow-3xl hover:bg-white dark:hover:bg-dk-tooltip'
+              'cursor-pointer'
             )}>
             <div className={clsx('flex items-center')}>
               <Icon
                 className={clsx(
                   '!text-2xl',
-                  active ? 'text-white' : 'text-gray-lt dark:text-gray-dk',
+                  active
+                    ? 'text-primary-v2 dark:text-primary-v4'
+                    : 'text-gray-lt dark:text-gray-dk',
                   !active &&
                     'group-hover:text-primary-v2 dark:group-hover:text-primary-v4'
                 )}
@@ -49,9 +43,12 @@ function SidebarLarge({ menu }: SidebarLargeProps) {
               <span
                 className={clsx(
                   'ml-3 font-semibold',
-                  active ? 'text-white' : 'dark:text-white',
+                  active
+                    ? 'text-primary-v2 dark:text-primary-v4'
+                    : 'text-gray-lt dark:text-gray-dk',
                   'transition-all duration-250 ease-out',
-                  !active && 'group-hover:translate-x-1'
+                  !active &&
+                    'group-hover:text-primary-v2 dark:group-hover:text-primary-v4'
                 )}>
                 {title}
               </span>

@@ -37,6 +37,9 @@ const colors = {
     input: '#21283b',
     tooltip: '#293249',
   },
+  success: '#43d787',
+  warning: '#ffbb00',
+  maintain: '#fa461c',
 };
 
 module.exports = colors;

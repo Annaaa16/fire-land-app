@@ -51,7 +51,7 @@ const useReactions = ({ postId, reaction, currentUser }: useReactionsProps) => {
   const dispatch = useStoreDispatch();
 
   const clearTimer = () => {
-    timerRef.current && clearTimeout(timerRef.current);
+    if (timerRef.current) clearTimeout(timerRef.current);
   };
 
   const reactPost = (payload: {

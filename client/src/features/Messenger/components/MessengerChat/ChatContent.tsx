@@ -1,6 +1,3 @@
-// nanoid
-import { nanoid } from 'nanoid';
-
 import { useMessengerSelector, useUsersSelector } from '@/redux/selectors';
 
 import { Scrollbar } from '@/components/Scrollbar';
@@ -14,11 +11,11 @@ function ChatContent() {
   return (
     <Scrollbar scrollToBottom>
       <div className='pr-4'>
-        {messages?.map(({ user, text }) =>
+        {messages?.map(({ user, text }, idx) =>
           user._id !== currentUser._id ? (
-            <ChatFriend key={nanoid(6)} message={text} />
+            <ChatFriend key={'chat-friend' + idx} message={text} />
           ) : (
-            <ChatUser key={nanoid(6)} message={text} />
+            <ChatUser key={'chat-user' + idx} message={text} />
           )
         )}
       </div>
