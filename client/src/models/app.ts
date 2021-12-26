@@ -1,9 +1,11 @@
 // types
-import { Movie } from './common';
+import { Movie, Toast } from './common';
 
 export interface GlobalInitContext {
   theme: string;
   setTheme: (value: string) => void;
+  showToast: (toast: Toast) => void;
+  notifyMaintain: () => void;
 }
 
 export interface MoviesInitContext {

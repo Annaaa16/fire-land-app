@@ -103,6 +103,11 @@ export interface Loadings {
   loadings: string[];
 }
 
+export interface Toast {
+  message: string;
+  status: 'success' | 'warning' | 'failed' | 'error' | 'maintain';
+}
+
 // === Responses ===
 export interface HydrateResponse {
   auth: AuthInitState;
