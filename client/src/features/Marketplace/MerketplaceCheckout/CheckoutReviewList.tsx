@@ -132,12 +132,12 @@ function CheckoutReviewList({
         className={clsx(
           'absolute right-2 bottom-17',
           'flex-center rounded-full p-3 shadow-lg',
-          'bg-gray-100',
+          'bg-gray-100 dark:bg-dk-tooltip',
           'cursor-pointer',
           'transition-all',
-          'hover:bg-gray-200'
+          'hover:bg-gray-200 dark:hover:bg-gray-800'
         )}>
-        <LogoutIcon className={clsx('text-gray', 'rotate-180')} />
+        <LogoutIcon className={clsx('rotate-180', 'text-gray')} />
       </div>
     </div>
   );

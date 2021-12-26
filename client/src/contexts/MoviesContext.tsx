@@ -10,6 +10,7 @@ import {
 import { Movie } from '@/models/common';
 import { ReactNode } from 'react';
 import { MoviesInitContext } from '@/models/app';
+
 import useEventListener from '@/hooks/useEventListener';
 
 interface MoviesProviderProps {
@@ -36,9 +37,7 @@ function MoviesProvider({ children }: MoviesProviderProps) {
   const timerRef = useRef<NodeJS.Timeout>();
 
   const clearTimer = () => {
-    if (!timerRef.current) return;
-
-    clearTimeout(timerRef.current);
+    if (timerRef.current) clearTimeout(timerRef.current);
   };
 
   const handleShowPreview = useCallback(

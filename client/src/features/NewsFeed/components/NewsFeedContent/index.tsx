@@ -20,19 +20,19 @@ function NewsFeedContent() {
   const { nextPage, total, posts, loadings } = usePostsSelector();
 
   const dispatch = useStoreDispatch();
-
   const isIntersecting = useIntersectionObserver(loaderRef, '500px');
 
-  // Get new posts when scrolled to bottom
+  const isLoading = loadings.includes(actions.getPosts);
+
   useEffect(() => {
-    if (isIntersecting && nextPage && !loadings.includes(actions.getPosts)) {
+    if (isIntersecting && nextPage && !isLoading) {
       dispatch(
         postActions.getPostsRequest({
           params: { page: nextPage, limit: LIMITS.POSTS },
         })
       );
     }
-  }, [total, isIntersecting, nextPage, loadings, dispatch]);
+  }, [total, isIntersecting, nextPage, isLoading, dispatch]);
 
   return (
     <div className={clsx('w-full lg:w-2/3 lg:mr-5')}>
@@ -43,7 +43,7 @@ function NewsFeedContent() {
 
       <div ref={loaderRef} />
 
-      {loadings.includes(actions.getPosts) && (
+      {isLoading && (
         <>
           <LoadingPost />
           <LoadingPost />
