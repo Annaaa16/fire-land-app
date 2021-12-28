@@ -4,7 +4,7 @@ import {
   NotificationEmitHandlers,
   UserEmitHandlers,
 } from './socket';
-import { Movie, Toast } from './common';
+import { Movie, Toast, User } from './common';
 
 export interface GlobalInitContext {
   theme: string;
@@ -14,9 +14,17 @@ export interface GlobalInitContext {
 }
 
 export interface SocketInitContext {
-  socketConversations: ConversationsEmitHandlers;
-  socketUsers: UserEmitHandlers;
-  socketNotifications: NotificationEmitHandlers;
+  socketConversations: {
+    joinConversation: (payload: { user: User; conversationId: string }) => void;
+    leaveConversation: () => void;
+    sendMessage: (text: string) => void;
+  };
+  socketUsers: {
+    addOnlineUser: (user: User) => void;
+  };
+  socketNotifications: {
+    sendNotification: (content: string) => void;
+  };
 }
 
 export interface MoviesInitContext {
