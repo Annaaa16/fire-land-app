@@ -15,7 +15,7 @@ import { FormEvent } from 'react';
 
 import { useMessengerSelector, useUsersSelector } from '@/redux/selectors';
 import { messengerActions } from '@/redux/slices/messengerSlice';
-import useSocket from '@/hooks/useSocket';
+import { useSocketContext } from '@/contexts/SocketContext';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 import Tooltip from '@/components/Tooltip';
@@ -29,7 +29,7 @@ function ChatFooter() {
 
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const { socketConversations } = useSocket();
+  const { socketConversations } = useSocketContext();
   const dispatch = useStoreDispatch();
 
   const handleSendMessage = async (e: FormEvent<HTMLFormElement>) => {

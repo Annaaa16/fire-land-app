@@ -68,4 +68,11 @@
     w-full h-full
     bg-gray-900 opacity-80;
   }
+
+  .line-clamp-3 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
 }

@@ -29,3 +29,6 @@ export const useProductsSelector = () =>
 
 export const useReviewsSelector = () =>
   useSelector((state: StoreState) => state.reviews);
+
+export const useNotificationsSelector = () =>
+  useSelector((state: StoreState) => state.notifications);

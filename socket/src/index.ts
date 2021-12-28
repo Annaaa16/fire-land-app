@@ -3,10 +3,11 @@ import express from 'express';
 import http from 'http';
 
 // types
-import type { Socket } from 'socket.io';
+import { SocketEmits, SocketListens } from './types/socket';
 
-import registerConversationsHandler from './handlers/conversationsHandler';
-import registerUsersHandler from './handlers/usersHandler';
+import conversationsHandler from './handlers/conversationsHandler';
+import usersHandler from './handlers/usersHandler';
+import notificationsHandler from './handlers/notificationsHandler';
 
 const app = express();
 
@@ -15,7 +16,7 @@ const PORT = process.env.PORT || 4000;
 
 // Init configs
 const server = http.createServer(app);
-const io = new Server(server, {
+const io = new Server<SocketEmits, SocketListens>(server, {
   cors: {
     origin: ['http://localhost:3000'],
     methods: ['GET', 'POST'],
@@ -27,9 +28,10 @@ const LISTENS = {
   CONNECTION: 'connection',
 };
 
-io.on(LISTENS.CONNECTION, (socket: Socket) => {
-  registerConversationsHandler(io, socket);
-  registerUsersHandler(io, socket);
+io.on(LISTENS.CONNECTION, (socket: SocketListens) => {
+  conversationsHandler(io, socket);
+  usersHandler(io, socket);
+  notificationsHandler(io, socket);
 });
 
 server.listen(PORT, () => {

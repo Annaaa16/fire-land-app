@@ -1,10 +1,7 @@
-import { useEffect } from 'react';
-
 // clsx
 import clsx from 'clsx';
 
 import { useConversationsSelector } from '@/redux/selectors';
-import useSocket from '@/hooks/useSocket';
 
 import ChatHeader from './ChatHeader';
 import ChatFooter from './ChatFooter';
@@ -12,13 +9,6 @@ import ChatContent from './ChatContent';
 
 function MessagesChat() {
   const { currentConversation } = useConversationsSelector();
-
-  const { socketConversations } = useSocket();
-
-  // Auto get message from sender
-  useEffect(() => {
-    socketConversations.receiveMessage();
-  }, [socketConversations]);
 
   return currentConversation ? (
     <div

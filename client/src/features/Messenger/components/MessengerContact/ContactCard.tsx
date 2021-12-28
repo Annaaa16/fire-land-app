@@ -7,8 +7,8 @@ import { Conversation } from '@/models/conversations';
 import { messengerActions } from '@/redux/slices/messengerSlice';
 import { useConversationsSelector, useUsersSelector } from '@/redux/selectors';
 import { conversationActions } from '@/redux/slices/conversationsSlice';
+import { useSocketContext } from '@/contexts/SocketContext';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
-import useSocket from '@/hooks/useSocket';
 
 import User from '@/components/User';
 
@@ -20,7 +20,7 @@ function ContactCard({ conversation }: ContactCardProps) {
   const { currentUser } = useUsersSelector();
   const { currentConversation } = useConversationsSelector();
 
-  const { socketConversations } = useSocket();
+  const { socketConversations } = useSocketContext();
   const dispatch = useStoreDispatch();
 
   const isSelected = currentConversation?._id === conversation._id;

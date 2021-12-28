@@ -21,22 +21,34 @@ import CircleIcon from '@mui/icons-material/Circle';
 // types
 import { AxiosResponse } from 'axios';
 import { StatusResponse } from '@/models/common';
+import { MouseEvent } from 'react';
 
 import { LOCAL_STORAGE, PATHS } from '@/constants';
 import { useGlobalContext } from '@/contexts/GlobalContext';
 import { authApiClient } from '@/apis/authApi';
+import { useNotificationsSelector } from '@/redux/selectors';
+import { notificationActions } from '@/redux/slices/notificationsSlice';
 import useClickOutside from '@/hooks/useClickOutside';
+import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 import Tooltip from '../Tooltip';
+import HeaderNotifications from './HeaderNotifications';
 
 function HeaderOptions() {
   const { theme, setTheme } = useGlobalContext();
+  const { notifications } = useNotificationsSelector();
 
-  const [isOpenSetting, setIsOpenSetting] = useState(false);
+  const [isOpenSetting, setIsOpenSetting] = useState<boolean>(false);
+  const [isOpenNotifications, setIsOpenNotifications] =
+    useState<boolean>(false);
 
   const optionsRef = useRef<HTMLDivElement>(null);
+  const notificationsRef = useRef<HTMLDivElement>(null);
 
   const router = useRouter();
+  const dispatch = useStoreDispatch();
+
+  const hasNotifications = notifications.length > 0;
 
   const handleLogout = async () => {
     const { logoutUser } = authApiClient();
@@ -56,7 +68,20 @@ function HeaderOptions() {
     );
   };
 
+  const handleOpenNotifications = () => {
+    setIsOpenNotifications(!isOpenNotifications);
+    isOpenNotifications && dispatch(notificationActions.clearNotifications());
+  };
+
   useClickOutside(optionsRef, () => setIsOpenSetting(false));
+
+  useClickOutside(notificationsRef, (e: MouseEvent<SVGSVGElement>) => {
+    const isMatchButton = (e.target as HTMLElement).closest(
+      '[data-notifications-button]'
+    );
+
+    if (!isMatchButton) handleOpenNotifications();
+  });
 
   return (
     <div
@@ -96,37 +121,45 @@ function HeaderOptions() {
         </div>
         <div className={clsx('relative', 'group px-2 lg:px-0 py-4 md:py-0')}>
           <NotificationsIcon
+            onClick={handleOpenNotifications}
+            data-notifications-button
             className={clsx(
               '!text-2xl !w-11',
-              'text-white',
+              hasNotifications ? 'text-white' : 'text-primary-v1-txt',
               'cursor-pointer',
               'lg:hover:text-white'
             )}
           />
 
-          <div
-            className={clsx(
-              'absolute right-4 lg:right-2 top-3 md:-top-1',
-              'flex-center'
-            )}>
-            <CircleIcon
-              className={clsx('relative', '!text-[8px]', 'text-red-400')}
-            />
+          {hasNotifications && (
             <div
               className={clsx(
-                'absolute inset-0',
-                'rounded-full',
-                'bg-red-200',
-                'animate-ping'
-              )}
-            />
-          </div>
+                'absolute right-4 lg:right-2 top-3 md:-top-1',
+                'flex-center'
+              )}>
+              <CircleIcon
+                className={clsx('relative', '!text-[8px]', 'text-red-400')}
+              />
+              <div
+                className={clsx(
+                  'absolute inset-0',
+                  'rounded-full',
+                  'bg-red-200',
+                  'animate-ping'
+                )}
+              />
+            </div>
+          )}
 
-          <Tooltip
-            title='0 Notifications'
-            className='top-full'
-            direction='btt'
-          />
+          {isOpenNotifications ? (
+            <HeaderNotifications ref={notificationsRef} />
+          ) : (
+            <Tooltip
+              title={notifications.length + ' Notifications'}
+              className='top-full'
+              direction='btt'
+            />
+          )}
         </div>
       </div>
       <div
