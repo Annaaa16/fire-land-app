@@ -5,7 +5,7 @@ import {
   UserEmits,
   UserListens,
 } from 'src/types/socket';
-import { User } from 'src/types/users';
+import { User } from 'src/types/common';
 
 const LISTENS: UserListens = {
   ADD_ONLINE_USER: 'addOnlineUser',
@@ -38,7 +38,7 @@ const removeOfflineUser = (socketId: string) => {
   onlineUsers = onlineUsers.filter((user) => user.socketId !== socketId);
 };
 
-const registerUsersHandler = (io: SocketEmits, socket: SocketListens) => {
+const usersHandler = (io: SocketEmits, socket: SocketListens) => {
   socket.on(LISTENS.ADD_ONLINE_USER, (user: User) => {
     addOnlineUser({ user, socketId: socket.id });
 
@@ -52,4 +52,4 @@ const registerUsersHandler = (io: SocketEmits, socket: SocketListens) => {
   });
 };
 
-export default registerUsersHandler;
+export default usersHandler;

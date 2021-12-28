@@ -39,6 +39,13 @@ const menu = [
   },
   {
     active: false,
+    title: 'Marketplace',
+    icon: StoreIcon,
+    maintain: false,
+    path: PATHS.MARKETPLACE,
+  },
+  {
+    active: false,
     title: 'Groups',
     icon: GroupsIcon,
     maintain: true,
@@ -71,13 +78,6 @@ const menu = [
     icon: EventNoteIcon,
     maintain: true,
     path: '',
-  },
-  {
-    active: false,
-    title: 'Marketplace',
-    icon: StoreIcon,
-    maintain: false,
-    path: PATHS.MARKETPLACE,
   },
 ];
 

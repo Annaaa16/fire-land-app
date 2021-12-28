@@ -10,6 +10,7 @@ export interface AuthInitState extends Loadings {
     success: boolean;
     message: string;
   };
+  isAuthenticated: boolean;
 }
 
 export interface LoginPayload {

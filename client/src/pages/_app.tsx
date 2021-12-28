@@ -26,6 +26,7 @@ import GlobalProvider from '../contexts/GlobalContext';
 // styles
 import '../styles/globals.scss';
 import 'swiper/css';
+import SocketProvider from '@/contexts/SocketContext';
 
 const progressBar = new ProgressBar({
   size: 4,
@@ -67,11 +68,13 @@ class WrappedApp extends App<
     return (
       <Provider store={store}>
         <GlobalProvider getUserResponse={getUserResponse}>
-          <ThemeProvider theme={theme}>
-            <MoviesProvider>
-              <Component {...pageProps} />
-            </MoviesProvider>
-          </ThemeProvider>
+          <SocketProvider>
+            <ThemeProvider theme={theme}>
+              <MoviesProvider>
+                <Component {...pageProps} />
+              </MoviesProvider>
+            </ThemeProvider>
+          </SocketProvider>
         </GlobalProvider>
       </Provider>
     );

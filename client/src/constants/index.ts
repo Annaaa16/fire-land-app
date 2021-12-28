@@ -1,5 +1,3 @@
-export * from './socket';
-
 export const API_URLS = {
   BASE: 'http://localhost:5000/api',
   SOCKET: 'http://localhost:4000',

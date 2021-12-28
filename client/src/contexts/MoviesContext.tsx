@@ -27,12 +27,12 @@ const initialState: MoviesInitContext = {
   clearTimer: () => {},
 };
 
-export const MoviesContext = createContext(initialState);
+const MoviesContext = createContext(initialState);
 
 function MoviesProvider({ children }: MoviesProviderProps) {
   const [targetEl, setTargetEl] = useState<HTMLElement | null>(null);
   const [containerEl, setContainerEl] = useState<HTMLElement | null>(null);
-  const [preview, setPeview] = useState<Movie | null>(null);
+  const [preview, setPreview] = useState<Movie | null>(null);
 
   const timerRef = useRef<NodeJS.Timeout>();
 
@@ -45,7 +45,7 @@ function MoviesProvider({ children }: MoviesProviderProps) {
       clearTimer();
       setTargetEl(null);
       setContainerEl(null);
-      setPeview(movie);
+      setPreview(movie);
 
       timerRef.current = setTimeout(() => {
         setTargetEl(targetEl);
@@ -56,7 +56,7 @@ function MoviesProvider({ children }: MoviesProviderProps) {
 
   const handleHidePreview = useCallback(() => {
     clearTimer();
-    setPeview(null);
+    setPreview(null);
     setTargetEl(null);
     setContainerEl(null);
   }, []);

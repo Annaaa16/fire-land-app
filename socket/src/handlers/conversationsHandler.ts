@@ -5,7 +5,7 @@ import {
   SocketEmits,
   SocketListens,
 } from 'src/types/socket';
-import { User } from 'src/types/users';
+import { User } from 'src/types/common';
 
 import time from '../helpers/time';
 
@@ -37,9 +37,7 @@ const joinConversation = ({
     (user) => user._id === currentUser._id || user.socketId === socketId
   );
 
-  if (isJoined) return;
-
-  users.push({ ...currentUser, conversationId, socketId });
+  if (!isJoined) users.push({ ...currentUser, conversationId, socketId });
 };
 
 const leaveConversation = (socketId: string) => {
@@ -50,10 +48,7 @@ const getCurrentUser = (socketId: string) => {
   return users.find((user) => user.socketId === socketId);
 };
 
-const registerConversationsHandler = (
-  io: SocketEmits,
-  socket: SocketListens
-) => {
+const conversationsHandler = (io: SocketEmits, socket: SocketListens) => {
   socket.on(LISTENS.JOIN_CONVERSATION, ({ user, conversationId }) => {
     joinConversation({ user, conversationId, socketId: socket.id });
 
@@ -63,13 +58,13 @@ const registerConversationsHandler = (
   socket.on(LISTENS.SEND_MESSAGE, (text: string) => {
     const sender = getCurrentUser(socket.id);
 
-    if (sender) {
-      io.to(sender.conversationId).emit(EMITS.RECEIVE_MESSAGE, {
-        user: sender,
-        text,
-        createdAt: time.createCreatedAt(),
-      });
-    }
+    if (!sender) return;
+
+    io.to(sender.conversationId).emit(EMITS.RECEIVE_MESSAGE, {
+      user: sender,
+      text,
+      createdAt: time.createCreatedAt(),
+    });
   });
 
   socket.on(LISTENS.LEAVE_CONVERSATION, () => {
@@ -81,4 +76,4 @@ const registerConversationsHandler = (
   });
 };
 
-export default registerConversationsHandler;
+export default conversationsHandler;

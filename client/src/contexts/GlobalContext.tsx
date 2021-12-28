@@ -16,11 +16,11 @@ import { ToastHandler } from '@/components/Toast';
 
 import { LOCAL_STORAGE, NOTIFICATIONS, PATHS } from '@/constants';
 import { userActions } from '@/redux/slices/usersSlice';
+import { authActions } from '@/redux/slices/authSlice';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import cookies from '@/helpers/cookies';
 import useIsomorphicLayoutEffect from '@/hooks/useIsomorphicLayoutEffect ';
-import useSocket from '@/hooks/useSocket';
 
 import Toast from '@/components/Toast';
 
@@ -36,7 +36,7 @@ const initialState: GlobalInitContext = {
   notifyMaintain: () => {},
 };
 
-export const GlobalContext = createContext(initialState);
+const GlobalContext = createContext(initialState);
 
 function GlobalProvider({ children, getUserResponse }: GlobalProviderProps) {
   const toastRef = useRef<ToastHandler>(null!);
@@ -47,7 +47,6 @@ function GlobalProvider({ children, getUserResponse }: GlobalProviderProps) {
     useIsomorphicLayoutEffect
   );
 
-  const { socketUsers } = useSocket();
   const dispatch = useStoreDispatch();
   const router = useRouter();
 
@@ -62,20 +61,13 @@ function GlobalProvider({ children, getUserResponse }: GlobalProviderProps) {
       status: 'maintain',
     });
 
-  // Set init user info
+  // Set init user
   useEffect(() => {
-    if (getUserResponse?.success) {
-      dispatch(userActions.setCurrentUser(getUserResponse));
-    }
-  }, [getUserResponse, dispatch]);
+    if (!getUserResponse?.success) return;
 
-  // Add user to socket
-  useEffect(() => {
-    if (getUserResponse?.success) {
-      socketUsers.addOnlineUser(getUserResponse.user);
-      socketUsers.receiveOnlineUsers();
-    }
-  }, [getUserResponse, socketUsers]);
+    dispatch(userActions.setCurrentUser(getUserResponse));
+    dispatch(authActions.setIsAuthenticated(true));
+  }, [getUserResponse, dispatch]);
 
   // Set previous path for handle redirect when logged in
   useEffect(() => {
