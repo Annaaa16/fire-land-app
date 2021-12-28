@@ -10,11 +10,13 @@ import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 
 import { useUsersSelector } from '@/redux/selectors';
 import { actions, userActions } from '@/redux/slices/usersSlice';
+import { useSocketContext } from '@/contexts/SocketContext';
+import { addFriend, unfriend } from '@/helpers/notifications';
+import useStoreDispatch from '@/hooks/useStoreDispatch';
 import useUsers from '@/hooks/useUsers';
 
 import User from '@/components/User';
 import Spinner from '../Spinner';
-import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 interface PostHeaderBoxProps {
   userId: string;
@@ -26,9 +28,10 @@ interface PostHeaderBoxProps {
 function PostHeaderBox(props: PostHeaderBoxProps) {
   const { username, avatar, userId, followers } = props;
 
-  const { visitWall } = useUsers();
   const { currentUser, loadings } = useUsersSelector();
 
+  const { socketNotifications } = useSocketContext();
+  const { visitWall } = useUsers();
   const dispatch = useStoreDispatch();
 
   const { friends } = currentUser;
@@ -40,14 +43,21 @@ function PostHeaderBox(props: PostHeaderBoxProps) {
   const handleMakeFriend = () => {
     if (!userId) return;
 
-    const addFriend = () => {
+    const handleAddFriend = () => {
+      const message = addFriend(currentUser.username, username);
+
       dispatch(userActions.addFriendUserRequest({ userId }));
-    };
-    const unfriend = () => {
-      dispatch(userActions.unfriendUserRequest({ userId }));
+      socketNotifications.sendNotification(message);
     };
 
-    isFriend ? unfriend() : addFriend();
+    const handleUnfriend = () => {
+      const message = unfriend(currentUser.username, username);
+
+      dispatch(userActions.unfriendUserRequest({ userId }));
+      socketNotifications.sendNotification(message);
+    };
+
+    isFriend ? handleUnfriend() : handleAddFriend();
   };
 
   return (

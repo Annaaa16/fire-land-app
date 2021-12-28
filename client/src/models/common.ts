@@ -99,6 +99,13 @@ export interface PaginationParams {
   limit: number;
 }
 
+export interface SocketNotification {
+  readonly id: string;
+  user: User;
+  content: string;
+  createdAt: string;
+}
+
 export interface Loadings {
   loadings: string[];
 }
