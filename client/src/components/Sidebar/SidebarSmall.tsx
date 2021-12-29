@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { useRouter } from 'next/router';
 
 // clsx
@@ -10,6 +11,10 @@ import Tooltip from '../Tooltip';
 
 // svgs
 import icon from '@/assets/svgs/icon.svg';
+import useClickOutside from '@/hooks/useClickOutside';
+
+// types
+import { MouseEvent } from 'react';
 
 export interface SidebarSmallProps {
   menu: Array<{
@@ -20,21 +25,25 @@ export interface SidebarSmallProps {
     path: string;
   }>;
   messenger?: boolean;
-  handleNavigate: (maintain: boolean, path: string) => void;
+  onNavigate: (maintain: boolean, path: string) => void;
+  onCloseMenu: (e: MouseEvent<HTMLElement>) => void;
 }
 
-function SidebarSmall({ menu, messenger, handleNavigate }: SidebarSmallProps) {
+function SidebarSmall(props: SidebarSmallProps) {
+  const { menu, messenger, onNavigate, onCloseMenu } = props;
+
   const router = useRouter();
+  const sidebarRef = useRef<HTMLElement>(null);
+
+  useClickOutside(sidebarRef, onCloseMenu);
 
   return (
     <aside
-      className={clsx(
+      className={clsx('hidden lg:block w-20 py-6', 'bg-white dark:bg-dk-cpn', [
         messenger ? 'z-50' : 'fixed left-0 top-16 z-50',
-        'hidden lg:block w-20 py-6',
-        messenger ? 'border-r border-lt-line dark:border-dk-line' : 'shadow-xl',
         messenger ? 'h-screen' : 'h-[calc(100vh-64px)]',
-        'bg-white dark:bg-dk-cpn'
-      )}>
+        messenger ? 'border-r border-lt-line dark:border-dk-line' : 'shadow-xl',
+      ])}>
       {messenger && (
         <div
           onClick={() => router.push(PATHS.NEWSFEED)}
@@ -53,7 +62,7 @@ function SidebarSmall({ menu, messenger, handleNavigate }: SidebarSmallProps) {
         )}>
         {menu.map(({ title, active, icon: Icon, maintain, path }, idx) => (
           <li
-            onClick={() => handleNavigate(maintain, path)}
+            onClick={() => onNavigate(maintain, path)}
             key={title + idx}
             className={clsx(
               'relative',

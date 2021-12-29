@@ -4,6 +4,7 @@ import {
   useContext,
   useEffect,
   useRef,
+  useState,
 } from 'react';
 import { useRouter } from 'next/router';
 
@@ -31,14 +32,18 @@ interface GlobalProviderProps {
 
 const initialState: GlobalInitContext = {
   theme: '',
+  isLargeMenu: false,
   setTheme: () => {},
   showToast: () => {},
   notifyMaintain: () => {},
+  handleSetIsLargeMenu: () => {},
 };
 
 const GlobalContext = createContext(initialState);
 
 function GlobalProvider({ children, getUserResponse }: GlobalProviderProps) {
+  const [isLargeMenu, setIsLargeMenu] = useState<boolean>(false);
+
   const toastRef = useRef<ToastHandler>(null!);
 
   const { storedValue: theme, setLocalValue: setTheme } = useLocalStorage(
@@ -60,6 +65,11 @@ function GlobalProvider({ children, getUserResponse }: GlobalProviderProps) {
       message: NOTIFICATIONS.MAINTAIN,
       status: 'maintain',
     });
+
+  const handleSetIsLargeMenu = useCallback(
+    (isLarge: boolean) => setIsLargeMenu(isLarge),
+    []
+  );
 
   // Set init user
   useEffect(() => {
@@ -86,7 +96,14 @@ function GlobalProvider({ children, getUserResponse }: GlobalProviderProps) {
     }
   }, [router]);
 
-  const value = { theme, setTheme, showToast, notifyMaintain };
+  const value = {
+    theme,
+    isLargeMenu,
+    setTheme,
+    showToast,
+    notifyMaintain,
+    handleSetIsLargeMenu,
+  };
 
   return (
     <GlobalContext.Provider value={value}>

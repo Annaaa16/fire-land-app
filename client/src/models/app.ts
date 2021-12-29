@@ -1,16 +1,13 @@
 // types
-import {
-  ConversationsEmitHandlers,
-  NotificationEmitHandlers,
-  UserEmitHandlers,
-} from './socket';
 import { Movie, Toast, User } from './common';
 
 export interface GlobalInitContext {
   theme: string;
+  isLargeMenu: boolean;
   setTheme: (value: string) => void;
   showToast: (toast: Toast) => void;
   notifyMaintain: () => void;
+  handleSetIsLargeMenu: (isLarge: boolean) => void;
 }
 
 export interface SocketInitContext {

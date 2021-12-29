@@ -1,18 +1,29 @@
+import { useRef } from 'react';
+
 // clsx
 import clsx from 'clsx';
 
 // types
 import { SidebarSmallProps } from './SidebarSmall';
 
+import useClickOutside from '@/hooks/useClickOutside';
+
 import User from '../User';
 
 interface SidebarLargeProps extends SidebarSmallProps {}
 
-function SidebarLarge({ menu, handleNavigate }: SidebarLargeProps) {
+function SidebarLarge(props: SidebarLargeProps) {
+  const { menu, onNavigate, onCloseMenu } = props;
+
+  const sidebarRef = useRef<HTMLElement>(null);
+
+  useClickOutside(sidebarRef, onCloseMenu);
+
   return (
     <aside
+      ref={sidebarRef}
       className={clsx(
-        'fixed top-[64px] left-0 z-50',
+        'fixed top-16 left-0 z-50',
         'flex flex-col items-center w-[300px] h-[calc(100vh-64px)] py-6 shadow-2xl',
         'bg-white dark:bg-dk-cpn'
       )}>
@@ -21,7 +32,7 @@ function SidebarLarge({ menu, handleNavigate }: SidebarLargeProps) {
       <ul className={clsx('mt-10 w-full px-4 text-center')}>
         {menu.map(({ title, active, icon: Icon, maintain, path }, idx) => (
           <li
-            onClick={() => handleNavigate(maintain, path)}
+            onClick={() => onNavigate(maintain, path)}
             key={title + idx}
             className={clsx(
               'group py-3 px-4 rounded-xl mb-5',

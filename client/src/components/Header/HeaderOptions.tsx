@@ -76,11 +76,11 @@ function HeaderOptions() {
   useClickOutside(optionsRef, () => setIsOpenSetting(false));
 
   useClickOutside(notificationsRef, (e: MouseEvent<SVGSVGElement>) => {
-    const isMatchButton = (e.target as HTMLElement).closest(
+    const isButtonClicked = (e.target as HTMLElement).closest(
       '[data-notifications-button]'
     );
 
-    if (!isMatchButton) handleOpenNotifications();
+    if (!isButtonClicked) handleOpenNotifications();
   });
 
   return (
