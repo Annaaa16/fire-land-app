@@ -98,9 +98,9 @@ function ToastItem({ message, status }: ToastType) {
       className={clsx(
         'flex items-center w-72 h-25 px-4 shadow-md rounded-md',
         'text-white',
-        background,
         'transition-all ease-out duration-250',
-        'cursor-pointer select-none'
+        'cursor-pointer select-none',
+        background
       )}>
       <Icon className={clsx('mr-2.5 !text-2xl', 'text-white')} />
       <div>

@@ -22,14 +22,11 @@ function User(props: UserProps) {
   return (
     <div
       onClick={onClick}
-      className={clsx(
-        'relative',
+      className={clsx('relative', 'group flex-shrink-0', 'cursor-pointer', [
         view === 'sm' && 'w-9 h-9',
-        'group flex-shrink-0',
         rounded && 'rounded-full',
-        'cursor-pointer',
-        className
-      )}>
+        className,
+      ])}>
       <img
         src={avatar || BACKUPS.AVATAR}
         alt='Avatar'

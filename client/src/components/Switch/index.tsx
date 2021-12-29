@@ -27,17 +27,17 @@ function Switch(props: SwitchProps) {
           className={clsx(
             'absolute inset-0',
             'rounded-full',
-            checked ? 'bg-primary-v1 dark:bg-primary-v4' : 'bg-gray-400',
-            'transition-all ease-out'
+            'transition-all ease-out',
+            checked ? 'bg-primary-v1 dark:bg-primary-v4' : 'bg-gray-400'
           )}
         />
         <div
           className={clsx(
             'absolute left-[4px] top-1/2 z-1',
             'h-[17px] w-[17px] rounded-full -translate-y-1/2',
-            checked ? 'translate-x-[19px]' : 'translate-x-0',
             'bg-white',
-            'transition-all ease-in-out'
+            'transition-all ease-in-out',
+            checked ? 'translate-x-[19px]' : 'translate-x-0'
           )}
         />
       </div>
