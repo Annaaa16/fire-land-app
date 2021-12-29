@@ -2,18 +2,18 @@
 import { Loadings, User } from './common';
 
 export interface CreateMessagePayload {
-  conversationId: string;
+  readonly conversationId: string;
   senderId: string;
   text: string;
 }
 
 export interface GetMessagesPayload {
-  conversationId: string;
+  readonly conversationId: string;
 }
 
 export interface Message {
   readonly _id?: string;
-  conversationId?: string;
+  readonly conversationId?: string;
   user: User;
   text: string;
   createdAt: string;
@@ -24,10 +24,11 @@ export interface MessengerInitState extends Loadings {
   messages: Message[];
   conversationId: string;
   receiverId: string;
+  lastMessages: Message[];
 }
 
 export interface OnlineUser extends User {
-  conversationId: string;
+  readonly conversationId: string;
   socketId: string;
 }
 
@@ -38,7 +39,7 @@ export interface CreateMessageResponse {
 }
 
 export interface GetMessagesResponse {
+  readonly conversationId: string;
   success: boolean;
   messages: Message[];
-  conversationId: string;
 }

@@ -9,6 +9,7 @@ import {
   GetMessagesPayload,
 } from '@/models/messenger';
 import { PayloadAction } from '@reduxjs/toolkit';
+
 import { addLoading, removeLoading } from '@/helpers/reduxStateLoadings';
 
 export const actions = {
@@ -21,6 +22,7 @@ const initialState: MessengerInitState = {
   conversationId: '',
   receiverId: '',
   loadings: [],
+  lastMessages: [],
 };
 
 const messengerSlice = createSlice({
@@ -46,11 +48,9 @@ const messengerSlice = createSlice({
     getMessagesSuccess: (state, action: PayloadAction<GetMessagesResponse>) => {
       const { success, messages } = action.payload;
 
-      if (success) {
-        state.messages = messages;
+      if (success) state.messages = messages;
 
-        removeLoading(state, actions.getMessages);
-      }
+      removeLoading(state, actions.getMessages);
     },
     getMessagesFailed: (state) => {
       removeLoading(state, actions.getMessages);
@@ -68,6 +68,17 @@ const messengerSlice = createSlice({
 
     setReceiverId: (state, action: PayloadAction<string>) => {
       state.receiverId = action.payload;
+    },
+
+    addLastMessage: (
+      state,
+      action: PayloadAction<{
+        message: Message;
+      }>
+    ) => {
+      const { message } = action.payload;
+
+      state.lastMessages.push(message);
     },
   },
 });

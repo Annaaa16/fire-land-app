@@ -1,13 +1,21 @@
 // clsx
 import clsx from 'clsx';
 
+// react timeago
+import Timeago from 'react-timeago';
+
 // types
 import { Conversation } from '@/models/conversations';
 
-import { messengerActions } from '@/redux/slices/messengerSlice';
-import { useConversationsSelector, useUsersSelector } from '@/redux/selectors';
+import {
+  useConversationsSelector,
+  useMessengerSelector,
+  useUsersSelector,
+} from '@/redux/selectors';
 import { conversationActions } from '@/redux/slices/conversationsSlice';
 import { useSocketContext } from '@/contexts/SocketContext';
+import { messengerActions } from '@/redux/slices/messengerSlice';
+import { placeholderLastMessage } from '@/utils/placeholders';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 import User from '@/components/User';
@@ -19,6 +27,7 @@ interface ContactCardProps {
 function ContactCard({ conversation }: ContactCardProps) {
   const { currentUser } = useUsersSelector();
   const { currentConversation } = useConversationsSelector();
+  const { lastMessages } = useMessengerSelector();
 
   const { socketConversations } = useSocketContext();
   const dispatch = useStoreDispatch();
@@ -27,6 +36,9 @@ function ContactCard({ conversation }: ContactCardProps) {
   const friend = conversation.creators.filter(
     (user) => user._id !== currentUser._id
   )[0];
+  const lastMessage = lastMessages.find(
+    (message) => message.conversationId === conversation._id
+  );
 
   const handleGetMessages = () => {
     dispatch(conversationActions.setCurrentConversation(conversation));
@@ -46,27 +58,46 @@ function ContactCard({ conversation }: ContactCardProps) {
     <li
       onClick={handleGetMessages}
       className={clsx(
-        'flex items-center px-8 py-5',
-        isSelected && 'border-l-[3px] border-primary-v1',
-        isSelected ? 'bg-gray-100 dark:bg-dk-tooltip' : 'dark:bg-dk-cpn',
-        'cursor-pointer'
+        'relative',
+        'flex items-center px-6 py-5',
+        'cursor-pointer',
+        isSelected ? 'bg-gray-100 dark:bg-dk-tooltip' : 'dark:bg-dk-cpn'
       )}>
-      <User view='sm' avatar={friend.avatar} online={friend.isOnline} rounded />
-      <div className={clsx('ml-3 max-w-[60%]')}>
-        <span className={clsx('font-semibold', 'dark:text-white')}>
+      <User
+        className='mr-3'
+        view='sm'
+        avatar={friend.avatar}
+        online={friend.isOnline}
+        rounded
+      />
+      <div className='overflow-hidden whitespace-nowrap'>
+        <div className={clsx('font-semibold truncate', 'dark:text-white')}>
           {friend.username}
-        </span>
+        </div>
         <p
           className={clsx(
             'font-semibold text-xs mt-1 truncate',
-            'text-primary-v1 dark:text-primary-v4'
+            lastMessage?.text
+              ? 'text-primary-v1 dark:text-primary-v4'
+              : 'text-gray-lt dark:text-gray-dk'
           )}>
-          Hi I am Josephin, can you help me to find best chat app?.
+          {lastMessage?.text || placeholderLastMessage}
         </p>
       </div>
-      <div className={clsx('ml-auto')}>
-        <span className={clsx('text-xs', 'dark:text-white')}>10 min</span>
-      </div>
+      <Timeago
+        live={false}
+        date={lastMessage?.createdAt || ''}
+        className={clsx('ml-auto text-xs whitespace-nowrap', 'dark:text-white')}
+      />
+      {isSelected && (
+        <div
+          className={clsx(
+            'absolute left-0 top-0',
+            'w-[3px] h-full',
+            'bg-primary-v1'
+          )}
+        />
+      )}
     </li>
   );
 }

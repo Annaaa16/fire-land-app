@@ -2,11 +2,16 @@ import { useState, useEffect } from 'react';
 
 // types
 import { Conversation } from '@/models/conversations';
+import { AxiosResponse } from 'axios';
+import { GetMessagesResponse } from '@/models/messenger';
 
 // enums
 import { Statuses } from './ContactContent';
 
 import { useConversationsSelector, useUsersSelector } from '@/redux/selectors';
+import { messagesApiClient } from '@/apis/messagesApi';
+import { messengerActions } from '@/redux/slices/messengerSlice';
+import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 import ContactCard from './ContactCard';
 
@@ -19,6 +24,33 @@ function ContactCardList({ status }: ContactCardListProps) {
   const { currentUser, onlineUsers } = useUsersSelector();
 
   const [conversations, setConversations] = useState<Conversation[]>([]);
+
+  const dispatch = useStoreDispatch();
+
+  // Get last message from conversations
+  useEffect(() => {
+    (async () => {
+      const { getMessages } = messagesApiClient();
+
+      if (stateConversations.length === 0) return;
+
+      const requests = stateConversations.map(async (conversation) => {
+        return (await getMessages({
+          conversationId: conversation._id,
+        })) as AxiosResponse<GetMessagesResponse>;
+      });
+
+      const promises = await Promise.all(requests);
+
+      promises.forEach(({ data }) => {
+        if (!data.success || data.messages.length === 0) return;
+
+        dispatch(
+          messengerActions.addLastMessage({ message: data.messages.pop()! })
+        );
+      });
+    })();
+  }, [stateConversations, dispatch]);
 
   useEffect(() => {
     const { CONVERSATIONS, ONLINE } = Statuses;
