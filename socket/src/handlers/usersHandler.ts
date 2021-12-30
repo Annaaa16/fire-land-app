@@ -7,6 +7,10 @@ import {
 } from 'src/types/socket';
 import { User } from 'src/types/common';
 
+interface CurrentSockets {
+  [userId: string]: string[];
+}
+
 const LISTENS: UserListens = {
   ADD_ONLINE_USER: 'addOnlineUser',
   DISCONNECT: 'disconnect',
@@ -16,22 +20,35 @@ const EMITS: UserEmits = {
   RECEIVE_ONLINE_USERS: 'receiveOnlineUsers',
 };
 
+let currentSockets: CurrentSockets = {};
 let onlineUsers: User[] = [];
 
-const addOnlineUser = ({
-  user: currentUser,
-  socketId,
-}: {
-  user: User;
-  socketId: string;
-}) => {
-  const isOnline = onlineUsers.some(
-    (user) => user._id === currentUser._id || user.socketId === socketId
+const isOnline = (userId: string, socketId: string) => {
+  return onlineUsers.some(
+    (user) => user._id === userId || user.socketId === socketId
   );
+};
 
-  if (isOnline) return;
+const addCurrentSocket = (userId: string, socketId: string) => {
+  if (!userId) return;
+
+  if (!currentSockets[userId]) currentSockets[userId] = [];
+
+  if (currentSockets[userId].includes(socketId)) return;
+
+  currentSockets[userId].push(socketId);
+};
+
+const addOnlineUser = (currentUser: User, socketId: string) => {
+  if (isOnline(currentUser._id, socketId)) return;
 
   onlineUsers.push({ ...currentUser, socketId });
+};
+
+const removeCurrentSocket = (userId: string, socketId: string) => {
+  if (!currentSockets[userId]) return;
+
+  currentSockets[userId].splice(currentSockets[userId].indexOf(socketId), 1);
 };
 
 const removeOfflineUser = (socketId: string) => {
@@ -39,16 +56,32 @@ const removeOfflineUser = (socketId: string) => {
 };
 
 const usersHandler = (io: SocketEmits, socket: SocketListens) => {
+  const userId = socket.handshake.query.userId as string;
+
+  // Empty user ID
+  if (!userId) return;
+
   socket.on(LISTENS.ADD_ONLINE_USER, (user: User) => {
-    addOnlineUser({ user, socketId: socket.id });
+    addCurrentSocket(userId, socket.id);
+
+    if (isOnline(userId, socket.id)) return;
+
+    addOnlineUser(user, socket.id);
 
     io.emit(EMITS.RECEIVE_ONLINE_USERS, onlineUsers);
   });
 
   socket.on(LISTENS.DISCONNECT, () => {
-    removeOfflineUser(socket.id);
+    removeCurrentSocket(userId, socket.id);
 
-    io.emit(EMITS.RECEIVE_ONLINE_USERS, onlineUsers);
+    if (currentSockets[userId]?.length === 0) {
+      removeOfflineUser(socket.id);
+      io.emit(EMITS.RECEIVE_ONLINE_USERS, onlineUsers);
+
+      delete currentSockets[userId];
+    }
+
+    socket.disconnect();
   });
 };
 

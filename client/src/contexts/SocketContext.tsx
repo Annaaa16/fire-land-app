@@ -1,6 +1,6 @@
-import { createContext, useContext, useEffect } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 
-import { useRef, useMemo } from 'react';
+import { useMemo } from 'react';
 import { nanoid } from '@reduxjs/toolkit';
 
 // types
@@ -11,8 +11,7 @@ import { SocketNotification } from '@/models/common';
 import { ReactNode } from 'react';
 import { SocketInitContext } from '@/models/app';
 
-import { EMITS, LISTENS } from '../configs/socket';
-import { default as socketConfig } from '@/configs/socket';
+import createSocket, { EMITS, LISTENS } from '../configs/socket';
 import { messengerActions } from '@/redux/slices/messengerSlice';
 import { userActions } from '@/redux/slices/usersSlice';
 import { notificationActions } from '@/redux/slices/notificationsSlice';
@@ -30,9 +29,6 @@ const initState: SocketInitContext = {
     leaveConversation: () => {},
     sendMessage: () => {},
   },
-  socketUsers: {
-    addOnlineUser: () => {},
-  },
   socketNotifications: {
     sendNotification: () => {},
   },
@@ -44,32 +40,22 @@ function SocketProvider({ children }: SocketProviderProps) {
   const { currentUser } = useUsersSelector();
   const { isAuthenticated } = useAuthSelector();
 
-  const socketRef = useRef<SocketEvents>(socketConfig);
-  const socket = socketRef.current;
+  const [socket, setSocket] = useState<SocketEvents | null>(null);
 
   const dispatch = useStoreDispatch();
 
   const socketConversations = useMemo(
     () => ({
       joinConversation(payload: { user: User; conversationId: string }) {
-        socket.emit(EMITS.JOIN_CONVERSATION, payload);
+        socket!.emit(EMITS.JOIN_CONVERSATION, payload);
       },
 
       leaveConversation() {
-        socket.emit(EMITS.LEAVE_CONVERSATION);
+        socket!.emit(EMITS.LEAVE_CONVERSATION);
       },
 
       sendMessage(text: string) {
-        socket.emit(EMITS.SEND_MESSAGE, text);
-      },
-    }),
-    [socket]
-  );
-
-  const socketUsers = useMemo(
-    () => ({
-      addOnlineUser(currentUser: User) {
-        socket.emit(EMITS.ADD_ONLINE_USER, currentUser);
+        socket!.emit(EMITS.SEND_MESSAGE, text);
       },
     }),
     [socket]
@@ -78,7 +64,7 @@ function SocketProvider({ children }: SocketProviderProps) {
   const socketNotifications = useMemo(
     () => ({
       sendNotification(content: string) {
-        socket.emit(EMITS.SEND_NOTIFICATION, {
+        socket!.emit(EMITS.SEND_NOTIFICATION, {
           id: nanoid(20),
           content,
           user: currentUser,
@@ -90,12 +76,27 @@ function SocketProvider({ children }: SocketProviderProps) {
   );
 
   useEffect(() => {
-    if (!isAuthenticated) return;
+    if (!currentUser._id) return;
 
-    socketUsers.addOnlineUser(currentUser);
-  }, [socketUsers, isAuthenticated, currentUser]);
+    setSocket(
+      createSocket({
+        withCredentials: true,
+        query: {
+          userId: currentUser._id,
+        },
+      })
+    );
+  }, [currentUser._id]);
 
   useEffect(() => {
+    if (!isAuthenticated || !socket) return;
+
+    socket.emit(EMITS.ADD_ONLINE_USER, currentUser);
+  }, [isAuthenticated, currentUser, socket]);
+
+  useEffect(() => {
+    if (!socket) return;
+
     // Auto get message from sender
     socket.on(LISTENS.RECEIVE_MESSAGE, (response: Message) => {
       dispatch(messengerActions.addMessage(response));
@@ -110,9 +111,13 @@ function SocketProvider({ children }: SocketProviderProps) {
     socket.on(LISTENS.RECEIVE_NOTIFICATION, (response: SocketNotification) => {
       dispatch(notificationActions.addNotification(response));
     });
+
+    return () => {
+      socket.close();
+    };
   }, [socket, dispatch]);
 
-  const value = { socketConversations, socketUsers, socketNotifications };
+  const value = { socketConversations, socketNotifications };
 
   return (
     <SocketContext.Provider value={value}>{children}</SocketContext.Provider>

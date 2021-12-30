@@ -16,9 +16,6 @@ export interface SocketInitContext {
     leaveConversation: () => void;
     sendMessage: (text: string) => void;
   };
-  socketUsers: {
-    addOnlineUser: (user: User) => void;
-  };
   socketNotifications: {
     sendNotification: (content: string) => void;
   };

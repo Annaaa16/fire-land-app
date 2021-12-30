@@ -1,5 +1,5 @@
 // socket
-import io from 'socket.io-client';
+import io, { ManagerOptions, SocketOptions } from 'socket.io-client';
 
 // types
 import { SocketEmits, SocketListens } from '@/models/socket';
@@ -21,8 +21,7 @@ export const LISTENS: SocketListens = {
   RECEIVE_ONLINE_USERS: 'receiveOnlineUsers',
 };
 
-const socket = io(API_URLS.SOCKET, {
-  withCredentials: true,
-});
+const createSocket = (opts: Partial<ManagerOptions & SocketOptions>) =>
+  io(API_URLS.SOCKET, opts);
 
-export default socket;
+export default createSocket;
