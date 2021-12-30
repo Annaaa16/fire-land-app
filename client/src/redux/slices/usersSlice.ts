@@ -34,7 +34,7 @@ export const actions = {
   getFriends: 'getFriends',
 };
 
-const user = {
+const initUser = {
   _id: '',
   username: '',
   avatar: '',
@@ -46,8 +46,8 @@ const user = {
 };
 
 const initialState: UsersInitState = {
-  currentUser: user,
-  userProfile: user,
+  currentUser: initUser,
+  userProfile: initUser,
   onlineUsers: [],
   friends: [],
   loadings: [],

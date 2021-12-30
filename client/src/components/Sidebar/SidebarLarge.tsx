@@ -6,7 +6,9 @@ import clsx from 'clsx';
 // types
 import { SidebarSmallProps } from './SidebarSmall';
 
+import { useUsersSelector } from '@/redux/selectors';
 import useClickOutside from '@/hooks/useClickOutside';
+import useUsers from '@/hooks/useUsers';
 
 import User from '../User';
 
@@ -15,8 +17,11 @@ interface SidebarLargeProps extends SidebarSmallProps {}
 function SidebarLarge(props: SidebarLargeProps) {
   const { menu, onNavigate, onCloseMenu } = props;
 
+  const { currentUser } = useUsersSelector();
+
   const sidebarRef = useRef<HTMLElement>(null);
 
+  const { visitWall } = useUsers();
   useClickOutside(sidebarRef, onCloseMenu);
 
   return (
@@ -27,7 +32,13 @@ function SidebarLarge(props: SidebarLargeProps) {
         'flex flex-col items-center w-[300px] h-[calc(100vh-64px)] py-6 shadow-2xl',
         'bg-white dark:bg-dk-cpn'
       )}>
-      <User user rounded className={clsx('w-14 h-14')} />
+      <User
+        user
+        rounded
+        className={clsx('w-14 h-14')}
+        avatar={currentUser.avatar}
+        onClick={() => visitWall(currentUser._id)}
+      />
 
       <ul className={clsx('mt-10 w-full px-4 text-center')}>
         {menu.map(({ title, active, icon: Icon, maintain, path }, idx) => (

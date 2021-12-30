@@ -4,17 +4,19 @@ import { useRouter } from 'next/router';
 // clsx
 import clsx from 'clsx';
 
+// types
+import { MouseEvent } from 'react';
+
 import { PATHS } from '@/constants';
+import { useUsersSelector } from '@/redux/selectors';
+import useClickOutside from '@/hooks/useClickOutside';
+import useUsers from '@/hooks/useUsers';
 
 import User from '../User';
 import Tooltip from '../Tooltip';
 
 // svgs
 import icon from '@/assets/svgs/icon.svg';
-import useClickOutside from '@/hooks/useClickOutside';
-
-// types
-import { MouseEvent } from 'react';
 
 export interface SidebarSmallProps {
   menu: Array<{
@@ -32,18 +34,23 @@ export interface SidebarSmallProps {
 function SidebarSmall(props: SidebarSmallProps) {
   const { menu, messenger, onNavigate, onCloseMenu } = props;
 
+  const { currentUser } = useUsersSelector();
+
   const router = useRouter();
   const sidebarRef = useRef<HTMLElement>(null);
 
+  const { visitWall } = useUsers();
   useClickOutside(sidebarRef, onCloseMenu);
 
   return (
     <aside
-      className={clsx('hidden lg:block w-20 py-6', 'bg-white dark:bg-dk-cpn', [
-        messenger ? 'z-50' : 'fixed left-0 top-16 z-50',
-        messenger ? 'h-screen' : 'h-[calc(100vh-64px)]',
-        messenger ? 'border-r border-lt-line dark:border-dk-line' : 'shadow-xl',
-      ])}>
+      className={clsx(
+        'hidden lg:block w-20 py-6',
+        'bg-white dark:bg-dk-cpn',
+        messenger
+          ? ['z-50', 'h-screen', 'border-r border-lt-line dark:border-dk-line']
+          : ['fixed left-0 top-16 z-50', 'h-[calc(100vh-64px)]', 'shadow-xl']
+      )}>
       {messenger && (
         <div
           onClick={() => router.push(PATHS.NEWSFEED)}
@@ -54,7 +61,13 @@ function SidebarSmall(props: SidebarSmallProps) {
           <img src={icon.src} alt='Logo' className={clsx('img-full')} />
         </div>
       )}
-      <User view='sm' className='mx-auto' rounded />
+      <User
+        view='sm'
+        className='mx-auto'
+        rounded
+        avatar={currentUser.avatar}
+        onClick={() => visitWall(currentUser._id)}
+      />
 
       <ul
         className={clsx(
