@@ -16,6 +16,7 @@ module.exports = {
       boxShadow: require('./src/tailwind/boxShadow'),
       colors: require('./src/tailwind/colors'),
       backgroundImage: require('./src/tailwind/backgroundImage'),
+      backgroundColor: require('./src/tailwind/backgroundColor'),
       transitionDuration: require('./src/tailwind/transitionDuration'),
       animation: require('./src/tailwind/animation'),
       keyframes: require('./src/tailwind/keyframes'),

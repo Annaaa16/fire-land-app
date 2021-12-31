@@ -58,7 +58,7 @@ function NewsFeedSender() {
               'lg:hover:bg-lt-input lg:dark:hover:bg-dk-tooltip'
             )}>
             <VideoCallIcon
-              className={clsx('mr-1.5 !text-2xl', 'text-[#f02849]')}
+              className={clsx('mr-1.5 !text-2xl', 'text-fb-red')}
             />
             <span className={clsx('font-semibold dark:text-white')}>
               Live Video
@@ -72,7 +72,7 @@ function NewsFeedSender() {
               'lg:hover:bg-lt-input lg:dark:hover:bg-dk-tooltip'
             )}>
             <PhotoLibraryIcon
-              className={clsx('mr-1.5 text-xl md:!text-2xl', 'text-[#45bd62]')}
+              className={clsx('mr-1.5 text-xl md:!text-2xl', 'text-fb-green')}
             />
             <span
               className={clsx(
@@ -89,7 +89,7 @@ function NewsFeedSender() {
               'lg:hover:bg-lt-input lg:dark:hover:bg-dk-tooltip'
             )}>
             <SentimentVerySatisfiedIcon
-              className={clsx('mr-1.5 text-xl md:!text-2xl', 'text-[#f7b928]')}
+              className={clsx('mr-1.5 text-xl md:!text-2xl', 'text-fb-yellow')}
             />
             <span
               className={clsx(

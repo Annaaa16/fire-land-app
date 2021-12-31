@@ -22,7 +22,7 @@ function FormError({ hasError, message }: FormErrorProps) {
       className={clsx(
         'absolute right-0 top-1/2',
         'text-xs rounded-full px-3 py-[3px] -translate-y-1/2',
-        'bg-red-400 dark:bg-[#F54F4E] text-white',
+        'bg-red-400 dark:bg-fb-red text-white',
         'select-none'
       )}>
       {message}

@@ -49,7 +49,7 @@ function SidebarSmall(props: SidebarSmallProps) {
         'bg-white dark:bg-dk-cpn',
         messenger
           ? ['z-50', 'h-screen', 'border-r border-lt-line dark:border-dk-line']
-          : ['fixed left-0 top-16 z-50', 'h-[calc(100vh-64px)]', 'shadow-xl']
+          : ['sidebar fixed left-0 z-50', 'shadow-xl']
       )}>
       {messenger && (
         <div

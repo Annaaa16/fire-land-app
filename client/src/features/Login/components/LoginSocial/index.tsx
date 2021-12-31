@@ -23,7 +23,7 @@ function LoginSocial() {
           <FacebookIcon
             className={clsx(
               '!text-2xl',
-              'text-[#139df8]',
+              'text-fb-blue-500',
               'lg:hover:scale-125'
             )}
           />
@@ -33,7 +33,7 @@ function LoginSocial() {
           <TwitterIcon
             className={clsx(
               '!text-2xl',
-              'text-[#139df8]',
+              'text-fb-blue-500',
               'lg:hover:scale-125'
             )}
           />
@@ -41,11 +41,7 @@ function LoginSocial() {
         <div
           className={clsx('flex-center p-2 rounded-lg ml-2', 'cursor-pointer')}>
           <YouTubeIcon
-            className={clsx(
-              '!text-2xl',
-              'text-[#fd434f]',
-              'lg:hover:scale-125'
-            )}
+            className={clsx('!text-2xl', 'text-fb-red', 'lg:hover:scale-125')}
           />
         </div>
         <div
@@ -53,7 +49,7 @@ function LoginSocial() {
           <InstagramIcon
             className={clsx(
               '!text-2xl',
-              'text-[#c13584]',
+              'text-fb-orange',
               'lg:hover:scale-125'
             )}
           />

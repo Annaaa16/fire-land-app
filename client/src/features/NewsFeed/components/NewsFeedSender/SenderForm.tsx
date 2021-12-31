@@ -204,34 +204,34 @@ function NewsFeedSenderArea() {
                 onClick={() => setIsOpenPhoto(!isOpenPhoto)}
                 className={clsx('relative', 'group px-2.5', 'cursor-pointer')}>
                 <PhotoLibraryIcon
-                  className={clsx('!text-2xl', 'text-[#45bd62]')}
+                  className={clsx('!text-2xl', 'text-fb-green')}
                 />
                 <Tooltip title='Photo' direction='ttb' />
               </li>
               <li
                 className={clsx('relative', 'group px-2.5', 'cursor-pointer')}>
                 <PersonAddIcon
-                  className={clsx('!text-2xl', 'text-[#1877f2]')}
+                  className={clsx('!text-2xl', 'text-fb-blue-500')}
                 />
                 <Tooltip title='Tag People' direction='ttb' />
               </li>
               <li
                 className={clsx('relative', 'group px-2.5', 'cursor-pointer')}>
                 <SentimentVerySatisfiedIcon
-                  className={clsx('!text-2xl', 'text-[#f7b928]')}
+                  className={clsx('!text-2xl', 'text-fb-yellow')}
                 />
                 <Tooltip title='Feeling' direction='ttb' />
               </li>
               <li
                 className={clsx('relative', 'group px-2.5', 'cursor-pointer')}>
                 <EditLocationAltIcon
-                  className={clsx('!text-2xl', 'text-[#f5533d]')}
+                  className={clsx('!text-2xl', 'text-fb-orange')}
                 />
                 <Tooltip title='Check In' direction='ttb' />
               </li>
               <li
                 className={clsx('relative', 'group px-2.5', 'cursor-pointer')}>
-                <FlagIcon className={clsx('!text-2xl', 'text-[#39afd5]')} />
+                <FlagIcon className={clsx('!text-2xl', 'text-fb-blue-100')} />
                 <Tooltip title='Life Event' direction='ttb' />
               </li>
             </ul>

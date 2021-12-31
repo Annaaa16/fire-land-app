@@ -39,7 +39,7 @@ function User(props: UserProps) {
           className={clsx(
             'absolute left-1/2 -bottom-2.5',
             'flex-center w-3.5 h-3.5 p-px -translate-x-1/2 border border-white rounded-full',
-            'bg-[#45bd62]'
+            'bg-fb-green'
           )}>
           <CheckIcon className={clsx('!w-full !h-full', 'text-white')} />
         </div>
@@ -49,7 +49,7 @@ function User(props: UserProps) {
           className={clsx(
             'absolute -right-1 -bottom-px z-[1]',
             'w-2.5 h-2.5 border-2 border-white dark:border-gray-700 rounded-full',
-            'bg-[#45bd62] dark:bg-primary-v4-hv'
+            'bg-fb-green dark:bg-primary-v4-hv'
           )}
         />
       )}

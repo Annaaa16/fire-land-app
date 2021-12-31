@@ -1,0 +1,32 @@
+@layer utilities {
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+
+  .flex-between {
+    @apply flex items-center justify-between;
+  }
+
+  .img-cover {
+    @apply w-full h-full object-cover;
+  }
+
+  .skeleton {
+    @apply absolute inset-0
+    bg-skeleton
+    animate-skeleton;
+  }
+
+  .modal {
+    @apply absolute inset-0
+    w-full h-full
+    bg-gray-900 opacity-80;
+  }
+}
+
+.line-clamp-3 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}

@@ -19,7 +19,7 @@ function Header() {
     <header
       className={clsx(
         'fixed top-0 left-0 z-[999]',
-        'flex items-center w-full h-14 md:h-16 px-2 md:px-4',
+        'header flex items-center w-full px-2 md:px-4',
         'bg-primary-v1 dark:bg-primary-v3'
       )}>
       <img

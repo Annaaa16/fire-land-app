@@ -5,12 +5,14 @@ interface LoadingImageProps {
   loadingWidths?: number[];
   loadingHeight?: number;
   skeleton?: boolean;
+  skeletonClass?: string;
 }
 
 function LoadingImage({
   loadingWidths,
   loadingHeight,
   skeleton,
+  skeletonClass,
 }: LoadingImageProps) {
   return (
     <div
@@ -20,8 +22,9 @@ function LoadingImage({
           key={'loading-image' + idx}
           className={clsx(
             'relative',
-            'rounded overflow-hidden dark:opacity-25',
-            'bg-[#dddbdd]'
+            'rounded overflow-hidden dark:opacity-20',
+            'bg-skeleton',
+            skeletonClass
           )}
           style={{
             width: width + '%',

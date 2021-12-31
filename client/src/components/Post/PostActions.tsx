@@ -88,14 +88,14 @@ function PostActions(props: PostActionsProps) {
             className={clsx(
               'font-semibold text-xs md:text-sm capitalize',
               isReacted && selectedEmotion?.type === emotions.like.type
-                ? 'text-[#2d86ff]'
+                ? 'text-fb-blue-500'
                 : selectedEmotion?.type === emotions.love.type
-                ? 'text-[#f33e58]'
+                ? 'text-fb-red'
                 : selectedEmotion?.type === emotions.angry.type
-                ? 'text-[#e36915]'
+                ? 'text-fb-orange'
                 : !isReacted
                 ? 'text-gray'
-                : 'text-[#efac25]',
+                : 'text-fb-yellow',
               'transition-all ease-out',
               !isReacted && 'lg:dark:group-hover:text-primary-v4'
             )}>

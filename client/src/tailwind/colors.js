@@ -39,7 +39,15 @@ const colors = {
   },
   success: '#43d787',
   warning: '#ffbb00',
-  maintain: '#fa461c',
+  error: '#f33e58',
+  fb: {
+    green: '#45bd62',
+    yellow: '#f7b928',
+    orange: '#f5533d',
+    red: '#f33e58',
+    'blue-100': '#39afd5',
+    'blue-500': '#1877f2',
+  },
 };
 
 module.exports = colors;

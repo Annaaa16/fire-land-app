@@ -19,9 +19,9 @@ function HeaderWidget() {
         fontSize='large'
         className={clsx(
           '!w-full',
-          isLargeMenu ? 'text-white' : 'lg:text-primary-v1-txt',
           'cursor-pointer',
-          'hover:text-white'
+          'lg:hover:text-white',
+          isLargeMenu ? 'text-white' : 'text-primary-v1-txt'
         )}
       />
     </div>

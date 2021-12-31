@@ -1,0 +1,45 @@
+@import './variables';
+
+@layer components {
+  .btn {
+    @apply flex-center shadow-primary-v1 dark:shadow-primary-v4 rounded-lg
+    text-white bg-primary-v1 dark:bg-primary-v4 
+    transition-all duration-250 ease-out
+    hover:bg-primary-v1-hv dark:hover:bg-primary-v4-hv
+    active:scale-95;
+  }
+
+  .header {
+    height: theme($header-height);
+
+    @screen lg {
+      height: theme($header-height-lg);
+    }
+  }
+
+  .sidebar {
+    top: theme($header-height);
+
+    height: calc(100vh - theme($header-height));
+
+    @screen lg {
+      top: theme($header-height-lg);
+
+      height: calc(100vh - theme($header-height-lg));
+    }
+  }
+}
+
+.scrollbar {
+  &-track {
+    background: transparent !important;
+
+    transition-duration: 0.2s !important;
+  }
+
+  &-thumb {
+    width: 6.5px !important;
+
+    background: rgba(0, 0, 0, 0.4) !important;
+  }
+}

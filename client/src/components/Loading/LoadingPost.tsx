@@ -8,7 +8,7 @@ function LoadingPost() {
         className={clsx(
           'relative',
           'h-4 w-1/4 rounded overflow-hidden dark:opacity-25',
-          'bg-[#dddbdd]',
+          'bg-skeleton',
           className
         )}>
         <span className='skeleton' />

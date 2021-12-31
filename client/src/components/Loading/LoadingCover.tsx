@@ -7,7 +7,7 @@ function LoadingCover() {
       className={clsx(
         'relative',
         'w-full h-full rounded-lg overflow-hidden dark:opacity-25',
-        'bg-[#dddbdd]',
+        'bg-skeleton',
         'animate-pulse'
       )}>
       <span className='skeleton' />

@@ -6,16 +6,17 @@ import clsx from 'clsx';
 
 // types
 import { Movie } from '@/models/common';
+import { TmdbCategories } from '@/models/tmdb';
 
 import { PATHS } from '@/constants';
 import { useMoviesContext } from '@/contexts/MoviesContext';
-import tmdb, { tmdbCategories } from '@/configs/tmdb';
+import tmdb from '@/configs/tmdb';
 
 import Image from '@/components/Image';
 
 interface MoviesItemProps {
   movie: Movie;
-  category: keyof typeof tmdbCategories;
+  category: keyof TmdbCategories;
 }
 
 function MoviesItem({ movie, category }: MoviesItemProps) {
@@ -64,6 +65,7 @@ function MoviesItem({ movie, category }: MoviesItemProps) {
       layout='fill'
       className={clsx('h-36 rounded-lg overflow-hidden', 'cursor-pointer')}
       styleLoading='image'
+      skeletonClass='!opacity-50'
     />
   );
 }

@@ -17,6 +17,7 @@ interface ImageProps extends NextImageProps {
   loadingWidths?: number[];
   loadingHeight?: number;
   skeleton?: boolean;
+  skeletonClass?: string;
   styleLoading: 'cover' | 'image';
 }
 
@@ -28,6 +29,7 @@ function Image(props: ImageProps, ref: any) {
     loadingHeight,
     skeleton,
     className,
+    skeletonClass,
     ...restProps
   } = props;
 
@@ -64,6 +66,7 @@ function Image(props: ImageProps, ref: any) {
                   loadingWidths={loadingWidths}
                   loadingHeight={loadingHeight}
                   skeleton={skeleton}
+                  skeletonClass={skeletonClass}
                 />
               ) : (
                 <LoadingCover />

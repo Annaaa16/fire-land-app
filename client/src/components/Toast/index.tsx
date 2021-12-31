@@ -75,7 +75,7 @@ function ToastItem({ message, status }: ToastType) {
       ? 'bg-success'
       : status === 'warning'
       ? 'bg-warning'
-      : 'bg-maintain';
+      : 'bg-fb-red';
   const Icon =
     status === 'success'
       ? CheckCircleIcon
