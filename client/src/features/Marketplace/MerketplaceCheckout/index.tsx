@@ -54,9 +54,10 @@ function MarketplaceCheckout() {
           <Image
             src={selectedProduct?.photo || ''}
             alt='Thumbnail'
-            className={clsx('img-cover')}
             styleLoading='cover'
             layout='fill'
+            objectFit='contain'
+            className='bg-gray-200'
           />
         </div>
 

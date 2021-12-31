@@ -1,5 +1,5 @@
 const backgroundColor = {
-  skeleton: '#dddbdd',
+  'skeleton-bgc': '#dddbdd',
 };
 
 module.exports = backgroundColor;

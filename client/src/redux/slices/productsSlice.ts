@@ -41,13 +41,11 @@ export const productCategories: ProductCategories = {
   entertainments: 'entertainments',
   vehicles: 'vehicles',
   comics: 'comics',
-  free: 'free',
 };
 
 const initialState: ProductsInitState = {
   updateProduct: null,
   checkoutProduct: null,
-  recent: [],
   categories: {
     food: [],
     drinks: [],
@@ -57,7 +55,6 @@ const initialState: ProductsInitState = {
     entertainments: [],
     vehicles: [],
     comics: [],
-    free: [],
   },
   loadings: [],
   isOpenCreateForm: false,
@@ -81,11 +78,10 @@ const productsSlice = createSlice({
       const { success, product } = action.payload;
 
       if (success) {
-        state.recent.unshift(product);
         state.categories[product.category].unshift(product);
-
-        removeLoading(state, actions.createProduct);
       }
+
+      removeLoading(state, actions.createProduct);
     },
     createProductFailure: (state) => {
       removeLoading(state, actions.createProduct);
@@ -104,9 +100,9 @@ const productsSlice = createSlice({
         state.prevPage = prevPage!;
         state.nextPage = nextPage!;
         state.total = total!;
-
-        removeLoading(state, actions.getProducts);
       }
+
+      removeLoading(state, actions.getProducts);
     },
     getProductsFailure: (state) => {
       removeLoading(state, actions.getProducts);
@@ -156,12 +152,6 @@ const productsSlice = createSlice({
         state.categories[category].forEach((product, idx) => {
           if (product._id === _id) {
             state.categories[category].splice(idx, 1);
-          }
-        });
-
-        state.recent.forEach((product, idx) => {
-          if (product._id === _id) {
-            state.recent.splice(idx, 1);
           }
         });
       }
@@ -225,7 +215,6 @@ const productsSlice = createSlice({
     clearProducts: (state) => {
       const categories = state.categories;
 
-      state.recent.length = 0;
       Object.keys(categories).forEach((key) => {
         categories[key as keyof typeof state.categories].length = 0;
       });

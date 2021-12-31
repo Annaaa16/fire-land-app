@@ -13,7 +13,6 @@ import {
   UpdateProductResponse,
 } from '@/models/products';
 import { AxiosError } from 'axios';
-import { PaginationParams } from '../models/common';
 import { GetServerSidePropsContext, NextPageContext } from 'next';
 
 import { axiosClient } from './axiosClient';

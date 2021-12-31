@@ -26,8 +26,6 @@ function Marketplace() {
       <Social className='pb-32'>
         <MarketplaceHero />
         <MarketplaceMenu />
-        <MarketplaceProductList title='Recent' category='free' />
-        <MarketplaceProductList title='Free' category='free' />
         <MarketplaceProductList title='Food' category='food' />
         <MarketplaceProductList title='Drinks' category='drinks' />
         <MarketplaceProductList

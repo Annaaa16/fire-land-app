@@ -6,6 +6,9 @@ import clsx from 'clsx';
 // material ui icons
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
+// types
+import { ProductCategories } from '@/models/products';
+
 import { productCategories } from '@/redux/slices/productsSlice';
 import useClickOutside from '@/hooks/useClickOutside';
 
@@ -82,17 +85,19 @@ function FormCategory({
             'bg-white dark:bg-dk-cpn dark:text-white'
           )}>
           <ul className='py-2'>
-            {Object.values(productCategories).map((category) => (
-              <li
-                onClick={() => handleSelectCategory(category)}
-                key={category}
-                className={clsx(
-                  'pl-3 py-2 capitalize',
-                  'hover:bg-primary-v1 dark:hover:bg-primary-v3 hover:text-white'
-                )}>
-                {category}
-              </li>
-            ))}
+            {Object.values(productCategories).map(
+              (category: keyof ProductCategories) => (
+                <li
+                  onClick={() => handleSelectCategory(category)}
+                  key={category}
+                  className={clsx(
+                    'pl-3 py-2 capitalize',
+                    'hover:bg-primary-v1 dark:hover:bg-primary-v3 hover:text-white'
+                  )}>
+                  {category}
+                </li>
+              )
+            )}
           </ul>
         </Scrollbar>
       )}

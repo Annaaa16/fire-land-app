@@ -23,7 +23,7 @@ function LoadingImage({
           className={clsx(
             'relative',
             'rounded overflow-hidden dark:opacity-20',
-            'bg-skeleton',
+            'bg-skeleton-bgc',
             skeletonClass
           )}
           style={{

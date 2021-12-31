@@ -52,6 +52,8 @@ function CheckoutReviewList({
   const handleCreateReview = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if (!content.trim()) return;
+
     dispatch(
       reviewActions.createReviewRequest({
         content,

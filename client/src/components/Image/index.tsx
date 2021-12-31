@@ -21,7 +21,7 @@ interface ImageProps extends NextImageProps {
   styleLoading: 'cover' | 'image';
 }
 
-function Image(props: ImageProps, ref: any) {
+const Image = forwardRef<HTMLDivElement, ImageProps>((props, ref) => {
   const {
     src,
     styleLoading,
@@ -81,6 +81,6 @@ function Image(props: ImageProps, ref: any) {
       )}
     </>
   );
-}
+});
 
-export default forwardRef(Image);
+export default Image;

@@ -35,14 +35,14 @@ productsController.createProduct = async (req, res) => {
       .json({ success: false, message: 'Product category is required' });
   }
 
-  if (!price) {
+  if (isNaN(price)) {
     return res
       .status(400)
       .json({ success: false, message: 'Product price is required' });
   }
 
   const parsedPrice = Number.parseFloat(price);
-  const isValidPrice = !Number.isNaN(parsedPrice);
+  const isValidPrice = !isNaN(parsedPrice);
 
   if (!isValidPrice) {
     return res.status(400).json({ success: false, message: 'Invalid price' });
@@ -90,7 +90,6 @@ productsController.getProducts = async (req, res) => {
     'entertainments',
     'vehicles',
     'comics',
-    'free',
   ];
   const sortList = ['price', 'reactions', 'members', 'sold', 'comments'];
   const orderList = ['asc', 'desc'];
@@ -121,11 +120,11 @@ productsController.getProducts = async (req, res) => {
   }
 
   try {
-    const total = await Product.count({ $eq: category });
+    const total = await Product.count({ $or: [{ category }] });
 
     const { skip, limit, nextPage, prevPage } = paginate(req, total);
 
-    const products = await Product.find({ category: { $eq: category } })
+    const products = await Product.find({ $or: [{ category }] })
       .limit(limit)
       .skip(skip)
       .populate('user')

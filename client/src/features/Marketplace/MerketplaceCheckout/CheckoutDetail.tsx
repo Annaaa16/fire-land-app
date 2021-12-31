@@ -207,10 +207,10 @@ function CheckoutDetail(props: CheckoutDetailProps) {
               'font-bold text-base md:text-lg truncate',
               'text-primary-v1 dark:text-primary-v4'
             )}>
-            <span className={clsx('line-through mr-1.5 opacity-70')}>
+            {/* <span className={clsx('line-through mr-1.5 opacity-70')}>
               $1000
-            </span>
-            <span>- ${price}</span>
+            </span> */}
+            <span>${price}</span>
           </span>
         </div>
       </div>

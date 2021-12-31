@@ -10,7 +10,6 @@ export interface ProductCategories {
   entertainments: 'entertainments';
   vehicles: 'vehicles';
   comics: 'comics';
-  free: 'free';
 }
 
 export interface ProductsInitState extends Loadings {
@@ -19,7 +18,6 @@ export interface ProductsInitState extends Loadings {
   categories: {
     [key in keyof ProductCategories]: Product[];
   };
-  recent: Product[];
   isOpenCreateForm: boolean;
   isOpenCheckout: boolean;
   prevPage: number | null;
@@ -38,6 +36,7 @@ export interface GetProductsParams extends PaginationParams {
   category?: keyof ProductCategories;
   order?: 'asc' | 'desc';
   sort?: 'price' | 'reactions' | 'members' | 'sold' | 'comments';
+  price?: number;
 }
 
 export interface UpdateProductPayload {
