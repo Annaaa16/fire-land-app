@@ -32,7 +32,7 @@ function RegisterForm() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<RegisterPayload>({
     resolver: yupResolver(formRegisterSchema),
   });
 

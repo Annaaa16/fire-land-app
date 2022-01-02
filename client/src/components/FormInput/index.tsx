@@ -1,11 +1,9 @@
 // clsx
 import clsx from 'clsx';
 
-// react hook form
-import { UseFormRegister } from 'react-hook-form';
-
 // types
 import { LoginPayload, RegisterPayload } from '@/models/auth';
+import { UseFormRegister } from 'react-hook-form';
 
 import { authActions } from '@/redux/slices/authSlice';
 import { useAuthSelector } from '@/redux/selectors';

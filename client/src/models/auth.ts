@@ -22,7 +22,7 @@ export interface RegisterPayload {
   username: string;
   password: string;
   confirmPassword?: string;
-  avatar: string;
+  avatar?: string;
 }
 
 // === Responses ===

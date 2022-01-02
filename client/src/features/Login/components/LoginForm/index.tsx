@@ -22,7 +22,7 @@ function LoginForm() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<LoginPayload>({
     resolver: yupResolver(formLoginSchema),
   });
 
