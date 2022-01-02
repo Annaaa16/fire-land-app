@@ -4,7 +4,7 @@ import clsx from 'clsx';
 // material ui icons
 import SearchIcon from '@mui/icons-material/Search';
 
-function HeaderSearch() {
+function HeaderMiddle() {
   return (
     <div
       className={clsx(
@@ -24,4 +24,4 @@ function HeaderSearch() {
   );
 }
 
-export default HeaderSearch;
+export default HeaderMiddle;
