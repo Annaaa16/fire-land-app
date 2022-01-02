@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import React, { createElement, useCallback } from 'react';
 
 // types
 import type { Scrollbar } from 'smooth-scrollbar/scrollbar';
@@ -11,13 +11,14 @@ type ScrollbarProps = Partial<ScrollbarOptions> &
   React.PropsWithChildren<{
     className?: string;
     scrollToBottom?: boolean;
+    dataAttr?: string;
   }>;
 
 function SmoothScrollbarReact(props: ScrollbarProps) {
-  const { children, className, scrollToBottom, ...restProps } = props;
+  const { children, className, scrollToBottom, dataAttr, ...restProps } = props;
 
   const containerRef = useCallback(
-    async (node: Scrollbar) => {
+    (node: Scrollbar) => {
       if (!(node instanceof HTMLElement)) return;
 
       node = SmoothScrollbar.init(node, {
@@ -35,10 +36,14 @@ function SmoothScrollbarReact(props: ScrollbarProps) {
     [restProps, scrollToBottom]
   );
 
-  return (
-    <div ref={containerRef as any} className={className}>
-      {children}
-    </div>
+  return createElement(
+    'div',
+    {
+      ref: containerRef,
+      className,
+      [dataAttr!]: 'true',
+    },
+    createElement(React.Fragment, {}, children)
   );
 }
 
