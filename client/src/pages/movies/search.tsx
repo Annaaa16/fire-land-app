@@ -7,7 +7,7 @@ import { GetServerSideProps } from 'next';
 // clsx
 import clsx from 'clsx';
 
-import { movieActions } from '@/redux/slices/moviesSlice';
+import { movieActions, actions } from '@/redux/slices/moviesSlice';
 import { wrapper } from '@/redux/store';
 import { moviesApi } from '@/apis/moviesApi';
 import { useMoviesSelector } from '@/redux/selectors';
@@ -20,6 +20,7 @@ import MoviesItem from '@/features/Movies/components/MoviesItem';
 
 function Search() {
   const {
+    loadings,
     searchedMovies: { page, movies, totalPages, totalMovies },
   } = useMoviesSelector();
 
@@ -42,7 +43,11 @@ function Search() {
 
   return (
     <MainLayout title={'Search - ' + router.query.query}>
-      <section className='pt-20'>
+      <section
+        className={clsx(
+          'pt-20',
+          loadings.includes(actions.getMovies) && 'pb-50'
+        )}>
         <h1
           className={clsx(
             'text-center text-3xl mb-4 leading-normal uppercase font-semibold',

@@ -20,12 +20,11 @@ function HeaderLeft() {
       <ul
         className={clsx(
           'fixed md:static bottom-0 left-0 right-0',
-          'flex items-center py-5 px-3 overflow-x-auto scrollbar-none',
+          'flex items-center py-5 px-3 space-x-6 overflow-x-auto scrollbar-none',
           'bg-dk-body md:bg-transparent'
         )}>
         <li
           className={clsx(
-            'mr-6',
             'text-white flex-shrink-0',
             'transition-all duration-300',
             'cursor-pointer',
@@ -35,7 +34,6 @@ function HeaderLeft() {
         </li>
         <li
           className={clsx(
-            'mr-6',
             'text-white flex-shrink-0',
             'transition-all duration-300',
             'cursor-pointer',
@@ -45,7 +43,6 @@ function HeaderLeft() {
         </li>
         <li
           className={clsx(
-            'mr-6',
             'text-white flex-shrink-0',
             'transition-all duration-300',
             'cursor-pointer',
@@ -55,7 +52,6 @@ function HeaderLeft() {
         </li>
         <li
           className={clsx(
-            'mr-6',
             'text-white flex-shrink-0',
             'transition-all duration-300',
             'cursor-pointer',
@@ -64,13 +60,14 @@ function HeaderLeft() {
           New & Popular
         </li>
         <li
+          onClick={() => router.push(PATHS.NEWSFEED)}
           className={clsx(
             'text-white flex-shrink-0',
             'transition-all duration-300',
             'cursor-pointer',
             'lg:hover:text-primary-v4-hv'
           )}>
-          My List
+          News Feed
         </li>
       </ul>
     </div>

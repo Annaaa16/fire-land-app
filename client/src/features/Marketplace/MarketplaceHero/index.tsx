@@ -76,7 +76,7 @@ function MarketplaceHero() {
                     dispatch(productActions.setIsOpenCreateForm(true))
                   }
                   className={clsx(
-                    'btn px-6 md:px-8 py-1.5 md:py-2 text-sm-1 md:text-sm'
+                    'btn btn--primary px-6 md:px-8 py-1.5 md:py-2 text-sm-1 md:text-sm'
                   )}>
                   Create
                 </button>

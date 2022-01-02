@@ -1,8 +1,6 @@
 // types
 import { ReactNode } from 'react';
 
-import { COLORS } from '@/constants';
-
 import Meta from '@/layouts/Meta';
 import MoviesFooter from '../components/MoviesFooter';
 import MoviesHeader from '../components/MoviesHeader';
@@ -15,11 +13,13 @@ interface MoviesProps {
 
 function MainLayout({ title, children }: MoviesProps) {
   return (
-    <Meta title={title} backgroundColor={COLORS.DARK_BODY}>
+    <Meta title={title}>
       <MoviesHeader />
-      {children}
-      <MoviesPreview />
-      <MoviesFooter />
+      <main className='bg-dk-body'>
+        {children}
+        <MoviesPreview />
+        <MoviesFooter />
+      </main>
     </Meta>
   );
 }

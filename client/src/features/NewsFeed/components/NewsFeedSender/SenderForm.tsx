@@ -238,7 +238,9 @@ function NewsFeedSenderArea() {
           </div>
 
           <button
-            className={clsx('btn mt-4 py-3 w-full font-semibold rounded-lg')}
+            className={clsx(
+              'btn btn--primary mt-4 py-3 w-full font-semibold rounded-lg'
+            )}
             type='submit'>
             {updatePost ? 'Update' : 'Post'}
           </button>

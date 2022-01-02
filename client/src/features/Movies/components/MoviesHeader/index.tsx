@@ -1,7 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 // clsx
 import clsx from 'clsx';
+
+import useEventListener from '@/hooks/useEventListener';
 
 import HeaderLeft from './HeaderLeft';
 import HeaderRight from './HeaderRight';
@@ -9,17 +11,7 @@ import HeaderRight from './HeaderRight';
 function MoviesHeader() {
   const [isActive, setIsActive] = useState<boolean>(false);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsActive(window.scrollY > 200);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+  useEventListener('scroll', () => setIsActive(window.scrollY > 200));
 
   return (
     <header
@@ -31,7 +23,7 @@ function MoviesHeader() {
       )}>
       <div
         className={clsx(
-          'container flex items-center justify-center md:justify-between py-1.5'
+          'container flex items-center justify-center md:justify-between py-1'
         )}>
         <HeaderLeft />
         <HeaderRight />

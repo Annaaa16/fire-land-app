@@ -40,7 +40,7 @@ function Custom404() {
         </p>
         <button
           onClick={() => router.push(PATHS.NEWSFEED)}
-          className={clsx('btn flex-center p-3 rounded-lg')}>
+          className={clsx('btn btn--primary flex-center p-3 rounded-lg')}>
           Go to News Feed
         </button>
       </div>

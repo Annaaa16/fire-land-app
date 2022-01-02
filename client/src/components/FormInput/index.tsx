@@ -53,7 +53,7 @@ function FormInput(props: FormInputProps) {
           {field}
         </label>
       </div>
-      <span className={clsx('block mt-1.5 text-xs', 'text-error')}>
+      <span className={clsx('block mt-1.5 text-xs', 'text-fb-red')}>
         {errors[name]?.message ||
           (!loginStatus.success && loginStatus.message) ||
           (!registerStatus.success &&

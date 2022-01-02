@@ -2,11 +2,20 @@
 
 @layer components {
   .btn {
-    @apply flex-center shadow-primary-v1 dark:shadow-primary-v4 rounded-lg
-    text-white bg-primary-v1 dark:bg-primary-v4 
-    transition-all duration-250 ease-out
-    hover:bg-primary-v1-hv dark:hover:bg-primary-v4-hv
+    @apply flex-center rounded-lg
+    transition-all duration-250 ease-out  
     active:scale-95;
+  }
+
+  .btn--primary {
+    @apply shadow-primary-v1 dark:shadow-primary-v4
+    text-white bg-primary-v1 dark:bg-primary-v4
+    hover:bg-primary-v1-hv dark:hover:bg-primary-v4-hv;
+  }
+
+  .btn--cancel {
+    @apply bg-gray-100 text-gray-500 dark:text-white dark:bg-gray-700
+    hover:bg-gray-200 dark:hover:bg-gray-600;
   }
 
   .header {
@@ -27,6 +36,14 @@
 
       height: calc(100vh - theme($header-height-lg));
     }
+  }
+
+  [data-contact-content-top] {
+    height: theme($contact-content-top-height);
+  }
+
+  [data-contact-content-bottom] {
+    height: calc(100vh - theme($contact-content-top-height));
   }
 }
 

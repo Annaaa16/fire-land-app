@@ -193,7 +193,9 @@ function MarketplaceForm() {
             updatePhoto={updateProduct?.photo}
             className='mb-4'
           />
-          <button type='submit' className={clsx('btn py-3 px-6 w-full')}>
+          <button
+            type='submit'
+            className={clsx('btn btn--primary py-3 px-6 w-full')}>
             {updateProduct ? 'Update' : 'Create'}
           </button>
         </form>

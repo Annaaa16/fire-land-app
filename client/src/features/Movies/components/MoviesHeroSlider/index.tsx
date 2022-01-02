@@ -120,7 +120,7 @@ function HomeHeroSlider() {
                             <button
                               onClick={() => moveToDetail(movie.id)}
                               className={clsx(
-                                'btn px-4 lg:px-6 py-2 lg:py-2.5 mr-4 !shadow-primary-v4 rounded-lg',
+                                'btn btn--primary px-4 lg:px-6 py-2 lg:py-2.5 mr-4 !shadow-primary-v4 rounded-lg',
                                 '!bg-primary-v4',
                                 'lg:hover:!bg-primary-v4-hv'
                               )}>

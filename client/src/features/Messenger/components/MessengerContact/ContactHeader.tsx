@@ -6,9 +6,9 @@ import GridViewIcon from '@mui/icons-material/GridView';
 
 function ContactHeader() {
   return (
-    <div className={clsx('px-8')}>
-      <div className={clsx('flex-between')}>
-        <h1 className={clsx('font-semibold text-xl mb-3', 'dark:text-white')}>
+    <div className='mb-4'>
+      <div className={clsx('flex-between mb-3')}>
+        <h1 className={clsx('font-semibold text-xl', 'dark:text-white')}>
           Recent
         </h1>
         <div className={clsx('group', 'cursor-pointer')}>

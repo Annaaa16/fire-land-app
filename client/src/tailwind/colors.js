@@ -39,7 +39,6 @@ const colors = {
   },
   success: '#43d787',
   warning: '#ffbb00',
-  error: '#f33e58',
   fb: {
     green: '#45bd62',
     yellow: '#f7b928',

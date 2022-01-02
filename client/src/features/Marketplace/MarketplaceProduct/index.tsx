@@ -66,7 +66,9 @@ function MarketplaceProduct(props: Product) {
     <div
       className={clsx(
         'px-3 pt-5 rounded-xl shadow-md',
-        'bg-white dark:bg-dk-cpn'
+        'bg-white dark:bg-dk-cpn',
+        'transition-all ease-out',
+        'hover:shadow-xl'
       )}>
       <div className={clsx('flex-between mb-3')}>
         <div className={clsx('flex items-center', 'cursor-pointer')}>
@@ -108,8 +110,7 @@ function MarketplaceProduct(props: Product) {
           layout='fill'
           className={clsx(
             'cursor-pointer',
-            'transition-all duration-250 ease-in-out',
-            'lg:hover:scale-[1.05]'
+            'transition-all duration-250 ease-in-out'
           )}
           objectFit='cover'
           styleLoading='image'
@@ -123,7 +124,7 @@ function MarketplaceProduct(props: Product) {
           onClick={handleOpenCheckout}
           title={name}
           className={clsx(
-            'truncate font-semibold text-base leading-tight mr-2 !no-underline',
+            'truncate font-semibold text-base leading-tight mr-2',
             'dark:text-white',
             'cursor-pointer',
             'hover:!underline'

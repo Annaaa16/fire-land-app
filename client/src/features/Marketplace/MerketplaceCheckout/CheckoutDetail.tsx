@@ -216,7 +216,9 @@ function CheckoutDetail(props: CheckoutDetailProps) {
       </div>
 
       <div className={clsx('relative', 'flex items-center gap-4 mt-auto')}>
-        <button onClick={handleBuyProduct} className={clsx('btn px-5 py-2.5')}>
+        <button
+          onClick={handleBuyProduct}
+          className={clsx('btn btn--primary px-5 py-2.5')}>
           <ShoppingCartOutlinedIcon className={clsx('!text-lg mr-1')} />
           <span className={clsx('text-sm-1')}>Buy now</span>
         </button>

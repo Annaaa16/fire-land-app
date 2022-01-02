@@ -17,14 +17,14 @@ function Social({ children, className }: SocialProps) {
     <>
       <Header />
       <Sidebar />
-      <div
+      <main
         className={clsx(
-          'lg:max-w-[1184px] px-4 lg:px-0 mx-auto py-10 mt-14 pb-50',
+          'lg:max-w-social-layout px-4 lg:px-0 mx-auto py-10 mt-14 pb-50',
           'bg-lt-body dark:bg-dk-body',
           className
         )}>
         {children}
-      </div>
+      </main>
     </>
   );
 }

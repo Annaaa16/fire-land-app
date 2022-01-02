@@ -62,7 +62,7 @@ function PostSender(props: PostSenderProps) {
       />
       <div
         className={clsx(
-          'flex flex-1 ml-2.5 justify-between rounded-3xl',
+          'flex flex-grow ml-2.5 rounded-3xl',
           'bg-lt-input dark:bg-dk-input'
         )}>
         <input
@@ -70,15 +70,16 @@ function PostSender(props: PostSenderProps) {
           value={content}
           placeholder='Write a comment...'
           className={clsx(
-            'pl-4 flex-1 md:max-w-full outline-none py-3 text-xs md:text-sm',
+            'pl-4 w-2/3 md:w-full outline-none py-3 text-xs md:text-sm',
             'dark:text-white bg-transparent'
           )}
         />
-        <ul className={clsx('flex items-center')}>
+
+        <ul className={clsx('w-1/3 md:w-auto flex items-center ml-auto')}>
           <li
             className={clsx(
               'relative',
-              'group hidden md:flex-center w-10 h-10 rounded-full',
+              'group flex-1 md:w-10 md:h-10 hidden md:flex-center rounded-full',
               'transition-all ease-out',
               'cursor-pointer',
               'lg:hover:bg-gray-200 lg:dark:hover:bg-dk-tooltip'
@@ -92,7 +93,7 @@ function PostSender(props: PostSenderProps) {
           <li
             className={clsx(
               'relative',
-              'group flex-center w-10 h-10 rounded-full',
+              'group flex-1 md:w-10 md:h-10 flex-center rounded-full',
               'transition-all ease-out',
               'cursor-pointer',
               'lg:hover:bg-gray-200 lg:dark:hover:bg-dk-tooltip'
@@ -106,7 +107,7 @@ function PostSender(props: PostSenderProps) {
           <li
             className={clsx(
               'relative',
-              'group flex-center w-10 h-10 rounded-full',
+              'group flex-1 md:w-10 md:h-10 flex-center rounded-full',
               'transition-all ease-out',
               'cursor-pointer',
               'lg:hover:bg-gray-200 lg:dark:hover:bg-dk-tooltip'
