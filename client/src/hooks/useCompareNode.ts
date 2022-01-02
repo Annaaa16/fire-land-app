@@ -2,19 +2,23 @@ import { useRef, useState } from 'react';
 
 import useIsomorphicLayoutEffect from './useIsomorphicLayoutEffect ';
 
-const useCompareNode = (comparedClass: string) => {
+const useCompareNode = (attr: string) => {
   const [isNodeEqual, setIsNodeEqual] = useState<boolean>(false);
 
   const elRef = useRef<HTMLDivElement>(null);
 
   // Compare class of previous node with current node
   useIsomorphicLayoutEffect(() => {
-    const prevNode = elRef.current!.previousSibling as HTMLElement;
+    if (!elRef.current) return;
 
-    setIsNodeEqual(prevNode?.classList.contains(comparedClass));
-  }, [comparedClass]);
+    const prevNode = elRef.current.previousSibling;
 
-  return { isNodeEqual, elRef, compared: comparedClass };
+    if (!prevNode) return;
+
+    setIsNodeEqual((prevNode as HTMLElement).hasAttribute(attr));
+  }, []);
+
+  return { isNodeEqual, elRef };
 };
 
 export default useCompareNode;
