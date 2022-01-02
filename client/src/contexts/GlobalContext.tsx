@@ -1,11 +1,4 @@
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 
 // types
@@ -14,15 +7,16 @@ import { GetUserResponse } from '@/models/users';
 import { GlobalInitContext } from '@/models/app';
 import { Toast as ToastType } from '@/models/common';
 import { ToastHandler } from '@/components/Toast';
+import { DialogDataState, DialogHandler } from '@/components/Dialog';
 
-import { LOCAL_STORAGE, NOTIFICATIONS, PATHS } from '@/constants';
+import { PATHS } from '@/constants';
 import { userActions } from '@/redux/slices/usersSlice';
 import { authActions } from '@/redux/slices/authSlice';
+import { maintainNotification } from '@/utils/text';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
-import useLocalStorage from '@/hooks/useLocalStorage';
 import cookies from '@/helpers/cookies';
-import useIsomorphicLayoutEffect from '@/hooks/useIsomorphicLayoutEffect ';
 
+import Dialog from '@/components/Dialog';
 import Toast from '@/components/Toast';
 
 interface GlobalProviderProps {
@@ -31,12 +25,11 @@ interface GlobalProviderProps {
 }
 
 const initialState: GlobalInitContext = {
-  theme: '',
   isLargeMenu: false,
-  setTheme: () => {},
   showToast: () => {},
   notifyMaintain: () => {},
-  handleSetIsLargeMenu: () => {},
+  setLargeMenu: () => {},
+  setDialogData: () => {},
 };
 
 const GlobalContext = createContext(initialState);
@@ -45,31 +38,27 @@ function GlobalProvider({ children, getUserResponse }: GlobalProviderProps) {
   const [isLargeMenu, setIsLargeMenu] = useState<boolean>(false);
 
   const toastRef = useRef<ToastHandler>(null!);
-
-  const { storedValue: theme, setLocalValue: setTheme } = useLocalStorage(
-    LOCAL_STORAGE.THEME_KEY,
-    LOCAL_STORAGE.LIGHT_THEME_VALUE,
-    useIsomorphicLayoutEffect
-  );
+  const dialogRef = useRef<DialogHandler>(null!);
 
   const dispatch = useStoreDispatch();
   const router = useRouter();
 
-  const showToast = useCallback(
-    (toast: ToastType) => toastRef.current.addToast(toast),
-    []
-  );
+  const showToast = (toast: ToastType) => {
+    toastRef.current.addToast(toast);
+  };
 
-  const notifyMaintain = () =>
+  const notifyMaintain = () => {
     showToast({
-      message: NOTIFICATIONS.MAINTAIN,
+      message: maintainNotification,
       status: 'maintain',
     });
+  };
 
-  const handleSetIsLargeMenu = useCallback(
-    (isLarge: boolean) => setIsLargeMenu(isLarge),
-    []
-  );
+  const setLargeMenu = (isLarge: boolean) => setIsLargeMenu(isLarge);
+
+  const setDialogData = (data: DialogDataState) => {
+    dialogRef.current.setDialogData(data);
+  };
 
   // Set init user
   useEffect(() => {
@@ -97,18 +86,18 @@ function GlobalProvider({ children, getUserResponse }: GlobalProviderProps) {
   }, [router]);
 
   const value = {
-    theme,
     isLargeMenu,
-    setTheme,
     showToast,
     notifyMaintain,
-    handleSetIsLargeMenu,
+    setLargeMenu,
+    setDialogData,
   };
 
   return (
     <GlobalContext.Provider value={value}>
       {children}
       <Toast ref={toastRef} />
+      <Dialog ref={dialogRef} />
     </GlobalContext.Provider>
   );
 }
