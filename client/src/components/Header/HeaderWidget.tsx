@@ -7,12 +7,12 @@ import AppsIcon from '@mui/icons-material/Apps';
 import { useGlobalContext } from '@/contexts/GlobalContext';
 
 function HeaderWidget() {
-  const { isLargeMenu, handleSetIsLargeMenu } = useGlobalContext();
+  const { isLargeMenu, setLargeMenu } = useGlobalContext();
 
   return (
     <div
       data-menu-button
-      onClick={() => handleSetIsLargeMenu(!isLargeMenu)}
+      onClick={() => setLargeMenu(!isLargeMenu)}
       className={clsx('w-10 ml-2 md:mx-4 lg:ml-0')}>
       <AppsIcon
         data-menu-button

@@ -2,7 +2,8 @@ import { useEffect } from 'react';
 
 // types
 import { GetServerSideProps } from 'next';
-import { TmdbGetMoviesResponse } from '@/models/tmdb';
+import { TmdbGetMoviesResponse, TmdbMoviesEndpoints } from '@/models/tmdb';
+import { MovieCategoryKeys } from '@/models/movies';
 
 import { movieCategoryKeys, movieActions } from '@/redux/slices/moviesSlice';
 import { moviesApi } from '@/apis/moviesApi';
@@ -102,47 +103,28 @@ export const getServerSideProps: GetServerSideProps =
     const { popular, upcoming, topRated, nowPlaying } = tmdbMoviesEndpoints;
 
     try {
-      const promises = await Promise.all([
-        getMovies(popular, {
+      const handleGetMovies = async (
+        endpoint: string,
+        type: keyof MovieCategoryKeys
+      ) => {
+        const response = await getMovies(endpoint, {
           page: 1,
-        }),
-        getMovies(upcoming, {
-          page: 1,
-        }),
-        getMovies(topRated, {
-          page: 1,
-        }),
-        getMovies(nowPlaying, {
-          page: 1,
-        }),
-      ]);
-
-      promises.forEach((promise) => {
-        const getMovieType = () => {
-          const path = promise?.config.url;
-          const endpoint = path?.split('/')[2]; // '/movie/popular' => ['', 'movie', 'popular']
-
-          switch (endpoint) {
-            case popular:
-              return movieCategoryKeys.popular;
-            case upcoming:
-              return movieCategoryKeys.upcoming;
-            case topRated:
-              return movieCategoryKeys.topRated;
-            case nowPlaying:
-              return movieCategoryKeys.nowPlaying;
-            default:
-              return '';
-          }
-        };
+        });
 
         store.dispatch(
           movieActions.getMoviesSuccess({
-            moviesType: getMovieType() as keyof typeof movieCategoryKeys,
-            movies: promise?.data as TmdbGetMoviesResponse,
+            moviesType: type,
+            movies: response?.data as TmdbGetMoviesResponse,
           })
         );
-      });
+      };
+
+      await Promise.all([
+        handleGetMovies(popular, movieCategoryKeys.popular),
+        handleGetMovies(upcoming, movieCategoryKeys.upcoming),
+        handleGetMovies(topRated, movieCategoryKeys.topRated),
+        handleGetMovies(nowPlaying, movieCategoryKeys.nowPlaying),
+      ]);
     } catch (error) {
       notifyPageError('Movies', error);
     }

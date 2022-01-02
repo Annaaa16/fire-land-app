@@ -3,7 +3,6 @@ module.exports = {
   purge: [
     './src/pages/**/*.{js,ts,jsx,tsx}',
     './src/components/**/*.{js,ts,jsx,tsx}',
-    './src/contexts/**/*.{js,ts,jsx,tsx}',
     './src/features/**/*.{js,ts,jsx,tsx}',
     './src/layouts/**/*.{js,ts,jsx,tsx}',
   ],
@@ -13,7 +12,9 @@ module.exports = {
       zIndex: require('./src/tailwind/zIndex'),
       container: require('./src/tailwind/container'),
       lineHeight: require('./src/tailwind/lineHeight'),
+      maxWidth: require('./src/tailwind/maxWidth'),
       boxShadow: require('./src/tailwind/boxShadow'),
+      borderWidth: require('./src/tailwind/borderWidth'),
       colors: require('./src/tailwind/colors'),
       backgroundImage: require('./src/tailwind/backgroundImage'),
       backgroundColor: require('./src/tailwind/backgroundColor'),

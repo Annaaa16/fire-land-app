@@ -15,7 +15,7 @@ import {
 import { conversationActions } from '@/redux/slices/conversationsSlice';
 import { useSocketContext } from '@/contexts/SocketContext';
 import { messengerActions } from '@/redux/slices/messengerSlice';
-import { placeholderLastMessage } from '@/utils/placeholders';
+import { messagePlaceholder } from '@/utils/text';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 import User from '@/components/User';
@@ -39,6 +39,7 @@ function ContactCard({ conversation }: ContactCardProps) {
   const lastMessage = lastMessages.find(
     (message) => message.conversationId === conversation._id
   );
+  const message = lastMessage?.text || messagePlaceholder;
 
   const handleGetMessages = () => {
     dispatch(conversationActions.setCurrentConversation(conversation));
@@ -74,15 +75,16 @@ function ContactCard({ conversation }: ContactCardProps) {
         <div className={clsx('font-semibold truncate', 'dark:text-white')}>
           {friend.username}
         </div>
-        <p
+        <abbr
+          title={message}
           className={clsx(
             'font-semibold text-xs mt-1 truncate',
             lastMessage?.text
               ? 'text-primary-v1 dark:text-primary-v4'
               : 'text-gray-lt dark:text-gray-dk'
           )}>
-          {lastMessage?.text || placeholderLastMessage}
-        </p>
+          {message}
+        </abbr>
       </div>
       <Timeago
         live={false}

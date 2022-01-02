@@ -1,13 +1,13 @@
 // types
 import { Movie, Toast, User } from './common';
+import { DialogDataState } from '@/components/Dialog';
 
 export interface GlobalInitContext {
-  theme: string;
   isLargeMenu: boolean;
-  setTheme: (value: string) => void;
   showToast: (toast: Toast) => void;
   notifyMaintain: () => void;
-  handleSetIsLargeMenu: (isLarge: boolean) => void;
+  setLargeMenu: (isLarge: boolean) => void;
+  setDialogData: (data: DialogDataState) => void;
 }
 
 export interface SocketInitContext {

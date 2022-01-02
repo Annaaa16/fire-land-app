@@ -1,27 +1,20 @@
-import { useEffect } from 'react';
-
 // types
 import { MutableRefObject } from 'react';
+
+import useEventListener from './useEventListener';
 
 const useClickOutside = (
   ref: MutableRefObject<Element | null>,
   handler: Function
 ) => {
-  useEffect(() => {
-    const listener = (e: Event) => {
-      if (!ref.current || ref.current.contains(e.target as Node)) return;
+  const listener = (e: Event) => {
+    if (!ref.current || ref.current.contains(e.target as Node)) return;
 
-      handler(e);
-    };
+    handler(e);
+  };
 
-    document.addEventListener('mousedown', listener);
-    document.addEventListener('touchstart', listener);
-
-    return () => {
-      document.removeEventListener('mousedown', listener);
-      document.removeEventListener('touchstart', listener);
-    };
-  }, [ref, handler]);
+  useEventListener('mousedown', listener);
+  useEventListener('touchstart', listener);
 };
 
 export default useClickOutside;

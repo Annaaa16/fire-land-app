@@ -6,13 +6,14 @@ import { AxiosResponse } from 'axios';
 import { GetMessagesResponse } from '@/models/messenger';
 
 // enums
-import { Statuses } from './ContactContent';
+import { Statuses } from '.';
 
 import { useConversationsSelector, useUsersSelector } from '@/redux/selectors';
 import { messagesApiClient } from '@/apis/messagesApi';
 import { messengerActions } from '@/redux/slices/messengerSlice';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
+import { Scrollbar } from '@/components/Scrollbar';
 import ContactCard from './ContactCard';
 
 interface ContactCardListProps {
@@ -40,9 +41,9 @@ function ContactCardList({ status }: ContactCardListProps) {
         })) as AxiosResponse<GetMessagesResponse>;
       });
 
-      const promises = await Promise.all(requests);
+      const responses = await Promise.all(requests);
 
-      promises.forEach(({ data }) => {
+      responses.forEach(({ data }) => {
         if (!data.success || data.messages.length === 0) return;
 
         dispatch(
@@ -91,14 +92,14 @@ function ContactCardList({ status }: ContactCardListProps) {
     }
   }, [currentUser, onlineUsers, stateConversations, status]);
 
-  if (conversations.length === 0) return null;
+  if (conversations.length === 0 || onlineUsers.length === 0) return null;
 
   return (
-    <ul className='mt-7'>
+    <Scrollbar dataAttr='data-contact-content-bottom'>
       {conversations?.map((conversation) => (
         <ContactCard key={conversation._id} conversation={conversation} />
       ))}
-    </ul>
+    </Scrollbar>
   );
 }
 

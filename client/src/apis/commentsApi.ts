@@ -29,7 +29,7 @@ export const commentsApiClient = () => {
 
     getComments: async ({ postId, params }: GetCommentsPayload) => {
       try {
-        const response = await axiosInstance.post<GetCommentsResponse>(
+        const response = await axiosInstance.get<GetCommentsResponse>(
           '/comments/' + postId,
           { params }
         );

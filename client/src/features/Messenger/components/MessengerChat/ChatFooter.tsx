@@ -115,7 +115,7 @@ function ChatFooter() {
         </div>
       </div>
 
-      <div className={clsx('relative', 'group mx-2')}>
+      <button type='submit' className={clsx('relative', 'group mx-2')}>
         <SendIcon
           fontSize='large'
           className={clsx(
@@ -125,7 +125,7 @@ function ChatFooter() {
           )}
         />
         <Tooltip title='Send' direction='ttb' />
-      </div>
+      </button>
     </form>
   );
 }

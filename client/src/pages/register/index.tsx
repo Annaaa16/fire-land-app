@@ -25,10 +25,9 @@ function Register() {
   };
 
   useEffect(() => {
-    dispatch(authActions.setLoginStatus(false));
-
     if (success) {
       router.push(PATHS.LOGIN);
+      dispatch(authActions.setLoginStatus(false));
     }
   }, [success, router, dispatch]);
 

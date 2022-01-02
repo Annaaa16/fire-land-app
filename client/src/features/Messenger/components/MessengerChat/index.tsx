@@ -1,6 +1,9 @@
 // clsx
 import clsx from 'clsx';
 
+// material ui icons
+import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
+
 import { useConversationsSelector } from '@/redux/selectors';
 
 import ChatHeader from './ChatHeader';
@@ -13,7 +16,7 @@ function MessagesChat() {
   return currentConversation ? (
     <div
       className={clsx(
-        'flex flex-col flex-grow flex-shrink-0 overflow-x-hidden',
+        'flex flex-col flex-grow overflow-x-hidden',
         'bg-lt-body dark:bg-dk-body'
       )}>
       <ChatHeader />
@@ -21,7 +24,21 @@ function MessagesChat() {
       <ChatFooter />
     </div>
   ) : (
-    <div className={clsx('text-xl p-4')}>Nothing...</div>
+    <div className={clsx('flex justify-center p-5')}>
+      <ChatBubbleIcon
+        className={clsx(
+          'inline-block mr-2 !text-4xl',
+          'text-gray-lt dark:text-gray-dk'
+        )}
+      />
+      <h2
+        className={clsx(
+          'text-2xl font-bold',
+          'text-gray-lt dark:text-gray-dk'
+        )}>
+        Let's start a new conversation
+      </h2>
+    </div>
   );
 }
 

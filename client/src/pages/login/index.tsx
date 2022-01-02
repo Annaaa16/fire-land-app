@@ -25,10 +25,9 @@ function Login() {
   };
 
   useEffect(() => {
-    dispatch(authActions.setRegisterStatus(false));
-
     if (success) {
       router.push(PATHS.NEWSFEED);
+      dispatch(authActions.setRegisterStatus(false));
     }
   }, [success, router, dispatch]);
 

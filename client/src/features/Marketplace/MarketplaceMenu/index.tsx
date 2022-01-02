@@ -1,3 +1,5 @@
+import { useRouter } from 'next/router';
+
 // clsx
 import clsx from 'clsx';
 
@@ -14,18 +16,40 @@ import MenuBookOutlinedIcon from '@mui/icons-material/MenuBookOutlined';
 // swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-const menu = [
-  { icon: DinnerDiningOutlinedIcon, title: 'Food' },
-  { icon: SportsBarOutlinedIcon, title: 'Drinks' },
-  { icon: VideogameAssetOutlinedIcon, title: 'Games' },
-  { icon: SmartToyOutlinedIcon, title: 'Toys' },
-  { icon: SportsSoccerOutlinedIcon, title: 'Sports' },
-  { icon: PhonelinkOutlinedIcon, title: 'Entertainments' },
-  { icon: TwoWheelerOutlinedIcon, title: 'Vehicles' },
-  { icon: MenuBookOutlinedIcon, title: 'Comics' },
+// types
+import { ProductCategories } from '@/models/products';
+
+import { PATHS } from '@/constants';
+
+const menu: Array<{
+  icon: any;
+  title: string;
+  query: keyof ProductCategories;
+}> = [
+  { icon: DinnerDiningOutlinedIcon, title: 'Food', query: 'food' },
+  { icon: SportsBarOutlinedIcon, title: 'Drinks', query: 'drinks' },
+  { icon: VideogameAssetOutlinedIcon, title: 'Games', query: 'games' },
+  { icon: SmartToyOutlinedIcon, title: 'Toys', query: 'toys' },
+  { icon: SportsSoccerOutlinedIcon, title: 'Sports', query: 'sports' },
+  {
+    icon: PhonelinkOutlinedIcon,
+    title: 'Entertainments',
+    query: 'entertainments',
+  },
+  { icon: TwoWheelerOutlinedIcon, title: 'Vehicles', query: 'vehicles' },
+  { icon: MenuBookOutlinedIcon, title: 'Comics', query: 'comics' },
 ];
 
 function MarketplaceMenu() {
+  const router = useRouter();
+
+  const handleNavigate = (query: keyof ProductCategories) => {
+    router.push({
+      pathname: PATHS.MARKETPLACE_PRODUCTS,
+      query: { category: query },
+    });
+  };
+
   return (
     <Swiper
       spaceBetween={35}
@@ -34,9 +58,10 @@ function MarketplaceMenu() {
         'mt-10 !px-6 h-17 rounded-xl shadow-md',
         'bg-white dark:text-gray-300 dark:bg-dk-cpn'
       )}>
-      {menu.map(({ icon: Icon, title }) => (
+      {menu.map(({ icon: Icon, title, query }) => (
         <SwiperSlide
           key={title}
+          onClick={() => handleNavigate(query)}
           className={clsx(
             'group flex items-center max-w-max',
             'cursor-pointer'

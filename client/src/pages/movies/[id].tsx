@@ -18,6 +18,7 @@ import { notifyAxiosError } from '@/helpers/notifyError';
 import { useMoviesSelector } from '@/redux/selectors';
 import { filterMovieDetail } from '@/helpers/filterMovies';
 import { movieActions } from '@/redux/slices/moviesSlice';
+import { redirectToNotFound } from '@/helpers/server';
 import tmdb, { tmdbCategories } from '@/configs/tmdb';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
@@ -55,91 +56,89 @@ function MoviesDetail(props: MoviesDetailProps) {
     if (!id || !category) return;
 
     if (category === movie) {
-      dispatch(movieActions.getSimilarMoviesRequest(id! as string));
+      dispatch(movieActions.getSimilarMoviesRequest(id as string));
     } else if (category === tv) {
-      dispatch(movieActions.getSimilarTvShowsRequest(id! as string));
+      dispatch(movieActions.getSimilarTvShowsRequest(id as string));
     }
   }, [router.query, movie, tv, dispatch]);
 
   return (
     <MainLayout title={'Movies - ' + title}>
-      <section>
-        <div className={clsx('relative', 'w-full h-[50vh]')}>
-          <Image
-            src={tmdb.getOriginalImage(image)}
-            alt='Thumbnail'
-            layout='fill'
-            objectFit='cover'
-            priority={true}
-            styleLoading='cover'
-          />
-          <div
-            className={clsx(
-              'absolute inset-0',
-              'bg-gradient-to-t from-dk-body to-transparent'
-            )}
-          />
-        </div>
-
+      <div className={clsx('relative', 'w-full h-[50vh]')}>
+        <Image
+          src={tmdb.getOriginalImage(image)}
+          alt='Thumbnail'
+          layout='fill'
+          objectFit='cover'
+          priority={true}
+          styleLoading='cover'
+        />
         <div
           className={clsx(
+            'absolute inset-0',
+            'bg-gradient-to-t from-dk-body to-transparent'
+          )}
+        />
+      </div>
+
+      <div
+        className={clsx(
+          'relative',
+          'container flex justify-center h-full mb-20 -mt-50'
+        )}>
+        <Image
+          src={tmdb.getOriginalImage(image)}
+          layout='fill'
+          alt='Thumbnail'
+          objectFit='cover'
+          className={clsx(
             'relative',
-            'container flex justify-center h-full mb-20 -mt-50'
-          )}>
-          <Image
-            src={tmdb.getOriginalImage(image)}
-            layout='fill'
-            alt='Thumbnail'
-            objectFit='cover'
-            className={clsx(
-              'relative',
-              'hidden lg:block w-72 h-100 flex-shrink-0 rounded-2xl overflow-hidden'
-            )}
-            priority={true}
-            loadingWidths={[50, 20, 30, 40, 90, 40, 50, 70]}
-            styleLoading='image'
-          />
+            'hidden lg:block w-72 h-100 flex-shrink-0 rounded-2xl overflow-hidden'
+          )}
+          priority={true}
+          loadingWidths={[50, 20, 30, 40, 90, 40, 50, 70]}
+          styleLoading='image'
+        />
 
-          <div
+        <div
+          className={clsx('text-center lg:text-left w-full lg:w-1/2 lg:ml-6')}>
+          <h1
             className={clsx(
-              'text-center lg:text-left w-full lg:w-1/2 lg:ml-6'
+              'text-2xl md:text-4xl font-semibold leading-tight lg:leading-normal mb-2',
+              'text-white'
             )}>
-            <h1
-              className={clsx(
-                'text-2xl md:text-4xl font-semibold leading-tight lg:leading-normal mb-2',
-                'text-white'
-              )}>
-              {title}
-            </h1>
-            <DetailGenreList genres={genres} />
-            <Paragraph
-              lengthInit={250}
-              bodyClass={clsx('mb-3')}
-              paragraphClass={clsx('leading-5 mb-2', 'text-white')}
-              buttonClass={clsx('mb-4', 'text-white', 'lg:hover:underline')}>
-              {overview}
-            </Paragraph>
+            {title}
+          </h1>
+          <DetailGenreList genres={genres} />
+          <Paragraph
+            lengthInit={250}
+            bodyClass={clsx('mb-3')}
+            paragraphClass={clsx('leading-5 mb-2', 'text-white')}
+            buttonClass={clsx('mb-4', 'text-white', 'lg:hover:underline')}>
+            {overview}
+          </Paragraph>
 
-            <DetailCastList casts={casts} />
-          </div>
+          <DetailCastList casts={casts} />
         </div>
-        <DetailTrailer videos={videos} />
-        {router.query.category && (
-          <MoviesItemList
-            title='Similar'
-            items={
-              router.query.category === movie
-                ? movieCategories.similar.movies
-                : tvShowCategories.similar.tvShows
-            }
-            category={
-              router.query.category === movie
-                ? tmdbCategories.movie
-                : tmdbCategories.tv
-            }
-          />
-        )}
-      </section>
+      </div>
+
+      <DetailTrailer videos={videos} />
+
+      {router.query.category && (
+        <MoviesItemList
+          title='Similar'
+          items={
+            router.query.category === movie
+              ? movieCategories.similar.movies
+              : tvShowCategories.similar.tvShows
+          }
+          category={
+            router.query.category === movie
+              ? tmdbCategories.movie
+              : tmdbCategories.tv
+          }
+        />
+      )}
     </MainLayout>
   );
 }
@@ -162,34 +161,38 @@ export const getServerSideProps: GetServerSideProps = async ({
 
   let movieDetail = null;
 
+  if (!params) {
+    return redirectToNotFound();
+  }
+
   if (query.category === movie) {
     try {
-      const promises = await Promise.all([
-        getMovieDetail(params?.id as string),
-        getMovieCasts(params?.id as string),
-        getMovieVideos(params?.id as string),
+      const responses = await Promise.all([
+        getMovieDetail(params.id as string),
+        getMovieCasts(params.id as string),
+        getMovieVideos(params.id as string),
       ]);
 
       movieDetail = {
-        detail: promises[0]?.data!,
-        casts: promises[1]?.data!,
-        videos: promises[2]?.data!,
+        detail: responses[0]?.data!,
+        casts: responses[1]?.data!,
+        videos: responses[2]?.data!,
       };
     } catch (error) {
       notifyAxiosError('Get movie detail', error as AxiosError);
     }
   } else if (query.category === tv) {
     try {
-      const promises = await Promise.all([
-        getTvShowDetail(params?.id as string),
-        getTvShowCasts(params?.id as string),
-        getTvShowVideos(params?.id as string),
+      const responses = await Promise.all([
+        getTvShowDetail(params.id as string),
+        getTvShowCasts(params.id as string),
+        getTvShowVideos(params.id as string),
       ]);
 
       movieDetail = {
-        detail: promises[0]?.data!,
-        casts: promises[1]?.data!,
-        videos: promises[2]?.data!,
+        detail: responses[0]?.data!,
+        casts: responses[1]?.data!,
+        videos: responses[2]?.data!,
       };
     } catch (error) {
       notifyAxiosError('Get TV Shows detail', error as AxiosError);
@@ -197,14 +200,12 @@ export const getServerSideProps: GetServerSideProps = async ({
   }
 
   if (!movieDetail) {
-    return {
-      notFound: true,
-    };
-  } else {
-    return {
-      props: {
-        movieDetail,
-      },
-    };
+    return redirectToNotFound();
   }
+
+  return {
+    props: {
+      movieDetail,
+    },
+  };
 };

@@ -5,6 +5,7 @@ import { AxiosError } from 'axios';
 import {
   TmdbGetTvShowCreditsResponse,
   TmdbGetTvShowVideosResponse,
+  TmdbMoviesEndpoints,
   TmdbParams,
   TmdbSearchPayload,
   TmdbTvShowDetail,
@@ -22,10 +23,10 @@ import { notifyAxiosError } from '@/helpers/notifyError';
 export const moviesApi = () => {
   return {
     // === Movies ===
-    getMovies: async (query: string, params: TmdbParams) => {
+    getMovies: async (endpoint: string, params: TmdbParams) => {
       try {
         const response = await axiosTmdb.get<TmdbGetMoviesResponse>(
-          '/movie/' + query,
+          '/movie/' + endpoint,
           { params }
         );
 

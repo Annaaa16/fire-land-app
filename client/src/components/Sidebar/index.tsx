@@ -85,8 +85,7 @@ const menu = [
 ];
 
 function Sidebar({ messenger }: SidebarProps) {
-  const { isLargeMenu, handleSetIsLargeMenu, notifyMaintain } =
-    useGlobalContext();
+  const { isLargeMenu, setLargeMenu, notifyMaintain } = useGlobalContext();
 
   const [cloneMenu, setCloneMenu] = useState(menu);
 
@@ -97,12 +96,11 @@ function Sidebar({ messenger }: SidebarProps) {
       '[data-menu-button]'
     );
 
-    if (!isButtonClicked) handleSetIsLargeMenu(false);
+    if (!isButtonClicked) setLargeMenu(false);
   };
 
   const handleNavigate = (maintain: boolean, path: string) => {
-    maintain ? notifyMaintain() : router.push(path);
-    handleSetIsLargeMenu(false);
+    maintain ? notifyMaintain() : [router.push(path), setLargeMenu(false)];
   };
 
   useIsomorphicLayoutEffect(() => {
@@ -111,7 +109,7 @@ function Sidebar({ messenger }: SidebarProps) {
     setCloneMenu((prevMenu) => {
       return prevMenu.map((menu) => ({
         ...menu,
-        active: menu.path.includes(path),
+        active: Boolean(menu.path) && path.includes(menu.path),
       }));
     });
   }, [router]);

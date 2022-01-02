@@ -58,15 +58,15 @@ export const getServerSideProps: GetServerSideProps =
         });
       });
 
-      const promises = await Promise.all(requests);
+      const responses = await Promise.all(requests);
 
       store.dispatch(productActions.clearProducts());
 
-      promises.forEach((promise) => {
-        promise &&
+      responses.forEach((response) => {
+        response &&
           store.dispatch(
             productActions.getProductsSuccess(
-              promise?.data as GetProductsResponse
+              response?.data as GetProductsResponse
             )
           );
       });
