@@ -1,20 +1,22 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
 
 // clsx
 import clsx from 'clsx';
 
 import { useUsersSelector } from '@/redux/selectors';
 import { userActions } from '@/redux/slices/usersSlice';
+import { useGlobalContext } from '@/contexts/GlobalContext';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 import useUsers from '@/hooks/useUsers';
 
 import User from '@/components/User';
 
 function WidgetsFriendList() {
-  const { visitWall } = useUsers();
+  const { notifyMaintain } = useGlobalContext();
   const { friends, userProfile } = useUsersSelector();
+
+  const { visitWall } = useUsers();
   const dispatch = useStoreDispatch();
   const router = useRouter();
 
@@ -22,15 +24,14 @@ function WidgetsFriendList() {
   useEffect(() => {
     const { id } = router.query;
 
-    // Block first load ID is undefined
-    if (id) {
-      dispatch(
-        userActions.getFriendsRequest({
-          userId: id as string,
-          params: { page: 1, limit: 10 },
-        })
-      );
-    }
+    if (!id) return;
+
+    dispatch(
+      userActions.getFriendsRequest({
+        userId: id as string,
+        params: { page: 1, limit: 10 },
+      })
+    );
   }, [router.query, dispatch]);
 
   return (
@@ -43,20 +44,20 @@ function WidgetsFriendList() {
         <h2 className={clsx('text-base font-semibold', 'dark:text-white')}>
           Friends
         </h2>
-        <Link href='#'>
-          <a
-            className={clsx(
-              'text-sm-1',
-              'text-primary-v1 dark:text-primary-v4',
-              'transition-all duration-300 ease-out',
-              'hover:text-primary-v1-hv dark:hover:text-primary-v4-hv'
-            )}>
-            See All Friends
-          </a>
-        </Link>
+        <span
+          onClick={notifyMaintain}
+          className={clsx(
+            'text-sm-1',
+            'text-primary-v1 dark:text-primary-v4',
+            'transition-all duration-300 ease-out',
+            'hover:text-primary-v1-hv dark:hover:text-primary-v4-hv',
+            'cursor-pointer select-none'
+          )}>
+          See All Friends
+        </span>
       </div>
       <div className={clsx('mt-3', 'dark:text-white')}>
-        {userProfile.followings.length} friends
+        {userProfile.friends.length} friends
       </div>
       <ul className={clsx('grid grid-cols-4 mt-2 gap-x-2')}>
         {friends.map((friend) => (

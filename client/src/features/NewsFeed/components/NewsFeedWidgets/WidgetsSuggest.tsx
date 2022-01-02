@@ -1,8 +1,13 @@
 // clsx
-import User from '@/components/User';
 import clsx from 'clsx';
 
+import { useGlobalContext } from '@/contexts/GlobalContext';
+
+import User from '@/components/User';
+
 function WidgetsSuggest() {
+  const { notifyMaintain } = useGlobalContext();
+
   return (
     <div
       className={clsx(
@@ -17,11 +22,12 @@ function WidgetsSuggest() {
           Suggestions For You
         </h3>
         <span
+          onClick={notifyMaintain}
           className={clsx(
             'text-sm-1 font-semibold',
             'text-gray-lt',
             'transition-all',
-            'cursor-pointer',
+            'cursor-pointer select-none',
             'lg:hover:text-primary-v1-hv lg:dark:hover:text-primary-v4-hv'
           )}>
           See All
@@ -39,7 +45,7 @@ function WidgetsSuggest() {
                   'cursor-pointer',
                   'lg:hover:underline'
                 )}>
-                IG Dev
+                Leonardo da Vinci
               </div>
               <div
                 className={clsx(
@@ -48,16 +54,17 @@ function WidgetsSuggest() {
                   'cursor-pointer',
                   'lg:hover:underline'
                 )}>
-                @igdev
+                @leonardo
               </div>
             </div>
           </div>
           <span
+            onClick={notifyMaintain}
             className={clsx(
               'text-sm-1 font-semibold',
               'text-primary-v1 dark:text-primary-v4',
               'transition-all ease-out',
-              'cursor-pointer',
+              'cursor-pointer select-none',
               'lg:hover:text-primary-v1-hv lg:dark:hover:text-primary-v4-hv'
             )}>
             Follow

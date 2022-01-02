@@ -14,6 +14,7 @@ import HideImageOutlinedIcon from '@mui/icons-material/HideImageOutlined';
 
 import { postActions } from '@/redux/slices/postsSlice';
 import { useUsersSelector } from '@/redux/selectors';
+import { useGlobalContext } from '@/contexts/GlobalContext';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 interface PostHeaderOptionsProps {
@@ -24,6 +25,7 @@ interface PostHeaderOptionsProps {
 function PostHeaderOptions(props: PostHeaderOptionsProps) {
   const { postId, userId } = props;
 
+  const { setDialogData } = useGlobalContext();
   const { currentUser } = useUsersSelector();
 
   const dispatch = useStoreDispatch();
@@ -33,8 +35,12 @@ function PostHeaderOptions(props: PostHeaderOptionsProps) {
     dispatch(postActions.setIsOpenFormSender(true));
   };
 
-  const handleDeletePost = () => {
-    dispatch(postActions.deletePostRequest({ postId }));
+  const handleSetDialogData = () => {
+    setDialogData({
+      title: 'Delete your post',
+      question: 'Are you sure?',
+      confirmHandler: () => dispatch(postActions.deletePostRequest({ postId })),
+    });
   };
 
   return (
@@ -194,7 +200,7 @@ function PostHeaderOptions(props: PostHeaderOptionsProps) {
       </li>
       {currentUser._id === userId && (
         <li
-          onClick={handleDeletePost}
+          onClick={handleSetDialogData}
           className={clsx(
             'pl-2 pr-4 py-3 rounded-lg',
             'dark:bg-dk-cpn',

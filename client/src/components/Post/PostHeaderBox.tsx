@@ -1,3 +1,5 @@
+import { useRouter } from 'next/router';
+
 // clsx
 import clsx from 'clsx';
 
@@ -8,10 +10,13 @@ import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 
+import { PATHS } from '@/constants';
 import { useUsersSelector } from '@/redux/selectors';
 import { actions, userActions } from '@/redux/slices/usersSlice';
 import { useSocketContext } from '@/contexts/SocketContext';
 import { addFriend, unfriend } from '@/helpers/notifications';
+import { useGlobalContext } from '@/contexts/GlobalContext';
+import { mustBeFriends } from '@/helpers/notifications';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 import useUsers from '@/hooks/useUsers';
 
@@ -28,11 +33,13 @@ interface PostHeaderBoxProps {
 function PostHeaderBox(props: PostHeaderBoxProps) {
   const { username, avatar, userId, followers } = props;
 
+  const { showToast, setDialogData } = useGlobalContext();
   const { currentUser, loadings } = useUsersSelector();
-
   const { socketNotifications } = useSocketContext();
+
   const { visitWall } = useUsers();
   const dispatch = useStoreDispatch();
+  const router = useRouter();
 
   const { friends } = currentUser;
   const isFriend = friends.includes(userId);
@@ -57,14 +64,29 @@ function PostHeaderBox(props: PostHeaderBoxProps) {
       socketNotifications.sendNotification(message);
     };
 
-    isFriend ? handleUnfriend() : handleAddFriend();
+    isFriend
+      ? setDialogData({
+          title: 'Stay with your friend',
+          question: 'Are you sure?',
+          confirmHandler: () => handleUnfriend(),
+        })
+      : handleAddFriend();
+  };
+
+  const handleSendMessage = () => {
+    isFriend
+      ? router.push(PATHS.MESSENGER)
+      : showToast({
+          status: 'warning',
+          message: mustBeFriends(username),
+        });
   };
 
   return (
     <div
       className={clsx(
-        'absolute bottom-full left-0',
-        'scale-0 opacity-0 invisible pb-4 w-87',
+        'absolute bottom-3/4 left-0',
+        'scale-0 opacity-0 invisible pb-5 w-87',
         'transition-all ease-out',
         'pointer-events-none',
         'lg:group-hover:scale-100 origin-bottom-left lg:group-hover:opacity-100 lg:group-hover:visible group-hover:pointer-events-auto'
@@ -140,6 +162,7 @@ function PostHeaderBox(props: PostHeaderBoxProps) {
           </button>
 
           <button
+            onClick={handleSendMessage}
             className={clsx(
               'h-full px-5 rounded-lg mx-2',
               'bg-gray-200 dark:bg-gray-700',

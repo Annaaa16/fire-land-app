@@ -8,16 +8,22 @@ import SentimentVerySatisfiedIcon from '@mui/icons-material/SentimentVerySatisfi
 
 import { usePostsSelector, useUsersSelector } from '@/redux/selectors';
 import { postActions } from '@/redux/slices/postsSlice';
+import { useGlobalContext } from '@/contexts/GlobalContext';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 import User from '@/components/User';
 import SenderForm from './SenderForm';
 
 function NewsFeedSender() {
+  const { notifyMaintain } = useGlobalContext();
   const { currentUser } = useUsersSelector();
   const { isOpenFormSender } = usePostsSelector();
 
   const dispatch = useStoreDispatch();
+
+  const openFormSender = () => {
+    dispatch(postActions.setIsOpenFormSender(true));
+  };
 
   return (
     <>
@@ -34,7 +40,7 @@ function NewsFeedSender() {
             rounded
           />
           <input
-            onClick={() => dispatch(postActions.setIsOpenFormSender(true))}
+            onClick={openFormSender}
             placeholder={`What's on your mind, IG Dev`}
             className={clsx(
               'flex-1 h-full ml-3 md:ml-4 rounded-full text-xs md:text-sm outline-none px-4 py-3',
@@ -51,6 +57,7 @@ function NewsFeedSender() {
             'flex mt-5 py-2 border-t border-lt-line dark:border-dk-line'
           )}>
           <li
+            onClick={notifyMaintain}
             className={clsx(
               'hidden md:flex-center flex-1 py-2.5 rounded-lg',
               'cursor-pointer select-none',
@@ -65,6 +72,7 @@ function NewsFeedSender() {
             </span>
           </li>
           <li
+            onClick={openFormSender}
             className={clsx(
               'flex-center flex-1 py-2.5 rounded-lg',
               'cursor-pointer select-none',
@@ -82,6 +90,7 @@ function NewsFeedSender() {
             </span>
           </li>
           <li
+            onClick={notifyMaintain}
             className={clsx(
               'flex-center flex-1 py-2.5 rounded-lg',
               'cursor-pointer select-none',

@@ -13,6 +13,7 @@ import { Product, User } from '@/models/common';
 import { productActions } from '@/redux/slices/productsSlice';
 import { useUsersSelector } from '@/redux/selectors';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
+import { useGlobalContext } from '@/contexts/GlobalContext';
 
 interface ProductOptionsProps {
   product: Product;
@@ -20,6 +21,7 @@ interface ProductOptionsProps {
 }
 
 function ProductOptions({ product, user }: ProductOptionsProps) {
+  const { setDialogData } = useGlobalContext();
   const { currentUser } = useUsersSelector();
 
   const dispatch = useStoreDispatch();
@@ -29,6 +31,18 @@ function ProductOptions({ product, user }: ProductOptionsProps) {
   const handleSelectEditProduct = () => {
     dispatch(productActions.setIsOpenCreateForm(true));
     dispatch(productActions.setUpdateProduct(product));
+  };
+
+  const handleDeleteProduct = () => {
+    setDialogData({
+      title: 'Delete your product',
+      question: 'Are you sure?',
+      confirmHandler: () => {
+        dispatch(
+          productActions.deleteProductRequest({ productId: product._id })
+        );
+      },
+    });
   };
 
   return (
@@ -99,11 +113,7 @@ function ProductOptions({ product, user }: ProductOptionsProps) {
       </li>
       {isOwnProduct && (
         <li
-          onClick={() =>
-            dispatch(
-              productActions.deleteProductRequest({ productId: product._id })
-            )
-          }
+          onClick={handleDeleteProduct}
           className={clsx(
             'pl-2 pr-4 py-3 rounded-lg',
             'dark:bg-dk-cpn',
