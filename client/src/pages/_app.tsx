@@ -3,6 +3,9 @@ import { Provider } from 'react-redux';
 import { END } from '@redux-saga/core';
 import App from 'next/app';
 
+// next themes
+import { ThemeProvider as NextThemeProvider } from 'next-themes';
+
 // bar of progress
 import ProgressBar from '@badrap/bar-of-progress';
 
@@ -16,6 +19,7 @@ import { ThemeProvider } from '@mui/material';
 import { AppContext, AppInitialProps } from 'next/app';
 import { SagaStore } from '@/models/store';
 import { GetUserResponse } from '@/models/users';
+
 import { fetchUserFromServer } from '@/helpers/server';
 import store, { wrapper } from '@/redux/store';
 import theme from '@/configs/mui';
@@ -69,11 +73,13 @@ class WrappedApp extends App<
       <Provider store={store}>
         <GlobalProvider getUserResponse={getUserResponse}>
           <SocketProvider>
-            <ThemeProvider theme={theme}>
-              <MoviesProvider>
-                <Component {...pageProps} />
-              </MoviesProvider>
-            </ThemeProvider>
+            <NextThemeProvider attribute='class' disableTransitionOnChange>
+              <ThemeProvider theme={theme}>
+                <MoviesProvider>
+                  <Component {...pageProps} />
+                </MoviesProvider>
+              </ThemeProvider>
+            </NextThemeProvider>
           </SocketProvider>
         </GlobalProvider>
       </Provider>

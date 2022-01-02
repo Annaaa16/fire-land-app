@@ -18,6 +18,9 @@ import AddBoxIcon from '@mui/icons-material/AddBox';
 import StoreMallDirectoryIcon from '@mui/icons-material/StoreMallDirectory';
 import CircleIcon from '@mui/icons-material/Circle';
 
+// next themes
+import { useTheme } from 'next-themes';
+
 // types
 import { AxiosResponse } from 'axios';
 import { StatusResponse } from '@/models/common';
@@ -26,8 +29,9 @@ import { MouseEvent } from 'react';
 import { LOCAL_STORAGE, PATHS } from '@/constants';
 import { useGlobalContext } from '@/contexts/GlobalContext';
 import { authApiClient } from '@/apis/authApi';
-import { useNotificationsSelector } from '@/redux/selectors';
+import { useNotificationsSelector, useUsersSelector } from '@/redux/selectors';
 import { notificationActions } from '@/redux/slices/notificationsSlice';
+import useUsers from '@/hooks/useUsers';
 import useClickOutside from '@/hooks/useClickOutside';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
@@ -35,7 +39,8 @@ import Tooltip from '../Tooltip';
 import HeaderNotifications from './HeaderNotifications';
 
 function HeaderOptions() {
-  const { theme, setTheme } = useGlobalContext();
+  const { notifyMaintain } = useGlobalContext();
+  const { currentUser } = useUsersSelector();
   const { notifications } = useNotificationsSelector();
 
   const [isOpenSetting, setIsOpenSetting] = useState<boolean>(false);
@@ -45,8 +50,11 @@ function HeaderOptions() {
   const optionsRef = useRef<HTMLDivElement>(null);
   const notificationsRef = useRef<HTMLDivElement>(null);
 
+  const { visitWall } = useUsers();
   const router = useRouter();
   const dispatch = useStoreDispatch();
+
+  const { theme, setTheme } = useTheme();
 
   const hasNotifications = notifications.length > 0;
 
@@ -71,6 +79,16 @@ function HeaderOptions() {
   const handleOpenNotifications = () => {
     setIsOpenNotifications(!isOpenNotifications);
     isOpenNotifications && dispatch(notificationActions.clearNotifications());
+  };
+
+  const handleOpenSettings = () => {
+    notifyMaintain();
+    setIsOpenSetting(false);
+  };
+
+  const handleOpenProfile = () => {
+    visitWall(currentUser._id);
+    setIsOpenSetting(false);
   };
 
   useClickOutside(optionsRef, () => setIsOpenSetting(false));
@@ -125,7 +143,9 @@ function HeaderOptions() {
             data-notifications-button
             className={clsx(
               '!text-2xl !w-11',
-              hasNotifications ? 'text-white' : 'text-primary-v1-txt',
+              hasNotifications || isOpenNotifications
+                ? 'text-white'
+                : 'text-primary-v1-txt',
               'cursor-pointer',
               'lg:hover:text-white'
             )}
@@ -205,6 +225,7 @@ function HeaderOptions() {
             'bg-primary-v1 dark:bg-primary-v3'
           )}>
           <li
+            onClick={handleOpenSettings}
             className={clsx(
               'group flex items-center pl-1 pr-3 py-3 border-b border-primary-v1-txt',
               'cursor-pointer',
@@ -228,6 +249,7 @@ function HeaderOptions() {
             </span>
           </li>
           <li
+            onClick={handleOpenProfile}
             className={clsx(
               'group flex items-center pl-1 pr-3 py-3 border-b border-primary-v1-txt',
               'cursor-pointer',

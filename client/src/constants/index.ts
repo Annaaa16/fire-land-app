@@ -49,11 +49,6 @@ export const BREAKPOINTS = {
   DESKTOP: 1440,
 };
 
-export const COLORS = {
-  LIGHT_BODY: '#f7f7fa',
-  DARK_BODY: '#161b28',
-};
-
 export const DELAYS = {
   DEFAULT: 300,
   DOUBLE: 600,
@@ -73,8 +68,4 @@ export const PREFIXES = {
 
 export const BACKUPS = {
   AVATAR: API_URLS.AVATAR + '/micah/uiSvbW.svg',
-};
-
-export const NOTIFICATIONS = {
-  MAINTAIN: 'This feature is currently closed',
 };

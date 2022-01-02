@@ -1,11 +1,13 @@
 // clsx
 import clsx from 'clsx';
 
+// next themes
+import { useTheme } from 'next-themes';
+
 // types
 import { ReactNode } from 'react';
 
 import { LOCAL_STORAGE } from '@/constants';
-import { useGlobalContext } from '@/contexts/GlobalContext';
 
 // images
 import {
@@ -30,7 +32,7 @@ interface AuthProps {
 function Auth(props: AuthProps) {
   const { title, question, recommend, children, onRedirect } = props;
 
-  const { theme } = useGlobalContext();
+  const { theme } = useTheme();
 
   return (
     <div
