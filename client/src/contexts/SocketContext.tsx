@@ -1,6 +1,4 @@
-import { createContext, useContext, useEffect, useState } from 'react';
-
-import { useMemo } from 'react';
+import { createContext, useContext, useEffect, useState, useMemo } from 'react';
 import { nanoid } from '@reduxjs/toolkit';
 
 // types
