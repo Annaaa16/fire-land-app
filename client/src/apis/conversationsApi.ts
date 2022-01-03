@@ -1,5 +1,4 @@
 // types
-import { AxiosError } from 'axios';
 import {
   CreateConversationPayload,
   CreateConversationResponse,
@@ -10,49 +9,27 @@ import {
 } from '@/models/conversations';
 
 import { axiosClient } from './axiosClient';
-import { notifyAxiosError } from '@/helpers/notifyError';
 
 export const conversationsApiClient = () => {
   const axiosInstance = axiosClient();
 
   return {
-    createConversation: async (payload: CreateConversationPayload) => {
-      try {
-        const response = await axiosInstance.post<CreateConversationResponse>(
-          '/conversations/create',
-          payload
-        );
-
-        return response;
-      } catch (error) {
-        return notifyAxiosError('Create conversation', error as AxiosError);
-      }
+    createConversation(
+      payload: CreateConversationPayload
+    ): Promise<CreateConversationResponse> {
+      return axiosInstance.post('/conversations/create', payload);
     },
 
-    getConversations: async ({ userId }: GetConversationsPayload) => {
-      try {
-        const response = await axiosInstance.get<GetConversationsResponse>(
-          '/conversations/' + userId
-        );
-
-        return response;
-      } catch (error) {
-        return notifyAxiosError('Get conversations', error as AxiosError);
-      }
+    getConversations({
+      userId,
+    }: GetConversationsPayload): Promise<GetConversationsResponse> {
+      return axiosInstance.get('/conversations/' + userId);
     },
 
-    deleteConversation: async ({
+    deleteConversation({
       conversationId,
-    }: DeleteConversationPayload) => {
-      try {
-        const response = await axiosInstance.delete<DeleteConversationResponse>(
-          '/conversations/' + conversationId
-        );
-
-        return response;
-      } catch (error) {
-        return notifyAxiosError('Delete conversation', error as AxiosError);
-      }
+    }: DeleteConversationPayload): Promise<DeleteConversationResponse> {
+      return axiosInstance.delete('/conversations/' + conversationId);
     },
   };
 };

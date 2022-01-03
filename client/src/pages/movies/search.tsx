@@ -7,11 +7,13 @@ import { GetServerSideProps } from 'next';
 // clsx
 import clsx from 'clsx';
 
+import { LOCAL_STORAGE } from '@/constants';
 import { movieActions, actions } from '@/redux/slices/moviesSlice';
 import { wrapper } from '@/redux/store';
 import { moviesApi } from '@/apis/moviesApi';
 import { useMoviesSelector } from '@/redux/selectors';
 import { tmdbCategories } from '@/configs/tmdb';
+import { redirectToNotFound } from '@/helpers/server';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 import useIntersectionObserver from '@/hooks/useIntersectionObserver';
 
@@ -73,6 +75,8 @@ function Search() {
   );
 }
 
+Search.theme = LOCAL_STORAGE.DARK_THEME_VALUE;
+
 export default Search;
 
 export const getServerSideProps: GetServerSideProps =
@@ -81,11 +85,15 @@ export const getServerSideProps: GetServerSideProps =
 
     store.dispatch(movieActions.clearSearchedMovies());
 
-    const response = await searchMovies({
-      query: query.query as string,
-    });
+    try {
+      const response = await searchMovies({
+        query: query.query as string,
+      });
 
-    response && store.dispatch(movieActions.searchMoviesSuccess(response.data));
+      store.dispatch(movieActions.searchMoviesSuccess(response));
+    } catch (error) {
+      return redirectToNotFound();
+    }
 
     return {
       props: {},

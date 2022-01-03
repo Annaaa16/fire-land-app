@@ -9,14 +9,12 @@ import {
   ReactPostPayload,
   DeletePostPayload,
 } from '@/models/posts';
-import { AxiosResponse } from 'axios';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { UpdatePostPayload } from '@/models/posts';
 
 import { DELAYS } from '@/constants';
 import { postActions } from '../slices/postsSlice';
 import { postsApiClient } from '@/apis/postsApi';
-import { notifySagaError } from '@/helpers/notifyError';
 
 const { createPost, getPosts, updatePost, deletePost, reactPost } =
   postsApiClient();
@@ -25,28 +23,20 @@ function* handleCreatePostRequest(action: PayloadAction<FormData>) {
   try {
     yield delay(DELAYS.DEFAULT); // Block spam upload button
 
-    const response: AxiosResponse<UpdatePostResponse> = yield call(
-      createPost,
-      action.payload
-    );
+    const response: UpdatePostResponse = yield call(createPost, action.payload);
 
-    yield put(postActions.createPostSuccess(response.data));
+    yield put(postActions.createPostSuccess(response));
   } catch (error) {
-    notifySagaError(postActions.createPostFailed, error);
     yield put(postActions.createPostFailed());
   }
 }
 
 function* handleGetPostsRequest(action: PayloadAction<GetPostsPayload>) {
   try {
-    const response: AxiosResponse<GetPostsResponse> = yield call(
-      getPosts,
-      action.payload
-    );
+    const response: GetPostsResponse = yield call(getPosts, action.payload);
 
-    yield put(postActions.getPostsSuccess(response.data));
+    yield put(postActions.getPostsSuccess(response));
   } catch (error) {
-    notifySagaError(postActions.getPostsFailed, error);
     yield put(postActions.getPostsFailed());
   }
 }
@@ -55,14 +45,10 @@ function* handleUpdatePostRequest(action: PayloadAction<UpdatePostPayload>) {
   try {
     yield delay(DELAYS.DEFAULT); // Block spam update button
 
-    const response: AxiosResponse<UpdatePostResponse> = yield call(
-      updatePost,
-      action.payload
-    );
+    const response: UpdatePostResponse = yield call(updatePost, action.payload);
 
-    yield put(postActions.updatePostSuccess(response.data));
+    yield put(postActions.updatePostSuccess(response));
   } catch (error) {
-    notifySagaError(postActions.updatePostFailed, error);
     yield put(postActions.updatePostFailed());
   }
 }
@@ -71,14 +57,10 @@ function* handleDeletePostRequest(action: PayloadAction<DeletePostPayload>) {
   try {
     yield delay(DELAYS.DEFAULT); // Block spam delete button
 
-    const response: AxiosResponse<DeletePostResponse> = yield call(
-      deletePost,
-      action.payload
-    );
+    const response: DeletePostResponse = yield call(deletePost, action.payload);
 
-    yield put(postActions.deletePostSuccess(response.data));
+    yield put(postActions.deletePostSuccess(response));
   } catch (error) {
-    notifySagaError(postActions.deletePostFailed, error);
     yield put(postActions.deletePostFailed());
   }
 }
@@ -89,7 +71,6 @@ function* handleReactPostRequest(action: PayloadAction<ReactPostPayload>) {
 
     yield call(reactPost, action.payload);
   } catch (error) {
-    notifySagaError(postActions.reactPostFailure, error);
     yield put(postActions.reactPostFailure());
   }
 }

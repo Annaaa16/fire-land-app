@@ -1,7 +1,5 @@
 // types
 import { NextPageContext } from 'next';
-import { AxiosResponse } from 'axios';
-import { GetUserResponse } from '@/models/users';
 
 import { PATHS } from '@/constants';
 import { usersApiServer } from '@/apis/usersApi';
@@ -13,13 +11,11 @@ export const fetchUserFromServer = async (ctx: NextPageContext) => {
   const { isMissing } = tokens.checkTokenMissing(ctx);
   const isAuthPath = path === PATHS.LOGIN || path === PATHS.REGISTER;
 
-  if (!isAuthPath && !isMissing) {
-    const { getCurrentUser } = usersApiServer(ctx);
-    const currentUser =
-      (await getCurrentUser()) as AxiosResponse<GetUserResponse>;
+  if (isAuthPath || isMissing) return;
 
-    return currentUser.data;
-  }
+  const { getCurrentUser } = usersApiServer(ctx);
+
+  return await getCurrentUser();
 };
 
 export const redirectToNotFound = () => ({

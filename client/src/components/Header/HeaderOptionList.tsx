@@ -16,7 +16,6 @@ import WidgetsIcon from '@mui/icons-material/Widgets';
 import { useTheme } from 'next-themes';
 
 // types
-import { AxiosResponse } from 'axios';
 import { StatusResponse } from '@/models/common';
 
 import { LOCAL_STORAGE, PATHS } from '@/constants';
@@ -44,9 +43,9 @@ function HeaderOptionList() {
   const handleLogout = async () => {
     const { logoutUser } = authApiClient();
 
-    const response = (await logoutUser()) as AxiosResponse<StatusResponse>;
+    const response = (await logoutUser()) as StatusResponse;
 
-    if (response.data.success) {
+    if (response.success) {
       router.push(PATHS.LOGIN);
     }
   };

@@ -50,6 +50,7 @@ export async function middleware(req: NextRequest) {
       );
     } catch (error: any) {
       console.log('Refresh token failed from middleware 👉', error.message);
+      return redirectToLogin();
     }
   };
 
@@ -73,6 +74,7 @@ export async function middleware(req: NextRequest) {
       }
     } catch (error: any) {
       console.log('Verify token failed from middleware 👉', error.message);
+      return redirectToLogin();
     }
   }
 

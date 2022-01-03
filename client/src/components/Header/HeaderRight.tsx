@@ -29,7 +29,6 @@ function HeaderOptions() {
   const [isOpenNotifications, setIsOpenNotifications] =
     useState<boolean>(false);
 
-  const optionsRef = useRef<HTMLDivElement>(null);
   const notificationsRef = useRef<HTMLDivElement>(null);
 
   const dispatch = useStoreDispatch();

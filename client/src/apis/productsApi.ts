@@ -12,98 +12,49 @@ import {
   UpdateProductPayload,
   UpdateProductResponse,
 } from '@/models/products';
-import { AxiosError } from 'axios';
 import { GetServerSidePropsContext, NextPageContext } from 'next';
 
 import { axiosClient } from './axiosClient';
-import { notifyAxiosError } from '@/helpers/notifyError';
 import { axiosServer } from './axiosServer';
 
 export const productsApiClient = () => {
   const axiosInstance = axiosClient();
 
   return {
-    createProduct: async (payload: FormData) => {
-      try {
-        const response = await axiosInstance.post<CreateProductResponse>(
-          '/products/create',
-          payload
-        );
-
-        return response;
-      } catch (error) {
-        return notifyAxiosError('Create product', error as AxiosError);
-      }
+    createProduct(payload: FormData): Promise<CreateProductResponse> {
+      return axiosInstance.post('/products/create', payload);
     },
 
-    updateProduct: async ({
+    updateProduct({
       productId,
       updatePayload,
-    }: UpdateProductPayload) => {
-      try {
-        const response = await axiosInstance.put<UpdateProductResponse>(
-          '/products/' + productId,
-          updatePayload
-        );
-
-        return response;
-      } catch (error) {
-        return notifyAxiosError('Update product', error as AxiosError);
-      }
+    }: UpdateProductPayload): Promise<UpdateProductResponse> {
+      return axiosInstance.put('/products/' + productId, updatePayload);
     },
 
-    getProducts: async (params: GetProductsParams) => {
-      try {
-        const response = await axiosInstance.get<GetProductsResponse>(
-          '/products',
-          {
-            params,
-          }
-        );
-
-        return response;
-      } catch (error) {
-        return notifyAxiosError('Get products', error as AxiosError);
-      }
+    getProducts(params: GetProductsParams): Promise<GetProductsResponse> {
+      return axiosInstance.get('/products', {
+        params,
+      });
     },
 
-    deleteProduct: async ({ productId }: DeleteProductPayload) => {
-      try {
-        const response = await axiosInstance.delete<DeleteProductResponse>(
-          '/products/' + productId
-        );
-
-        return response;
-      } catch (error) {
-        return notifyAxiosError('Delete product', error as AxiosError);
-      }
+    deleteProduct({
+      productId,
+    }: DeleteProductPayload): Promise<DeleteProductResponse> {
+      return axiosInstance.delete('/products/' + productId);
     },
 
-    reactProduct: async ({ isReact, productId }: ReactProductPayload) => {
-      try {
-        const response = await axiosInstance.post<ReactProductResponse>(
-          `/products/${productId}/reactions`,
-          {
-            isReact,
-          }
-        );
-
-        return response;
-      } catch (error) {
-        return notifyAxiosError('React product', error as AxiosError);
-      }
+    reactProduct({
+      isReact,
+      productId,
+    }: ReactProductPayload): Promise<ReactProductResponse> {
+      return axiosInstance.post(`/products/${productId}/reactions`, {
+        isReact,
+      });
     },
 
-    buyProduct: async ({ productId }: BuyProductPayload) => {
-      try {
-        const response = await axiosInstance.post<BuyProductResponse>(
-          `/products/${productId}/buy`
-        );
-
-        return response;
-      } catch (error) {
-        return notifyAxiosError('Buy product', error as AxiosError);
-      }
+    buyProduct({ productId }: BuyProductPayload): Promise<BuyProductResponse> {
+      return axiosInstance.post(`/products/${productId}/buy`);
     },
   };
 };
@@ -114,19 +65,10 @@ export const productsApiServer = (
   const axiosInstance = axiosServer(ctx);
 
   return {
-    getProducts: async (params: GetProductsParams) => {
-      try {
-        const response = await axiosInstance.get<GetProductsResponse>(
-          '/products',
-          {
-            params,
-          }
-        );
-
-        return response;
-      } catch (error) {
-        return notifyAxiosError('Get products', error as AxiosError);
-      }
+    getProducts(params: GetProductsParams): Promise<GetProductsResponse> {
+      return axiosInstance.get('/products', {
+        params,
+      });
     },
   };
 };

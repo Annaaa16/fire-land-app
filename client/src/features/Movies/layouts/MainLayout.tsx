@@ -15,7 +15,7 @@ function MainLayout({ title, children }: MoviesProps) {
   return (
     <Meta title={title}>
       <MoviesHeader />
-      <main className='bg-dk-body'>
+      <main>
         {children}
         <MoviesPreview />
         <MoviesFooter />

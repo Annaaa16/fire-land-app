@@ -1,11 +1,9 @@
 import { axiosTmdb } from './axiosTmdb';
 
 // types
-import { AxiosError } from 'axios';
 import {
   TmdbGetTvShowCreditsResponse,
   TmdbGetTvShowVideosResponse,
-  TmdbMoviesEndpoints,
   TmdbParams,
   TmdbSearchPayload,
   TmdbTvShowDetail,
@@ -18,153 +16,64 @@ import {
   TmdbMovieDetail,
 } from '@/models/tmdb';
 
-import { notifyAxiosError } from '@/helpers/notifyError';
-
 export const moviesApi = () => {
   return {
     // === Movies ===
-    getMovies: async (endpoint: string, params: TmdbParams) => {
-      try {
-        const response = await axiosTmdb.get<TmdbGetMoviesResponse>(
-          '/movie/' + endpoint,
-          { params }
-        );
-
-        return response;
-      } catch (error) {
-        notifyAxiosError('Get movies', error as AxiosError);
-      }
+    getMovies(
+      endpoint: string,
+      params: TmdbParams
+    ): Promise<TmdbGetMoviesResponse> {
+      return axiosTmdb.get('/movie/' + endpoint, { params });
     },
 
-    getSimilarMovies: async (movieId: string) => {
-      try {
-        const response = await axiosTmdb.get<TmdbGetMoviesResponse>(
-          `/movie/${movieId}/similar`,
-          { params: {} }
-        );
-
-        return response;
-      } catch (error) {
-        notifyAxiosError('Get similar movies', error as AxiosError);
-      }
+    getSimilarMovies(movieId: string): Promise<TmdbGetMoviesResponse> {
+      return axiosTmdb.get(`/movie/${movieId}/similar`, {
+        params: {},
+      });
     },
 
-    getMovieDetail: async (movieId: string) => {
-      try {
-        const response = await axiosTmdb.get<TmdbMovieDetail>(
-          '/movie/' + movieId,
-          { params: {} }
-        );
-
-        return response;
-      } catch (error) {
-        notifyAxiosError('Get movie detail', error as AxiosError);
-      }
+    getMovieDetail(movieId: string): Promise<TmdbMovieDetail> {
+      return axiosTmdb.get('/movie/' + movieId, { params: {} });
     },
 
-    getMovieCasts: async (movieId: string) => {
-      try {
-        const response = await axiosTmdb.get<TmdbGetMovieCreditsResponse>(
-          `/movie/${movieId}/credits`,
-          { params: {} }
-        );
-
-        return response;
-      } catch (error) {
-        notifyAxiosError('Get movie casts', error as AxiosError);
-      }
+    getMovieCasts(movieId: string): Promise<TmdbGetMovieCreditsResponse> {
+      return axiosTmdb.get(`/movie/${movieId}/credits`, {
+        params: {},
+      });
     },
 
-    getMovieVideos: async (movieId: string) => {
-      try {
-        const response = await axiosTmdb.get<TmdbGetMovieVideosResponse>(
-          `/movie/${movieId}/videos`,
-          { params: {} }
-        );
-
-        return response;
-      } catch (error) {
-        notifyAxiosError('Get movie videos', error as AxiosError);
-      }
+    getMovieVideos(movieId: string): Promise<TmdbGetMovieVideosResponse> {
+      return axiosTmdb.get(`/movie/${movieId}/videos`, {
+        params: {},
+      });
     },
 
-    searchMovies: async (params: TmdbSearchPayload) => {
-      try {
-        const response = await axiosTmdb.get<TmdbGetMoviesResponse>(
-          '/search/movie',
-          { params }
-        );
-
-        return response;
-      } catch (error) {
-        notifyAxiosError('Search movie', error as AxiosError);
-      }
+    searchMovies(params: TmdbSearchPayload): Promise<TmdbGetMoviesResponse> {
+      return axiosTmdb.get('/search/movie', { params });
     },
 
     // === Tv Shows ===
-    getTvShows: async (query: string, params: TmdbParams) => {
-      try {
-        const response = await axiosTmdb.get<TmdbGetTvShowsResponse>(
-          '/tv/' + query,
-          { params }
-        );
-
-        return response;
-      } catch (error) {
-        notifyAxiosError('Get shows', error as AxiosError);
-      }
+    getTvShows(
+      query: string,
+      params: TmdbParams
+    ): Promise<TmdbGetTvShowsResponse> {
+      return axiosTmdb.get('/tv/' + query, { params });
     },
 
-    getSimilarTvShows: async (showId: string) => {
-      try {
-        const response = await axiosTmdb.get<TmdbGetMoviesResponse>(
-          `/tv/${showId}/similar`,
-          { params: {} }
-        );
-
-        return response;
-      } catch (error) {
-        notifyAxiosError('Get similar shows', error as AxiosError);
-      }
+    getSimilarTvShows(showId: string): Promise<TmdbGetMoviesResponse> {
+      return axiosTmdb.get(`/tv/${showId}/similar`, { params: {} });
     },
 
-    getTvShowDetail: async (showId: string) => {
-      try {
-        const response = await axiosTmdb.get<TmdbTvShowDetail>(
-          '/tv/' + showId,
-          { params: {} }
-        );
-
-        return response;
-      } catch (error) {
-        notifyAxiosError('Get show detail', error as AxiosError);
-      }
+    getTvShowDetail(showId: string): Promise<TmdbTvShowDetail> {
+      return axiosTmdb.get('/tv/' + showId, { params: {} });
     },
 
-    getTvShowCasts: async (showId: string) => {
-      try {
-        const response = await axiosTmdb.get<TmdbGetTvShowCreditsResponse>(
-          `/tv/${showId}/credits`,
-          { params: {} }
-        );
-
-        return response;
-      } catch (error) {
-        notifyAxiosError('Get show casts', error as AxiosError);
-      }
+    getTvShowCasts(showId: string): Promise<TmdbGetTvShowCreditsResponse> {
+      return axiosTmdb.get(`/tv/${showId}/credits`, { params: {} });
     },
 
-    getTvShowVideos: async (showId: string) => {
-      try {
-        const response = await axiosTmdb.get<TmdbGetTvShowVideosResponse>(
-          `/tv/${showId}/videos`,
-          { params: {} }
-        );
-
-        return response;
-      } catch (error) {
-        notifyAxiosError('Get show videos', error as AxiosError);
-      }
+    getTvShowVideos(showId: string): Promise<TmdbGetTvShowVideosResponse> {
+      return axiosTmdb.get(`/tv/${showId}/videos`, { params: {} });
     },
   };
 };

@@ -6,10 +6,9 @@ import { useRouter } from 'next/dist/client/router';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 import Meta from '@/layouts/Meta';
+import Auth from '@/layouts/Auth';
 import LoginForm from '@/features/Login/components/LoginForm';
 import LoginSocial from '@/features/Login/components/LoginSocial';
-
-import Auth from '@/layouts/Auth';
 
 function Login() {
   const {

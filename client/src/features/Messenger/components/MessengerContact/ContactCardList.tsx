@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 
 // types
 import { Conversation } from '@/models/conversations';
-import { AxiosResponse } from 'axios';
 import { GetMessagesResponse } from '@/models/messenger';
 
 // enums
@@ -38,12 +37,12 @@ function ContactCardList({ status }: ContactCardListProps) {
       const requests = stateConversations.map(async (conversation) => {
         return (await getMessages({
           conversationId: conversation._id,
-        })) as AxiosResponse<GetMessagesResponse>;
+        })) as GetMessagesResponse;
       });
 
       const responses = await Promise.all(requests);
 
-      responses.forEach(({ data }) => {
+      responses.forEach((data) => {
         if (!data.success || data.messages.length === 0) return;
 
         dispatch(

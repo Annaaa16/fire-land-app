@@ -9,6 +9,7 @@ import {
 import { useProductsSelector } from '@/redux/selectors';
 import { productsApiServer } from '@/apis/productsApi';
 import { wrapper } from '@/redux/store';
+import { redirectToNotFound } from '@/helpers/server';
 
 import Meta from '@/layouts/Meta';
 import Social from '@/layouts/Social';
@@ -63,15 +64,12 @@ export const getServerSideProps: GetServerSideProps =
       store.dispatch(productActions.clearProducts());
 
       responses.forEach((response) => {
-        response &&
-          store.dispatch(
-            productActions.getProductsSuccess(
-              response?.data as GetProductsResponse
-            )
-          );
+        store.dispatch(
+          productActions.getProductsSuccess(response as GetProductsResponse)
+        );
       });
-    } catch (error: any) {
-      console.log('Get products error at server 👉', error?.message);
+    } catch (error) {
+      return redirectToNotFound();
     }
 
     return {

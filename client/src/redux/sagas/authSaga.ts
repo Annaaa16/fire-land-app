@@ -1,7 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 
 // types
-import { AxiosResponse } from 'axios';
 import { PayloadAction } from '@reduxjs/toolkit';
 import {
   LoginPayload,
@@ -12,36 +11,27 @@ import {
 
 import { authActions } from '../slices/authSlice';
 import { authApiClient } from '@/apis/authApi';
-import { notifySagaError } from '@/helpers/notifyError';
 import { userActions } from '../slices/usersSlice';
 
 const { loginUser, registerUser } = authApiClient();
 
 function* handleRegisterRequest(action: PayloadAction<RegisterPayload>) {
   try {
-    const response: AxiosResponse<RegisterResponse> = yield call(
-      registerUser,
-      action.payload
-    );
+    const response: RegisterResponse = yield call(registerUser, action.payload);
 
-    yield put(authActions.registerSuccess(response.data));
+    yield put(authActions.registerSuccess(response));
   } catch (error) {
-    notifySagaError(authActions.registerFailed, error);
     yield put(authActions.registerFailed());
   }
 }
 
 function* handleLoginRequest(action: PayloadAction<LoginPayload>) {
   try {
-    const response: AxiosResponse<LoginResponse> = yield call(
-      loginUser,
-      action.payload
-    );
+    const response: LoginResponse = yield call(loginUser, action.payload);
 
-    yield put(authActions.loginSuccess(response.data));
-    yield put(userActions.setCurrentUser(response.data));
+    yield put(authActions.loginSuccess(response));
+    yield put(userActions.setCurrentUser(response));
   } catch (error) {
-    notifySagaError(authActions.loginFailed, error);
     yield put(authActions.loginFailed());
   }
 }

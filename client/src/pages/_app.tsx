@@ -70,19 +70,22 @@ class WrappedApp extends App<
     SwiperCore.use([Autoplay]);
 
     return (
-      <Provider store={store}>
-        <GlobalProvider getUserResponse={getUserResponse}>
-          <SocketProvider>
-            <NextThemeProvider attribute='class' disableTransitionOnChange>
-              <ThemeProvider theme={theme}>
-                <MoviesProvider>
+      <NextThemeProvider
+        attribute='class'
+        forcedTheme={(Component as any).theme || null}
+        disableTransitionOnChange>
+        <Provider store={store}>
+          <GlobalProvider getUserResponse={getUserResponse}>
+            <SocketProvider>
+              <MoviesProvider>
+                <ThemeProvider theme={theme}>
                   <Component {...pageProps} />
-                </MoviesProvider>
-              </ThemeProvider>
-            </NextThemeProvider>
-          </SocketProvider>
-        </GlobalProvider>
-      </Provider>
+                </ThemeProvider>
+              </MoviesProvider>
+            </SocketProvider>
+          </GlobalProvider>
+        </Provider>
+      </NextThemeProvider>
     );
   }
 }
