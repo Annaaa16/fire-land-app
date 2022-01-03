@@ -7,6 +7,8 @@ import YouTubeIcon from '@mui/icons-material/YouTube';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 
+import time from '@/helpers/time';
+
 function MoviesFooter() {
   return (
     <footer className={clsx('pb-10 mt-28')}>
@@ -53,7 +55,7 @@ function MoviesFooter() {
         </div>
       </div>
       <div className={clsx('text-center text-xs', 'text-gray-300')}>
-        © {new Date().getFullYear()} Fire Land, Inc
+        © {time.getCurrentYear()} Fire Land, Inc
       </div>
     </footer>
   );

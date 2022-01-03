@@ -7,6 +7,10 @@ const time = {
     return new Date(time).getFullYear();
   },
 
+  getCurrentYear() {
+    return new Date().getFullYear();
+  },
+
   getNow() {
     return new Date().toISOString();
   },
