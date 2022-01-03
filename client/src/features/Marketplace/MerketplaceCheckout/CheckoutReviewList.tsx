@@ -47,7 +47,6 @@ function CheckoutReviewList({
   const dispatch = useStoreDispatch();
 
   const { visitWall } = useUsers();
-  useAutoFocus(inputRef);
 
   const handleCreateReview = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -80,6 +79,8 @@ function CheckoutReviewList({
       );
     }
   }, [productId, isIntersecting, dispatch, nextPage, loadings]);
+
+  useAutoFocus(inputRef, reviews);
 
   return (
     <div
