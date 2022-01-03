@@ -1,5 +1,4 @@
 // types
-import { AxiosError } from 'axios';
 import {
   CreateMessageResponse,
   GetMessagesResponse,
@@ -8,35 +7,21 @@ import {
 } from '@/models/messenger';
 
 import { axiosClient } from './axiosClient';
-import { notifyAxiosError } from '@/helpers/notifyError';
 
 export const messagesApiClient = () => {
   const axiosInstance = axiosClient();
 
   return {
-    createMessage: async (messageData: CreateMessagePayload) => {
-      try {
-        const response = await axiosInstance.post<CreateMessageResponse>(
-          '/messages',
-          messageData
-        );
-
-        return response;
-      } catch (error) {
-        return notifyAxiosError('Create message', error as AxiosError);
-      }
+    createMessage(
+      messageData: CreateMessagePayload
+    ): Promise<CreateMessageResponse> {
+      return axiosInstance.post('/messages', messageData);
     },
 
-    getMessages: async ({ conversationId }: GetMessagesPayload) => {
-      try {
-        const response = await axiosInstance.get<GetMessagesResponse>(
-          '/messages/' + conversationId
-        );
-
-        return response;
-      } catch (error) {
-        return notifyAxiosError('Get messages', error as AxiosError);
-      }
+    getMessages({
+      conversationId,
+    }: GetMessagesPayload): Promise<GetMessagesResponse> {
+      return axiosInstance.get('/messages/' + conversationId);
     },
   };
 };

@@ -5,16 +5,15 @@ import { useRouter } from 'next/router';
 import clsx from 'clsx';
 
 // types
-import { GetServerSideProps } from 'next';
-import { AxiosError } from 'axios';
 import {
   TmdbGetMovieCreditsResponse,
   TmdbGetMovieVideosResponse,
   TmdbMovieDetail,
 } from '@/models/tmdb';
+import { GetServerSideProps } from 'next';
 
+import { LOCAL_STORAGE } from '@/constants';
 import { moviesApi } from '@/apis/moviesApi';
-import { notifyAxiosError } from '@/helpers/notifyError';
 import { useMoviesSelector } from '@/redux/selectors';
 import { filterMovieDetail } from '@/helpers/filterMovies';
 import { movieActions } from '@/redux/slices/moviesSlice';
@@ -143,6 +142,8 @@ function MoviesDetail(props: MoviesDetailProps) {
   );
 }
 
+MoviesDetail.theme = LOCAL_STORAGE.DARK_THEME_VALUE;
+
 export default MoviesDetail;
 
 export const getServerSideProps: GetServerSideProps = async ({
@@ -161,7 +162,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 
   let movieDetail = null;
 
-  if (!params) {
+  if (!params || (query.category !== movie && query.category !== tv)) {
     return redirectToNotFound();
   }
 
@@ -174,12 +175,12 @@ export const getServerSideProps: GetServerSideProps = async ({
       ]);
 
       movieDetail = {
-        detail: responses[0]?.data!,
-        casts: responses[1]?.data!,
-        videos: responses[2]?.data!,
+        detail: responses[0],
+        casts: responses[1],
+        videos: responses[2],
       };
     } catch (error) {
-      notifyAxiosError('Get movie detail', error as AxiosError);
+      return redirectToNotFound();
     }
   } else if (query.category === tv) {
     try {
@@ -190,17 +191,13 @@ export const getServerSideProps: GetServerSideProps = async ({
       ]);
 
       movieDetail = {
-        detail: responses[0]?.data!,
-        casts: responses[1]?.data!,
-        videos: responses[2]?.data!,
+        detail: responses[0],
+        casts: responses[1],
+        videos: responses[2],
       };
     } catch (error) {
-      notifyAxiosError('Get TV Shows detail', error as AxiosError);
+      return redirectToNotFound();
     }
-  }
-
-  if (!movieDetail) {
-    return redirectToNotFound();
   }
 
   return {

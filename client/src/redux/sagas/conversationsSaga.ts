@@ -10,12 +10,10 @@ import {
   GetConversationsResponse,
 } from '@/models/conversations';
 import { PayloadAction } from '@reduxjs/toolkit';
-import { AxiosResponse } from 'axios';
 
 import { DELAYS } from '@/constants';
 import { conversationActions } from '../slices/conversationsSlice';
 import { conversationsApiClient } from '@/apis/conversationsApi';
-import { notifySagaError } from '@/helpers/notifyError';
 
 const { createConversation, getConversations, deleteConversation } =
   conversationsApiClient();
@@ -26,14 +24,13 @@ function* handleCreateConversationRequest(
   try {
     yield delay(DELAYS.DEFAULT); // Block spam add friend button
 
-    const response: AxiosResponse<CreateConversationResponse> = yield call(
+    const response: CreateConversationResponse = yield call(
       createConversation,
       action.payload
     );
 
-    yield put(conversationActions.createConversationSuccess(response.data));
+    yield put(conversationActions.createConversationSuccess(response));
   } catch (error) {
-    notifySagaError(conversationActions.createConversationFailed, error);
     yield put(conversationActions.createConversationFailed());
   }
 }
@@ -42,14 +39,13 @@ function* handleGetConversationsRequest(
   action: PayloadAction<GetConversationsPayload>
 ) {
   try {
-    const response: AxiosResponse<GetConversationsResponse> = yield call(
+    const response: GetConversationsResponse = yield call(
       getConversations,
       action.payload
     );
 
-    yield put(conversationActions.getConversationsSuccess(response.data));
+    yield put(conversationActions.getConversationsSuccess(response));
   } catch (error) {
-    notifySagaError(conversationActions.getConversationsFailed, error);
     yield put(conversationActions.getConversationsFailed());
   }
 }
@@ -58,14 +54,13 @@ function* handleDeleteConversationRequest(
   action: PayloadAction<DeleteConversationPayload>
 ) {
   try {
-    const response: AxiosResponse<DeleteConversationResponse> = yield call(
+    const response: DeleteConversationResponse = yield call(
       deleteConversation,
       action.payload
     );
 
-    yield put(conversationActions.deleteConversationSuccess(response.data));
+    yield put(conversationActions.deleteConversationSuccess(response));
   } catch (error) {
-    notifySagaError(conversationActions.deleteConversationFailed, error);
     yield put(conversationActions.deleteConversationFailed());
   }
 }

@@ -8,10 +8,8 @@ import {
 } from '@/models/reviews';
 
 import { reviewActions } from '../slices/reviewsSlice';
-import { AxiosResponse } from 'axios';
 import { call, put, takeLatest } from '@redux-saga/core/effects';
 import { reviewsApiClient } from '@/apis/reviewsApi';
-import { notifySagaError } from '@/helpers/notifyError';
 
 const { createReview, getReviews } = reviewsApiClient();
 
@@ -19,28 +17,23 @@ function* handleCreateReviewRequest(
   action: PayloadAction<CreateReviewPayload>
 ) {
   try {
-    const response: AxiosResponse<CreateReviewResponse> = yield call(
+    const response: CreateReviewResponse = yield call(
       createReview,
       action.payload
     );
 
-    yield put(reviewActions.createReviewSuccess(response.data));
+    yield put(reviewActions.createReviewSuccess(response));
   } catch (error) {
-    notifySagaError(reviewActions.createReviewFailed, error);
     yield put(reviewActions.createReviewFailed());
   }
 }
 
 function* handleGetReviewsRequest(action: PayloadAction<GetReviewsPayload>) {
   try {
-    const response: AxiosResponse<GetReviewsResponse> = yield call(
-      getReviews,
-      action.payload
-    );
+    const response: GetReviewsResponse = yield call(getReviews, action.payload);
 
-    yield put(reviewActions.getReviewsSuccess(response.data));
+    yield put(reviewActions.getReviewsSuccess(response));
   } catch (error) {
-    notifySagaError(reviewActions.getReviewsFailed, error);
     yield put(reviewActions.getReviewsFailed());
   }
 }

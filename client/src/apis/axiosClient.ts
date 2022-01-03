@@ -1,5 +1,9 @@
 import axios from 'axios';
 
+// types
+import { AxiosResponse, AxiosError } from 'axios';
+import { StatusResponse } from '@/models/common';
+
 // query string
 import queryString from 'query-string';
 
@@ -20,13 +24,17 @@ export const axiosClient = () => {
   });
 
   axiosInstance.interceptors.response.use(
-    (response) => {
-      if (response && response.data) {
-        return response;
+    (response: AxiosResponse) => {
+      if (response?.data) {
+        return response.data;
       }
     },
-    async (error) => {
-      throw error;
+    (error: AxiosError): StatusResponse => {
+      if (error?.response?.data) {
+        return error.response?.data;
+      }
+
+      return { success: false, message: 'Please try again' };
     }
   );
 

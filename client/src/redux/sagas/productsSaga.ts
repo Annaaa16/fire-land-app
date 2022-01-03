@@ -14,11 +14,9 @@ import {
   UpdateProductResponse,
 } from '@/models/products';
 import { PayloadAction } from '@reduxjs/toolkit';
-import { AxiosResponse } from 'axios';
 
 import { productsApiClient } from '@/apis/productsApi';
 import { productActions } from '../slices/productsSlice';
-import { notifySagaError } from '@/helpers/notifyError';
 
 const {
   createProduct,
@@ -31,28 +29,26 @@ const {
 
 function* handleCreateProductRequest(action: PayloadAction<FormData>) {
   try {
-    const response: AxiosResponse<CreateProductResponse> = yield call(
+    const response: CreateProductResponse = yield call(
       createProduct,
       action.payload
     );
 
-    yield put(productActions.createProductSuccess(response.data));
+    yield put(productActions.createProductSuccess(response));
   } catch (error) {
-    notifySagaError(productActions.createProductFailure, error);
     yield put(productActions.createProductFailure());
   }
 }
 
 function* handleGetProductsRequest(action: PayloadAction<GetProductsParams>) {
   try {
-    const response: AxiosResponse<GetProductsResponse> = yield call(
+    const response: GetProductsResponse = yield call(
       getProducts,
       action.payload
     );
 
-    yield put(productActions.getProductsSuccess(response.data));
+    yield put(productActions.getProductsSuccess(response));
   } catch (error) {
-    notifySagaError(productActions.getProductsFailure, error);
     yield put(productActions.getProductsFailure());
   }
 }
@@ -61,14 +57,13 @@ function* handleUpdateProductRequest(
   action: PayloadAction<UpdateProductPayload>
 ) {
   try {
-    const response: AxiosResponse<UpdateProductResponse> = yield call(
+    const response: UpdateProductResponse = yield call(
       updateProduct,
       action.payload
     );
 
-    yield put(productActions.updateProductSuccess(response.data));
+    yield put(productActions.updateProductSuccess(response));
   } catch (error) {
-    notifySagaError(productActions.updateProductFailure, error);
     yield put(productActions.updateProductFailure());
   }
 }
@@ -77,14 +72,13 @@ function* handleDeleteProductRequest(
   action: PayloadAction<DeleteProductPayload>
 ) {
   try {
-    const response: AxiosResponse<DeleteProductResponse> = yield call(
+    const response: DeleteProductResponse = yield call(
       deleteProduct,
       action.payload
     );
 
-    yield put(productActions.deleteProductSuccess(response.data));
+    yield put(productActions.deleteProductSuccess(response));
   } catch (error) {
-    notifySagaError(productActions.deleteProductFailure, error);
     yield put(productActions.deleteProductFailure());
   }
 }
@@ -97,21 +91,16 @@ function* handleReactProductRequest(
 
     yield call(reactProduct, action.payload);
   } catch (error) {
-    notifySagaError(productActions.reactProductFailure, error);
     yield put(productActions.reactProductFailure());
   }
 }
 
 function* handleBuyProductRequest(action: PayloadAction<BuyProductPayload>) {
   try {
-    const response: AxiosResponse<BuyProductResponse> = yield call(
-      buyProduct,
-      action.payload
-    );
+    const response: BuyProductResponse = yield call(buyProduct, action.payload);
 
-    yield put(productActions.buyProductSuccess(response.data));
+    yield put(productActions.buyProductSuccess(response));
   } catch (error) {
-    notifySagaError(productActions.buyProductFailure, error);
     yield put(productActions.buyProductFailure());
   }
 }

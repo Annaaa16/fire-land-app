@@ -5,6 +5,8 @@ import queryString from 'query-string';
 
 // types
 import { GetServerSidePropsContext, NextPageContext } from 'next';
+import { AxiosError, AxiosResponse } from 'axios';
+import { StatusResponse } from '@/models/common';
 
 import { API_URLS } from '@/constants';
 import tokens from '@/helpers/tokens';
@@ -27,13 +29,17 @@ export const axiosServer = (
   });
 
   axiosInstance.interceptors.response.use(
-    (response) => {
-      if (response && response.data) {
-        return response;
+    (response: AxiosResponse) => {
+      if (response?.data) {
+        return response.data;
       }
     },
-    async (error) => {
-      throw error;
+    (error: AxiosError): StatusResponse => {
+      if (error?.response?.data) {
+        return error.response?.data;
+      }
+
+      return { success: false, message: 'Please try again later' };
     }
   );
 

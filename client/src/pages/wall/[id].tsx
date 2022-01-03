@@ -3,18 +3,14 @@ import clsx from 'clsx';
 
 // types
 import { GetServerSideProps } from 'next';
-import { AxiosResponse } from 'axios';
-import { GetPostsResponse } from '@/models/posts';
-import { GetUserResponse } from '@/models/users';
 import { User } from '@/models/common';
 
-import { LIMITS, STATUS_CODES } from '@/constants';
+import { LIMITS } from '@/constants';
 import { postActions } from '@/redux/slices/postsSlice';
 import { wrapper } from '@/redux/store';
 import { postsApiServer } from '@/apis/postsApi';
 import { userActions } from '@/redux/slices/usersSlice';
 import { usersApiServer } from '@/apis/usersApi';
-import { notifyPageError } from '@/helpers/notifyError';
 import { redirectToNotFound } from '@/helpers/server';
 
 import Meta from '@/layouts/Meta';
@@ -49,42 +45,27 @@ export const getServerSideProps: GetServerSideProps =
     const { getPosts } = postsApiServer(ctx);
     const { getUser } = usersApiServer(ctx);
 
-    let user: User | null = null;
-    let statusCode = STATUS_CODES.DEFAULT;
-
     store.dispatch(postActions.clearPosts());
 
     try {
-      const userResponse = (await getUser(
-        id as string
-      )) as AxiosResponse<GetUserResponse>;
+      const userResponse = await getUser(id as string);
 
-      if (userResponse?.data.success) {
-        const postsResponse = (await getPosts({
-          userId: id as string,
-          params: { page: 1, limit: LIMITS.POSTS },
-        })) as AxiosResponse<GetPostsResponse>;
+      if (!userResponse.success) return redirectToNotFound();
 
-        store.dispatch(userActions.setUserProfile(userResponse.data));
-        postsResponse &&
-          store.dispatch(postActions.getPostsSuccess(postsResponse.data));
+      const postsResponse = await getPosts({
+        userId: id as string,
+        params: { page: 1, limit: LIMITS.POSTS },
+      });
 
-        user = userResponse.data.user;
-      }
+      store.dispatch(userActions.setUserProfile(userResponse));
+      store.dispatch(postActions.getPostsSuccess(postsResponse));
 
-      statusCode = userResponse.status;
+      return {
+        props: {
+          user: userResponse.user,
+        },
+      };
     } catch (error) {
-      statusCode = STATUS_CODES.SERVER_ERROR;
-      notifyPageError('Wall', error);
-    }
-
-    if (statusCode >= STATUS_CODES.BAD_REQUEST) {
       return redirectToNotFound();
     }
-
-    return {
-      props: {
-        user,
-      },
-    };
   });

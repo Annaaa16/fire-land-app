@@ -1,6 +1,5 @@
 // types
 import { GetServerSidePropsContext, NextPageContext } from 'next';
-import { AxiosError } from 'axios';
 import {
   AddFriendUserPayload,
   AddFriendUserResponse,
@@ -16,96 +15,49 @@ import {
 } from '@/models/users';
 
 import { axiosClient } from './axiosClient';
-import { notifyAxiosError } from '@/helpers/notifyError';
 import { axiosServer } from './axiosServer';
 
 export const usersApiClient = () => {
   const axiosInstance = axiosClient();
 
   return {
-    getCurrentUser: async () => {
-      try {
-        const response = await axiosInstance.get<GetUserResponse>(
-          '/users/current'
-        );
-
-        return response;
-      } catch (error) {
-        return notifyAxiosError('Get current user', error as AxiosError);
-      }
+    getCurrentUser(): Promise<GetUserResponse> {
+      return axiosInstance.get('/users/current');
     },
 
-    getUser: async (userId: string) => {
-      try {
-        const response = await axiosInstance.get<GetUserResponse>(
-          '/users/' + userId
-        );
-
-        return response;
-      } catch (error) {
-        return notifyAxiosError('Get user by ID', error as AxiosError);
-      }
+    getUser(userId: string): Promise<GetUserResponse> {
+      return axiosInstance.get('/users/' + userId);
     },
 
-    addFriendUser: async ({ userId }: AddFriendUserPayload) => {
-      try {
-        const response = await axiosInstance.patch<AddFriendUserResponse>(
-          `/users/${userId}/friend`
-        );
-
-        return response;
-      } catch (error) {
-        return notifyAxiosError('Add friend user', error as AxiosError);
-      }
+    addFriendUser({
+      userId,
+    }: AddFriendUserPayload): Promise<AddFriendUserResponse> {
+      return axiosInstance.patch(`/users/${userId}/friend`);
     },
 
-    unfriendUser: async ({ userId }: UnfriendUserPayload) => {
-      try {
-        const response = await axiosInstance.patch<UnfriendUserResponse>(
-          `/users/${userId}/unfriend`
-        );
-
-        return response;
-      } catch (error) {
-        return notifyAxiosError('Unfriend user', error as AxiosError);
-      }
+    unfriendUser({
+      userId,
+    }: UnfriendUserPayload): Promise<UnfriendUserResponse> {
+      return axiosInstance.patch(`/users/${userId}/unfriend`);
     },
 
-    followUser: async ({ userId }: FollowUserPayload) => {
-      try {
-        const response = await axiosInstance.patch<FollowUserResponse>(
-          `/users/${userId}/follow`
-        );
-
-        return response;
-      } catch (error) {
-        return notifyAxiosError('Follow user', error as AxiosError);
-      }
+    followUser({ userId }: FollowUserPayload): Promise<FollowUserResponse> {
+      return axiosInstance.patch(`/users/${userId}/follow`);
     },
 
-    unfollowUser: async ({ userId }: UnfollowUserPayload) => {
-      try {
-        const response = await axiosInstance.patch<UnfollowUserResponse>(
-          `/users/${userId}/unfollow`
-        );
-
-        return response;
-      } catch (error) {
-        return notifyAxiosError('Unfollow user', error as AxiosError);
-      }
+    unfollowUser({
+      userId,
+    }: UnfollowUserPayload): Promise<UnfollowUserResponse> {
+      return axiosInstance.patch(`/users/${userId}/unfollow`);
     },
 
-    getFriends: async ({ userId, params }: GetFriendsPayload) => {
-      try {
-        const response = await axiosInstance.get<GetUserFriendsResponse>(
-          `/users/${userId}/friends`,
-          { params }
-        );
-
-        return response;
-      } catch (error) {
-        return notifyAxiosError('Get user friends', error as AxiosError);
-      }
+    getFriends({
+      userId,
+      params,
+    }: GetFriendsPayload): Promise<GetUserFriendsResponse> {
+      return axiosInstance.get(`/users/${userId}/friends`, {
+        params,
+      });
     },
   };
 };
@@ -116,28 +68,12 @@ export const usersApiServer = (
   const axiosInstance = axiosServer(ctx);
 
   return {
-    getCurrentUser: async () => {
-      try {
-        const response = await axiosInstance.get<GetUserResponse>(
-          '/users/current'
-        );
-
-        return response;
-      } catch (error) {
-        return notifyAxiosError('Get current user', error as AxiosError);
-      }
+    getCurrentUser(): Promise<GetUserResponse> {
+      return axiosInstance.get('/users/current');
     },
 
-    getUser: async (userId: string) => {
-      try {
-        const response = await axiosInstance.get<GetUserResponse>(
-          '/users/' + userId
-        );
-
-        return response;
-      } catch (error) {
-        return notifyAxiosError('Get user by ID', error as AxiosError);
-      }
+    getUser(userId: string): Promise<GetUserResponse> {
+      return axiosInstance.get('/users/' + userId);
     },
   };
 };

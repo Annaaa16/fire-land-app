@@ -14,12 +14,10 @@ import {
   UnfriendUserResponse,
 } from '@/models/users';
 import { PayloadAction } from '@reduxjs/toolkit';
-import { AxiosResponse } from 'axios';
 
 import { DELAYS } from '@/constants';
 import { userActions } from '../slices/usersSlice';
 import { usersApiClient } from '@/apis/usersApi';
-import { notifySagaError } from '@/helpers/notifyError';
 
 const { addFriendUser, unfriendUser, followUser, unfollowUser, getFriends } =
   usersApiClient();
@@ -30,14 +28,13 @@ function* handleAddFriendUserRequest(
   try {
     yield delay(DELAYS.DEFAULT); // Block spam add friend button
 
-    const response: AxiosResponse<AddFriendUserResponse> = yield call(
+    const response: AddFriendUserResponse = yield call(
       addFriendUser,
       action.payload
     );
 
-    yield put(userActions.addFriendUserSuccess(response.data));
+    yield put(userActions.addFriendUserSuccess(response));
   } catch (error) {
-    notifySagaError(userActions.addFriendUserFailed, error);
     yield put(userActions.addFriendUserFailed());
   }
 }
@@ -48,14 +45,13 @@ function* handleUnfriendUserRequest(
   try {
     yield delay(DELAYS.DEFAULT); // Block spam add friend button
 
-    const response: AxiosResponse<UnfriendUserResponse> = yield call(
+    const response: UnfriendUserResponse = yield call(
       unfriendUser,
       action.payload
     );
 
-    yield put(userActions.unfriendUserSuccess(response.data));
+    yield put(userActions.unfriendUserSuccess(response));
   } catch (error) {
-    notifySagaError(userActions.unfriendUserFailed, error);
     yield put(userActions.unfriendUserFailed());
   }
 }
@@ -66,14 +62,10 @@ function* handleFollowUserRequest(action: PayloadAction<FollowUserPayload>) {
   try {
     yield delay(DELAYS.DEFAULT); // Block spam follow button
 
-    const response: AxiosResponse<FollowUserResponse> = yield call(
-      followUser,
-      userId
-    );
+    const response: FollowUserResponse = yield call(followUser, userId);
 
-    yield put(userActions.followUserSuccess(response.data));
+    yield put(userActions.followUserSuccess(response));
   } catch (error) {
-    notifySagaError(userActions.followUserFailed, error);
     yield put(userActions.followUserFailed());
   }
 }
@@ -84,28 +76,26 @@ function* handleUnfollowUserRequest(
   try {
     yield delay(DELAYS.DEFAULT); // Block spam unfollow button
 
-    const response: AxiosResponse<UnfollowUserResponse> = yield call(
+    const response: UnfollowUserResponse = yield call(
       unfollowUser,
       action.payload
     );
 
-    yield put(userActions.unfollowUserSuccess(response.data));
+    yield put(userActions.unfollowUserSuccess(response));
   } catch (error) {
-    notifySagaError(userActions.unfollowUserFailed, error);
     yield put(userActions.unfollowUserFailed());
   }
 }
 
 function* handleGetFriendsRequest(action: PayloadAction<GetFriendsPayload>) {
   try {
-    const response: AxiosResponse<GetUserFriendsResponse> = yield call(
+    const response: GetUserFriendsResponse = yield call(
       getFriends,
       action.payload
     );
 
-    yield put(userActions.getFriendsSuccess(response.data));
+    yield put(userActions.getFriendsSuccess(response));
   } catch (error) {
-    notifySagaError(userActions.getFriendsFailed, error);
     yield put(userActions.getFriendsFailed());
   }
 }

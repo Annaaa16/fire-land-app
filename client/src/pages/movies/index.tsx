@@ -2,9 +2,10 @@ import { useEffect } from 'react';
 
 // types
 import { GetServerSideProps } from 'next';
-import { TmdbGetMoviesResponse, TmdbMoviesEndpoints } from '@/models/tmdb';
+import { TmdbGetMoviesResponse } from '@/models/tmdb';
 import { MovieCategoryKeys } from '@/models/movies';
 
+import { LOCAL_STORAGE } from '@/constants';
 import { movieCategoryKeys, movieActions } from '@/redux/slices/moviesSlice';
 import { moviesApi } from '@/apis/moviesApi';
 import { wrapper } from '@/redux/store';
@@ -12,7 +13,7 @@ import { tmdbMoviesEndpoints } from '@/configs/tmdb';
 import { useMoviesSelector } from '@/redux/selectors';
 import { tvShowCategoryKeys } from '@/redux/slices/moviesSlice';
 import { tmdbCategories, tmdbTvShowsEndpoints } from '@/configs/tmdb';
-import { notifyPageError } from '@/helpers/notifyError';
+import { redirectToNotFound } from '@/helpers/server';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 import MainLayout from '@/features/Movies/layouts/MainLayout';
@@ -94,6 +95,8 @@ function Movies() {
   );
 }
 
+Movies.theme = LOCAL_STORAGE.DARK_THEME_VALUE;
+
 export default Movies;
 
 export const getServerSideProps: GetServerSideProps =
@@ -114,7 +117,7 @@ export const getServerSideProps: GetServerSideProps =
         store.dispatch(
           movieActions.getMoviesSuccess({
             moviesType: type,
-            movies: response?.data as TmdbGetMoviesResponse,
+            movies: response as TmdbGetMoviesResponse,
           })
         );
       };
@@ -126,7 +129,7 @@ export const getServerSideProps: GetServerSideProps =
         handleGetMovies(nowPlaying, movieCategoryKeys.nowPlaying),
       ]);
     } catch (error) {
-      notifyPageError('Movies', error);
+      return redirectToNotFound();
     }
 
     return {

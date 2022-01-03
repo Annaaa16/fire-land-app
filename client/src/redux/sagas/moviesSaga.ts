@@ -1,7 +1,6 @@
 import { call, put, takeEvery, takeLatest } from '@redux-saga/core/effects';
 
 // types
-import { AxiosResponse } from 'axios';
 import {
   TmdbGetMoviesResponse,
   TmdbGetTvShowsResponse,
@@ -16,7 +15,6 @@ import {
   tvShowCategoryKeys,
 } from '../slices/moviesSlice';
 import { moviesApi } from '@/apis/moviesApi';
-import { notifySagaError } from '@/helpers/notifyError';
 
 const {
   getMovies,
@@ -30,17 +28,14 @@ function* handleGetMoviesRequest(action: PayloadAction<GetMoviesPayload>) {
   const { query, params, moviesType } = action.payload;
 
   try {
-    const response: AxiosResponse<TmdbGetMoviesResponse> = yield call(
+    const response: TmdbGetMoviesResponse = yield call(
       getMovies,
       query,
       params
     );
 
-    yield put(
-      movieActions.getMoviesSuccess({ moviesType, movies: response.data })
-    );
+    yield put(movieActions.getMoviesSuccess({ moviesType, movies: response }));
   } catch (error) {
-    notifySagaError(movieActions.getMoviesFailed, error);
     yield put(movieActions.getMoviesFailed());
   }
 }
@@ -49,7 +44,7 @@ function* handleGetSimilarMoviesRequest(action: PayloadAction<string>) {
   const movieId = action.payload;
 
   try {
-    const response: AxiosResponse<TmdbGetMoviesResponse> = yield call(
+    const response: TmdbGetMoviesResponse = yield call(
       getSimilarMovies,
       movieId
     );
@@ -57,25 +52,23 @@ function* handleGetSimilarMoviesRequest(action: PayloadAction<string>) {
     yield put(
       movieActions.getMoviesSuccess({
         moviesType: movieCategoryKeys.similar,
-        movies: response.data,
+        movies: response,
       })
     );
   } catch (error) {
-    notifySagaError(movieActions.getMoviesFailed, error);
     yield put(movieActions.getMoviesFailed());
   }
 }
 
 function* handleSearchMoviesRequest(action: PayloadAction<TmdbSearchPayload>) {
   try {
-    const response: AxiosResponse<TmdbGetMoviesResponse> = yield call(
+    const response: TmdbGetMoviesResponse = yield call(
       searchMovies,
       action.payload
     );
 
-    yield put(movieActions.searchMoviesSuccess(response.data));
+    yield put(movieActions.searchMoviesSuccess(response));
   } catch (error) {
-    notifySagaError(movieActions.searchMoviesFailed, error);
     yield put(movieActions.searchMoviesFailed());
   }
 }
@@ -84,17 +77,16 @@ function* handleGetTvShowsRequest(action: PayloadAction<GetTvShowsPayload>) {
   const { query, params, tvShowsType } = action.payload;
 
   try {
-    const response: AxiosResponse<TmdbGetTvShowsResponse> = yield call(
+    const response: TmdbGetTvShowsResponse = yield call(
       getTvShows,
       query,
       params
     );
 
     yield put(
-      movieActions.getTvShowsSuccess({ tvShowsType, tvShows: response.data })
+      movieActions.getTvShowsSuccess({ tvShowsType, tvShows: response })
     );
   } catch (error) {
-    notifySagaError(movieActions.getTvShowsFailed, error);
     yield put(movieActions.getTvShowsFailed());
   }
 }
@@ -103,7 +95,7 @@ function* handleGetSimilarTvShowsRequest(action: PayloadAction<string>) {
   const tvShowId = action.payload;
 
   try {
-    const response: AxiosResponse<TmdbGetTvShowsResponse> = yield call(
+    const response: TmdbGetTvShowsResponse = yield call(
       getSimilarTvShows,
       tvShowId
     );
@@ -111,11 +103,10 @@ function* handleGetSimilarTvShowsRequest(action: PayloadAction<string>) {
     yield put(
       movieActions.getTvShowsSuccess({
         tvShowsType: tvShowCategoryKeys.similar,
-        tvShows: response.data,
+        tvShows: response,
       })
     );
   } catch (error) {
-    notifySagaError(movieActions.getTvShowsFailed, error);
     yield put(movieActions.getTvShowsFailed());
   }
 }
