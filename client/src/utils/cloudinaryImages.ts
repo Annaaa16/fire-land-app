@@ -3,19 +3,19 @@ import { API_URLS } from '@/constants';
 const { CLOUDINARY } = API_URLS;
 
 // Auth layout
-export const ltBackground = `${CLOUDINARY}/v1631503820/fire-chat-app/common/gmtca69qmkg1jqv9qmkf.jpg`;
-export const dkBackground = `${CLOUDINARY}/v1631544025/fire-chat-app/common/jwmgicokwtgtw0dwhmtk.jpg`;
-export const rocket = `${CLOUDINARY}/v1631503853/fire-chat-app/common/qttqsjesgtwux6vwdi2p.png`;
-export const ltDot = `${CLOUDINARY}/v1631535065/fire-chat-app/common/c553kaaote9gle2ixceb.png`;
-export const dkDot = `${CLOUDINARY}/v1631546575/fire-chat-app/common/uackw0a5ke9kncdtfz9u.png`;
+export const ltBackground = `${CLOUDINARY}/v1641175114/fire-land-app/auth/najtycv0wp34ixexldbb.jpg`;
+export const dkBackground = `${CLOUDINARY}/v1641175115/fire-land-app/auth/xtnrqcpkv8idndeo37ev.jpg`;
+export const rocket = `${CLOUDINARY}/v1641175113/fire-land-app/auth/hxzifsmpm0wzkblglasl.png`;
+export const ltDot = `${CLOUDINARY}/v1641175113/fire-land-app/auth/lq81no2n8ygjiu3bespv.png`;
+export const dkDot = `${CLOUDINARY}/v1641175113/fire-land-app/auth/mtestkvlcrdviv3rgzzz.png`;
 
 // Newsfeed
-export const bannerShape = `${CLOUDINARY}/v1631780448/fire-chat-app/newsfeed/banner/p4smcip89spsavygmbry.png`;
-export const bannerMembers = `${CLOUDINARY}/v1631780422/fire-chat-app/newsfeed/banner/owa4exzdanqribyacbmf.png`;
+export const bannerShape = `${CLOUDINARY}/v1641177285/fire-land-app/newsfeed/ujygyh6u4qg4luwldosp.png`;
+export const bannerMembers = `${CLOUDINARY}/v1641177286/fire-land-app/newsfeed/xd0derids83wyambpips.png`;
 
 // Marketplace
-export const heroOne = `${CLOUDINARY}/v1637755675/fire-chat-app/marketplace/tqgu8qaxh2zsuoznhuoc.png`;
-export const heroTwo = `${CLOUDINARY}/v1637755675/fire-chat-app/marketplace/rvq4si04ficqdp42lhgr.png`;
-export const heroThree = `${CLOUDINARY}/v1637755675/fire-chat-app/marketplace/b6icv9n73tybee34n34u.png`;
-export const heroFour = `${CLOUDINARY}/v1637755675/fire-chat-app/marketplace/fmdtqfbqpx8hx5r1uunl.png`;
-export const heroFive = `${CLOUDINARY}/v1637755674/fire-chat-app/marketplace/tsixfziwliztpfr7zny6.png`;
+export const heroOne = `${CLOUDINARY}/v1641175382/fire-land-app/marketplace/g9awrzh31ajubhj3kgvy.png`;
+export const heroTwo = `${CLOUDINARY}/v1641175381/fire-land-app/marketplace/sce8phoy4aobgkaelm4c.png`;
+export const heroThree = `${CLOUDINARY}/v1641175380/fire-land-app/marketplace/quvqtc5rynwtnszfswgp.png`;
+export const heroFour = `${CLOUDINARY}/v1641175379/fire-land-app/marketplace/b231ejioeap9m9cyjlyc.png`;
+export const heroFive = `${CLOUDINARY}/v1641175379/fire-land-app/marketplace/clllzc4zrdzbk7v2lp33.png`;
