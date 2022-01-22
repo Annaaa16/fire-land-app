@@ -17,6 +17,7 @@ import { ViewOptions } from '.';
 import { LIMITS } from '@/constants';
 import { actions, reviewActions } from '@/redux/slices/reviewsSlice';
 import { useReviewsSelector, useUsersSelector } from '@/redux/selectors';
+import { emptyReviews } from '@/utils/text';
 import useIntersectionObserver from '@/hooks/useIntersectionObserver';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 import useAutoFocus from '@/hooks/useAutoFocus';
@@ -88,14 +89,24 @@ function CheckoutReviewList({
         'relative',
         'flex flex-col justify-between h-full pl-2 pr-0.5'
       )}>
-      <Scrollbar className={clsx('flex-grow md:h-100')}>
-        <div ref={containerRef} className='flex flex-col gap-y-2 pt-2 pr-3'>
-          {reviews.map((review) => (
-            <CheckoutReview key={review._id} {...review} />
-          ))}
-          <div ref={loaderRef} className='h-px' />
-        </div>
-      </Scrollbar>
+      {reviews.length > 0 ? (
+        <Scrollbar className={clsx('flex-grow md:h-100')}>
+          <div ref={containerRef} className='flex flex-col gap-y-2 pt-2 pr-3'>
+            {reviews.map((review) => (
+              <CheckoutReview key={review._id} {...review} />
+            ))}
+            <div ref={loaderRef} className='h-px' />
+          </div>
+        </Scrollbar>
+      ) : (
+        <p
+          className={clsx(
+            'text-center mx-auto pt-5 px-5',
+            'text-gray-lt dark:text-gray-dk'
+          )}>
+          {emptyReviews}
+        </p>
+      )}
 
       <form
         onSubmit={handleCreateReview}

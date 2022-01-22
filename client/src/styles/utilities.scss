@@ -7,10 +7,6 @@
     @apply flex items-center justify-between;
   }
 
-  .img-cover {
-    @apply w-full h-full object-cover;
-  }
-
   .skeleton {
     @apply absolute inset-0
     bg-skeleton

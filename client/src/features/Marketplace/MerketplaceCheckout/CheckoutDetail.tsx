@@ -16,6 +16,10 @@ import StoreIcon from '@mui/icons-material/Store';
 import DoDisturbIcon from '@mui/icons-material/DoDisturb';
 import ChatIcon from '@mui/icons-material/Chat';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import DateRangeIcon from '@mui/icons-material/DateRange';
+
+// react timeago
+import Timeago from 'react-timeago';
 
 // types
 import { Product } from '@/models/common';
@@ -43,6 +47,7 @@ function CheckoutDetail(props: CheckoutDetailProps) {
     category,
     reactions,
     price,
+    createdAt,
     onSelectOption,
   } = props;
 
@@ -145,10 +150,19 @@ function CheckoutDetail(props: CheckoutDetailProps) {
       </div>
 
       <div className={clsx('flex items-center')}>
+        <DateRangeIcon
+          className={clsx('mr-2', 'text-gray-500 dark:text-gray-200')}
+        />
+        <span className={clsx('text-sm-1 mr-4 pb-0.5', 'dark:text-gray-200')}>
+          Uploaded <Timeago live={false} date={createdAt} />
+        </span>
+      </div>
+
+      <div className={clsx('flex items-center mt-2')}>
         <ChatIcon
           className={clsx('mr-2', 'text-gray-500 dark:text-gray-200')}
         />
-        <span className={clsx('mr-4 pb-0.5', 'dark:text-gray-200')}>
+        <span className={clsx('mr-4 text-sm-1 pb-0.5', 'dark:text-gray-200')}>
           {desc}
         </span>
         <Avatar
