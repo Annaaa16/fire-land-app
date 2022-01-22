@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 
 // clsx
 import clsx from 'clsx';
@@ -9,8 +9,18 @@ import { useForm } from 'react-hook-form';
 // material ui icons
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 
+// lodash
+import _ from 'lodash';
+
+import {
+  addProductSuccess,
+  missingProductCategory,
+  missingProductPhoto,
+  updateProductSuccess,
+} from '@/utils/text';
 import { productActions } from '@/redux/slices/productsSlice';
 import { useProductsSelector } from '@/redux/selectors';
+import { useGlobalContext } from '@/contexts/GlobalContext';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 import usePhotoPicker from '@/hooks/usePhotoPicker';
 
@@ -19,16 +29,12 @@ import FormCategory from './FormCategory';
 import FormError from './FormError';
 
 function MarketplaceForm() {
+  const { showToast } = useGlobalContext();
   const { updateProduct } = useProductsSelector();
 
   const [selectedCategory, setSelectedCategory] = useState<string>(
     updateProduct?.category || ''
   );
-  const [formField] = useState<{ [key: string]: string }>({
-    name: 'name',
-    price: 'price',
-    desc: 'desc',
-  });
 
   const {
     register,
@@ -40,6 +46,15 @@ function MarketplaceForm() {
   const { file, payload } = usePhotoPicker();
   const dispatch = useStoreDispatch();
 
+  const formField = useMemo(
+    () => ({
+      name: 'name',
+      price: 'price',
+      desc: 'desc',
+    }),
+    []
+  );
+
   const selectCategory = (category: string) => {
     setSelectedCategory(category);
   };
@@ -49,6 +64,20 @@ function MarketplaceForm() {
     desc: string;
     price: number;
   }) => {
+    if (_.isEmpty(file)) {
+      return showToast({
+        status: 'warning',
+        message: missingProductPhoto,
+      });
+    }
+
+    if (!selectedCategory) {
+      return showToast({
+        status: 'warning',
+        message: missingProductCategory,
+      });
+    }
+
     const formData = new FormData();
 
     formData.append('name', data.name);
@@ -60,6 +89,11 @@ function MarketplaceForm() {
     dispatch(productActions.createProductRequest(formData));
     dispatch(productActions.setIsOpenCreateForm(false));
     dispatch(productActions.setUpdateProduct(null));
+
+    showToast({
+      status: 'success',
+      message: addProductSuccess,
+    });
   };
 
   const handleUpdateProduct = (data: {
@@ -88,6 +122,11 @@ function MarketplaceForm() {
     );
     dispatch(productActions.setIsOpenCreateForm(false));
     dispatch(productActions.setUpdateProduct(null));
+
+    showToast({
+      status: 'success',
+      message: updateProductSuccess,
+    });
   };
 
   const handleCloseModal = () => {

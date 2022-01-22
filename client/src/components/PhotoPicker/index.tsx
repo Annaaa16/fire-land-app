@@ -18,6 +18,7 @@ interface PhotoPickerProps {
   className?: string;
   updatePhoto?: string;
   setPreview: Dispatch<SetStateAction<string>>;
+  setFile: Dispatch<SetStateAction<File | Object>>;
   getRootProps: <T extends DropzoneRootProps>(props?: T) => T;
   getInputProps: <T extends DropzoneInputProps>(props?: T) => T;
   onClosePhoto?: () => void;
@@ -29,6 +30,7 @@ function PhotoPicker(props: PhotoPickerProps) {
     className,
     updatePhoto,
     setPreview,
+    setFile,
     getRootProps,
     getInputProps,
     onClosePhoto,
@@ -41,6 +43,7 @@ function PhotoPicker(props: PhotoPickerProps) {
   const handleRemovePreview = () => {
     setInitPhoto('');
     setPreview('');
+    setFile({});
     onClosePhoto && onClosePhoto();
   };
 
@@ -64,9 +67,10 @@ function PhotoPicker(props: PhotoPickerProps) {
           <Image
             src={preview || initPhoto || ''} // Prioritize preview
             alt='Thumbnail'
-            className={clsx('img-cover', 'cursor-pointer')}
+            className={clsx('cursor-pointer')}
             styleLoading='image'
             layout='fill'
+            objectFit='contain'
           />
         </div>
       ) : (
