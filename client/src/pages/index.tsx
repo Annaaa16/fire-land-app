@@ -1,7 +1,7 @@
 // types
 import { GetServerSideProps, NextPage } from 'next';
 
-import { redirectToNotFound } from '@/helpers/server';
+import { PATHS } from '@/constants';
 
 const Home: NextPage = () => {
   return null;
@@ -10,5 +10,10 @@ const Home: NextPage = () => {
 export default Home;
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  return redirectToNotFound();
+  return {
+    redirect: {
+      destination: PATHS.NEWSFEED,
+      permanent: true,
+    },
+  };
 };
