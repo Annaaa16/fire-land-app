@@ -11,6 +11,8 @@ import {
   GetFriendsPayload,
   GetUserFriendsResponse,
   GetUserResponse,
+  SearchPeoplePayload,
+  SearchPeopleResponse,
   UnfollowUserPayload,
   UnfollowUserResponse,
   UnfriendUserPayload,
@@ -32,6 +34,7 @@ export const actions = {
   followUser: 'followUser',
   unfollowUser: 'unfollowUser',
   getFriends: 'getFriends',
+  searchPeople: 'searchPeople',
 };
 
 const initUser = {
@@ -51,6 +54,12 @@ const initialState: UsersInitState = {
   onlineUsers: [],
   friends: [],
   loadings: [],
+  searchedUsers: {
+    prevPage: null,
+    nextPage: null,
+    total: 0,
+    users: [],
+  },
 };
 
 const usersSlice = createSlice({
@@ -88,6 +97,31 @@ const usersSlice = createSlice({
     },
     addFriendUserFailed: (state) => {
       removeLoading(state, actions.addFriendUser);
+    },
+
+    searchPeopleRequest: (
+      state,
+      action: PayloadAction<SearchPeoplePayload>
+    ) => {
+      addLoading(state, actions.searchPeople);
+    },
+    searchPeopleSuccess: (
+      state,
+      action: PayloadAction<SearchPeopleResponse>
+    ) => {
+      const { success, users, prevPage, nextPage, total } = action.payload;
+
+      if (success) {
+        state.searchedUsers.users.push(...users);
+        state.searchedUsers.prevPage = prevPage!;
+        state.searchedUsers.nextPage = nextPage!;
+        state.searchedUsers.total = total!;
+      }
+
+      removeLoading(state, actions.searchPeople);
+    },
+    searchPeopleFailed: (state) => {
+      removeLoading(state, actions.searchPeople);
     },
 
     unfriendUserRequest: (
@@ -175,6 +209,10 @@ const usersSlice = createSlice({
       if (success) {
         state.userProfile = user;
       }
+    },
+
+    clearSearchedResults(state) {
+      return { ...state, searchedUsers: initialState.searchedUsers };
     },
 
     setOnlineUsers: (state, action: PayloadAction<OnlineUser[]>) => {

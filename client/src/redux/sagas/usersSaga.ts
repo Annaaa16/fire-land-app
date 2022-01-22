@@ -8,6 +8,8 @@ import {
   FollowUserResponse,
   GetFriendsPayload,
   GetUserFriendsResponse,
+  SearchPeoplePayload,
+  SearchPeopleResponse,
   UnfollowUserPayload,
   UnfollowUserResponse,
   UnfriendUserPayload,
@@ -19,8 +21,14 @@ import { DELAYS } from '@/constants';
 import { userActions } from '../slices/usersSlice';
 import { usersApiClient } from '@/apis/usersApi';
 
-const { addFriendUser, unfriendUser, followUser, unfollowUser, getFriends } =
-  usersApiClient();
+const {
+  addFriendUser,
+  unfriendUser,
+  followUser,
+  unfollowUser,
+  getFriends,
+  searchPeople,
+} = usersApiClient();
 
 function* handleAddFriendUserRequest(
   action: PayloadAction<AddFriendUserPayload>
@@ -36,6 +44,21 @@ function* handleAddFriendUserRequest(
     yield put(userActions.addFriendUserSuccess(response));
   } catch (error) {
     yield put(userActions.addFriendUserFailed());
+  }
+}
+
+function* handleSearchPeopleRequest(
+  action: PayloadAction<SearchPeoplePayload>
+) {
+  try {
+    const response: SearchPeopleResponse = yield call(
+      searchPeople,
+      action.payload
+    );
+
+    yield put(userActions.searchPeopleSuccess(response));
+  } catch (error) {
+    yield put(userActions.searchPeopleFailed());
   }
 }
 
@@ -105,6 +128,7 @@ function* usersSaga() {
     userActions.addFriendUserRequest,
     handleAddFriendUserRequest
   );
+  yield takeLatest(userActions.searchPeopleRequest, handleSearchPeopleRequest);
   yield takeLatest(userActions.unfriendUserRequest, handleUnfriendUserRequest);
   yield takeLatest(userActions.followUserRequest, handleFollowUserRequest);
   yield takeLatest(userActions.unfollowUserRequest, handleUnfollowUserRequest);
