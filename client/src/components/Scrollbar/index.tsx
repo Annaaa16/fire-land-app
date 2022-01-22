@@ -43,7 +43,7 @@ function SmoothScrollbarReact(props: ScrollbarProps) {
       className,
       [dataAttr!]: 'true',
     },
-    createElement(React.Fragment, {}, children)
+    createElement('div', {}, children)
   );
 }
 
