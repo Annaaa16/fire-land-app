@@ -9,6 +9,8 @@ import AppsIcon from '@mui/icons-material/Apps';
 import { PATHS } from '@/constants';
 import { useGlobalContext } from '@/contexts/GlobalContext';
 
+import Image from '../Image';
+
 // svgs
 import icon from '@/assets/svgs/icon.svg';
 
@@ -21,8 +23,16 @@ function HeaderLeft() {
     <>
       <div
         onClick={() => router.push(PATHS.NEWSFEED)}
-        className={clsx('w-10 md:w-12 lg:mr-2', 'cursor-pointer')}>
-        <img src={icon.src} alt='Logo' className={clsx('img-cover')} />
+        className={clsx('w-10 h-10 md:w-12 md:h-12 lg:mr-2', 'cursor-pointer')}>
+        <Image
+          src={icon.src}
+          alt='Logo'
+          styleLoading='cover'
+          layout='fill'
+          objectFit='contain'
+          className='rat'
+          priority={true}
+        />
       </div>
       <div
         data-menu-button

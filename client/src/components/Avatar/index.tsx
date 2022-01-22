@@ -6,6 +6,8 @@ import CheckIcon from '@mui/icons-material/Check';
 
 import { BACKUPS } from '@/constants';
 
+import Image from '@/components/Image';
+
 interface AvatarProps {
   view?: 'sm';
   avatar?: string;
@@ -27,11 +29,13 @@ function Avatar(props: AvatarProps) {
         rounded && 'rounded-full',
         className,
       ])}>
-      <img
+      <Image
         src={avatar || BACKUPS.AVATAR}
         alt='Avatar'
-        className={clsx('relative', 'img-cover', rounded && 'rounded-full')}
-        draggable={false}
+        className={clsx(rounded && 'rounded-full')}
+        objectFit='cover'
+        layout='fill'
+        styleLoading='cover'
       />
 
       {user && (

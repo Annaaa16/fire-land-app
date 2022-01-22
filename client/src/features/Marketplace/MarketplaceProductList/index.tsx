@@ -89,8 +89,6 @@ function MarketplaceProductList(props: MarketplaceProductListProps) {
               src={notMatch.src}
               alt='Empty'
               loading='lazy'
-              width={20}
-              height={20}
               styleLoading='cover'
               layout='fill'
             />
