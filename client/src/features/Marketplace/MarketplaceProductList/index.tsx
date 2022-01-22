@@ -11,6 +11,10 @@ import { useProductsSelector } from '@/redux/selectors';
 
 import MarketplaceFilters from '../MarketplaceFilters';
 import MarketplaceProduct from '../MarketplaceProduct';
+import Image from '@/components/Image';
+
+// svgs
+import notMatch from '@/assets/svgs/not-match.svg';
 
 interface MarketplaceProductListProps {
   title: string;
@@ -37,8 +41,6 @@ function MarketplaceProductList(props: MarketplaceProductListProps) {
 
   const products = categories[category];
   const displayedProducts = showcase ? products.slice(0, 4) : products;
-
-  if (displayedProducts?.length === 0) return null;
 
   const handleSeeMore = () => {
     router.push({
@@ -74,11 +76,34 @@ function MarketplaceProductList(props: MarketplaceProductListProps) {
         )}
         {filters && <MarketplaceFilters category={category} />}
       </div>
-      <div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-x-3 gap-y-5'>
-        {displayedProducts.map((product) => (
-          <MarketplaceProduct key={product._id} {...product} />
-        ))}
-      </div>
+      {products.length > 0 ? (
+        <div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-x-3 gap-y-5'>
+          {displayedProducts.map((product) => (
+            <MarketplaceProduct key={product._id} {...product} />
+          ))}
+        </div>
+      ) : (
+        <div>
+          <div className={'mx-auto w-20 h-20'}>
+            <Image
+              src={notMatch.src}
+              alt='Empty'
+              loading='lazy'
+              width={20}
+              height={20}
+              styleLoading='cover'
+              layout='fill'
+            />
+          </div>
+          <p
+            className={clsx(
+              'mt-3 text-center',
+              'text-gray-lt dark:text-gray-dk'
+            )}>
+            Be the first to upload your products
+          </p>
+        </div>
+      )}
     </section>
   );
 }
