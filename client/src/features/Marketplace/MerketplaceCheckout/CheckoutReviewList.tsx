@@ -23,7 +23,7 @@ import useAutoFocus from '@/hooks/useAutoFocus';
 import useUsers from '@/hooks/useUsers';
 
 import { Scrollbar } from '@/components/Scrollbar';
-import User from '@/components/User';
+import Avatar from '@/components/Avatar';
 import Tooltip from '@/components/Tooltip';
 import CheckoutReview from './CheckoutReview';
 
@@ -103,7 +103,7 @@ function CheckoutReviewList({
           'flex items-center px-2 border-t -mr-0.5 mt-auto border-lt-line dark:border-dk-line',
           'bg-white dark:bg-dk-input'
         )}>
-        <User
+        <Avatar
           onClick={() => visitWall(currentUser._id)}
           className={clsx('w-8 h-8 mr-2')}
           rounded

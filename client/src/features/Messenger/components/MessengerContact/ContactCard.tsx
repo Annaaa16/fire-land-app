@@ -18,7 +18,7 @@ import { messengerActions } from '@/redux/slices/messengerSlice';
 import { messagePlaceholder } from '@/utils/text';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
-import User from '@/components/User';
+import Avatar from '@/components/Avatar';
 
 interface ContactCardProps {
   conversation: Conversation;
@@ -64,7 +64,7 @@ function ContactCard({ conversation }: ContactCardProps) {
         'cursor-pointer',
         isSelected ? 'bg-gray-100 dark:bg-dk-tooltip' : 'dark:bg-dk-cpn'
       )}>
-      <User
+      <Avatar
         className='mr-3'
         view='sm'
         avatar={friend.avatar}

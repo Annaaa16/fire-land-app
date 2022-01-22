@@ -17,7 +17,7 @@ import { useGlobalContext } from '@/contexts/GlobalContext';
 import { mustBeFriends } from '@/helpers/notifications';
 import useUsers from '@/hooks/useUsers';
 
-import User from '@/components/User';
+import Avatar from '@/components/Avatar';
 import Spinner from '../Spinner';
 
 interface PostHeaderBoxProps {
@@ -67,7 +67,7 @@ function PostHeaderBox(props: PostHeaderBoxProps) {
           'dark:text-white bg-white dark:bg-dk-cpn'
         )}>
         <div className={clsx('flex items-center mb-6')}>
-          <User
+          <Avatar
             onClick={() => visitWall(userId)}
             avatar={avatar}
             className={clsx('w-14 h-14 mr-2')}

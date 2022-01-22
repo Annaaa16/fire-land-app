@@ -10,7 +10,7 @@ import { useGlobalContext } from '@/contexts/GlobalContext';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 import useUsers from '@/hooks/useUsers';
 
-import User from '@/components/User';
+import Avatar from '@/components/Avatar';
 
 function WidgetsFriendList() {
   const { notifyMaintain } = useGlobalContext();
@@ -65,7 +65,7 @@ function WidgetsFriendList() {
             key={friend._id}
             onClick={() => visitWall(friend._id)}
             className={clsx('mt-3')}>
-            <User
+            <Avatar
               className='rounded-lg mx-auto overflow-hidden'
               avatar={friend.avatar}
             />

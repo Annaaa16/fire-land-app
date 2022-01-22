@@ -8,7 +8,7 @@ import InfoIcon from '@mui/icons-material/Info';
 
 import { useConversationsSelector, useUsersSelector } from '@/redux/selectors';
 
-import User from '@/components/User';
+import Avatar from '@/components/Avatar';
 import Tooltip from '@/components/Tooltip';
 
 function ChatHeader() {
@@ -29,7 +29,7 @@ function ChatHeader() {
         'bg-white dark:bg-dk-cpn'
       )}>
       <div className={clsx('flex items-center ml-1')}>
-        <User view='sm' avatar={friend.avatar} rounded />
+        <Avatar view='sm' avatar={friend.avatar} rounded />
         <span className={clsx('ml-3 font-semibold', 'dark:text-white')}>
           {friend.username}
         </span>

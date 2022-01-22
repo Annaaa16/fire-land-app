@@ -6,7 +6,7 @@ import CheckIcon from '@mui/icons-material/Check';
 
 import { BACKUPS } from '@/constants';
 
-interface UserProps {
+interface AvatarProps {
   view?: 'sm';
   avatar?: string;
   className?: string;
@@ -16,7 +16,7 @@ interface UserProps {
   onClick?: () => void;
 }
 
-function User(props: UserProps) {
+function Avatar(props: AvatarProps) {
   const { view, avatar, className, user, online, rounded, onClick } = props;
 
   return (
@@ -57,4 +57,4 @@ function User(props: UserProps) {
   );
 }
 
-export default User;
+export default Avatar;

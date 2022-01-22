@@ -12,7 +12,7 @@ import { useUsersSelector } from '@/redux/selectors';
 import useClickOutside from '@/hooks/useClickOutside';
 import useUsers from '@/hooks/useUsers';
 
-import User from '../User';
+import Avatar from '../Avatar';
 import Tooltip from '../Tooltip';
 
 // svgs
@@ -61,7 +61,7 @@ function SidebarSmall(props: SidebarSmallProps) {
           <img src={icon.src} alt='Logo' className={clsx('img-full')} />
         </div>
       )}
-      <User
+      <Avatar
         view='sm'
         className='mx-auto'
         rounded

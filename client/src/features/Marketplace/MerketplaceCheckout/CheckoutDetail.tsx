@@ -28,7 +28,7 @@ import { productActions } from '@/redux/slices/productsSlice';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 import useUsers from '@/hooks/useUsers';
 
-import User from '@/components/User';
+import Avatar from '@/components/Avatar';
 
 interface CheckoutDetailProps extends Product {
   onSelectOption: (option: ViewOptions) => void;
@@ -151,7 +151,7 @@ function CheckoutDetail(props: CheckoutDetailProps) {
         <span className={clsx('mr-4 pb-0.5', 'dark:text-gray-200')}>
           {desc}
         </span>
-        <User
+        <Avatar
           onClick={() => visitWall(user._id)}
           rounded
           className={clsx('ml-auto mr-0.5 w-10 h-10')}

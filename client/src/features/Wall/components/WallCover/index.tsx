@@ -6,7 +6,7 @@ import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
 
 import { useUsersSelector } from '@/redux/selectors';
 
-import User from '@/components/User';
+import Avatar from '@/components/Avatar';
 import Tooltip from '@/components/Tooltip';
 
 // images
@@ -35,7 +35,7 @@ function WallCover() {
           'relative',
           'flex items-center justify-center md:justify-start w-full'
         )}>
-        <User
+        <Avatar
           avatar={userProfile.avatar}
           className={clsx('w-18 h-18 lg:w-24 lg:h-24 mr-2')}
           rounded

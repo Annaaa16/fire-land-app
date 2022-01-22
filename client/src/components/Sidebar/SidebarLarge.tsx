@@ -10,7 +10,7 @@ import { useUsersSelector } from '@/redux/selectors';
 import useClickOutside from '@/hooks/useClickOutside';
 import useUsers from '@/hooks/useUsers';
 
-import User from '../User';
+import Avatar from '../Avatar';
 
 interface SidebarLargeProps extends SidebarSmallProps {}
 
@@ -32,7 +32,7 @@ function SidebarLarge(props: SidebarLargeProps) {
         'flex flex-col items-center w-2/3 md:w-75 py-6 shadow-2xl',
         'bg-white dark:bg-dk-cpn'
       )}>
-      <User
+      <Avatar
         user
         rounded
         className={clsx('w-14 h-14')}

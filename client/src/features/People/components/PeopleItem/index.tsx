@@ -6,16 +6,16 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 
 // types
-import { User as UserType } from '@/models/common';
+import { User } from '@/models/common';
 
 import { useUsersSelector } from '@/redux/selectors';
 import { actions } from '@/redux/slices/usersSlice';
 import useUsers from '@/hooks/useUsers';
 
-import User from '@/components/User';
+import Avatar from '@/components/Avatar';
 import Spinner from '@/components/Spinner';
 
-function PeopleItem(props: UserType) {
+function PeopleItem(props: User) {
   const { currentUser, loadings } = useUsersSelector();
 
   const { visitWall, makeFriend } = useUsers();
@@ -33,7 +33,7 @@ function PeopleItem(props: UserType) {
         'flex px-4 py-4 shadow-md rounded-lg',
         'bg-white dark:bg-dk-cpn'
       )}>
-      <User
+      <Avatar
         onClick={() => visitWall(props._id)}
         className={clsx('w-9 md:w-12 h-9 md:h-12 mr-4')}
         rounded

@@ -9,14 +9,14 @@ import { Review } from '@/models/common';
 
 import useUsers from '@/hooks/useUsers';
 
-import User from '@/components/User';
+import Avatar from '@/components/Avatar';
 
 function CheckoutReview({ user, content, createdAt }: Review) {
   const { visitWall } = useUsers();
 
   return (
     <div className={clsx('flex')}>
-      <User
+      <Avatar
         onClick={() => visitWall(user._id)}
         view='sm'
         className='mr-2'

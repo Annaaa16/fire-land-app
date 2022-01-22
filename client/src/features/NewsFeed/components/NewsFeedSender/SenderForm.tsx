@@ -27,7 +27,7 @@ import usePhotoPicker from '@/hooks/usePhotoPicker';
 import useAutoFocus from '@/hooks/useAutoFocus';
 
 import { Scrollbar } from '@/components/Scrollbar';
-import User from '@/components/User';
+import Avatar from '@/components/Avatar';
 import Tooltip from '@/components/Tooltip';
 import PhotoPicker from '@/components/PhotoPicker';
 
@@ -119,7 +119,7 @@ function NewsFeedSenderArea() {
           onSubmit={updatePost ? handleUpdatePost : handleCreatePost}
           className={clsx('relative', 'p-3')}>
           <div className={clsx('flex items-center mt-2 pb-2 ml-2')}>
-            <User view='sm' avatar={currentUser.avatar} rounded />
+            <Avatar view='sm' avatar={currentUser.avatar} rounded />
             <div className={clsx('ml-3')}>
               <span className={clsx('font-semibold', 'dark:text-white')}>
                 {currentUser.username}

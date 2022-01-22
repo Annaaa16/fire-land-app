@@ -16,7 +16,7 @@ import { useUsersSelector } from '@/redux/selectors';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 import useUsers from '@/hooks/useUsers';
 
-import User from '@/components/User';
+import Avatar from '@/components/Avatar';
 import Tooltip from '@/components/Tooltip';
 
 interface PostSenderProps {
@@ -54,7 +54,7 @@ function PostSender(props: PostSenderProps) {
       className={clsx(
         'flex items-center border-t border-lt-line dark:border-dk-line mt-1 pt-4 pb-3'
       )}>
-      <User
+      <Avatar
         avatar={avatar}
         view='sm'
         rounded

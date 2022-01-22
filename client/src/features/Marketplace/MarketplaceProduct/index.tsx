@@ -15,7 +15,7 @@ import { useUsersSelector } from '@/redux/selectors';
 import { productActions } from '@/redux/slices/productsSlice';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
-import User from '@/components/User';
+import Avatar from '@/components/Avatar';
 import Image from '@/components/Image';
 import ProductOptions from './ProductOptions';
 
@@ -72,7 +72,7 @@ function MarketplaceProduct(props: Product) {
       )}>
       <div className={clsx('flex-between mb-3')}>
         <div className={clsx('flex items-center', 'cursor-pointer')}>
-          <User
+          <Avatar
             className={clsx('w-6 h-6 mr-1.5')}
             rounded
             avatar={user?.avatar}

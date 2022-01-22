@@ -12,7 +12,7 @@ import CampaignOutlinedIcon from '@mui/icons-material/CampaignOutlined';
 import { useNotificationsSelector } from '@/redux/selectors';
 
 import { Scrollbar } from '../Scrollbar';
-import User from '../User';
+import Avatar from '../Avatar';
 
 interface HeaderNotificationsProps {}
 
@@ -51,7 +51,7 @@ const HeaderNotifications = forwardRef<
                   'lg:hover:bg-gray-100 lg:dark:hover:bg-dk-tooltip',
                   'cursor-pointer'
                 )}>
-                <User
+                <Avatar
                   className={clsx('w-9 h-9 mr-2')}
                   rounded
                   avatar={user.avatar}

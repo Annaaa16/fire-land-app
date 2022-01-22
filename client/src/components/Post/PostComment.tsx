@@ -9,7 +9,7 @@ import { Comment } from '@/models/common';
 
 import useUsers from '@/hooks/useUsers';
 
-import User from '../User';
+import Avatar from '../Avatar';
 
 interface PostCommentProps {
   comment: Comment;
@@ -22,7 +22,7 @@ function PostComment({ comment }: PostCommentProps) {
 
   return (
     <div className={clsx('flex mb-2')}>
-      <User
+      <Avatar
         onClick={() => visitWall(user._id)}
         avatar={user?.avatar}
         view='sm'

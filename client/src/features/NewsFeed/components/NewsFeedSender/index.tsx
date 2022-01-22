@@ -11,7 +11,7 @@ import { postActions } from '@/redux/slices/postsSlice';
 import { useGlobalContext } from '@/contexts/GlobalContext';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
-import User from '@/components/User';
+import Avatar from '@/components/Avatar';
 import SenderForm from './SenderForm';
 
 function NewsFeedSender() {
@@ -33,7 +33,7 @@ function NewsFeedSender() {
           'bg-white dark:bg-dk-cpn'
         )}>
         <div className={clsx('flex items-center')}>
-          <User
+          <Avatar
             view='sm'
             avatar={currentUser.avatar}
             className={clsx('ml-1 md:ml-0')}

@@ -11,7 +11,7 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { useUsersSelector } from '@/redux/selectors';
 import useUsers from '@/hooks/useUsers';
 
-import User from '@/components/User';
+import Avatar from '@/components/Avatar';
 import PostHeaderOptions from './PostHeaderOptions';
 import PostHeaderBox from './PostHeaderBox';
 
@@ -34,7 +34,7 @@ function PostHeader(props: PostHeaderProps) {
     <div className={clsx('relative', 'flex items-center px-2 md:px-4 py-4')}>
       <div className={clsx('flex items-center')}>
         <div className={clsx('relative', 'group ml-1 md:ml-0 z-0')}>
-          <User
+          <Avatar
             avatar={avatar}
             view='sm'
             rounded

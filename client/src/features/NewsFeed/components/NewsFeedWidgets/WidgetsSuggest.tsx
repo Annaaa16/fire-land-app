@@ -3,7 +3,7 @@ import clsx from 'clsx';
 
 import { useGlobalContext } from '@/contexts/GlobalContext';
 
-import User from '@/components/User';
+import Avatar from '@/components/Avatar';
 
 function WidgetsSuggest() {
   const { notifyMaintain } = useGlobalContext();
@@ -36,7 +36,7 @@ function WidgetsSuggest() {
       <ul className={clsx('mt-5 -mb-3')}>
         <li className={clsx('flex-between pb-7')}>
           <div className={clsx('flex items-center')}>
-            <User view='sm' rounded />
+            <Avatar view='sm' rounded />
             <div className={clsx('ml-4')}>
               <div
                 className={clsx(
