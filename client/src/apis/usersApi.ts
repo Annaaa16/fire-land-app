@@ -8,6 +8,8 @@ import {
   GetFriendsPayload,
   GetUserFriendsResponse,
   GetUserResponse,
+  SearchPeoplePayload,
+  SearchPeopleResponse,
   UnfollowUserPayload,
   UnfollowUserResponse,
   UnfriendUserPayload,
@@ -59,6 +61,10 @@ export const usersApiClient = () => {
         params,
       });
     },
+
+    searchPeople(params: SearchPeoplePayload): Promise<SearchPeopleResponse> {
+      return axiosInstance.get('/users/people/search', { params });
+    },
   };
 };
 
@@ -74,6 +80,10 @@ export const usersApiServer = (
 
     getUser(userId: string): Promise<GetUserResponse> {
       return axiosInstance.get('/users/' + userId);
+    },
+
+    searchPeople(params: SearchPeoplePayload): Promise<SearchPeopleResponse> {
+      return axiosInstance.get('/users/people/search', { params });
     },
   };
 };

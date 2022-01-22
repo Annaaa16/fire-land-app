@@ -7,7 +7,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import { BACKUPS } from '@/constants';
 
 interface UserProps {
-  view?: 'sm' | 'lg';
+  view?: 'sm';
   avatar?: string;
   className?: string;
   user?: boolean;

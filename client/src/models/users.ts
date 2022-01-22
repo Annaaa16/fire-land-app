@@ -6,6 +6,12 @@ export interface UsersInitState extends Loadings {
   userProfile: User;
   friends: User[];
   onlineUsers: User[];
+  searchedUsers: {
+    prevPage: number | null;
+    nextPage: number | null;
+    total: number;
+    users: User[];
+  };
 }
 
 export interface AddFriendUserPayload {
@@ -27,6 +33,10 @@ export interface UnfollowUserPayload {
 export interface GetFriendsPayload {
   userId: string;
   params: PaginationParams;
+}
+
+export interface SearchPeoplePayload extends PaginationParams {
+  q: string;
 }
 
 // === Responses ===
@@ -75,4 +85,10 @@ export interface GetUserFriendsResponse extends Pagination {
   success: boolean;
   message: string;
   friends: User[];
+}
+
+export interface SearchPeopleResponse extends Pagination {
+  success: boolean;
+  message: string;
+  users: User[];
 }

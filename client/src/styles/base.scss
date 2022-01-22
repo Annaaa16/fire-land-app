@@ -18,6 +18,10 @@
   }
 }
 
+body {
+  -webkit-tap-highlight-color: transparent;
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -28,6 +32,9 @@ input[type='number'] {
   -moz-appearance: textfield;
 }
 
-abbr {
-  text-decoration: none !important;
+img {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
 }

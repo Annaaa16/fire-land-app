@@ -120,7 +120,7 @@ function MarketplaceProduct(props: Product) {
       </div>
 
       <div className={clsx('flex-between mt-3')}>
-        <abbr
+        <div
           onClick={handleOpenCheckout}
           title={name}
           className={clsx(
@@ -130,7 +130,7 @@ function MarketplaceProduct(props: Product) {
             'hover:!underline'
           )}>
           {name}
-        </abbr>
+        </div>
         <div
           onClick={handleReactProduct}
           className={clsx(

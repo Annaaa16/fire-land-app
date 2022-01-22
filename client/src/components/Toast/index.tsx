@@ -37,7 +37,7 @@ const Toast = forwardRef<ToastHandler, ToastProps>((_, forwardRef) => {
 
   return (
     <div
-      className={clsx('fixed top-20 right-10 z-10', 'flex flex-col gap-y-4')}>
+      className={clsx('fixed top-20 right-10 z-50', 'flex flex-col gap-y-4')}>
       {toasts.map((toast, idx) => (
         <ToastItem key={toast.status + idx} {...toast} />
       ))}

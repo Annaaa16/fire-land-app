@@ -11,9 +11,7 @@ import LoginForm from '@/features/Login/components/LoginForm';
 import LoginSocial from '@/features/Login/components/LoginSocial';
 
 function Login() {
-  const {
-    loginStatus: { success },
-  } = useAuthSelector();
+  const { loginStatus } = useAuthSelector();
 
   const router = useRouter();
   const dispatch = useStoreDispatch();
@@ -24,11 +22,12 @@ function Login() {
   };
 
   useEffect(() => {
-    if (success) {
+    if (loginStatus.success) {
       router.push(PATHS.NEWSFEED);
       dispatch(authActions.setRegisterStatus(false));
+      dispatch(authActions.setLoginStatus(false));
     }
-  }, [success, router, dispatch]);
+  }, [loginStatus.success, router, dispatch]);
 
   return (
     <Meta title='Login'>
