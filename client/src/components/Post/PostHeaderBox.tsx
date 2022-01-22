@@ -12,12 +12,9 @@ import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 
 import { PATHS } from '@/constants';
 import { useUsersSelector } from '@/redux/selectors';
-import { actions, userActions } from '@/redux/slices/usersSlice';
-import { useSocketContext } from '@/contexts/SocketContext';
-import { addFriend, unfriend } from '@/helpers/notifications';
+import { actions } from '@/redux/slices/usersSlice';
 import { useGlobalContext } from '@/contexts/GlobalContext';
 import { mustBeFriends } from '@/helpers/notifications';
-import useStoreDispatch from '@/hooks/useStoreDispatch';
 import useUsers from '@/hooks/useUsers';
 
 import User from '@/components/User';
@@ -33,12 +30,10 @@ interface PostHeaderBoxProps {
 function PostHeaderBox(props: PostHeaderBoxProps) {
   const { username, avatar, userId, followers } = props;
 
-  const { showToast, setDialogData } = useGlobalContext();
+  const { showToast } = useGlobalContext();
   const { currentUser, loadings } = useUsersSelector();
-  const { socketNotifications } = useSocketContext();
 
-  const { visitWall } = useUsers();
-  const dispatch = useStoreDispatch();
+  const { visitWall, makeFriend } = useUsers();
   const router = useRouter();
 
   const { friends } = currentUser;
@@ -46,32 +41,6 @@ function PostHeaderBox(props: PostHeaderBoxProps) {
   const isLoading =
     loadings.includes(actions.addFriendUser) ||
     loadings.includes(actions.unfriendUser);
-
-  const handleMakeFriend = () => {
-    if (!userId) return;
-
-    const handleAddFriend = () => {
-      const message = addFriend(currentUser.username, username);
-
-      dispatch(userActions.addFriendUserRequest({ userId }));
-      socketNotifications.sendNotification(message);
-    };
-
-    const handleUnfriend = () => {
-      const message = unfriend(currentUser.username, username);
-
-      dispatch(userActions.unfriendUserRequest({ userId }));
-      socketNotifications.sendNotification(message);
-    };
-
-    isFriend
-      ? setDialogData({
-          title: 'Stay with your friend',
-          question: 'Are you sure?',
-          confirmHandler: () => handleUnfriend(),
-        })
-      : handleAddFriend();
-  };
 
   const handleSendMessage = () => {
     isFriend
@@ -128,7 +97,7 @@ function PostHeaderBox(props: PostHeaderBoxProps) {
         </div>
         <div className={clsx('flex-between h-9')}>
           <button
-            onClick={() => !isLoading && handleMakeFriend()}
+            onClick={() => !isLoading && makeFriend(userId, username)}
             className={clsx(
               'flex-center flex-grow h-full rounded-lg px-5',
               isFriend

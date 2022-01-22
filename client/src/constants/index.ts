@@ -29,6 +29,7 @@ export const PATHS = {
   NEWSFEED: '/newsfeed',
   MOVIES: '/movies',
   MOVIES_SEARCH: '/movies/search',
+  PEOPLE_SEARCH: '/people/search',
   MARKETPLACE: '/marketplace',
   MARKETPLACE_PRODUCTS: '/marketplace/products',
   WALL: '/wall',
@@ -41,6 +42,7 @@ export const LIMITS = {
   COMMENTS: 5,
   PRODUCTS: 15,
   REVIEWS: 5,
+  SEARCH_PEOPLE: 10,
 };
 
 export const BREAKPOINTS = {

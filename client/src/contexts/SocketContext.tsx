@@ -38,22 +38,22 @@ function SocketProvider({ children }: SocketProviderProps) {
   const { currentUser } = useUsersSelector();
   const { isAuthenticated } = useAuthSelector();
 
-  const [socket, setSocket] = useState<SocketEvents>(null!);
+  const [socket, setSocket] = useState<SocketEvents | null>(null);
 
   const dispatch = useStoreDispatch();
 
   const socketConversations = useMemo(
     () => ({
       joinConversation(payload: { user: User; conversationId: string }) {
-        socket.emit(EMITS.JOIN_CONVERSATION, payload);
+        socket?.emit(EMITS.JOIN_CONVERSATION, payload);
       },
 
       leaveConversation() {
-        socket.emit(EMITS.LEAVE_CONVERSATION);
+        socket?.emit(EMITS.LEAVE_CONVERSATION);
       },
 
       sendMessage(text: string) {
-        socket.emit(EMITS.SEND_MESSAGE, text);
+        socket?.emit(EMITS.SEND_MESSAGE, text);
       },
     }),
     [socket]
@@ -62,7 +62,7 @@ function SocketProvider({ children }: SocketProviderProps) {
   const socketNotifications = useMemo(
     () => ({
       sendNotification(content: string) {
-        socket!.emit(EMITS.SEND_NOTIFICATION, {
+        socket?.emit(EMITS.SEND_NOTIFICATION, {
           id: nanoid(20),
           content,
           user: currentUser,

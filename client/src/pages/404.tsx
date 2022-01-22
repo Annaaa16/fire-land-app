@@ -37,7 +37,7 @@ function Custom404() {
             )}>
             This Page Isn't Available
           </h1>
-          <p className={clsx('mb-4', 'dark:text-gray')}>
+          <p className={clsx('mb-4 text-center', 'dark:text-gray')}>
             Check to see if the link you're trying to open is correct.
           </p>
           <button

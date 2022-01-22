@@ -266,4 +266,39 @@ usersController.getFriends = async (req, res) => {
   }
 };
 
+usersController.search = async (req, res) => {
+  const { q } = req.query;
+
+  if (!q?.trim()) {
+    return res
+      .status(400)
+      .json({ success: false, message: 'Search content is required' });
+  }
+
+  try {
+    const total = await User.count({
+      username: { $regex: q },
+    });
+
+    const { skip, limit, nextPage, prevPage } = paginate(req, total);
+
+    const users = await User.find({
+      username: { $regex: q },
+    })
+      .skip(skip)
+      .limit(limit)
+      .lean();
+
+    res.json({
+      success: true,
+      users,
+      total,
+      nextPage,
+      prevPage,
+    });
+  } catch (error) {
+    notifyServerError(res, error);
+  }
+};
+
 module.exports = usersController;

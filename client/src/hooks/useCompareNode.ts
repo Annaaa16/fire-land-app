@@ -7,7 +7,7 @@ const useCompareNode = (attr: string) => {
 
   const elRef = useRef<HTMLDivElement>(null);
 
-  // Compare class of previous node with current node
+  // Compare data attribute of previous node with current node
   useIsomorphicLayoutEffect(() => {
     if (!elRef.current) return;
 

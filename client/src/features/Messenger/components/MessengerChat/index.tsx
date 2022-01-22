@@ -2,7 +2,7 @@
 import clsx from 'clsx';
 
 // material ui icons
-import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
+import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 
 import { useConversationsSelector } from '@/redux/selectors';
 
@@ -25,15 +25,15 @@ function MessagesChat() {
     </div>
   ) : (
     <div className={clsx('flex justify-center p-5')}>
-      <ChatBubbleIcon
+      <ChatBubbleOutlineIcon
         className={clsx(
-          'inline-block mr-2 !text-4xl',
+          'inline-block mr-2 !text-2xl',
           'text-gray-lt dark:text-gray-dk'
         )}
       />
       <h2
         className={clsx(
-          'text-2xl font-bold',
+          'text-lg -translate-y-0.5',
           'text-gray-lt dark:text-gray-dk'
         )}>
         Let's start a new conversation

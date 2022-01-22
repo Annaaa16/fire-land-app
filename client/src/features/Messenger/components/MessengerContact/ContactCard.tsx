@@ -75,7 +75,7 @@ function ContactCard({ conversation }: ContactCardProps) {
         <div className={clsx('font-semibold truncate', 'dark:text-white')}>
           {friend.username}
         </div>
-        <abbr
+        <div
           title={message}
           className={clsx(
             'font-semibold text-xs mt-1 truncate',
@@ -84,7 +84,7 @@ function ContactCard({ conversation }: ContactCardProps) {
               : 'text-gray-lt dark:text-gray-dk'
           )}>
           {message}
-        </abbr>
+        </div>
       </div>
       <Timeago
         live={false}

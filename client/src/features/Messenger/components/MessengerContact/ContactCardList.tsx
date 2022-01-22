@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 
 // types
 import { Conversation } from '@/models/conversations';
-import { GetMessagesResponse } from '@/models/messenger';
 
 // enums
 import { Statuses } from '.';
@@ -14,6 +13,7 @@ import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 import { Scrollbar } from '@/components/Scrollbar';
 import ContactCard from './ContactCard';
+import ContactEmptyList from './ContactEmptyList';
 
 interface ContactCardListProps {
   status: Statuses;
@@ -35,23 +35,24 @@ function ContactCardList({ status }: ContactCardListProps) {
       if (stateConversations.length === 0) return;
 
       const requests = stateConversations.map(async (conversation) => {
-        return (await getMessages({
+        return await getMessages({
           conversationId: conversation._id,
-        })) as GetMessagesResponse;
+        });
       });
 
       const responses = await Promise.all(requests);
 
-      responses.forEach((data) => {
-        if (!data.success || data.messages.length === 0) return;
+      responses.forEach((response) => {
+        if (!response.success || response.messages.length === 0) return;
 
         dispatch(
-          messengerActions.addLastMessage({ message: data.messages.pop()! })
+          messengerActions.addLastMessage({ message: response.messages.pop()! })
         );
       });
     })();
   }, [stateConversations, dispatch]);
 
+  // Set conversations by status
   useEffect(() => {
     const { CONVERSATIONS, ONLINE } = Statuses;
 
@@ -76,14 +77,31 @@ function ContactCardList({ status }: ContactCardListProps) {
         );
         break;
       case ONLINE:
-        setConversations((prevState) => {
-          if (onlineUsers.length === 0) return prevState;
+        setConversations(() => {
+          const onlineConversations: Conversation[] = [];
 
-          return prevState.filter((conversation) =>
-            conversation.creators.some(
-              (creator) => creator.isOnline && creator._id !== currentUser._id
-            )
-          );
+          stateConversations.forEach((conversation) => {
+            const isOnline = conversation.creators.some((creator) =>
+              onlineUsers.some(
+                (user) =>
+                  user._id === creator._id && user._id !== currentUser._id
+              )
+            );
+
+            if (isOnline) {
+              const updatedCreators = conversation.creators.map((creator) => ({
+                ...creator,
+                isOnline: true,
+              }));
+
+              onlineConversations.push({
+                ...conversation,
+                creators: updatedCreators,
+              });
+            }
+          });
+
+          return onlineConversations;
         });
         break;
       default:
@@ -91,7 +109,21 @@ function ContactCardList({ status }: ContactCardListProps) {
     }
   }, [currentUser, onlineUsers, stateConversations, status]);
 
-  if (conversations.length === 0 || onlineUsers.length === 0) return null;
+  if (stateConversations.length === 0) {
+    return (
+      <ContactEmptyList message='Add a new friend to start a new conversation 💬' />
+    );
+  }
+
+  if (status === Statuses.ONLINE && conversations.length === 0) {
+    return (
+      <ContactEmptyList message="Don't have any friends online right now 🙅" />
+    );
+  }
+
+  if (status === Statuses.GROUPS || status === Statuses.ROOMS) {
+    return <ContactEmptyList message='This feature is coming 🔨' />;
+  }
 
   return (
     <Scrollbar dataAttr='data-contact-content-bottom'>

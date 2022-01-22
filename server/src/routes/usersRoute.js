@@ -2,6 +2,7 @@ const express = require('express');
 
 const verifyTokens = require('../middlewares/authMiddleware');
 const verifyMongooseId = require('../middlewares/mongooseMiddleware');
+const verifyQueries = require('../middlewares/queriesMiddleware');
 const usersController = require('../controllers/usersController');
 
 const router = express.Router();
@@ -15,6 +16,12 @@ router.get('/current', verifyTokens, usersController.getCurrentUser);
 // @desc Get user by id
 // @access Private
 router.get('/:userId', verifyTokens, verifyMongooseId, usersController.getUser);
+
+// @route GET api/users/people/search?q=...
+// @desc Search people
+// @access Private
+router.get('/people/search', verifyQueries, usersController.search);
+// router.get('/people/search', verifyTokens, verifyQueries, usersController.search);
 
 // @route PATCH api/users/:userId/friend
 // @desc Add friend

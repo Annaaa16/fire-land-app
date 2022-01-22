@@ -41,7 +41,6 @@ export interface CreatePostsResponse {
 
 export interface GetPostsResponse extends Pagination {
   success: boolean;
-  message: string;
   posts: Post[];
 }
 
