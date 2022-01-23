@@ -12,7 +12,7 @@ import useIntersectionObserver from '@/hooks/useIntersectionObserver';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 import Post from '@/components/Post';
-import NewsFeedSender from '@/features/NewsFeed/components/NewsFeedSender';
+import NewsFeedSender from '@/features/newsfeed/components/NewsFeedSender';
 import LoadingPost from '@/components/Loading/LoadingPost';
 
 function WallContent() {

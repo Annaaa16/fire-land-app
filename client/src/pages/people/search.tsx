@@ -12,7 +12,7 @@ import { userActions } from '@/redux/slices/usersSlice';
 
 import Meta from '@/layouts/Meta';
 import Social from '@/layouts/Social';
-import PeopleList from '@/features/People/components/PeopleList';
+import PeopleList from '@/features/people/components/PeopleList';
 
 interface PeopleProps {
   query: string;

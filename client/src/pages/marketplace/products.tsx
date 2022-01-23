@@ -20,8 +20,8 @@ import string from '@/helpers/string';
 
 import Meta from '@/layouts/Meta';
 import Social from '@/layouts/Social';
-import MarketplaceProductList from '@/features/Marketplace/MarketplaceProductList';
-import MarketplaceCheckout from '@/features/Marketplace/MerketplaceCheckout';
+import MarketplaceProductList from '@/features/marketplace/components/MarketplaceProductList';
+import MarketplaceCheckout from '@/features/marketplace/components/MarketplaceCheckout';
 
 function Detail() {
   const { nextPage, loadings, isOpenCheckout } = useProductsSelector();

@@ -17,8 +17,8 @@ import { redirectToNotFound } from '@/helpers/server';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 import useIntersectionObserver from '@/hooks/useIntersectionObserver';
 
-import MainLayout from '@/features/Movies/layouts/MainLayout';
-import MoviesItem from '@/features/Movies/components/MoviesItem';
+import MainLayout from '@/features/movies/layouts/MainLayout';
+import MoviesItem from '@/features/movies/components/MoviesItem';
 
 function Search() {
   const {

@@ -2,8 +2,8 @@
 import clsx from 'clsx';
 
 import Meta from '@/layouts/Meta';
-import MessengerContact from '@/features/Messenger/components/MessengerContact';
-import MessengerChat from '@/features/Messenger/components/MessengerChat';
+import MessengerContact from '@/features/messenger/components/MessengerContact';
+import MessengerChat from '@/features/messenger/components/MessengerChat';
 import Sidebar from '@/components/Sidebar';
 
 function Messenger() {

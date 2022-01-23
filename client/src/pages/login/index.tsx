@@ -7,8 +7,8 @@ import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 import Meta from '@/layouts/Meta';
 import Auth from '@/layouts/Auth';
-import LoginForm from '@/features/Login/components/LoginForm';
-import LoginSocial from '@/features/Login/components/LoginSocial';
+import LoginForm from '@/features/login/components/LoginForm';
+import LoginSocial from '@/features/login/components/LoginSocial';
 
 function Login() {
   const { loginStatus } = useAuthSelector();

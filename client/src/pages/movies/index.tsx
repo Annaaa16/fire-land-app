@@ -16,10 +16,10 @@ import { tmdbCategories, tmdbTvShowsEndpoints } from '@/configs/tmdb';
 import { redirectToNotFound } from '@/helpers/server';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
-import MainLayout from '@/features/Movies/layouts/MainLayout';
-import MoviesItemList from '@/features/Movies/components/MoviesItemList';
-import MoviesHeroSlider from '@/features/Movies/components/MoviesHeroSlider';
-import MoviesSearch from '@/features/Movies/components/MoviesSearch';
+import MainLayout from '@/features/movies/layouts/MainLayout';
+import MoviesItemList from '@/features/movies/components/MoviesItemList';
+import MoviesHeroSlider from '@/features/movies/components/MoviesHeroSlider';
+import MoviesSearch from '@/features/movies/components/MoviesSearch';
 
 function Movies() {
   const { movieCategories, tvShowCategories } = useMoviesSelector();

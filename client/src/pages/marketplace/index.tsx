@@ -13,11 +13,11 @@ import { redirectToNotFound } from '@/helpers/server';
 
 import Meta from '@/layouts/Meta';
 import Social from '@/layouts/Social';
-import MarketplaceHero from '@/features/Marketplace/MarketplaceHero';
-import MarketplaceMenu from '@/features/Marketplace/MarketplaceMenu';
-import MarketplaceCheckout from '@/features/Marketplace/MerketplaceCheckout';
-import MarketplaceProductList from '@/features/Marketplace/MarketplaceProductList';
-import MarketplaceForm from '@/features/Marketplace/MarketplaceForm';
+import MarketplaceHero from '@/features/marketplace/components/MarketplaceHero';
+import MarketplaceMenu from '@/features/marketplace/components/MarketplaceMenu';
+import MarketplaceCheckout from '@/features/marketplace/components/MarketplaceCheckout';
+import MarketplaceProductList from '@/features/marketplace/components/MarketplaceProductList';
+import MarketplaceForm from '@/features/marketplace/components/MarketplaceForm';
 
 function Marketplace() {
   const { isOpenCheckout, isOpenCreateForm } = useProductsSelector();

@@ -23,11 +23,11 @@ import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 import Image from '@/components/Image';
 import Paragraph from '@/components/Paragraph';
-import MainLayout from '@/features/Movies/layouts/MainLayout';
-import MoviesItemList from '@/features/Movies/components/MoviesItemList';
-import DetailTrailer from '@/features/Movies/components/MoviesDetail/DetailTrailer';
-import DetailCastList from '@/features/Movies/components/MoviesDetail/DetailCastList';
-import DetailGenreList from '@/features/Movies/components/MoviesDetail/DetailGenreList';
+import MainLayout from '@/features/movies/layouts/MainLayout';
+import MoviesItemList from '@/features/movies/components/MoviesItemList';
+import DetailTrailer from '@/features/movies/components/MoviesDetail/DetailTrailer';
+import DetailCastList from '@/features/movies/components/MoviesDetail/DetailCastList';
+import DetailGenreList from '@/features/movies/components/MoviesDetail/DetailGenreList';
 
 export interface MoviesDetailProps {
   movieDetail: {

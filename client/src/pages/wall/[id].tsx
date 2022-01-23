@@ -15,9 +15,9 @@ import { redirectToNotFound } from '@/helpers/server';
 
 import Meta from '@/layouts/Meta';
 import Social from '@/layouts/Social';
-import WallCover from '@/features/Wall/components/WallCover';
-import WallWidgets from '@/features/Wall/components/WallWidgets';
-import WallContent from '@/features/Wall/components/WallContent';
+import WallCover from '@/features/wall/components/WallCover';
+import WallWidgets from '@/features/wall/components/WallWidgets';
+import WallContent from '@/features/wall/components/WallContent';
 
 interface WallProps {
   user: User;

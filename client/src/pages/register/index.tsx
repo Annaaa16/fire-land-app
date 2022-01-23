@@ -7,7 +7,7 @@ import { authActions } from '@/redux/slices/authSlice';
 import useStoreDispatch from '@/hooks/useStoreDispatch';
 
 import Meta from '@/layouts/Meta';
-import RegisterForm from '@/features/Register/components/RegisterForm';
+import RegisterForm from '@/features/register/components/RegisterForm';
 
 import Auth from '@/layouts/Auth';
 

@@ -12,10 +12,10 @@ import { redirectToNotFound } from '@/helpers/server';
 
 import Meta from '@/layouts/Meta';
 import Social from '@/layouts/Social';
-import NewsFeedBanner from '@/features/NewsFeed/components/NewsFeedBanner';
-import NewsFeedMembers from '@/features/NewsFeed/components/NewsFeedSummary';
-import NewsFeedContent from '@/features/NewsFeed/components/NewsFeedContent';
-import NewsFeedWidgets from '@/features/NewsFeed/components/NewsFeedWidgets';
+import NewsFeedBanner from '@/features/newsfeed/components/NewsFeedBanner';
+import NewsFeedMembers from '@/features/newsfeed/components/NewsFeedSummary';
+import NewsFeedContent from '@/features/newsfeed/components/NewsFeedContent';
+import NewsFeedWidgets from '@/features/newsfeed/components/NewsFeedWidgets';
 
 function NewsFeed() {
   return (
