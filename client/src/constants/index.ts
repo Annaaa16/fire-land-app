@@ -1,5 +1,6 @@
 export const API_URLS = {
-  BASE: 'http://localhost:5000/api',
+  // BASE: 'http://localhost:5000/api',
+  BASE: 'https://fire-land-app-api.herokuapp.com/api',
   SOCKET: 'http://localhost:4000',
   TMDB: 'https://api.themoviedb.org/3',
   AVATAR: 'https://avatars.dicebear.com/api',

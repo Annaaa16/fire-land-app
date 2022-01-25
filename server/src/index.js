@@ -9,8 +9,8 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 
-const { LIMIT_UPLOAD, MONGO_URI } = require('./src/constants');
-const connectToRoutes = require('./src/routes');
+const { LIMIT_UPLOAD, MONGO_URI } = require('./constants');
+const connectToRoutes = require('./routes');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
