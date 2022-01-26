@@ -1,7 +1,15 @@
 export const API_URLS = {
-  // BASE: 'http://localhost:5000/api',
-  BASE: 'https://fire-land-app-api.herokuapp.com/api',
-  SOCKET: 'http://localhost:4000',
+  BASE:
+    process.env.NODE_ENV === 'production'
+      ? process.env.NEXT_PUBLIC_API_URL
+      : 'http://localhost:5000/api',
+
+  SOCKET:
+    process.env.NODE_ENV === 'production'
+      ? process.env.NEXT_PUBLIC_SOCKET_URL
+      : 'http://localhost:4000',
+
+  NEXT: '/api',
   TMDB: 'https://api.themoviedb.org/3',
   AVATAR: 'https://avatars.dicebear.com/api',
   CLOUDINARY: 'https://res.cloudinary.com/drxhgl7xe/image/upload',

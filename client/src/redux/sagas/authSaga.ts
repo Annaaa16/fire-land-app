@@ -10,10 +10,11 @@ import {
 } from '@/models/auth';
 
 import { authActions } from '../slices/authSlice';
-import { authApiClient } from '@/apis/authApi';
+import { authApiClient, authApiNext } from '@/apis/authApi';
 import { userActions } from '../slices/usersSlice';
 
-const { loginUser, registerUser } = authApiClient();
+const { registerUser } = authApiClient();
+const { loginUser } = authApiNext();
 
 function* handleRegisterRequest(action: PayloadAction<RegisterPayload>) {
   try {

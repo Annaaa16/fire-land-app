@@ -6,7 +6,7 @@ import queryString from 'query-string';
 // types
 import { GetServerSidePropsContext, NextPageContext } from 'next';
 import { AxiosError, AxiosResponse } from 'axios';
-import { StatusResponse } from '@/models/common';
+import { ErrorResponse } from '@/models/common';
 
 import { API_URLS } from '@/constants';
 import tokens from '@/helpers/tokens';
@@ -34,7 +34,7 @@ export const axiosServer = (
         return response.data;
       }
     },
-    (error: AxiosError): StatusResponse => {
+    (error: AxiosError): ErrorResponse => {
       if (error?.response?.data) {
         return error.response?.data;
       }

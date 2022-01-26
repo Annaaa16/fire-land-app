@@ -4,19 +4,15 @@ import axios from 'axios';
 import { AxiosResponse, AxiosError } from 'axios';
 import { ErrorResponse } from '@/models/common';
 
-// query string
-import queryString from 'query-string';
-
 import { API_URLS } from '@/constants';
 
-export const axiosClient = () => {
+export const axiosNext = () => {
   const axiosInstance = axios.create({
-    baseURL: API_URLS.BASE,
+    baseURL: API_URLS.NEXT,
     headers: {
       'content-type': 'application/json',
     },
     withCredentials: true,
-    paramsSerializer: (params) => queryString.stringify(params),
   });
 
   axiosInstance.interceptors.request.use((config) => {
@@ -31,7 +27,7 @@ export const axiosClient = () => {
     },
     (error: AxiosError): ErrorResponse => {
       if (error.response?.data) {
-        return error.response.data;
+        return error.response?.data;
       }
 
       return { success: false, message: 'Please try again later' };

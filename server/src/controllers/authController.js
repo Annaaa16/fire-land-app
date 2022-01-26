@@ -5,7 +5,7 @@ const User = require('../models/userModel');
 
 const { COOKIES, TOKENS } = require('../constants');
 const { notifyServerError } = require('../helpers/notifyError');
-const { setTokens, getTokens } = require('../helpers/tokens');
+const { getTokens } = require('../helpers/tokens');
 const cookieOptions = require('../configs/cookieOptionsConfig');
 
 const authController = {};
@@ -76,15 +76,15 @@ authController.login = async (req, res) => {
         .json({ success: false, message: 'Incorrect username or password' });
     }
 
-    setTokens.accessToken(res, user._id);
-    setTokens.refreshToken(res, user._id);
-
     delete user.password;
 
     res.json({
       success: true,
       message: 'User has successfully logged in',
       user,
+      accessToken: getTokens.accessToken(user._id),
+      refreshToken: getTokens.refreshToken(user._id),
+      cookieOptions,
     });
   } catch (error) {
     notifyServerError(res, error);

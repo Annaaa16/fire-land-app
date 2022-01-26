@@ -32,6 +32,7 @@ export interface LoginResponse {
   user: User;
   accessToken: string;
   refreshToken: string;
+  cookieOptions: any;
 }
 
 export interface RegisterResponse {

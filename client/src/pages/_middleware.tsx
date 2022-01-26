@@ -2,7 +2,7 @@
 import type { NextRequest } from 'next/server';
 import { StatusResponse } from '@/models/common';
 
-import { COOKIES, PATHS } from '@/constants';
+import { API_URLS, COOKIES, PATHS } from '@/constants';
 import { NextResponse } from 'next/server';
 import { RefreshTokenResponse } from '@/models/auth';
 import { fetcher } from '@/helpers/fetcher';
@@ -11,6 +11,11 @@ import tokens from '@/helpers/tokens';
 export async function middleware(req: NextRequest) {
   const { access_token, refresh_token, prev_path } = req.cookies;
   const { pathname } = req.nextUrl;
+
+  // Avoid api call conflict from next api page
+  if (pathname.startsWith(API_URLS.NEXT)) {
+    return NextResponse.next();
+  }
 
   const combinedTokens = tokens.combineTokensToString(
     access_token,

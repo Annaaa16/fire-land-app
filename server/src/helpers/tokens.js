@@ -26,4 +26,10 @@ exports.getTokens = {
       expiresIn: TOKENS.ACCESS_TOKEN_EXP,
     });
   },
+
+  refreshToken: (userId) => {
+    return jwt.sign({ userId }, TOKENS.REFRESH_TOKEN_SECRET, {
+      expiresIn: TOKENS.REFRESH_TOKEN_EXP,
+    });
+  },
 };

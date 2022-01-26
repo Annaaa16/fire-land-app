@@ -29,6 +29,10 @@ app.use(
 // Connect to routes
 connectToRoutes(app);
 
+app.get('/', (req, res) => {
+  res.send('Welcome to fire land app 👋');
+});
+
 // HTTP logger
 app.use(morgan('dev'));
 

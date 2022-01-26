@@ -11,17 +11,30 @@ import {
 
 import { axiosServer } from './axiosServer';
 import { axiosClient } from './axiosClient';
+import { axiosNext } from './axiosNext';
+
+export const authApiNext = () => {
+  const axiosInstance = axiosNext();
+
+  return {
+    loginUser(payload: LoginPayload): Promise<LoginResponse> {
+      return axiosInstance.post('/auth/login', payload);
+    },
+  };
+};
 
 export const authApiClient = () => {
   const axiosInstance = axiosClient();
 
   return {
-    registerUser(formData: RegisterPayload): Promise<RegisterResponse> {
-      return axiosInstance.post('/auth/register', formData);
+    registerUser(payload: RegisterPayload): Promise<RegisterResponse> {
+      return axiosInstance.post('/auth/register', payload);
     },
-    loginUser(formData: LoginPayload): Promise<LoginResponse> {
-      return axiosInstance.post('/auth/login', formData);
+
+    loginUser(payload: LoginPayload): Promise<LoginResponse> {
+      return axiosInstance.post('/auth/login', payload);
     },
+
     logoutUser(): Promise<StatusResponse> {
       return axiosInstance.get('/auth/logout');
     },
